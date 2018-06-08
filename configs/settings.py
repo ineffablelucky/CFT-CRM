@@ -149,6 +149,5 @@ AUTHENTICATION_BACKENDS = [
     'users.backends.MobileBackend',
     'django.contrib.auth.backends.ModelBackend',
 ]
-
-AUTH_USER_MODEL = 'users.MyUser'
 """
+AUTH_USER_MODEL = 'users.MyUser'
