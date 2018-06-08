@@ -31,7 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    #test
+    'salary_percentages',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -138,3 +138,15 @@ try:
     from configs.local_settings import *
 except ImportError as e:
     pass
+
+
+#LOGIN_REDIRECT_URL='index'
+"""
+AUTHENTICATION_BACKENDS = [
+    'users.backends.EmailBackend',
+    'users.backends.MobileBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
+
+AUTH_USER_MODEL = 'users.MyUser'
+"""
