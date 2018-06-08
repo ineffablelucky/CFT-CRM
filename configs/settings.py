@@ -143,11 +143,10 @@ except ImportError as e:
 
 
 #LOGIN_REDIRECT_URL='index'
-"""
+
 AUTHENTICATION_BACKENDS = [
-    'users.backends.EmailBackend',
-    'users.backends.MobileBackend',
+    'apps.users.backends.EmailBackend',
     'django.contrib.auth.backends.ModelBackend',
 ]
-"""
+
 AUTH_USER_MODEL = 'users.MyUser'

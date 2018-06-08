@@ -3,8 +3,6 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout
 from .forms import RegistrationForm
 
-def user(request):
-    return render(request, 'user.html')
 
 
 def register(request):
