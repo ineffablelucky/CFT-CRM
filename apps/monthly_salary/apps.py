@@ -2,4 +2,4 @@ from django.apps import AppConfig
 
 
 class MonthlySalaryConfig(AppConfig):
-    name = 'monthly_salary'
+    name = 'apps.monthly_salary'
