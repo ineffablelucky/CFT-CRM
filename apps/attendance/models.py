@@ -1,4 +1,5 @@
 from django.db import models
+from ..users.models import MyUser
 
 
 class Attendance(models.Model):
@@ -21,11 +22,13 @@ class Attendance(models.Model):
         choices = STATUS_CHOICES,
         default = 'Absent',
     )
+
     leave_type = models.CharField(
         max_length=8,
         choices=LEAVE_TYPE_CHOICES,
         default='CL',
     )
+    user = models.ForeignKey(MyUser, on_delete=models.PROTECT, default=None)
 
     note = models.CharField(max_length=500)
 
