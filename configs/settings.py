@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'apps.leads.apps.LeadsConfig',
-    'apps.attendance.apps.AttendanceConfig',
+    'apps.attendence.apps.AttendenceConfig',
     'apps.client.apps.ClientConfig',
     'apps.leave.apps.LeaveConfig',
     'apps.ctc.apps.CtcConfig',

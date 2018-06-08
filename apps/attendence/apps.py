@@ -1,5 +1,5 @@
 from django.apps import AppConfig
 
 
-class AttendanceConfig(AppConfig):
-    name = 'apps.attendance'
+class AttendenceConfig(AppConfig):
+    name = 'apps.attendence'
