@@ -31,7 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'salary_percentages',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -50,7 +50,9 @@ INSTALLED_APPS = [
     'apps.salary_percentages.apps.SalaryPercentagesConfig',
     'apps.task.apps.TaskConfig',
     'apps.time_entry.apps.TimeEntryConfig',
-    'apps.users.apps.UsersConfig'
+    'apps.users.apps.UsersConfig',
+    'apps.project.apps.ProjectConfig',
+    #'apps.salary_percentages.apps.SalaryPercentagesConfig',
 
 ]
 
@@ -147,6 +149,5 @@ AUTHENTICATION_BACKENDS = [
     'users.backends.MobileBackend',
     'django.contrib.auth.backends.ModelBackend',
 ]
-
-AUTH_USER_MODEL = 'users.MyUser'
 """
+AUTH_USER_MODEL = 'users.MyUser'
