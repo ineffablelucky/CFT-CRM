@@ -1,7 +1,7 @@
 from django.db import models
 from apps.client.models import CLIENT
 from apps.leads.models import LEADS
-from apps.users.models import Myuser
+from apps.users.models import MyUser
 
 
 class Opportunity(models.Model):
