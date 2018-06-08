@@ -1,8 +1,8 @@
 from django.db import models
-from apps.client.models import CLIENT
-from apps.leads.models import LEADS
+#from apps.client.models import CLIENT
+#from apps.leads.models import LEADS
 
-
+"""
 class Opportunity(models.Model):
 
     CHOICES = (
@@ -17,4 +17,6 @@ class Opportunity(models.Model):
     assigned_to = models.OneToOneField(USERS, on_delete=models.PROTECT, blank=True),
     lead = models.OneToOneField(LEADS, on_delete=models.PROTECT, blank=True),
     client = models.ForeignKey(CLIENT, on_delete=models.PROTECT, blank=True),
+
     status = models.CharField(max_length=20, choices=CHOICES)
+"""
