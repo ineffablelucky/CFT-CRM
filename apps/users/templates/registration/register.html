@@ -15,7 +15,8 @@
         <h2>Register Here</h2>
         <h4>Fields with * mark are necessary for successful registration! </h4>
 
-        <p>*Username {{ form.username }}</p>
+        {{ form.as_p }}
+        <!--p>*Username {{ form.username }}</p>
         <p>*Email {{ form.email }}</p>
         <p>*Password {{ form.password1 }}</p>
         <p>*Confirm Password {{ form.password2 }}</p>
@@ -27,7 +28,7 @@
         <p>Designation {{ form.designation }}</p>
         <p>Salary {{ form.salary }}</p>
         <p>Staff? {{ form.is_staff }}</p>
-        <p>Superuser? {{ form.is_superuser }}</p>
+        <p>Superuser? {{ form.is_superuser }}</p-->
 
         <input type="submit" value="Register" />
     </form>
