@@ -50,7 +50,7 @@ INSTALLED_APPS = [
     'apps.salary_percentages.apps.SalaryPercentagesConfig',
     'apps.task.apps.TaskConfig',
     'apps.time_entry.apps.TimeEntryConfig',
-    'apps.users.apps.UsersConfig'
+    'apps.users.apps.UsersConfig',
 
 ]
 
