@@ -1,5 +1,5 @@
 from django.db import models
-from ..users.models import MyUser
+from apps.users.models import MyUser
 
 
 class CLIENT(models.Model):

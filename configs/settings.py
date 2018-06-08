@@ -31,8 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    #test
-
+    'salary_percentages',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -51,8 +50,7 @@ INSTALLED_APPS = [
     'apps.salary_percentages.apps.SalaryPercentagesConfig',
     'apps.task.apps.TaskConfig',
     'apps.time_entry.apps.TimeEntryConfig',
-    'apps.users.apps.UsersConfig',
-    'apps.project.apps.ProjectConfig',
+    'apps.users.apps.UsersConfig'
 
 ]
 
@@ -140,3 +138,15 @@ try:
     from configs.local_settings import *
 except ImportError as e:
     pass
+
+
+#LOGIN_REDIRECT_URL='index'
+"""
+AUTHENTICATION_BACKENDS = [
+    'users.backends.EmailBackend',
+    'users.backends.MobileBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
+
+AUTH_USER_MODEL = 'users.MyUser'
+"""
