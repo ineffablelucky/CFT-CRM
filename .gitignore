@@ -5,5 +5,7 @@ __pycache__/
 *.pot
 *.pyc
 .idea/
-users/
-leads/
+<<<<<<< HEAD
+cftenv/
+=======
+>>>>>>> 3764683e4e6b93eb5a2fe820b1399a8a4797e278
