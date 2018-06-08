@@ -38,6 +38,20 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'apps.leads.apps.LeadsConfig',
+    'apps.attendance.apps.AttendanceConfig',
+    'apps.client.apps.ClientConfig',
+    'apps.leave.apps.LeaveConfig',
+    'apps.ctc.apps.CtcConfig',
+    'apps.meeting.apps.MeetingConfig',
+    'apps.module.apps.ModuleConfig',
+    'apps.monthly_salary.apps.MonthlySalaryConfig',
+    'apps.opportunity.apps.OpportunityConfig',
+    'apps.salary_percentages.apps.SalaryPercentagesConfig',
+    'apps.task.apps.TaskConfig',
+    'apps.time_entry.apps.TimeEntryConfig',
+    'apps.users.apps.UsersConfig'
+
 ]
 
 MIDDLEWARE = [
