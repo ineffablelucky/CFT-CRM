@@ -1,3 +1,8 @@
 from django.shortcuts import render
+from .forms import LeaveForm
 
-# Create your views here.
+
+def leave_request(request):
+    form = LeaveForm()
+    return render(request, 'leaverequest.html', {'form' : form})
+
