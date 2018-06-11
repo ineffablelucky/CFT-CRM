@@ -4,7 +4,7 @@ from ..client. models import CLIENT
 from ..opportunity.models import Opportunity
 
 class IT_Project(models.Model):
-    opportunity = models.OneToOneField(Opportunity, on_delete=models.PROTECT, blank=True)
+    opportunity = models.OneToOneField(Opportunity, on_delete=models.PROTECT, blank=True, default=None)
     project_name = models.CharField(max_length=30, blank=True,null=True,)
     project_description = models.CharField(max_length=30, blank=True,null=True,)
     project_manager = models.ForeignKey(MyUser, on_delete=models.CASCADE, blank=True,null=True,)
