@@ -19,3 +19,6 @@ class Opportunity(models.Model):
     lead = models.OneToOneField(LEADS, on_delete=models.PROTECT, blank=True)
     client = models.ForeignKey(CLIENT, on_delete=models.PROTECT, blank=True)
     status = models.CharField(max_length=20, choices=CHOICES)
+
+    def __str__(self):
+        return self.description
