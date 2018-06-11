@@ -15,6 +15,8 @@ class Task(models.Model):
     task_end_date_time = models.DateTimeField(blank=True,null=True,)
     status = models.CharField(max_length=30, blank=True,null=True, choices=task_status)
 
+    def __str__(self):
+        return self.task_name
 
 
 class Time_Entry(models.Model):
@@ -22,3 +24,4 @@ class Time_Entry(models.Model):
     task_start_date_time = models.DateTimeField(blank=True,null=True,)
     task_end_date_time = models.DateTimeField(blank=True,null=True,)
     task_project_id = models.IntegerField(blank=True,null=True,)
+

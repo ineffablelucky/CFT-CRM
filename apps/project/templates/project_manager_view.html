@@ -13,8 +13,9 @@
     <thead>
     <th>Project Name</th>
     <th>Project Description</th>
-    <th>project_start_date_time</th>
-    <th>project_end_date_time</th>
+    <th>Project start date</th>
+    <th>Project End date</th>
+    <th>Status</th>
     <th>Actions</th>
     </thead>
 
@@ -25,6 +26,7 @@
         <td>{{ p.project_description}}</td>
         <td>{{ p.project_start_date_time }}</td>
         <td>{{ p.project_end_date_time }}</td>
+        <td>{{ p.status }}</td>
         <td>
             <form method="post">
                 {% csrf_token %}

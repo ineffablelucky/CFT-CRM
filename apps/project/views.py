@@ -10,6 +10,12 @@ def project_manager_index(request):
     context = {
         'project': project
     }
-    for p in project:
-        print(p.project_name)
     return render(request, 'project_manager_view.html', context)
+
+def employee_project(request):
+    project = IT_Project.objects.all()
+    context = {
+        'project': project
+    }
+    return render(request, 'employee_view.html', context)
+
