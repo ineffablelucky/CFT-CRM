@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1> Leave Request form</h1>
+<form action="/Request" method="post">
+    {% csrf_token %}
+    <p>Username :{{ form.name }}</p>
+    <p>Type of Leave:{{ form.leave_type }}</p>
+    <p>Date:&emsp;From:{{ form.from_date }}&emsp;&emsp;&emsp;&emsp;To:{{ form.end_date }}</p>
+    <p>Reason:</p>
+    <p>&emsp;&emsp;&emsp;&emsp;{{ form.reason }}</p>
+    <input type="submit" value="request">
+</form>
+</body>
+</html>
