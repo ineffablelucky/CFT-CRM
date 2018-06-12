@@ -9,3 +9,6 @@ class MEETING(models.Model):
     Opportunity = models.ForeignKey(Opportunity, on_delete=models.CASCADE, blank=True)
     date = models.DateField()
     extras = models.ManyToManyField(MyUser)
+
+    def __str__(self):
+        return self.description
