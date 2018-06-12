@@ -49,25 +49,35 @@ class RegistrationForm(UserCreationForm):
         else:
             raise forms.ValidationError("Only alphabets are allowed")
 
+
     def clean_middle_name(self):
         data = self.cleaned_data.get('middle_name')
-        if data == None:
-            pass
-        elif re.match('^[a-zA-Z ]+$',data):
+        if re.match('^[a-zA-Z ]*$',data):
             data = re.split(' +',data)
             data = ' '.join(data).title()
             return data
         else:
             raise forms.ValidationError("Only alphabetes and spaces are allowed")
 
+
     def clean_last_name(self):
         data = self.cleaned_data.get('last_name').strip().title()
-        if data == None:
-            pass
-        elif re.match('^[a-zA-Z]+$',data):
+        if re.match('^[a-zA-Z]*$',data):
             return data
         else:
             raise forms.ValidationError("Only alphabets are allowed")
 
+
+    def clean_contact(self):
+        data = self.cleaned_data.get('contact')
+        if data == None:
+            pass
+        else:
+            data = str(data)
+            print(data)
+            if len(data) == 10:
+                return data
+            else:
+                raise forms.ValidationError("Please enter a 10 digit number")
 
 

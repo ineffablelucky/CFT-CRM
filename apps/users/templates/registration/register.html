@@ -15,23 +15,71 @@
         <h2>Register Here</h2>
         <h4>Fields with * mark are necessary for successful registration! </h4>
 
-        {{ form.as_p }}
-        <!--p>*Username {{ form.username }}</p>
-        <p>*Email {{ form.email }}</p>
+        {{ form.non_fields.errors }}
+
+        {{ form.email.errors }}
+        <div>
+            <label for="id_email">*Email </label>
+            <input type="text" id="id_email" name="email" value="{% if form.email.value %}{{ form.email.value }}{% endif %}" />
+        </div>
+
+        {{ form.password1.errors }}
+        <div>
+            <label for="id_password1">*password1 </label>
+            <input type="password" id="id_password1" name="password1" value="{% if form.email.value %}{{ form.password1.value }}{% endif %}" />
+        </div>
+
+        {{ form.password2.errors }}
+        <div>
+            <label for="id_password2">*password2 </label>
+            <input type="password" id="id_password2" name="password2" value="{% if form.email.value %}{{ form.password2.value }}{% endif %}" />
+        </div>
+
+        {{ form.first_name.errors }}
+        <div>
+            <label for="id_first_name">*first_name </label>
+            <input type="text" id="id_first_name" name="first_name" value="{% if form.email.value %}{{ form.first_name.value }}{% endif %}" />
+        </div>
+
+        {{ form.middle_name.errors }}
+        <div>
+            <label for="id_middle_name">middle_name </label>
+            <input type="text" id="id_middle_name" name="middle_name" value="{% if form.email.value %}{{ form.middle_name.value }}{% endif %}" />
+        </div>
+
+        {{ form.last_name.errors }}
+        <div>
+            <label for="id_last_name">last_name </label>
+            <input type="text" id="id_last_name" name="last_name" value="{% if form.email.value %}{{ form.last_name.value }}{% endif %}" />
+        </div>
+
+        {{ form.contact.errors }}
+        <div>
+            <label for="id_contact">contact </label>
+            <input type="number" id="id_contact" name="contact" value="{% if form.email.value %}{{ form.contact.value }}{% endif %}" />
+        </div>
+
+
+
+        <!--p>*Email {{ form.email }}</p>
         <p>*Password {{ form.password1 }}</p>
         <p>*Confirm Password {{ form.password2 }}</p>
         <p>*First Name {{ form.first_name }}</p>
         <p>Middle Name {{ form.middle_name }}</p>
         <p>Last Name {{ form.last_name }}</p>
-        <p>Contact {{ form.contact }}</p>
+        <p>Contact {{ form.contact }}</p-->
+
+
         <p>Department {{ form.department }}</p>
         <p>Designation {{ form.designation }}</p>
         <p>Salary {{ form.salary }}</p>
         <p>Staff? {{ form.is_staff }}</p>
-        <p>Superuser? {{ form.is_superuser }}</p-->
+        <p>Superuser? {{ form.is_superuser }}</p>
 
         <input type="submit" value="Register" />
     </form>
 </body>
 </html>
+
+
 

@@ -145,7 +145,7 @@ except ImportError as e:
     pass
 
 
-#LOGIN_REDIRECT_URL='index'
+LOGIN_REDIRECT_URL='/'
 
 AUTHENTICATION_BACKENDS = [
     'apps.users.backends.EmailBackend',
