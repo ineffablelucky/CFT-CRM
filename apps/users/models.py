@@ -14,6 +14,7 @@ class MyUser(AbstractUser):
         ('hr', 'HR'),
         ('marketing', 'Marketing'),
         ('accounts', 'Accounts'),
+        ('it', 'IT'),
     )
 
     gender_choice = (
