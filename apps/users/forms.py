@@ -6,7 +6,6 @@ import re
 
 
 class RegistrationForm(UserCreationForm):
-
     class Meta:
         model = MyUser
         fields = (
@@ -44,10 +43,32 @@ class RegistrationForm(UserCreationForm):
 
 
     def clean_first_name(self):
-        data = self.cleaned_data.get('first_name').title()
-        try:
-            re.match(r'^[A-Za-z]+$',data)
+        data = self.cleaned_data.get('first_name')
+        data = data.strip().title()
+        if re.match(r'^[A-Za-z]+$',data):
             return data
-        except:
-            raise forms.ValidationError("enter correct name pattern")
+        else:
+            raise forms.ValidationError("Only alphabets are allowed")
+
+    def clean_middle_name(self):
+        data = self.cleaned_data.get('middle_name')
+        if data == None:
+            pass
+        elif re.match('^[a-zA-Z ]+$',data):
+            data = re.split(' +',data)
+            data = ' '.join(data).title()
+            return data
+        else:
+            raise forms.ValidationError("Only alphabetes and spaces are allowed")
+
+    def clean_last_name(self):
+        data = self.cleaned_data.get('last_name').strip().title()
+        if data == None:
+            pass
+        elif re.match('^[a-zA-Z]+$',data):
+            return data
+        else:
+            raise forms.ValidationError("Only alphabets are allowed")
+
+
 
