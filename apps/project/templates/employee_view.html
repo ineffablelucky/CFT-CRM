@@ -2,13 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Manager's Project view</title>
+    <title>Title</title>
 </head>
 <body>
-<h1>Hi, Welcome to Project Manager's Project List!</h1><hr>
-
-<form><input type="submit" align="right" formaction="create/" value="CREATE NEW PROJECT"></form>
-
+<h1>Hi, Welcome to Employee's Project List!</h1><hr>
+<br><br>
 <table border="1">
     <thead>
     <th>Project Name</th>
@@ -31,9 +29,6 @@
             <form method="post">
                 {% csrf_token %}
                 <a href="" ><button>View</button></a>
-                <a href=""><button>Edit</button></a>
-                <a href=""><button>Create New Task</button></a>
-                <input type="submit" formaction="" value="DELETE">
             </form>
         </td>
     </tr>
