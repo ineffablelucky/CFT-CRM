@@ -11,3 +11,7 @@ class LEADS(models.Model):
     email=models.EmailField()
     website=models.CharField(max_length=45)
     assigned_boolean=models.BooleanField()
+
+
+    def __str__(self):
+        return self.description

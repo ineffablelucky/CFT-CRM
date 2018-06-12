@@ -1,2 +1,6 @@
-
-<h1>devesh</h1>
+ <h2>Publishers</h2>
+    <ul>
+        {% for leads in object_list %}
+        <li><a href="{% url 'leads:LeadDetails' leads.id %}">{{ leads.contact_person }}</a></li>
+        {% endfor %}
+    </ul>
