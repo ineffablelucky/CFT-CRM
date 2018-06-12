@@ -1,21 +1,10 @@
 from django.db import models
-#from Crmproject.project.apps.users import User
+from ..users.models import MyUser
 
 
 class Leave(models.Model):
-
-    LEAVE_TYPE_CHOICES = (
-        ('PL', 'Privilege Leave'),
-        ('CL', 'Casual Leave'),
-        ('Half Day', 'Half Day'),
-    )
-
-    leave_type = models.CharField(
-        max_length= 8,
-        choices=LEAVE_TYPE_CHOICES,
-        default='PL',
-    )
-
-
-
-    #user = models.OneToOneField(User, on_delete=models.CASCADE, blank=True)
+    pl = models.IntegerField(default=None)
+    cl = models.IntegerField(default=None)
+    half_day = models.IntegerField(default=None)
+    comp_off = models.IntegerField(default=None)
+    user = models.OneToOneField(MyUser, on_delete=models.PROTECT, blank=True, default=None)

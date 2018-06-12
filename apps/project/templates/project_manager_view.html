@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Manager's Project view</title>
+</head>
+<body>
+<h1>Hi, Welcome to Project Manager's Project List!</h1><hr>
+
+<form><input type="submit" align="right" formaction="create/" value="CREATE NEW PROJECT"></form>
+
+<table border="1">
+    <thead>
+    <th>Project Name</th>
+    <th>Project Description</th>
+    <th>Project start date</th>
+    <th>Project End date</th>
+    <th>Status</th>
+    <th>Actions</th>
+    </thead>
+
+    <tbody>
+    {% for p in project %}
+    <tr>
+        <td>{{ p.project_name }}</td>
+        <td>{{ p.project_description}}</td>
+        <td>{{ p.project_start_date_time }}</td>
+        <td>{{ p.project_end_date_time }}</td>
+        <td>{{ p.status }}</td>
+        <td>
+            <form method="post">
+                {% csrf_token %}
+                <a href="" ><button>View</button></a>
+                <a href=""><button>Edit</button></a>
+                <a href=""><button>Create New Task</button></a>
+                <input type="submit" formaction="" value="DELETE">
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+</body>
+</html>

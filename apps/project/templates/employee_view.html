@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Hi, Welcome to Employee's Project List!</h1><hr>
+<br><br>
+<table border="1">
+    <thead>
+    <th>Project Name</th>
+    <th>Project Description</th>
+    <th>Project start date</th>
+    <th>Project End date</th>
+    <th>Status</th>
+    <th>Actions</th>
+    </thead>
+
+    <tbody>
+    {% for p in project %}
+    <tr>
+        <td>{{ p.project_name }}</td>
+        <td>{{ p.project_description}}</td>
+        <td>{{ p.project_start_date_time }}</td>
+        <td>{{ p.project_end_date_time }}</td>
+        <td>{{ p.status }}</td>
+        <td>
+            <form method="post">
+                {% csrf_token %}
+                <a href="" ><button>View</button></a>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Manager's Task view</title>
+</head>
+<body>
+<h1>Hi, Welcome to Project Manager's Task List!</h1><hr>
+
+<form><input type="submit" align="right" formaction="create/" value="CREATE NEW TASK"></form>
+
+<table border="1">
+    <thead>
+    <th>Task Name</th>
+    <th>Task Description</th>
+    <th>Assigned To</th>
+    <th>Start Date</th>
+    <th>Expected Time</th>
+    <th>Time Taken</th>
+    <th>Action</th>
+    </thead>
+
+    <tbody>
+    {% for i in task %}
+    <tr>
+        <td>{{ i.task_name }}</td>
+        <td>{{ i.task_description}}</td>
+        <td>{{ i.employee_id }}</td>
+        <td>{{ i.task_start_date_time }}</td>
+        <td>({{ i.task_end_date_time }}-{{ i.task_start_date_time }})</td>
+        <td>--</td>
+        <td>
+            <form method="post">
+                {% csrf_token %}
+                <a href="" ><button>View</button></a>
+                <a href=""><button>Edit</button></a>
+                <input type="submit" formaction="" value="DELETE">
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+</body>
+</html>
