@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome User</title>
+</head>
+<body>
+
+    {% if user.is_authenticated %}
+        <h2>Hello {{ user.first_name }}</h2>
+        <a href="{% url 'users:lout' %}"><button>Log Out</button></a>
+
+    {% else %}
+        <h2>Please enter correct details</h2>
+        <p>Login again</p>
+        <a href="{% url 'users:login' %}"><button>Login</button></a>
+    {% endif %}
+
+</body>
+</html>
+
