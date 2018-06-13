@@ -1,6 +1,8 @@
 from django.contrib import admin
 from django.urls import path, include
-from . import views
+from apps.opportunity.views import ListOppo
+
+
 urlpatterns = [
-    path('opportunity/', views.opportunity, name="list"),
+    path('', ListOppo.as_view(), name='list_oppo'),
 ]
