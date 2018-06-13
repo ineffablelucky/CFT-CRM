@@ -17,3 +17,4 @@ class CreateProjectForm(ModelForm):
             'employees_per_project',
             'status',
         )
+

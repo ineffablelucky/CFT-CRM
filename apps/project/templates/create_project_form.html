@@ -6,25 +6,25 @@
 </head>
 <body>
 <h1>This is a Project Entry form!</h1><hr>
+
+<form method="post"> <!--action="{% url 'project:manager-project-view' %}"-->
     {% csrf_token %}
 
-    <label for="project_name">Project Name: </label><input id="project_name" type="text" name="your_name" maxlength="100" required />
-    <label for="project_description">Project Description: </label><input id="project_description" type="text" name="project_description" maxlength="1000" />
-   <!-- <label for="opprtunity">Oppotunity: </label><input id="opportunity" type="" >
+    <p>PROJECT NAME {{ form.project_name }}</p>
+    <p>PROJECT DESCRIPTION {{ form.project_description }}</p>
+    <p>OPPORTUNITY {{ form.opportunity }}</p>
+    <p>PROJECT MANAGER {{ form.project_manager }}</p>
+    <p>PROJECT PRICE {{ form.project_price }}</p>
+    <p>PROJECT START DATE {{ form.project_start_date_time }}</p>
+    <p>PROJECT END DATE {{ form.project_end_date_time }}</p>
+    <p>TOTAL HOURS {{ form.project_total_working_hr }}</p>
+    <p>CLIENT ID {{ form.client_id }}</p>
+    <p>PROJECT EMPLOYEES {{ form.employees_per_project }}</p>
+    <p>STATUS {{ form.status }}</p>
 
-'opportunity',
-            'project_name',
-            'project_description',
-            'project_manager',
-            'project_price',
-            'project_start_date_time',
-            'project_end_date_time',
-            'project_total_working_hr',
-            'client_id',
-            'employees_per_project',
-            'status',
--->
-    <input type="submit" value="Submit" />
+     <input type="submit" value="Submit" />
 </form>
+
+
 </body>
 </html>
