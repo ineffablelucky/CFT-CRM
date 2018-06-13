@@ -9,15 +9,9 @@ def index(request):
 def register(request):
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
-
         if form.is_valid():
             form.save()
-            username = form.cleaned_data['email']
-            password = form.cleaned_data['password1']
-
-            user = authenticate(username=username, password=password)
-            login(request, user)
-            return redirect('/admin/login/')
+            return redirect('/')
     else:
         form = RegistrationForm()
 
@@ -33,8 +27,13 @@ def auth_login(request):
         user = authenticate(username=username, password=password)
         if user:
             login(request, user)
-        return redirect('/admin/login/')
+        return render(request, 'welcome.html')
     else:
         return render(request, 'registration/login.html')
+
+def lout(request):
+    logout(request)
+    return redirect('/')
+
 
 
