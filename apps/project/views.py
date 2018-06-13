@@ -18,15 +18,9 @@ class ProjectCreate(CreateView):
     template_name = 'create_project_form.html'
     success_url = '/'
 
-    def form_invalid(self, form):
-        print('Form invalid!')
-        print(form.errors)
-        data = json.dumps(form.errors)
-        return HttpResponse(content=data, status=400, content_type='application/json')
 
-    def form_valid(self, form):
-        form.instance.created_by = self.request.user
-        return super().form_valid(form)
+
+
 
 class Edit_Project(UpdateView):
     model = IT_Project

@@ -1,0 +1,3 @@
+<form method="POST" action="{% url 'leads:LeadDelete' leads.id %}">
+   {% csrf_token %}<input type="submit" value="DELETE">
+</form>
