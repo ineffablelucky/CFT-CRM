@@ -1,5 +1,6 @@
 from django.db import models
 from ..users.models import MyUser
+from datetime import date
 
 
 class Attendance(models.Model):
@@ -14,9 +15,9 @@ class Attendance(models.Model):
         ('Half Day', 'Half Day'),
     )
 
-    date = models.DateField()
-    time_in = models.DateTimeField()
-    time_out = models.DateTimeField()
+    date = models.DateField(null=True)
+    time_in = models.DateTimeField(null=True)
+    time_out = models.DateTimeField(null=True)
     status = models.CharField(
         max_length=7,
         choices = STATUS_CHOICES,
@@ -26,9 +27,9 @@ class Attendance(models.Model):
     leave_type = models.CharField(
         max_length=8,
         choices=LEAVE_TYPE_CHOICES,
-        default='CL',
+        null=True,
     )
     user = models.ForeignKey(MyUser, on_delete=models.PROTECT, default=None)
 
-    note = models.CharField(max_length=500)
+    note = models.CharField(max_length=500, null=True)
 
