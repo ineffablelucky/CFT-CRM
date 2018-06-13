@@ -6,64 +6,64 @@
 </head>
 <body>
 <h1>This is a Project Entry form!</h1><hr>
-{{ form.errors }}
-<form method="post" action="{% url 'project:manager-project-view' %}"> <!--action="{% url 'project:manager-project-view' %}"-->
+
+<form method="post" action="{% url 'project:project-add' %}"> <!--action="{% url 'project:manager-project-view' %}"-->
     {% csrf_token %}
         <div>
-            <label for="project_name">PROJECT NAME</label>
-            {{ form.project_name }}
+            {{ form.project_name.label }}
+            {{ form.project_name }}{{ form.project_name.errors }}
         </div><br>
 
         <div>
-            <label for="project_description">PROJECT DESCRIPTION</label>
+            {{ form.project_description.label }}
             {{ form.project_description }}
         </div><br>
 
         <div>
-            <label for="opportunity">OPPORTUNITY </label>
-            {{ form.opportunity }}
+            {{ form.opportunity.label }}
+            {{ form.opportunity }}{{ form.opportunity.errors }}
 
         </div><br>
 
         <div>
-            <label for="project_manager">PROJECT MANAGER</label>
+            {{ form.project_manager.label }}
             {{ form.project_manager }}
         </div><br>
 
         <div>
-            <label for="project_price">PROJECT PRICE </label>
+            {{ form.project_price.label }}
             {{ form.project_price }}
         </div><br>
 
 
         <div>
-            <label for="project_start_date_time">PROJECT START DATE </label>
+            {{ form.project_start_date_time.label }}
            {{ form.project_start_date_time}}
         </div><br>
 
         <div>
-            <label for="project_end_date_time">PROJECT END DATE </label>
+            {{ form.project_end_date.label }}
             {{ form.project_end_date_time }}
         </div><br>
 
         <div>
-            <label for="project_total_working_hr">TOTAL HOURS </label>
+            {{ form.project_total_working_hr.label }}
             {{ form.project_total_working_hr }}
         </div><br>
 
         <div>
-            <label for="client_id">CLIENT ID </label>
+            {{ form.client_id.label }}
             {{ form.client_id }}
 
         </div><br>
         <div>
-            <label for="employees_per_project">PROJECT EMPLOYEES </label>
+            {{ form.employees_per_project.label }}
             {{ form.employees_per_project }}
             <br>
         </div><br>
 
         <div>
-            <label for="status">STATUS {{ form. }} </label>
+            {{ form.status.label }}
             {{ form.status }}
         </div><br>
 
