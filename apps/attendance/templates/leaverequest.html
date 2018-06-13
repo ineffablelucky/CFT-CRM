@@ -2,18 +2,21 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Leave Attendance Form</title>
 </head>
 <body>
 <h1> Leave Request form</h1>
-<form action="/Request" method="post">
+<form method="post">
     {% csrf_token %}
+    {{ form.as_p }}
+    <!--
+    {{form.name.errors}}
     <p>Username :{{ form.name }}</p>
     <p>Type of Leave:{{ form.leave_type }}</p>
-    <p>Date:&emsp;From:{{ form.from_date }}&emsp;&emsp;&emsp;&emsp;To:{{ form.end_date }}</p>
+    <p>Date:&emsp;From:{{ form.date }}&emsp;&emsp;&emsp;&emsp;To:{{ form.end_date }}</p>
     <p>Reason:</p>
-    <p>&emsp;&emsp;&emsp;&emsp;{{ form.reason }}</p>
-    <input type="submit" value="request">
+    <p>&emsp;&emsp;&emsp;&emsp;{{ form.note }}</p>-->
+    <button type="submit">Submit</button>
 </form>
 </body>
 </html>
