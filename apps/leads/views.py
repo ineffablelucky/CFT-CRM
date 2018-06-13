@@ -9,18 +9,19 @@ from .forms import CreateForm
 
 
 
-class LeadIndex(ListView):
-	model=LEADS
+# class LeadIndex(ListView):
+# 	model=LEADS
+#
+# 	# def get_context_data(self, **kwargs):
+# 	# 	context = super(LeadIndex,self).get_context_data(**kwargs)
+# 	# 	context['LEADS_LIST'] =LEADS.objects.all().order_by('contact_person')
+# 	template_name='leads/index.html'
 
-	# def get_context_data(self, **kwargs):
-	# 	context = super(LeadIndex,self).get_context_data(**kwargs)
-	# 	context['LEADS_LIST'] =LEADS.objects.all().order_by('contact_person')
-	template_name='leads/index.html'
 
-
-class LeadDetails(DetailView):
+class LeadDetails(ListView):
     model = LEADS
     template_name = 'leads/details.html'
+
 
 
 
@@ -31,12 +32,12 @@ class LeadCreate(CreateView):
 
 
 
-    # def form_valid(self, form):
-    #     print('adfsadf')
-    #     obj = form.save()
-    #     return obj
+    def form_valid(self, form):
+        print('adfsadf')
+        obj = form.save()
+        return obj
 
-    success_url = '/create/i'
+    success_url = '/leads/details/'
 
 
 
@@ -48,8 +49,9 @@ class LeadEdit(UpdateView):
     fields = '__all__'
     template_name = 'leads/update.html'
 
+
     def get_success_url(self, **kwargs):
-        return reverse_lazy('leads:LeadDetails', args=(self.object.id))
+        return reverse_lazy('leads:LeadDetails')
 
 	# success_url = reverse_lazy('clients:projectdetails')
 
@@ -63,7 +65,7 @@ class LeadDelete(DeleteView):
     template_name = 'leads/delete.html'
 
     def get_success_url(self, **kwargs):
-        return reverse_lazy('leads:LeadIndex',args=(self.object.id,))
+        return reverse_lazy('leads:LeadDetails')
 
 	#success_url = reverse_lazy('LeadIndex')
 

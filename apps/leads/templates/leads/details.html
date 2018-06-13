@@ -1,3 +1,6 @@
+
+<a href="{% url 'leads:LeadCreate' %}"><button>Create Lead</button></a>
+{% if object_list %}
 <table border="1">
     <tr>
         <th>contact_number</th>
@@ -12,7 +15,7 @@
     </tr>
 
 
-
+{% for leads in object_list %}
     <tr>
         <td>{{leads.contact_number}}</td>
         <td>{{leads.comany_name}}</td>
@@ -29,10 +32,14 @@
         <td><a href="{% url 'leads:LeadDelete' leads.id %}"><button>Delete</button>
         </a>
         </td>
-
+{% endfor %}
     </tr>
 
 </table>
+{% else %}
+<h1>no leads available</h1>
+
+{% endif %}
 
 
-
+<a href=""><button>Import Leads</button></a>

@@ -9,3 +9,5 @@ class CreateForm(forms.ModelForm):
         fields = '__all__'
 
 
+c=CreateForm()
+print(c)
