@@ -1,0 +1,14 @@
+<!<!DOCTYPE html>
+<html>
+<head>
+	<title>Change opportunity Status</title>
+</head>
+<body>
+	<h1>Change Opportunity Status</h1>
+	<form id="category_form" method="post">
+		{% csrf_token %}
+		{{ form.as_p }}
+		<input type="submit" value="Update"/>
+	</form>
+</body>
+</html>
