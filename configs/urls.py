@@ -25,4 +25,5 @@ urlpatterns = [
     path('task/', include('apps.task.urls')),
     path('module/', include('apps.module.urls')),
     path('opportunity/', include('apps.opportunity.urls')),
+    path('leads/', include('apps.leads.urls')),
 ]

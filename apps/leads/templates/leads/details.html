@@ -1,0 +1,45 @@
+
+<a href="{% url 'leads:LeadCreate' %}"><button>Create Lead</button></a>
+{% if object_list %}
+<table border="1">
+    <tr>
+        <th>contact_number</th>
+    <th>comany_name</th>
+    <th>contact_person</th>
+    <th>source</th>
+    <th>source_type</th>
+    <th>description</th>
+    <th>email</th>
+    <th>website</th>
+    <th>assigned_boolean</th>
+    </tr>
+
+
+{% for leads in object_list %}
+    <tr>
+        <td>{{leads.contact_number}}</td>
+        <td>{{leads.comany_name}}</td>
+        <td>{{leads.contact_person}}</td>
+        <td>{{leads.source}}</td>
+        <td>{{leads.source_type}}</td>
+        <td>{{leads.description}}</td>
+        <td>{{leads.email}}</td>
+        <td>{{leads.website}}</td>
+        <td>{{leads.assigned_boolean}}</td>
+        <td><a href="{% url 'leads:LeadEdit' leads.id %}"><button>Edit</button>
+        </a>
+        </td>
+        <td><a href="{% url 'leads:LeadDelete' leads.id %}"><button>Delete</button>
+        </a>
+        </td>
+{% endfor %}
+    </tr>
+
+</table>
+{% else %}
+<h1>no leads available</h1>
+
+{% endif %}
+
+
+<a href=""><button>Import Leads</button></a>
