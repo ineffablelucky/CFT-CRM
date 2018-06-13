@@ -17,10 +17,13 @@ class EmailBackend(ModelBackend):
         if getattr(user, 'is_active') and user.check_password(password):
             return user
         return None
-
+"""
     def get_user(self, user_id):
         try:
             myuser = get_user_model()
             return myuser.objects.get(pk=user_id)
         except myuser.DoesNotExist:
             return None
+"""
+
+
