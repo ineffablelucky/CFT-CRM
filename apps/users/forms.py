@@ -75,9 +75,21 @@ class RegistrationForm(UserCreationForm):
         else:
             data = str(data)
             print(data)
-            if len(data) == 10:
+            if re.search('[+-]', data):
+                raise forms.ValidationError("'+', '-' are not allowed")
+            elif len(data) == 10:
                 return data
             else:
                 raise forms.ValidationError("Please enter a 10 digit number")
 
+
+    def clean_salary(self):
+        data = self.cleaned_data.get('salary')
+        data = str(data)
+        if data == None:
+            pass
+        elif re.search('[+-]', data):
+            raise forms.ValidationError("'+', '-' are not allowed")
+        else:
+            return data
 

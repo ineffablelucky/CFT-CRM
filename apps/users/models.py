@@ -4,23 +4,23 @@ from django.contrib.auth.models import AbstractUser
 class MyUser(AbstractUser):
 
     designation_choices = (
-        ('emp', 'Employee'),
-        ('manager', 'Manager'),
-        ('client', 'Client'),
-        ('admin', 'Admin'),
+        ('Employee', 'Employee'),
+        ('Manager', 'Manager'),
+        ('Client', 'Client'),
+        ('Admin', 'Admin'),
     )
 
     department_choices = (
-        ('hr', 'HR'),
-        ('marketing', 'Marketing'),
-        ('accounts', 'Accounts'),
-        ('it', 'IT'),
+        ('HR', 'HR'),
+        ('Marketing', 'Marketing'),
+        ('Accounts', 'Accounts'),
+        ('IT', 'IT'),
     )
 
     gender_choice = (
-        ('M', 'Male'),
-        ('F', 'Female'),
-        ('other', 'Other'),
+        ('M', 'M'),
+        ('F', 'F'),
+        ('Other', 'Other'),
     )
     username            = models.CharField(unique=True, blank=False, max_length=50, default=None)
     email               = models.EmailField(unique=False, blank=False, default=None)

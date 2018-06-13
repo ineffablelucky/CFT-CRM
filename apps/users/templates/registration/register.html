@@ -20,43 +20,80 @@
         {{ form.email.errors }}
         <div>
             <label for="id_email">*Email </label>
-            <input type="text" id="id_email" name="email" value="{% if form.email.value %}{{ form.email.value }}{% endif %}" />
+            <input type="text" id="id_email" name="email" value="{{ form.email.value | default:'' }}" />
         </div>
+        <br>
 
         {{ form.password1.errors }}
         <div>
-            <label for="id_password1">*password1 </label>
-            <input type="password" id="id_password1" name="password1" value="{% if form.email.value %}{{ form.password1.value }}{% endif %}" />
+            <label for="id_password1">*Password1 </label>
+
+            <input type="text" id="id_password1" name="password1" value="{{ form.password1.value | default:'' }}" />
         </div>
+        <br>
 
         {{ form.password2.errors }}
         <div>
-            <label for="id_password2">*password2 </label>
-            <input type="password" id="id_password2" name="password2" value="{% if form.email.value %}{{ form.password2.value }}{% endif %}" />
+            <label for="id_password2">*Password2 </label>
+            <input type="text" id="id_password2" name="password2" value="{{ form.password2.value | default:'' }}" />
         </div>
+        <br>
 
         {{ form.first_name.errors }}
         <div>
-            <label for="id_first_name">*first_name </label>
-            <input type="text" id="id_first_name" name="first_name" value="{% if form.email.value %}{{ form.first_name.value }}{% endif %}" />
+            <label for="id_first_name">*First Name </label>
+            <input type="text" id="id_first_name" name="first_name" value="{{ form.first_name.value | default:'' }}" />
         </div>
+        <br>
 
         {{ form.middle_name.errors }}
         <div>
-            <label for="id_middle_name">middle_name </label>
-            <input type="text" id="id_middle_name" name="middle_name" value="{% if form.email.value %}{{ form.middle_name.value }}{% endif %}" />
+            <label for="id_middle_name">Middle Name </label>
+            <input type="text" id="id_middle_name" name="middle_name" value="{{ form.middle_name.value | default:'' }}" />
         </div>
+        <br>
 
         {{ form.last_name.errors }}
         <div>
-            <label for="id_last_name">last_name </label>
-            <input type="text" id="id_last_name" name="last_name" value="{% if form.email.value %}{{ form.last_name.value }}{% endif %}" />
+            <label for="id_last_name">Last Name </label>
+            <input type="text" id="id_last_name" name="last_name" value="{{ form.last_name.value | default:'' }}" />
         </div>
+        <br>
 
         {{ form.contact.errors }}
         <div>
-            <label for="id_contact">contact </label>
-            <input type="number" id="id_contact" name="contact" value="{% if form.email.value %}{{ form.contact.value }}{% endif %}" />
+            <label for="id_contact">Contact </label>
+            <input type="number" id="id_contact" name="contact" value="{{ form.contact.value | default:'' }}" />
+        </div>
+        <br>
+
+
+        <div>
+            <label for="id_department">Department </label>
+            <select  id="id_department" name="department">
+                <option value="HR">HR</option>
+                <option value="Marketing">Marketing</option>
+                <option value="Accounts">Accounts</option>
+                <option value="IT">IT</option>
+            </select>
+        </div>
+        <br>
+
+        <div>
+            <label for="id_designation">Designation </label>
+            <select  id="id_designation" name="designation">
+                <option value="Employee">Employee</option>
+                <option value="Manager">Manager</option>
+                <option value="Client">Client</option>
+                <option value="Admin">Admin</option>
+            </select>
+        </div>
+        <br>
+
+        {{ form.salary.errors }}
+        <div>
+            <label for="id_salary">Salary </label>
+            <input type="number" id="id_salary" name="salary" value="{% if form.salary.value %}{{ form.salary.value }}{% endif %}" />
         </div>
 
 
@@ -67,12 +104,11 @@
         <p>*First Name {{ form.first_name }}</p>
         <p>Middle Name {{ form.middle_name }}</p>
         <p>Last Name {{ form.last_name }}</p>
-        <p>Contact {{ form.contact }}</p-->
-
-
+        <p>Contact {{ form.contact }}</p>
         <p>Department {{ form.department }}</p>
         <p>Designation {{ form.designation }}</p>
-        <p>Salary {{ form.salary }}</p>
+        <p>Salary {{ form.salary }}</p-->
+
         <p>Staff? {{ form.is_staff }}</p>
         <p>Superuser? {{ form.is_superuser }}</p>
 
