@@ -7,7 +7,7 @@
 <body>
 <h1>Hi, Welcome to Project Manager's Task List!</h1><hr>
 
-<form><input type="submit" align="right" formaction="create/" value="CREATE NEW TASK"></form>
+<form><input type="submit" align="right" formaction="{% url 'task:add_task' %}" value="CREATE NEW TASK"></form>
 
 <table border="1">
     <thead>
@@ -21,13 +21,13 @@
     </thead>
 
     <tbody>
-    {% for i in task %}
+    {% for i in task_list %}
     <tr>
         <td>{{ i.task_name }}</td>
         <td>{{ i.task_description}}</td>
         <td>{{ i.employee_id }}</td>
         <td>{{ i.task_start_date_time }}</td>
-        <td>({{ i.task_end_date_time }}-{{ i.task_start_date_time }})</td>
+        <td></td>
         <td>--</td>
         <td>
             <form method="post">
