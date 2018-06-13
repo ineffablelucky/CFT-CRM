@@ -15,6 +15,11 @@ def register(request):
     else:
         form = RegistrationForm()
 
+
+    form.password1 = request.POST.get('password1')
+    form.password2 = request.POST.get('password2')
+
+    print(form.password1, form.password2)
     context = {'form' : form}
     return render(request,'registration/register.html',context)
 
