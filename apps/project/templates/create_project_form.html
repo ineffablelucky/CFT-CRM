@@ -6,13 +6,72 @@
 </head>
 <body>
 <h1>This is a Project Entry form!</h1><hr>
-<form method="post">
+{{ form.errors }}
+<form method="post" action="{% url 'project:manager-project-view' %}"> <!--action="{% url 'project:manager-project-view' %}"-->
     {% csrf_token %}
+        <div>
+            <label for="project_name">PROJECT NAME</label>
+            {{ form.project_name }}
+        </div><br>
 
-    {% for field in form %}
-    <p>{{ field.label_tag }} {{ field }}</p>
-    {% endfor %}
-    <input type="submit" value="Submit" />
+        <div>
+            <label for="project_description">PROJECT DESCRIPTION</label>
+            {{ form.project_description }}
+        </div><br>
+
+        <div>
+            <label for="opportunity">OPPORTUNITY </label>
+            {{ form.opportunity }}
+
+        </div><br>
+
+        <div>
+            <label for="project_manager">PROJECT MANAGER</label>
+            {{ form.project_manager }}
+        </div><br>
+
+        <div>
+            <label for="project_price">PROJECT PRICE </label>
+            {{ form.project_price }}
+        </div><br>
+
+
+        <div>
+            <label for="project_start_date_time">PROJECT START DATE </label>
+           {{ form.project_start_date_time}}
+        </div><br>
+
+        <div>
+            <label for="project_end_date_time">PROJECT END DATE </label>
+            {{ form.project_end_date_time }}
+        </div><br>
+
+        <div>
+            <label for="project_total_working_hr">TOTAL HOURS </label>
+            {{ form.project_total_working_hr }}
+        </div><br>
+
+        <div>
+            <label for="client_id">CLIENT ID </label>
+            {{ form.client_id }}
+
+        </div><br>
+        <div>
+            <label for="employees_per_project">PROJECT EMPLOYEES </label>
+            {{ form.employees_per_project }}
+            <br>
+        </div><br>
+
+        <div>
+            <label for="status">STATUS {{ form. }} </label>
+            {{ form.status }}
+        </div><br>
+
+
+
+     <input type="submit" value="Submit" />
 </form>
+
+
 </body>
 </html>

@@ -7,7 +7,7 @@
 <body>
 <h1>Hi, Welcome to Project Manager's Project List!</h1><hr>
 
-<form><input type="submit" align="right" formaction="create/" value="CREATE NEW PROJECT"></form>
+<form><input type="submit"  formaction="{% url 'project:project-add' %}" value="CREATE NEW PROJECT"></form>
 
 <table border="1">
     <thead>
@@ -20,7 +20,7 @@
     </thead>
 
     <tbody>
-    {% for p in project %}
+    {% for p in object_list %}
     <tr>
         <td>{{ p.project_name }}</td>
         <td>{{ p.project_description}}</td>
@@ -28,13 +28,11 @@
         <td>{{ p.project_end_date_time }}</td>
         <td>{{ p.status }}</td>
         <td>
-            <form method="post">
+
                 {% csrf_token %}
                 <a href="" ><button>View</button></a>
-                <a href=""><button>Edit</button></a>
-                <a href=""><button>Create New Task</button></a>
-                <input type="submit" formaction="" value="DELETE">
-            </form>
+                <a href="/project/edit/{{ p.id }}/"><button>Edit</button></a>
+                <a href="{% url 'task:add_task' %}"><button>Create New Task</button></a>
         </td>
     </tr>
     {% endfor %}
