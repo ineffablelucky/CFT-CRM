@@ -1,33 +1,34 @@
 from django.shortcuts import render, HttpResponseRedirect
 from .models import IT_Project
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, ListView, CreateView, UpdateView, DeleteView
 from .forms import CreateProjectForm
-#class AboutView(TemplateView):
- #   template_name = "project_manager_view"
+from django.views.generic.edit import FormView
+import json
+from django.http import HttpResponse
 
-def project_manager_index(request):
-    project = IT_Project.objects.all()
-    context = {
-        'project': project
-    }
-    return render(request, 'project_manager_view.html', context)
+class ProjectList(ListView):
+    model = IT_Project
 
-def employee_project(request):
-    project = IT_Project.objects.all()
-    context = {
-        'project': project
-    }
-    return render(request, 'employee_view.html', context)
+class Employee_Project_List(ListView):
+    model = IT_Project
 
-def create_project_form(request):
+class ProjectCreate(CreateView):
+    model = IT_Project
+    form_class = CreateProjectForm
+    template_name = 'create_project_form.html'
+    success_url = '/'
 
-    if request.method == 'POST':
-        form = CreateProjectForm(request.POST)
-        if form.is_valid():
 
-            form.save()
-            return HttpResponseRedirect('/')
-    else:
-        form = CreateProjectForm()
 
-    return render(request, 'create_project_form.html', {'form': form})
+
+
+class Edit_Project(UpdateView):
+    model = IT_Project
+    form_class = CreateProjectForm
+
+
+    def form_valid(self, form):
+        form.save()
+
+class Project_Delete(DeleteView):
+    model = IT_Project

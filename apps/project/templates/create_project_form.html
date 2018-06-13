@@ -6,13 +6,72 @@
 </head>
 <body>
 <h1>This is a Project Entry form!</h1><hr>
-<form method="post">
-    {% csrf_token %}
 
-    {% for field in form %}
-    <p>{{ field.label_tag }} {{ field }}</p>
-    {% endfor %}
-    <input type="submit" value="Submit" />
+<form method="post" action="{% url 'project:project-add' %}"> <!--action="{% url 'project:manager-project-view' %}"-->
+    {% csrf_token %}
+        <div>
+            {{ form.project_name.label }}
+            {{ form.project_name }}{{ form.project_name.errors }}
+        </div><br>
+
+        <div>
+            {{ form.project_description.label }}
+            {{ form.project_description }}
+        </div><br>
+
+        <div>
+            {{ form.opportunity.label }}
+            {{ form.opportunity }}{{ form.opportunity.errors }}
+
+        </div><br>
+
+        <div>
+            {{ form.project_manager.label }}
+            {{ form.project_manager }}
+        </div><br>
+
+        <div>
+            {{ form.project_price.label }}
+            {{ form.project_price }}
+        </div><br>
+
+
+        <div>
+            {{ form.project_start_date_time.label }}
+           {{ form.project_start_date_time}}
+        </div><br>
+
+        <div>
+            {{ form.project_end_date.label }}
+            {{ form.project_end_date_time }}
+        </div><br>
+
+        <div>
+            {{ form.project_total_working_hr.label }}
+            {{ form.project_total_working_hr }}
+        </div><br>
+
+        <div>
+            {{ form.client_id.label }}
+            {{ form.client_id }}
+
+        </div><br>
+        <div>
+            {{ form.employees_per_project.label }}
+            {{ form.employees_per_project }}
+            <br>
+        </div><br>
+
+        <div>
+            {{ form.status.label }}
+            {{ form.status }}
+        </div><br>
+
+
+
+     <input type="submit" value="Submit" />
 </form>
+
+
 </body>
 </html>
