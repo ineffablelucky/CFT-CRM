@@ -1,8 +1,9 @@
-from django.shortcuts import render
-from django.views.generic import ListView, DetailView, UpdateView
+from django.shortcuts import render,redirect
+from django.views.generic import ListView, DetailView, UpdateView, CreateView
 from apps.opportunity.models import Opportunity
 from apps.users.models import MyUser
 from django.contrib.auth.mixins import LoginRequiredMixin
+from apps.opportunity.forms import ChangeStatus
 
 
 class ListOppo(LoginRequiredMixin, ListView):
@@ -19,5 +20,11 @@ class ListOppo(LoginRequiredMixin, ListView):
         return queryset
 
 
-class ChangeStatus(LoginRequiredMixin, UpdateView):
-    pass
+class C_Status(LoginRequiredMixin, UpdateView):
+    model = Opportunity
+    template_name = 'opportunity/change_status.html'
+    form_class = ChangeStatus
+
+    def form_valid(self, form):
+        form.save()
+        return redirect('../')
