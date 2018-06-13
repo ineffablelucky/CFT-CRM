@@ -1,4 +1,5 @@
 from django.db import models
+from apps.opportunity.model import Opprtunity
 
 
 class LEADS(models.Model):

@@ -26,16 +26,13 @@ class LeadDetails(ListView):
 
 
 class LeadCreate(CreateView):
+    model=LEADS
     form_class = CreateForm
     template_name = 'leads/create.html'
 
-
-
-
     def form_valid(self, form):
-        print('adfsadf')
-        obj = form.save()
-        return obj
+        form.instance.created_by = self.request.user
+        return super().form_valid(form)
 
     success_url = '/leads/details/'
 
