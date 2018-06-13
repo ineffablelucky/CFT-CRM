@@ -15,10 +15,11 @@ class ProjectCreate(CreateView):
     model = IT_Project
     form_class = CreateProjectForm
 
+    """
     def form_valid(self, form):
         form.instance.created_by = self.request.user
         return super().form_valid(form)
-
+"""
 class Edit_Project(UpdateView):
     model = IT_Project
     form_class = CreateProjectForm

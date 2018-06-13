@@ -6,15 +6,24 @@
 </head>
 <body>
 <h1>This is a Project Entry form!</h1><hr>
-<form method="post">
     {% csrf_token %}
-<!--
-    {% for field in form %}
-    <p>{{ field.label_tag }} {{ field }}</p>
-    {% endfor %} -->
 
-    {{ form.as_p }}
+    <label for="project_name">Project Name: </label><input id="project_name" type="text" name="your_name" maxlength="100" required />
+    <label for="project_description">Project Description: </label><input id="project_description" type="text" name="project_description" maxlength="1000" />
+   <!-- <label for="opprtunity">Oppotunity: </label><input id="opportunity" type="" >
 
+'opportunity',
+            'project_name',
+            'project_description',
+            'project_manager',
+            'project_price',
+            'project_start_date_time',
+            'project_end_date_time',
+            'project_total_working_hr',
+            'client_id',
+            'employees_per_project',
+            'status',
+-->
     <input type="submit" value="Submit" />
 </form>
 </body>
