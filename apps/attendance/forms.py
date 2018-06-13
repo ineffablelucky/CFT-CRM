@@ -1,16 +1,25 @@
 from django import forms
 from .models import Attendance, MyUser
-from django.forms.widgets import SelectDateWidget, DateInput
-from django.contrib.admin.widgets import AdminDateWidget
 import datetime
 
-from django.utils import timezone
+
 class LeaveForm(forms.ModelForm):
-    print("Entering LeaveForm model")
     name = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'readonly': True}))
     date = forms.DateField(widget=forms.TextInput(attrs={'type' : 'date'}))
     end_date = forms.DateField(widget=forms.TextInput(attrs={'type' : 'date'}))
     note = forms.CharField(max_length=500, widget=forms.Textarea)
+    LEAVE_TYPE_CHOICES = (
+        ('PL', 'Privilege leave'),
+        ('CL', 'Casual leave'),
+        ('Half Day', 'Half Day'),
+    )
+
+    leave_type = forms.ChoiceField(
+        choices=LEAVE_TYPE_CHOICES,
+        widget=forms.Select(),
+
+    )
+
 
     class Meta:
         model = Attendance
@@ -21,6 +30,7 @@ class LeaveForm(forms.ModelForm):
         self.logged_user = kwargs.pop('logged_user')
         super(LeaveForm, self).__init__(*args, **kwargs)
         self.fields['name'].initial = self.logged_user
+
 
     """"
     def clean_date(self):

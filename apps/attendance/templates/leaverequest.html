@@ -6,7 +6,7 @@
 </head>
 <body>
 <h1> Leave Request form</h1>
-<form method="post">
+<form action="leave/" method="post">
     {% csrf_token %}
     {{ form.as_p }}
     <!--
