@@ -4,7 +4,7 @@ from apps.opportunity.models import Opportunity
 from apps.users.models import MyUser
 from django.contrib.auth.mixins import LoginRequiredMixin
 from apps.opportunity.forms import ChangeStatus
-
+from django.urls import reverse, reverse_lazy
 
 class ListOppo(LoginRequiredMixin, ListView):
     model = Opportunity
@@ -24,7 +24,5 @@ class C_Status(LoginRequiredMixin, UpdateView):
     model = Opportunity
     template_name = 'opportunity/change_status.html'
     form_class = ChangeStatus
+    success_url = reverse_lazy('list_oppo')
 
-    def form_valid(self, form):
-        form.save()
-        return redirect('../')
