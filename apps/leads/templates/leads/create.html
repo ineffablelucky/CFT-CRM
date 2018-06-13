@@ -1,0 +1,48 @@
+<form method="post">
+    {% csrf_token %}
+
+
+
+<!-- <p><label for="id_name">Contact no.</label>
+        <input type="number" id="id_name" name="contact_number" value="{{form.contact_number.value}}">
+    {{form.contact_number.errors}}
+   <p> <label for="id_name1">Comany Name</label>
+        <input type="text" id="id_name1" name="company_name" value="{{form.company_name.value|default:''}}">
+  {{form.company_name.errors}}
+    <p><label for="id_name2">Contact Person</label>
+        <input type="text" id="id_name2" name="contact_person" value="{{form.contact_person.value}}">
+    {{form.contact_person.errors}}
+    <p><label for="id_name3">Source</label>
+        <input type="text" id="id_name3"  name="source" value="{{form.source.value}}">
+    {{form.source.errors}}
+    <p><label for="id_name4">Source Type</label>
+        <input type="text" id="id_name4" name="source_type" value="{{form.source_type.value}}">
+    {{form.source_type.errors}}
+    <p><label for="id_name5">Description</label>
+        <input type="text" id="id_name5" name="description" value="{{form.description.value}}">
+    {{form.description.errors}}
+    <p><label for="id_name6">Email</label>
+        <input type="email" id="id_name6" name="email" value="{{form.email.value}}">
+    {{form.email.errors}}
+    <p><label for="id_name7">Website</label>
+        <input type="url" id="id_name7" name="website" value="{{form.website.value}}">
+    {{form.website.errors}}
+    <p><label for="id_name7">Assigned Boolean</label>
+        <input type="checkbox" id="id_name8" name="assigned_boolean" value="{{form.assigned_boolean.value}}">
+
+{{form.assigned_boolean.errors}}
+
+-->
+
+   {{form.contact_number}}
+    {{form.company_name}}
+    {{form.contact_person}}
+    {{form.source}}
+    {{form.source_type}}
+    {{form.description}}
+    {{form.email}}
+    {{form.website}}
+    {{form.assigned_boolean}}
+
+        <input type="submit" value="Submit" />
+</form>
