@@ -17,6 +17,7 @@
 
         {{ form.non_fields.errors }}
 
+<!--
         {{ form.email.errors }}
         <div>
             <label for="id_email">*Email </label>
@@ -95,10 +96,9 @@
             <label for="id_salary">Salary </label>
             <input type="number" id="id_salary" name="salary" value="{% if form.salary.value %}{{ form.salary.value }}{% endif %}" />
         </div>
+-->
 
-
-
-        <!--p>*Email {{ form.email }}</p>
+        <p>*Email {{ form.email }}</p>
         <p>*Password {{ form.password1 }}</p>
         <p>*Confirm Password {{ form.password2 }}</p>
         <p>*First Name {{ form.first_name }}</p>
@@ -107,7 +107,7 @@
         <p>Contact {{ form.contact }}</p>
         <p>Department {{ form.department }}</p>
         <p>Designation {{ form.designation }}</p>
-        <p>Salary {{ form.salary }}</p-->
+        <p>Salary {{ form.salary }}</p>
 
         <p>Staff? {{ form.is_staff }}</p>
         <p>Superuser? {{ form.is_superuser }}</p>

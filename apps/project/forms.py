@@ -15,9 +15,7 @@ class CreateProjectForm(ModelForm):
     )
 
     project_name = forms.CharField(
-        widget=forms.TextInput(
-
-        )
+        widget=forms.TextInput()
     )
 
     project_description = forms.CharField(

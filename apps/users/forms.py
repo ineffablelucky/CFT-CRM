@@ -6,6 +6,34 @@ import re
 
 
 class RegistrationForm(UserCreationForm):
+
+"""
+    email = forms.CharField(
+        widget = forms.TextInput()
+    )
+
+    first_name = forms.CharField(
+        widget=forms.TextInput()
+    )
+
+    middle_name = forms.CharField(
+        widget=forms.TextInput()
+    )
+
+    last_name = forms.CharField(
+        widget=forms.TextInput()
+    )
+
+    contact = forms.IntegerField(
+        widget=forms.NumberInput()
+    )
+
+    salary = forms.IntegerField(
+        widget=forms.NumberInput()
+    )
+"""
+
+
     class Meta:
         model = MyUser
         fields = (
@@ -21,6 +49,7 @@ class RegistrationForm(UserCreationForm):
             'department',
             'designation',
             'salary',
+            'gender',
         )
 
     def save(self, commit=True):
