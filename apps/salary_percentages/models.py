@@ -1,5 +1,6 @@
 from django.db import models
 from datetime import datetime
+
 class Salary_calculations(models.Model):
 
     financial_year = models.CharField(null=True, max_length=5)
