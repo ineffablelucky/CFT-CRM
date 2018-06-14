@@ -31,7 +31,9 @@ class RegistrationForm(UserCreationForm):
 
         if commit:
             myuser.save()
+            return myuser
 
+            """
             designation = self.cleaned_data['designation']
             department = self.cleaned_data['department']
 
@@ -63,6 +65,7 @@ class RegistrationForm(UserCreationForm):
                 raise Exception("Not correct designation or department")
 
         return myuser
+"""
 
 
 
@@ -127,6 +130,17 @@ class RegistrationForm(UserCreationForm):
                 raise forms.ValidationError("'+', '-' are not allowed")
             else:
                 return data
+
+
+    def clean_designation(self):
+        designation = self.cleaned_data.get('designation')
+        departmnt = self.cleaned_data.get('department')
+        if designation == departmnt:
+            raise forms.ValidationError("designation and department both can not be NA")
+        elif designation == 'Client' and departmnt != 'NA':
+            raise forms.ValidationError('not correct match of designation and department')
+        else:
+            return designation
 
 
 
