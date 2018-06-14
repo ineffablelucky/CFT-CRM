@@ -10,5 +10,7 @@ urlpatterns =[
     path('edit/<pk>',views.LeadEdit.as_view(),name='LeadEdit'),
     path('delete/<pk>',views.LeadDelete.as_view(),name='LeadDelete'),
 
+    path('upload/csv/', views.upload_csv, name='upload_csv'),
+
 
 ]
