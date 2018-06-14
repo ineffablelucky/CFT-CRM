@@ -1,3 +1,4 @@
+import re
 from django.forms import ModelForm
 from .models import IT_Project
 from django import forms
@@ -7,6 +8,7 @@ from apps.users.models import MyUser
 from apps.client.models import CLIENT
 
 class CreateProjectForm(ModelForm):
+
     Project_status = (
         ('active', 'ACTIVE'),
         ('inactive', 'INACTIVE'),
@@ -28,8 +30,9 @@ class CreateProjectForm(ModelForm):
 
     opportunity = forms.ModelChoiceField(
         label='OPPORTUNITY',
+        # required=False,
         queryset= Opportunity.objects.all(),
-        widget= forms.Select()
+        widget= forms.Select(),
     )
 
     project_manager = forms.ModelChoiceField(
@@ -37,23 +40,25 @@ class CreateProjectForm(ModelForm):
         queryset= MyUser.objects.all(),
         widget=forms.Select()
     )
-    project_price = forms.CharField(
+    project_price = forms.IntegerField(
         label='PROJECT PRICE',
         widget=forms.TextInput()
     )
     project_start_date_time = forms.CharField(
         label='PROJECT START DATE',
+        required=False,
         widget=forms.TextInput(
             attrs={'type': 'date'}
         )
     )
     project_end_date_time = forms.CharField(
         label='PROJECT END DATE',
+        required=False,
         widget=forms.TextInput(
             attrs={'type': 'date'}
         )
     )
-    project_total_working_hr = forms.CharField(
+    project_total_working_hr = forms.IntegerField(
         label='TOTAL WORKING HOURS',
         widget=forms.TextInput()
     )
@@ -89,10 +94,10 @@ class CreateProjectForm(ModelForm):
             'status',
         )
 
-    def __init__(self,  *args, **kwargs):
-        super(CreateProjectForm, self).__init__(*args, **kwargs)
-        #self.fields['project_name'].initial = timezone.now().date
-        self.fields['project_description'].widget.attrs['placeholder']= 'asfsadf'
+    # def __init__(self,  *args, **kwargs):
+    #     super(CreateProjectForm, self).__init__(*args, **kwargs)
+    #     self.fields['project_name'].initial = timezone.now().date
+    #     self.fields['project_description'].widget.attrs['placeholder']= 'asfsadf'
 
     def clean_project_name(self):
         value = self.cleaned_data.get('project_name')
@@ -100,3 +105,52 @@ class CreateProjectForm(ModelForm):
             raise forms.ValidationError('Name too small')
         return value
 
+    # def clean_opportunity(self):
+    #     value = self.cleaned_data['opportunity']
+    #     print(" ##############################  ",value.id)
+    #     if self.instance.pk is not None:
+    #         return value
+    #     else:
+    #         pass
+
+    # def clean_project_name(self):
+    #     data = self.cleaned_data.get('project_name')
+    #     if re.match('^\w*$', data):
+    #     #if re.match(r'^[-a-zA-Z0-9_]+$',data):
+    #         return data
+    #     else:
+    #         raise forms.ValidationError("Only alphabets and numbers are allowed")
+    #
+    # def clean_project_description(self):
+    #     data = self.cleaned_data.get('project_description')
+    #     if re.match('^\w*$', data):
+    #     #if re.match(r'^[-a-zA-Z0-9_]+$',data):
+    #         return data
+    #     else:
+    #         raise forms.ValidationError("Only alphabets and numbers are allowed")
+    #
+
+    def clean_project_price(self):
+         data = self.cleaned_data.get('project_price')
+         data = str(data)
+         if re.match(r'^[0-9_]+$', data):
+             return data
+         else:
+             raise forms.ValidationError("Only Numbers are alllowed")
+
+    def clean_project_total_working_hr(self):
+         data = self.cleaned_data.get('project_total_working_hr')
+         data = str(data)
+         if re.match(r'^[0-9_]+$', data):
+             return data
+         else:
+             raise forms.ValidationError("Only Numbers are alllowed")
+
+    def clean_project_end_date_time(self):
+        data = self.cleaned_data.get('project_end_date_time')
+        value = self.cleaned_data.get('project_start_date_time')
+
+        if(data > value):
+            return data
+        else:
+            raise forms.ValidationError("Project end date should be either same or more than start date!")
