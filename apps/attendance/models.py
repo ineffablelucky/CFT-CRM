@@ -7,7 +7,8 @@ class Attendance(models.Model):
 
     STATUS_CHOICES = (
         ('Present', 'Present'),
-        ('Absent', 'Absent')
+        ('Absent', 'Absent'),
+        ('Pending', 'Pending')
     )
     LEAVE_TYPE_CHOICES = (
         ('PL', 'Privilege leave'),
@@ -21,7 +22,7 @@ class Attendance(models.Model):
     status = models.CharField(
         max_length=7,
         choices = STATUS_CHOICES,
-        default = 'Absent',
+        default = 'Pending',
     )
 
     leave_type = models.CharField(
