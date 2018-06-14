@@ -1,12 +1,15 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Django</title>
+    <link rel="stylesheet" href="{% static 'opportunity/style.css' %}">
+
 </head>
 <body>
     {% if user.is_authenticated %}
-        <div witdth="20">Hello {{user.username}}</div>
+        <div height="200">Hello {{user.username}}</div>
         <hr/>
         <table border="1">
             <tr>
@@ -18,7 +21,7 @@
                 <th>Contact Person</th>
                 <th>Email</th>
                 <th>Contact Number</th>
-                <th>Action</th>
+                <th>Change Status</th>
             </tr>
             {% for op in opportunity %}
                 <tr>
@@ -30,12 +33,46 @@
                     <td>{{ op.lead.contact_person }}</td>
                     <td>{{ op.lead.email }}</td>
                     <td>{{ op.lead.contact_number }}</td>
-                    <td><a href="">Edit</a></td>
+                    <td><a href="/opportunity/change_status/{{ op.id }}"> Edit </a></td>
                 </tr>
             {% endfor %}
         </table>
     {% else %}
         <div>You don't have permission</div>
     {% endif %}
+    <!-- Modal content-->
+
+
+
+
+
+
+<script>
+    var modal = document.getElementById('myModal');
+
+    // Get the button that opens the modal
+    var btn = document.getElementById("MyButton");
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks on the button, open the modal
+    btn.onclick = function() {
+        modal.style.display = "block";
+    }
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+
+</script>
 </body>
 </html>
