@@ -8,6 +8,7 @@ class MyUser(AbstractUser):
         ('Manager', 'Manager'),
         ('Client', 'Client'),
         ('Admin', 'Admin'),
+        ('NA', 'NA'),
     )
 
     department_choices = (
@@ -15,6 +16,7 @@ class MyUser(AbstractUser):
         ('Marketing', 'Marketing'),
         ('Accounts', 'Accounts'),
         ('IT', 'IT'),
+        ('NA', 'NA'),
     )
 
     gender_choice = (
