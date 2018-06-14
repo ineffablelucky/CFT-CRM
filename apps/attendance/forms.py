@@ -1,16 +1,27 @@
 from django import forms
 from .models import Attendance, MyUser
-from django.forms.widgets import SelectDateWidget, DateInput
-from django.contrib.admin.widgets import AdminDateWidget
 import datetime
 
-from django.utils import timezone
+
+
 class LeaveForm(forms.ModelForm):
-    print("Entering LeaveForm model")
-    name = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'readonly': True}))
-    date = forms.DateField(widget=forms.TextInput(attrs={'type' : 'date'}))
-    end_date = forms.DateField(widget=forms.TextInput(attrs={'type' : 'date'}))
+    name = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'readonly': True}), label='Name')
+    date = forms.DateField(widget=forms.TextInput(attrs={'type' : 'date'}), label='Start Date')
+    end_date = forms.DateField(widget=forms.TextInput(attrs={'type' : 'date'}), label='End Date')
     note = forms.CharField(max_length=500, widget=forms.Textarea)
+    LEAVE_TYPE_CHOICES = (
+        ('PL', 'Privilege leave'),
+        ('CL', 'Casual leave'),
+        ('Half Day', 'Half Day'),
+    )
+
+    leave_type = forms.ChoiceField(
+        choices=LEAVE_TYPE_CHOICES,
+        widget=forms.Select(),
+        label='Type of Leave'
+
+    )
+
 
     class Meta:
         model = Attendance
@@ -22,11 +33,8 @@ class LeaveForm(forms.ModelForm):
         super(LeaveForm, self).__init__(*args, **kwargs)
         self.fields['name'].initial = self.logged_user
 
-    """"
-    def clean_date(self):
-
-        data = self.cleaned_data.get('date')
-        return data
+    """
+    
     
     def clean_from_date(self):
         print("Entering clean_form_data Leaveform")
@@ -35,16 +43,23 @@ class LeaveForm(forms.ModelForm):
         return data
         #else:
          #   raise forms.ValidationError('year should be greater than 2000')
-    
-    def clean_end_date(self):
-        print("Entering clean_end_data Leaveform")
-        data = self.cleaned_data.get('end_date')
-        print(data)
-        #if data > datetime.datetime():
-        return data
-        #else:
-        #    raise forms.ValidationError('year should be greater than 2000')
     """
+    """
+    def clean_date(self):
+        data = self.cleaned_data.get('date')
+
+        if data <= datetime.date.today():
+            raise forms.ValidationError('Start Date should be greater than Today\'s date')
+        return data
+    """
+    def clean_end_date(self):
+        data = self.cleaned_data.get('end_date')
+        data1 = self.cleaned_data.get('date')
+        if data >= data1:
+            return data
+        else:
+            raise forms.ValidationError('End Date should be greater than Start Date')
+
     def clean_leave_type(self):
         data = self.cleaned_data.get('leave_type')
         return data
