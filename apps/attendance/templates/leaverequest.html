@@ -6,9 +6,30 @@
 </head>
 <body>
 <h1> Leave Request form</h1>
-<form action="leave/" method="post">
+<form action="{% url 'attendance:leave_request' %}" method="post">
     {% csrf_token %}
-    {{ form.as_p }}
+        <div>
+            {{ form.name.label }}
+            {{ form.name }}{{ form.name.errors }}
+        </div><br>
+
+        <div>
+            {{ form.leave_type.label }}
+            {{ form.leave_type }}{{ form.leave_type.errors }}
+        </div><br>
+        <div>
+            {{ form.date.label }}
+            {{ form.date }}{{ form.date.errors }}
+            {{ form.end_date.label }}
+            {{ form.end_date }}{{ form.end_date.errors }}
+        </div><br>
+        Reason:
+        <div>
+            &emsp;&emsp;&emsp;&emsp;{{ form.note }}{{ form.note.errors }}
+        </div>
+    <button type="submit">Submit</button>
+
+
     <!--
     {{form.name.errors}}
     <p>Username :{{ form.name }}</p>
@@ -16,7 +37,7 @@
     <p>Date:&emsp;From:{{ form.date }}&emsp;&emsp;&emsp;&emsp;To:{{ form.end_date }}</p>
     <p>Reason:</p>
     <p>&emsp;&emsp;&emsp;&emsp;{{ form.note }}</p>-->
-    <button type="submit">Submit</button>
+
 </form>
 </body>
 </html>
