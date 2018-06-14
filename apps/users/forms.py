@@ -2,6 +2,7 @@ from django.forms import ModelForm
 from .models import  MyUser
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import Group
 import re
 
 
@@ -21,6 +22,7 @@ class RegistrationForm(UserCreationForm):
             'department',
             'designation',
             'salary',
+            'gender',
         )
 
     def save(self, commit=True):
@@ -29,8 +31,43 @@ class RegistrationForm(UserCreationForm):
 
         if commit:
             myuser.save()
+            return myuser
+
+            """
+            designation = self.cleaned_data['designation']
+            department = self.cleaned_data['department']
+
+            if designation == 'Admin':
+                group_user = Group.objects.get_by_natural_key('Admin Group')
+                group_user.user_set.add(myuser)
+
+            elif designation == 'Manager' and department == 'HR':
+                group_user = Group.objects.get_by_natural_key('HR Manager Group')
+                group_user.user_set.add(myuser)
+
+            elif designation == 'Manager' and department == 'IT':
+                group_user = Group.objects.get_by_natural_key('IT Manager Group')
+                group_user.user_set.add(myuser)
+
+            elif department == 'Accounts':
+                group_user = Group.objects.get_by_natural_key('Accounts Group')
+                group_user.user_set.add(myuser)
+
+            elif designation == 'Employee':
+                group_user = Group.objects.get_by_natural_key('Employee Group')
+                group_user.user_set.add(myuser)
+
+            elif designation == 'Client':
+                group_user = Group.objects.get_by_natural_key('Client Group')
+                group_user.user_set.add(myuser)
+
+            else:
+                raise Exception("Not correct designation or department")
 
         return myuser
+"""
+
+
 
     def clean_email(self):
         data = self.cleaned_data.get('email').lower()
@@ -85,11 +122,61 @@ class RegistrationForm(UserCreationForm):
 
     def clean_salary(self):
         data = self.cleaned_data.get('salary')
-        data = str(data)
         if data == None:
             pass
-        elif re.search('[+-]', data):
-            raise forms.ValidationError("'+', '-' are not allowed")
         else:
-            return data
+            data = str(data)
+            if re.search('[+-]', data):
+                raise forms.ValidationError("'+', '-' are not allowed")
+            else:
+                return data
+
+
+    def clean_designation(self):
+        designation = self.cleaned_data.get('designation')
+        departmnt = self.cleaned_data.get('department')
+        if designation == departmnt:
+            raise forms.ValidationError("designation and department both can not be NA")
+        elif designation == 'Client' and departmnt != 'NA':
+            raise forms.ValidationError('not correct match of designation and department')
+        else:
+            return designation
+
+
+
+    email = forms.CharField(
+        label='Email ',
+        widget = forms.TextInput(),
+    )
+
+    first_name = forms.CharField(
+        label='First name ',
+        widget=forms.TextInput(),
+    )
+
+    middle_name = forms.CharField(
+        label='Middle Name ',
+        widget=forms.TextInput(),
+        required = False,
+    )
+
+    last_name = forms.CharField(
+        label='Last Name ',
+        widget=forms.TextInput(),
+        required = False,
+    )
+
+    contact = forms.IntegerField(
+        label='Contact ',
+        widget=forms.NumberInput(),
+        required = False,
+    )
+
+    salary = forms.IntegerField(
+        label='Salary ',
+        widget=forms.NumberInput(),
+        required=False,
+    )
+
+
 

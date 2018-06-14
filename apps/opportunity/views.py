@@ -6,6 +6,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from apps.opportunity.forms import ChangeStatus
 from django.urls import reverse, reverse_lazy
 
+
 class ListOppo(LoginRequiredMixin, ListView):
     model = Opportunity
     template_name = 'opportunity/index.html'
@@ -16,7 +17,7 @@ class ListOppo(LoginRequiredMixin, ListView):
         user_id = MyUser.objects.get(username=self.request.user)
         print(user_id)
         queryset = Opportunity.objects.filter(assigned_to=self.request.user)
-        print(queryset)
+        print(type(queryset))
         return queryset
 
 

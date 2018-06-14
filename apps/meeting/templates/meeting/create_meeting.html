@@ -2,9 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Create Meeting Page</title>
 </head>
 <body>
-
+    <form method="post" action="{% url 'meeting:create_meeting' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" name="Create"/>
+    </form>
 </body>
 </html>
