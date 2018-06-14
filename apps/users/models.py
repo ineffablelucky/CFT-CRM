@@ -8,6 +8,7 @@ class MyUser(AbstractUser):
         ('Manager', 'Manager'),
         ('Client', 'Client'),
         ('Admin', 'Admin'),
+        ('NA', 'NA'),
     )
 
     department_choices = (
@@ -15,6 +16,7 @@ class MyUser(AbstractUser):
         ('Marketing', 'Marketing'),
         ('Accounts', 'Accounts'),
         ('IT', 'IT'),
+        ('NA', 'NA'),
     )
 
     gender_choice = (
@@ -32,8 +34,8 @@ class MyUser(AbstractUser):
     salary              = models.IntegerField(null=True, blank=True, default=None)
     created_on          = models.DateTimeField(auto_now_add=True)
     date_of_joining     = models.DateField(blank=True, null=True)
-    department          = models.CharField(default=None, choices=department_choices, max_length=35)
-    designation         = models.CharField(default=None, choices=designation_choices, max_length=35)
-    gender              = models.CharField(default='M', choices=gender_choice, max_length=10, null=True, blank=True)
+    department          = models.CharField(default='NA', choices=department_choices, max_length=35)
+    designation         = models.CharField(default='NA', choices=designation_choices, max_length=35)
+    gender              = models.CharField(default='M', choices=gender_choice, max_length=10)
 
 
