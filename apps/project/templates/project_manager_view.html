@@ -30,8 +30,8 @@
         <td>
 
                 {% csrf_token %}
-                <a href="" ><button>View</button></a>
-                <a href="/project/edit/{{ p.id }}/"><button>Edit</button></a>
+                <a href="{% url 'project:project-details' p.id %}"><button>View</button></a>
+                <a href="{% url 'project:project-update' p.id %}"><button>Edit</button></a>
                 <a href="{% url 'task:add_task' %}"><button>Create New Task</button></a>
         </td>
     </tr>
