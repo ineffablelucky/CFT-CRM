@@ -21,6 +21,7 @@ class RegistrationForm(UserCreationForm):
             'department',
             'designation',
             'salary',
+            'gender',
         )
 
     def save(self, commit=True):
@@ -92,4 +93,40 @@ class RegistrationForm(UserCreationForm):
             raise forms.ValidationError("'+', '-' are not allowed")
         else:
             return data
+
+
+
+
+    email = forms.CharField(
+        label='Email ',
+
+        widget = forms.TextInput()
+    )
+
+    first_name = forms.CharField(
+        label='First name ',
+        widget=forms.TextInput()
+    )
+
+    middle_name = forms.CharField(
+        label='Middle Name ',
+        widget=forms.TextInput()
+    )
+
+    last_name = forms.CharField(
+        label='Last Name ',
+        widget=forms.TextInput()
+    )
+
+    contact = forms.IntegerField(
+        label='Contact ',
+        widget=forms.NumberInput()
+    )
+
+    salary = forms.IntegerField(
+        label='Salary ',
+        widget=forms.NumberInput()
+    )
+
+
 

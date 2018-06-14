@@ -17,6 +17,7 @@
 
         {{ form.non_fields.errors }}
 
+<!--
         {{ form.email.errors }}
         <div>
             <label for="id_email">*Email </label>
@@ -95,19 +96,51 @@
             <label for="id_salary">Salary </label>
             <input type="number" id="id_salary" name="salary" value="{% if form.salary.value %}{{ form.salary.value }}{% endif %}" />
         </div>
+-->
 
+        <p>
+            {{ form.email.errors }} {{ form.email.label }} {{ form.email }}
+        </p>
 
+        <p>
+            {{ form.password1.errors }} {{ form.password1.label }} {{ form.password1 }}
+        </p>
 
-        <!--p>*Email {{ form.email }}</p>
-        <p>*Password {{ form.password1 }}</p>
-        <p>*Confirm Password {{ form.password2 }}</p>
-        <p>*First Name {{ form.first_name }}</p>
-        <p>Middle Name {{ form.middle_name }}</p>
-        <p>Last Name {{ form.last_name }}</p>
-        <p>Contact {{ form.contact }}</p>
-        <p>Department {{ form.department }}</p>
-        <p>Designation {{ form.designation }}</p>
-        <p>Salary {{ form.salary }}</p-->
+        <p>
+             {{ form.password2.errors }} {{ form.password2.label }} {{ form.password2 }}
+        </p>
+
+        <p>
+             {{ form.first_name.errors }} {{ form.first_name.label }} {{ form.first_name }}
+        </p>
+
+        <p>
+            {{ form.middle_name.errors }} {{ form.middle_name.label }} {{ form.middle_name }}
+        </p>
+
+        <p>
+            {{ form.last_name.errors }} {{ form.last_name.label }} {{ form.last_name }}
+        </p>
+
+        <p>
+             {{ form.contact.errors }} {{ form.contact.label }} {{ form.contact }}
+        </p>
+
+        <p>
+             {{ form.gender.errors }} {{ form.gender.label }} {{ form.gender }}
+        </p>
+
+        <p>
+            {{ form.department.errors }} {{ form.department.label }} {{ form.department }}
+        </p>
+
+        <p>
+            {{ form.designation.errors }} {{ form.designation.label }} {{ form.designation }}
+        </p>
+
+        <p>
+            {{ form.salary.errors }} {{ form.salary.label }} {{ form.salary }}
+        </p>
 
         <p>Staff? {{ form.is_staff }}</p>
         <p>Superuser? {{ form.is_superuser }}</p>
