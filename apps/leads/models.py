@@ -1,5 +1,5 @@
 from django.db import models
-from apps.opportunity.model import Opprtunity
+#from ..opportunity.models import Opportunity
 
 
 class LEADS(models.Model):
