@@ -18,7 +18,7 @@ from .forms import CreateForm,DetailForm
 # 	# def get_context_data(self, **kwargs):
 # 	# 	context = super(LeadIndex,self).get_context_data(**kwargs)
 # 	# 	context['LEADS_LIST'] =LEADS.objects.all().order_by('contact_person')
-# 	template_name='leads/index.html'
+# 	template_name='leads/employee_leads.html'
 
 
 class LeadDetails(ListView,FormView):
