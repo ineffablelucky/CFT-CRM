@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect
 from . import models
 from .models import Salary_calculations
 from .forms import SalaryForm
+from django.views.generic import ListView,CreateView,DetailView,DeleteView,UpdateView,TemplateView
 
 def table(request):
     var = Salary_calculations.objects.all()
