@@ -7,64 +7,82 @@
 <body>
 <h1>This is a Project Entry form!</h1><hr>
 
-<form method="post" action="{% url 'project:project-add' %}"> <!--action="{% url 'project:manager-project-view' %}"-->
+{% if object.id %}
+    <form method="post" action="{% url 'project:project-update' object.id %}">
+{% else %}
+    <form method="post" action="{% url 'project:project-add' %}">
+{% endif %}
+
     {% csrf_token %}
         <div>
             {{ form.project_name.label }}
-            {{ form.project_name }}{{ form.project_name.errors }}
+            {{ form.project_name }}
+            {{ form.project_name.errors }}
         </div><br>
 
         <div>
             {{ form.project_description.label }}
             {{ form.project_description }}
+            {{ form.project_description.errors }}
         </div><br>
 
         <div>
             {{ form.opportunity.label }}
-            {{ form.opportunity }}{{ form.opportunity.errors }}
+            {{ form.opportunity }}
+            {{ form.opportunity.errors }}
 
         </div><br>
 
         <div>
             {{ form.project_manager.label }}
             {{ form.project_manager }}
+            {{ from.project_manager.errors }}
         </div><br>
 
         <div>
             {{ form.project_price.label }}
             {{ form.project_price }}
+            {{ form.project_price.errors }}
         </div><br>
 
 
         <div>
-            {{ form.project_start_date_time.label }}
+
+           {{ form.project_start_date_time.label }}
            {{ form.project_start_date_time}}
+           {{ form.project_start_date_time.errors }}
         </div><br>
 
         <div>
-            {{ form.project_end_date.label }}
+            {{ form.project_end_date_time.label }}
             {{ form.project_end_date_time }}
-        </div><br>
+            {{ form.project_end_date_time.errors }}
+        </div>
+    <br>
 
         <div>
             {{ form.project_total_working_hr.label }}
             {{ form.project_total_working_hr }}
+            {{ form.project_total_working_hr.errors }}
         </div><br>
 
         <div>
             {{ form.client_id.label }}
             {{ form.client_id }}
+            {{ form.client_id.errors }}
 
         </div><br>
         <div>
             {{ form.employees_per_project.label }}
             {{ form.employees_per_project }}
+            {{ form.employees_per_project.errors }}
             <br>
         </div><br>
 
         <div>
             {{ form.status.label }}
             {{ form.status }}
+            {{ form.status.errors }}
         </div><br>
 
 
