@@ -28,8 +28,6 @@
             &emsp;&emsp;&emsp;&emsp;{{ form.note }}{{ form.note.errors }}
         </div>
     <button type="submit">Submit</button>
-
-
     <!--
     {{form.name.errors}}
     <p>Username :{{ form.name }}</p>
@@ -39,5 +37,31 @@
     <p>&emsp;&emsp;&emsp;&emsp;{{ form.note }}</p>-->
 
 </form>
+<table border="1">
+    <tr>
+        <th>Type of Leave</th>
+        <th>Leaves left</th>
+    </tr>
+    {% for l in leave %}
+        <tr>
+            <td>PL</td>
+            <td>{{ l.pl }}</td>
+        </tr>
+        <tr>
+            <td>CL</td>
+            <td>{{ l.cl }}</td>
+        </tr>
+        <tr>
+            <td>Half Day</td>
+            <td>{{ l.half_day }}</td>
+        </tr>
+        <tr>
+            <td>Company Off</td>
+            <td>{{ l.comp_off }}</td>
+        </tr>
+    {% endfor %}
+
+</table>
+
 </body>
 </html>
