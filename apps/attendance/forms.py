@@ -1,7 +1,8 @@
 from django import forms
 from .models import Attendance, MyUser
 import datetime
-
+from django.utils.timezone import utc
+from pytz import timezone
 
 
 class LeaveForm(forms.ModelForm):
@@ -89,5 +90,49 @@ class LeaveForm(forms.ModelForm):
                 saved_instance.append(self.instance)
         return saved_instance
 
+"""
+class ClockinForm(forms.ModelForm):
+    name = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'readonly': True}), label='Name')
+
+    class Meta:
+        model = Attendance
+        fields = ('name',)
+
+    def __init__(self, *args, **kwargs):
+        # print(kwargs, args)
+        self.logged_user = kwargs.pop('logged_user', None)
+        super(ClockinForm, self).__init__(*args, **kwargs)
+        self.fields['name'].initial = self.logged_user
+
+    def save(self, commit=True):
+        instance = super(ClockinForm, self).save(commit=False)
+        instance.user_id = self.logged_user.id
+        instance.date = datetime.date.today()
+        instance.time_in = datetime.datetime.now()
+        print(instance.time_in)
+        instance.status = 'present'
+        instance.save()
+        return instance
+
+
+class ClockoutForm(forms.ModelForm):
+
+    class Meta:
+        model = Attendance
+        fields = ()
+
+    def __init__(self, *args, **kwargs):
+        self.logged_user = kwargs.pop('logged_user')
+        super(ClockoutForm, self.__init__(*args, **kwargs))
+
+    def save(self, commit=True):
+        a = Attendance.objects.get(user_id = self.logged_user.id, date=datetime.date.today())
+        a.time_out = datetime.datetime.now()
+        instance = super(ClockoutForm, self).save(commit=False)
+        instance = a
+        instance.time_out = datetime.datetime.now()
+        instance.save()
+        return instance
+"""
 
 
