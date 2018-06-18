@@ -18,6 +18,11 @@ class DetailForm(forms.Form):
         queryset=MyUser.objects.filter(department='Marketing'),
         widget=forms.Select()
     )
+    # checkbox=forms.CheckboxInput()
+    # class Meta:
+    #     model=LEADS
+    #     fields='__all__'
+
 
 
 

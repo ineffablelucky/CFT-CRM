@@ -1,7 +1,7 @@
 import logging
 
 from django.contrib import messages
-from django.http import request
+from django.http import request, HttpResponse
 from django.shortcuts import render,HttpResponseRedirect
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, UpdateView, DeleteView,ListView,DetailView,FormView
@@ -131,4 +131,17 @@ def upload_csv(request):
 
     return HttpResponseRedirect(reverse("leads:upload_csv"))
 
+from apps.opportunity.models import Opportunity
+def LeadsAssign(request):
+
+
+    data = (request.POST['ids']).split(',')
+    
+    if len(data) > 0:
+        for item in data:
+            tmp = Opportunity()
+            tmp.lead_id = int(item)
+            tmp.assigned_to_id = request.POST.get('assign')
+            tmp.save()
+    return HttpResponse("this is devesh")
 

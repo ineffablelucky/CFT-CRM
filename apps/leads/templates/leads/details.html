@@ -29,7 +29,7 @@ $(document).ready(function() {
 
 </script>
 
-
+<form method="post" action="assign/">
 
 <table border="1" style="margin-right:8px">
     <tr><th>
@@ -49,7 +49,7 @@ $(document).ready(function() {
 
 {% for leads in object_list %}
     <tr>
-        <td><input type="checkbox"> </input></td>
+        <td><input type="checkbox" data-id="{{ leads.id }}" class="chk_selector"> </input></td>
         <td>{{leads.contact_number}}</td>
         <td>{{leads.comany_name}}</td>
         <td>{{leads.contact_person}}</td>
@@ -78,7 +78,7 @@ $(document).ready(function() {
 
 <a href="" style="position:absolute; right:380px; top:150px;"><button>Import Leads</button></a>
 
-<a href="" style="position:absolute; right:600px; top:150px;"><button id="ram">Assign</button></a>
+<!--<button id="console" type="button">Console</button>-->
 <!--&lt;!&ndash;<div class="container">&ndash;&gt;-->
     <!--&lt;!&ndash;<div class="dropdown">&ndash;&gt;-->
         <!--&lt;!&ndash;<a href=""  data-toggle = "dropdown" style="position:absolute; right:500px; top:151px;"><input type="" >Assign</input></a>&ndash;&gt;-->
@@ -99,8 +99,47 @@ $(document).ready(function() {
 <!--&lt;!&ndash;</div>&ndash;&gt;-->
 
 
-<form method="post">
+
     {% csrf_token %}
+     <input type="hidden" name="ids" value="" class="id-input">
     {{ form }}
-    <!--<input type="submit" value="Submit" />-->
+    <a href="" style="position:absolute; right:600px; top:150px;">
+        <input type="submit" value="Assign" id="ram"/></a>
+
 </form>
+
+<script>
+$(function(){
+var arr = [];
+
+    $('.chk_selector').click(function(){
+        if($(this).prop('checked') == true){
+            var tempId = $(this).attr('data-id');
+            var id = $(this).data('id');
+
+            var value = $('.id-input').val();
+            if(value != ''){
+                value = value + ',';
+            }
+            var tmp = value + id;
+            $('.id-input').val(tmp);
+        }
+        else{
+            $(this).removeAttr('checked');
+            var temp = $(this).attr('data-id');
+            var index = arr.indexOf(temp);
+            arr.splice(index,1);
+
+            $('.id-input').val('');
+        }
+    });
+
+    $('#console').click(function(){
+        console.log($('#id_assign').val());
+            console.log("array : " + arr);
+    });
+
+});
+
+
+    </script>
