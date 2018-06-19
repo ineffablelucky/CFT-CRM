@@ -28,22 +28,22 @@ class CreateProjectForm(ModelForm):
         widget=forms.TextInput()
     )
 
-    opportunity = forms.ModelChoiceField(
-        label='OPPORTUNITY',
-        # required=False,
-        queryset= Opportunity.objects.all(),
-        widget= forms.Select(),
-    )
+    # opportunity = forms.ModelChoiceField(
+    #     label='OPPORTUNITY',
+    #     # required=False,
+    #     queryset= Opportunity.objects.all(),
+    #     widget= forms.Select(),
+    # )
 
-    project_manager = forms.ModelChoiceField(
-        label='PROJECT MANAGER',
-        queryset= MyUser.objects.all(),
-        widget=forms.Select()
-    )
-    project_price = forms.IntegerField(
-        label='PROJECT PRICE',
-        widget=forms.TextInput()
-    )
+    # project_manager = forms.ModelChoiceField(
+    #     label='PROJECT MANAGER',
+    #     queryset= MyUser.objects.all(),
+    #     widget=forms.Select()
+    # )
+    # project_price = forms.IntegerField(
+    #     label='PROJECT PRICE',
+    #     widget=forms.TextInput()
+    # )
     project_start_date_time = forms.CharField(
         label='PROJECT START DATE',
         required=False,
@@ -62,12 +62,12 @@ class CreateProjectForm(ModelForm):
         label='TOTAL WORKING HOURS',
         widget=forms.TextInput()
     )
-    client_id = forms.ModelChoiceField(
-        label='CLIENT',
-        required=False,
-        queryset=CLIENT.objects.all(),
-        widget=forms.Select()
-    )
+    # client_id = forms.ModelChoiceField(
+    #     label='CLIENT',
+    #     required=False,
+    #     queryset=CLIENT.objects.all(),
+    #     widget=forms.Select()
+    # )
     employees_per_project = forms.ModelMultipleChoiceField(
         label='ALOT EMPLOYEES TO PROJECT',
         queryset=MyUser.objects.all(),
@@ -82,15 +82,14 @@ class CreateProjectForm(ModelForm):
     class Meta:
         model = IT_Project
         fields = (
-            'opportunity',
             'project_name',
             'project_description',
-            'project_manager',
-            'project_price',
+            # 'project_manager',
+            # 'project_price',
             'project_start_date_time',
             'project_end_date_time',
             'project_total_working_hr',
-            'client_id',
+            # 'client_id',
             'employees_per_project',
             'status',
         )

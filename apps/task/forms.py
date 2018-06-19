@@ -131,11 +131,11 @@ class CreateTaskForm(ModelForm):
     #      else:
     #          raise forms.ValidationError("Only Numbers are alllowed")
 
-    def clean_task_end_date_time(self):
-        data = self.cleaned_data.get('project_end_date_time')
-        value = self.cleaned_data.get('project_start_date_time')
-
-        if(data > value):
-            return data
-        else:
-            raise forms.ValidationError("Project end date should be either same or more than start date!")
+    # def clean_task_end_date_time(self):
+    #     data = self.cleaned_data.get('project_end_date_time')
+    #     value = self.cleaned_data.get('project_start_date_time')
+    #
+    #     if(data > value):
+    #         return data
+    #     else:
+    #         raise forms.ValidationError("Project end date should be either same or more than start date!")

@@ -20,6 +20,7 @@ class Task(models.Model):
         return self.task_name
 
 
+
 class Time_Entry(models.Model):
 
     task = models.ForeignKey(Task, on_delete=models.PROTECT, blank=True, null=True)

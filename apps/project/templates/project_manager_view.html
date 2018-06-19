@@ -3,12 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <title>Manager's Project view</title>
+    <style>
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.topnav {
+  overflow: hidden;
+  background-color: #333;
+}
+
+.topnav a {
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.topnav a.active {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.topnav-right {
+  float: right;
+}
+</style>
 </head>
 <body>
 <h1>Hi, Welcome to Project Manager's Project List!</h1><hr>
-
+<div class="topnav-right">
 <form><input type="submit"  formaction="{% url 'project:project-add' %}" value="CREATE NEW PROJECT"></form>
-
+</div>
 <table border="1">
     <thead>
     <th>Project Name</th>
