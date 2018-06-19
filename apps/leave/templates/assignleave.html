@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Assign Leave</title>
+</head>
+<body>
+ <form action="{% url 'leave:leave_creation' %}" method="post">
+     {% csrf_token %}
+        <div>
+            {{ form.pl.label }}
+            {{ form.pl }}{{ form.pl.errors }}
+        </div><br>
+        <div>
+            {{ form.cl.label }}
+            {{ form.cl }}{{ form.cl.errors }}
+        </div><br>
+        <div>
+            {{ form.half_day.label }}
+            {{ form.half_day }}{{ form.half_day.errors }}
+        </div><br>
+        <div>
+            {{ form.comp_off.label }}
+            {{ form.comp_off }}{{ form.comp_off.errors }}
+        </div><br>
+     <button type="submit">Create</button>
+
+ </form>
+</body>
+</html>
