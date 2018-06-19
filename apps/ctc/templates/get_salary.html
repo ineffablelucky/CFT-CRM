@@ -1,0 +1,5 @@
+{% extends "users/" %}
+{% block body_block %}
+    <a href ="{% url 'ctc:slip' %}">Get CTC Breakdown</a><br>
+    <a href ="{% url 'ctc:' %}">Download Salary Slip</a>
+{% endblock %}

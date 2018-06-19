@@ -12,7 +12,7 @@ def add(request):
     if request.method=="POST":
         form = SalaryForm(request.POST)
         form.save()
-        return redirect('/salary')
+        return redirect('/salary_structure')
     else :
         form = SalaryForm()
         return render(request,'work/fill.html',{'form':form})
