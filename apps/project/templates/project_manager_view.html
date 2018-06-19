@@ -22,7 +22,7 @@
     <tbody>
     {% for p in object_list %}
     <tr>
-        <td>{{ p.project_name }}</td>
+        <td><a href="{% url 'task:manager-task-view' p.id %}">{{ p.project_name }}</a></td>
         <td>{{ p.project_description}}</td>
         <td>{{ p.project_start_date_time }}</td>
         <td>{{ p.project_end_date_time }}</td>
@@ -32,7 +32,7 @@
                 {% csrf_token %}
                 <a href="{% url 'project:project-details' p.id %}"><button>View</button></a>
                 <a href="{% url 'project:project-update' p.id %}"><button>Edit</button></a>
-                <a href="{% url 'task:add_task' %}"><button>Create New Task</button></a>
+
         </td>
     </tr>
     {% endfor %}

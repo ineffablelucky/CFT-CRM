@@ -64,6 +64,7 @@ class CreateProjectForm(ModelForm):
     )
     client_id = forms.ModelChoiceField(
         label='CLIENT',
+        required=False,
         queryset=CLIENT.objects.all(),
         widget=forms.Select()
     )

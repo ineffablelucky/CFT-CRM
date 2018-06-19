@@ -7,7 +7,7 @@
 <body>
 <h1>Hi, Welcome to Project Manager's Task List!</h1><hr>
 
-<form><input type="submit" align="right" formaction="{% url 'task:add_task' %}" value="CREATE NEW TASK"></form>
+<form><input type="submit" formaction="{% url 'task:task-add' %}" value="CREATE NEW TASK"></form>
 
 <table border="1">
     <thead>
@@ -27,14 +27,16 @@
         <td>{{ i.task_description}}</td>
         <td>{{ i.employee_id }}</td>
         <td>{{ i.task_start_date_time }}</td>
-        <td></td>
+        <td>{{ i.expected_time }}</td>
         <td>--</td>
         <td>
             <form method="post">
                 {% csrf_token %}
-                <a href="" ><button>View</button></a>
-                <a href=""><button>Edit</button></a>
-                <input type="submit" formaction="" value="DELETE">
+
+                <a href="{ url 'task:task-details' }" ><button>View</button></a>
+                <a href="{ url 'task:task-update' }"><button>Edit</button></a>
+                <a href=""><button>Delete</button></a>
+
             </form>
         </td>
     </tr>
