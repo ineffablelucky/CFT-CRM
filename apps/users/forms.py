@@ -30,8 +30,8 @@ class RegistrationForm(UserCreationForm):
         myuser.username = self.cleaned_data['email'].split('@')[0]
 
         if commit:
-            myuser.save()
 
+            myuser.save()
 
             designation = self.cleaned_data['designation']
             department = self.cleaned_data['department']
@@ -40,17 +40,29 @@ class RegistrationForm(UserCreationForm):
                 group_user = Group.objects.get_by_natural_key('Admin_Group')
                 group_user.user_set.add(myuser)
 
+            elif designation == 'Manager' and department == 'Marketing':
+                group_user = Group.objects.get_by_natural_key('Marketing Manager Group')
+                group_user.user_set.add(myuser)
+                group_user1 = Group.objects.get_by_natural_key('Employee Group')
+                group_user1.user_set.add(myuser)
+
             elif designation == 'Manager' and department == 'HR':
                 group_user = Group.objects.get_by_natural_key('HR Manager Group')
                 group_user.user_set.add(myuser)
+                group_user1 = Group.objects.get_by_natural_key('Employee Group')
+                group_user1.user_set.add(myuser)
 
             elif designation == 'Manager' and department == 'IT':
                 group_user = Group.objects.get_by_natural_key('IT Manager Group')
                 group_user.user_set.add(myuser)
+                group_user1 = Group.objects.get_by_natural_key('Employee Group')
+                group_user1.user_set.add(myuser)
 
             elif department == 'Accounts':
                 group_user = Group.objects.get_by_natural_key('Accounts Group')
                 group_user.user_set.add(myuser)
+                group_user1 = Group.objects.get_by_natural_key('Employee Group')
+                group_user1.user_set.add(myuser)
 
             elif designation == 'Employee':
                 group_user = Group.objects.get_by_natural_key('Employee Group')

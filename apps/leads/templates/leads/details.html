@@ -59,10 +59,10 @@ $(document).ready(function() {
         <td>{{leads.email}}</td>
         <td>{{leads.website}}</td>
         <td>{{leads.assigned_boolean}}</td>
-        <td><a href="{% url 'leads:LeadEdit' leads.id %}"><button>Edit</button>
+        <td><a href="{% url 'leads:LeadEdit' leads.id %}"><button type="button">Edit</button>
         </a>
         </td>
-        <td><a href="{% url 'leads:LeadDelete' leads.id %}"><button>Delete</button>
+        <td><a href="{% url 'leads:LeadDelete' leads.id %}"><button type="button">Delete</button>
         </a>
         </td>
 {% endfor %}
