@@ -49,11 +49,31 @@ class LeaveRequest(LoginRequiredMixin, CreateView):
     #     print(saved_instance)
     #     return redirect('/')
 
+    def get_context_data(self, **kwargs):
+        context = super(LeaveRequest, self).get_context_data(**kwargs)
+        context["leave"] = Leave.objects.get(user_id=self.request.user)
+        return context
+
     def form_valid(self, form):
         ins = form.save()
         # for i in ins:
         #     print(i.id)
         return redirect('/')
+
+
+
+
+"""
+class LeaveTable(LoginRequiredMixin, ListView):
+    template_name = 'leaverequest.html'
+    model = Leave
+    context_object_name = 'leave'
+
+    def get_queryset(self):
+        queryset = Leave.objects.get(user_id = self.request.user.id)
+        return queryset
+"""
+
 
 
 class Completed(LoginRequiredMixin, TemplateView):

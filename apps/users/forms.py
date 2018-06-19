@@ -35,6 +35,7 @@ class RegistrationForm(UserCreationForm):
 
             designation = self.cleaned_data['designation']
             department = self.cleaned_data['department']
+
             if designation == 'Admin':
                 group_user = Group.objects.get_by_natural_key('Admin_Group')
                 group_user.user_set.add(myuser)
@@ -61,6 +62,7 @@ class RegistrationForm(UserCreationForm):
 
             else:
                 raise Exception("Not correct designation or department")
+
 
         return myuser
 
