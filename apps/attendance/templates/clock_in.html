@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Clock IN page</title>
+</head>
+<body>
+
+ <p>Username:{{ request.user.username }}</p>
+<form action="{% url 'attendance:clockin' %}" method="post">
+    {% csrf_token %}
+    <div>
+
+        <input type="submit" value="clock in">
+    </div>
+</form>
+
+<form action="{% url 'attendance:clockout' %}" method="post">
+    {% csrf_token %}
+    <div>
+        <input type="submit" value="clock out">
+    </div>
+</form>
+
+</body>
+</html>

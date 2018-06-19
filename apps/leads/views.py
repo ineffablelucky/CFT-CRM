@@ -1,7 +1,7 @@
 import logging
 
 from django.contrib import messages
-from django.http import request
+from django.http import request, HttpResponse
 from django.shortcuts import render,HttpResponseRedirect
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, UpdateView, DeleteView,ListView,DetailView,FormView
@@ -18,7 +18,7 @@ from .forms import CreateForm,DetailForm
 # 	# def get_context_data(self, **kwargs):
 # 	# 	context = super(LeadIndex,self).get_context_data(**kwargs)
 # 	# 	context['LEADS_LIST'] =LEADS.objects.all().order_by('contact_person')
-# 	template_name='leads/index.html'
+# 	template_name='leads/employee_leads.html'
 
 
 class LeadDetails(ListView,FormView):
@@ -131,4 +131,17 @@ def upload_csv(request):
 
     return HttpResponseRedirect(reverse("leads:upload_csv"))
 
+from apps.opportunity.models import Opportunity
+def LeadsAssign(request):
+
+
+    data = (request.POST['ids']).split(',')
+    
+    if len(data) > 0:
+        for item in data:
+            tmp = Opportunity()
+            tmp.lead_id = int(item)
+            tmp.assigned_to_id = request.POST.get('assign')
+            tmp.save()
+    return HttpResponse("this is devesh")
 

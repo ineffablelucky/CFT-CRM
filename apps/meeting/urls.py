@@ -5,4 +5,5 @@ from apps.meeting import views
 app_name = 'meeting'
 urlpatterns = [
     path('create_meeting/', views.CMeeting.as_view(), name='create_meeting'),
+    path('meeting_list/', views.L_Meeting.as_view(), name='meeting_list')
 ]

@@ -7,7 +7,15 @@
 <body>
     <form method="post" action="{% url 'meeting:create_meeting' %}">
         {% csrf_token %}
-        {{ form.as_p }}
+        <p>
+            {{ form.date.errors }} {{ form.date.label }} {{ form.date }}
+        </p>
+        <p>
+            {{ form.extras.errors }} {{ form.extras.label }} {{ form.extras }}
+        </p>
+        <p>
+            {{ form.Opportunity.errors }} {{ form.Opportunity.label }} {{ form.Opportunity }}
+        </p>
         <input type="submit" name="Create"/>
     </form>
 </body>
