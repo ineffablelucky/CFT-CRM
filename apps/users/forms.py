@@ -31,14 +31,12 @@ class RegistrationForm(UserCreationForm):
 
         if commit:
             myuser.save()
-            return myuser
 
-            """
+
             designation = self.cleaned_data['designation']
             department = self.cleaned_data['department']
-
             if designation == 'Admin':
-                group_user = Group.objects.get_by_natural_key('Admin Group')
+                group_user = Group.objects.get_by_natural_key('Admin_Group')
                 group_user.user_set.add(myuser)
 
             elif designation == 'Manager' and department == 'HR':
@@ -65,7 +63,7 @@ class RegistrationForm(UserCreationForm):
                 raise Exception("Not correct designation or department")
 
         return myuser
-"""
+
 
 
 
