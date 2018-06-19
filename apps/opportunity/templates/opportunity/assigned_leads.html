@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Assigned Leads</title>
+</head>
+<body>
+{% if user.is_authenticated %}
+    <div height="200">Hello {{ user.username }}</div>
+    <hr/>
+    <div>
+        {% for assign in assigned_leads %}
+            <div >
+                <a href="{% url 'meeting:meeting_list' %}">
+                    <p>
+                        Company Name: {{ assign.assigned_to.username }}
+                    </p>
+                    <p>
+                        Project Manager: {{ assign.proj_manager.username }}
+                    </p>
+                    <p>
+                        Project Description : {{ assign.description }}
+                    </p>
+                    <p>
+                        Status : {{ assign.status }}
+                    </p>
+                    <p>
+                        Assigned To : {{ assign.assigned_to.username }}
+                    </p>
+                </a>
+            </div>
+            <div>
+                <fieldset>
+                    <legend>Assign Project Manager</legend>
+                    <form action="{% url 'opportunity:add_proj_manager' assign.pk %}" method="post" style="display:inline">
+                        {% csrf_token %}
+                        <p>
+                            {{ form.proj_manager.errors }} {{ form.proj_manager.label }} {{ form.proj_manager }}
+                        </p>
+                        <input type = submit value="Assign">
+                    </form>
+                </fieldset>
+            </div>
+            <hr/>
+            <hr/>
+        {% endfor %}
+    </div>
+{% else %}
+    <div>You don't have permission</div>
+{% endif %}
+</body>
+</html>

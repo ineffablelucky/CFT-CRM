@@ -9,6 +9,9 @@ urlpatterns =[
     path('create/',views.LeadCreate.as_view(),name='LeadCreate'),
     path('edit/<pk>',views.LeadEdit.as_view(),name='LeadEdit'),
     path('delete/<pk>',views.LeadDelete.as_view(),name='LeadDelete'),
+    path('details/assign/',views.LeadsAssign,name='leadsassign'),
+
+    path('upload/csv/', views.upload_csv, name='upload_csv'),
 
 
 ]
