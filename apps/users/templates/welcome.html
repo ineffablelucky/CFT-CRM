@@ -6,18 +6,32 @@
 </head>
 <body>
 
-    {% load users_extras %}
+
     {% if user.is_authenticated %}
+    {% load users_extras %}
+
+    <h3>Hello {{ user.first_name }} {{user.last_name}}</h3>
+
         {% if user|has_group:"Employee Group" %}
-        <div>User is in Employee Group <br>
-            <a href="{% url 'users:profile' user.id %}"><button>Profile</button></a>
-            <a href="{% url 'project:employee-project' %}"><button>Project</button></a>
-            <a href="{% url 'attendance:leave_request' %}"><button>Leave Request</button></a>
+        <div>
+            <a href="{% url 'users:profile' user.id %}" blank="True"><button>Profile</button></a><br><br>
+
+            {% if user.department == 'IT' %}
+                <a href="{% url 'project:employee-project' %}"><button>Project</button></a><br><br>
+
+            {% elif user.department == 'Marketing' %}
+                <a href="{% url 'opportunity:list_oppo' %}"><button>Leads</button></a><br><br>
+
+            {% endif %}
+
+            <a href="{% url 'attendance:leave_request' %}"><button>Leave Request</button></a><br><br>
+        </div><br>
+        {% endif %}
+
+        {% if user|has_group:"Marketing Manager Group" %}
+        <div>
+            <a href="{% url 'leads:LeadDetails' %}"><button>Lead Management</button></a><br><br>
         </div>
-
-
-        {% else %}
-            <p>Not is Employee group</p>
         {% endif %}
 
 
