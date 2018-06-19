@@ -4,7 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 from .forms import RegistrationForm
 
 def index(request):
-    return render(request, 'employee_leads.html')
+    return render(request, 'index.html')
 
 def register(request):
     if request.method == 'POST':
