@@ -6,9 +6,20 @@
 </head>
 <body>
 
+    {% load users_extras %}
     {% if user.is_authenticated %}
-        <h2>Hello {{ user.first_name }}</h2>
-        <a href="{% url 'users:lout' %}"><button>Log Out</button></a>
+        {% if user|has_group:"Employee Group" %}
+        <div>User is in Employee Group <br>
+            <a href="{% url 'users:profile' user.id %}"><button>Profile</button></a>
+            <a href="{% url 'project:employee-project' %}"><button>Project</button></a>
+            <a href="{% url 'attendance:leave_request' %}"><button>Leave Request</button></a>
+        </div>
+
+
+        {% else %}
+            <p>Not is Employee group</p>
+        {% endif %}
+
 
     {% else %}
         <h2>Please enter correct details</h2>
@@ -18,4 +29,7 @@
 
 </body>
 </html>
+
+
+
 
