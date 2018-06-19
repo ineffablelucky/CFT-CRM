@@ -39,3 +39,4 @@ class MyUser(AbstractUser):
     gender              = models.CharField(default='M', choices=gender_choice, max_length=10)
 
 
+

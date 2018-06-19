@@ -27,6 +27,10 @@ class LeadDetails(ListView,FormView):
     model = LEADS
     fields='__all__'
     template_name = 'leads/details.html'
+    def get_queryset(self):
+        queryset=LEADS.objects.filter(assigned_boolean=False)
+        return queryset
+
 
 
 
