@@ -1,11 +1,13 @@
 from django.shortcuts import render
 from .forms import LeaveForm
-from django.views.generic import CreateView, TemplateView, UpdateView
+from django.views.generic import CreateView, TemplateView, UpdateView, ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
 from django.http import HttpResponseForbidden, HttpResponse
 from ..leave.models import Leave
 from ..attendance.models import Attendance
+from django.db.models import Q
+
 
 import datetime
 from copy import deepcopy
@@ -103,9 +105,21 @@ class Clockout(LoginRequiredMixin, UpdateView):
             a = Attendance.objects.get(user_id = self.request.user, date=datetime.date.today())
             if a is None:
                 return HttpResponse("first CLock In")
+            elif a.time_out is not None:
+                return HttpResponse("Clockout Done")
             else:
                 a.time_out = datetime.datetime.today()
                 a.save()
             return redirect('/')
 
 
+class PastAttendance(LoginRequiredMixin, ListView):
+    template_name = 'clock_in.html'
+    model = Attendance
+    context_object_name = 'attendance'
+
+    def get_queryset(self):
+        delta = datetime.timedelta(days=3)
+        queryset = Attendance.objects.filter(Q(user_id=self.request.user) & Q(date__lt=datetime.date.today())
+                                             & Q(date__gte=datetime.date.today()-delta))
+        return queryset
