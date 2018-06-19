@@ -39,3 +39,17 @@ class MyUser(AbstractUser):
     gender              = models.CharField(default='M', choices=gender_choice, max_length=10)
 
 
+    class Meta:
+        permissions = (
+            ('view_attendance', 'Can view attendance'),
+            ('view_client', 'Can view clients'),
+            ('view_leads', 'Can view leads'),
+            ('view_leave', 'Can view leaves'),
+            ('view_meeting', 'Can view meetings'),
+            ('view_module', 'Can view modules'),
+            ('view_monthly_salary', 'Can view monthly salary'),
+            ('view_opportunity', 'Can view opportunities'),
+            ('view_salary_percentages', 'Can view salary percentages'),
+            ('view_task', 'Can view tasks'),
+            ('view_users', 'Can view users'),
+        )
