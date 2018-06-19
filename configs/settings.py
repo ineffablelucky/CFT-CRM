@@ -150,6 +150,7 @@ LOGIN_REDIRECT_URL='/'
 AUTHENTICATION_BACKENDS = [
     'apps.users.backends.EmailBackend',
     'django.contrib.auth.backends.ModelBackend',
+    'apps.users.backends.MobileBackend',
 ]
 
 AUTH_USER_MODEL = 'users.MyUser'
