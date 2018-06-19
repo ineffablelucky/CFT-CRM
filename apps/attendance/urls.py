@@ -11,3 +11,4 @@ urlpatterns = [
     path('clock/out/', Clockout.as_view(), name='clockout'),
     path('userattendance/', PastAttendance.as_view(), name='pastattendance' )
 ]
+
