@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SHow REquest</title>
+</head>
+<body>
+<p><b>Employee id :</b> {{ leave.user_id }}</p>
+<p><b>Employee Name:</b> {{ leave.user.first_name }} {{ leave.user.last_name }}</p>
+<p><b>Employee Department:</b> {{ leave.user.department }}</p>
+<p><b>Date:</b>&nbsp;&nbsp;&nbsp;&nbsp; <b>From:</b> {{ leave.date }} &nbsp;&nbsp; <b>To:</b> {{ leave.end_date }}</p>
+<p><b>Status:</b> {{ leave.status }}</p>
+<p><b>Reason:</b> {{ leave.note }}</p>
+<form action="approve/{{ leave.id }}" method="post">
+    {% csrf_token %}
+
+    <button type="submit">Approve</button>
+</form>
+<form action="reject/{{ leave.id }}" method="post">
+    {% csrf_token %}
+
+    <button type="submit">Reject</button>
+</form>
+</body>
+</html>
