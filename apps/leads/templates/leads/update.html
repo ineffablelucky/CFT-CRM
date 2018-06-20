@@ -2,7 +2,58 @@
 
     {% csrf_token %}
 
-    {{form.as_p}}
+    <div>
+            {{ form.contact_number.label }}
+            {{ form.contact_number }}
+            {{ form.contact_number.errors }}
+        </div><br>
+
+        <div>
+            {{ form.company_name.label }}
+            {{ form.company_name }}
+            {{ form.company_name.errors }}
+        </div><br>
+
+        <div>
+            {{ form.contact_person.label }}
+            {{ form.contact_person }}
+            {{ form.contact_person.errors }}
+
+        </div><br>
+
+        <div>
+            {{ form.source.label }}
+            {{ form.source }}
+            {{ form.source.errors }}
+        </div><br>
+
+        <div>
+            {{ form.source_type.label }}
+            {{ form.source_type }}
+            {{ form.source_type.errors }}
+        </div><br>
+
+
+        <div>
+
+           {{ form.description.label }}
+           {{ form.description }}
+           {{ form.description.errors }}
+        </div><br>
+
+        <div>
+            {{ form.email.label }}
+            {{ form.email }}
+            {{ form.email.errors }}
+        </div>
+    <br>
+
+        <div>
+            {{ form.website.label }}
+            {{ form.website }}
+            {{ form.website.errors }}
+        </div><br>
+
     <input type="submit" value="Submit" />
 </form>
 

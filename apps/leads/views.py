@@ -40,7 +40,9 @@ class LeadCreate(CreateView):
     form_class = CreateForm
     template_name = 'leads/create.html'
 
+
     def form_valid(self, form):
+        print("saghghdsf hah hdgh dshaghhjasgggggggggggggggg")
         form.instance.created_by = self.request.user
         return super().form_valid(form)
 
@@ -52,20 +54,40 @@ class LeadCreate(CreateView):
 
 
 class LeadEdit(UpdateView):
-
     model = LEADS
-    fields = '__all__'
+
+    form_class=CreateForm
+
+
+
     template_name = 'leads/update.html'
 
 
     def get_success_url(self, **kwargs):
         return reverse_lazy('leads:LeadDetails')
 
-	# success_url = reverse_lazy('clients:projectdetails')
+
+    
+    
+    
+    def get_queryset(self):
+        queryset=LEADS.objects.all()
+        return queryset
+
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        return super().form_valid(form)
+
+        
+        
+	#success_url = reverse_lazy('clients:projectdetails')
 
 
 	#def get_success_url(self, **kwargs):
 		#return reverse_lazy('clients:projectdetails', args=(self.object.id,))
+
+
+
 
 
 class LeadDelete(DeleteView):
