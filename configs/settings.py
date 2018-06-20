@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'apps.time_entry.apps.TimeEntryConfig',
     'apps.users.apps.UsersConfig',
     'apps.project.apps.ProjectConfig',
+    'apps.complaints.apps.ComplaintsConfig'
     #'apps.salary_percentages.apps.SalaryPercentagesConfig',
 
 ]
