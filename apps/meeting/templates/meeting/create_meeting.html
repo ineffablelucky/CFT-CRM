@@ -5,16 +5,16 @@
     <title>Create Meeting Page</title>
 </head>
 <body>
-    <form method="post" action="{% url 'meeting:create_meeting' %}">
+    <form method="post" action="{% url 'opportunity:meeting:create_meeting' oppo_id %}">
         {% csrf_token %}
+        <p>
+            {{ form.Opportunity.errors }} {{ form.Opportunity.label }} {{ form.Opportunity }}
+        </p>
         <p>
             {{ form.date.errors }} {{ form.date.label }} {{ form.date }}
         </p>
         <p>
             {{ form.extras.errors }} {{ form.extras.label }} {{ form.extras }}
-        </p>
-        <p>
-            {{ form.Opportunity.errors }} {{ form.Opportunity.label }} {{ form.Opportunity }}
         </p>
         <input type="submit" name="Create"/>
     </form>

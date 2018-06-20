@@ -4,6 +4,10 @@ from apps.users.models import MyUser
 
 
 class CreateMeeting(forms.ModelForm):
+    Opportunity = forms.CharField(
+        widget=forms.TextInput(attrs={'readonly': True}), label='Opportunity ID'
+    )
+
     date = forms.CharField(
         label='Meeting Date',
         widget=forms.TextInput(
@@ -14,15 +18,22 @@ class CreateMeeting(forms.ModelForm):
         label='Extra Personnel',
         queryset=MyUser.objects.filter(department='Marketing'),
     )
-    #Opportunity = forms.
+
     class Meta:
         model = MEETING
         fields = (
             'date',
             'extras',
-            'Opportunity',
         )
 
     def __init__(self, *args, **kwargs):
+        self.oppo = kwargs.pop('oppo_id')
         super().__init__(*args, **kwargs)
-        #self.fields['Opportunity'].initial =
+        self.fields['Opportunity'].initial = self.oppo
+
+    def save(self, commit=True):
+        instance = super().save(commit=False)
+        print(self.oppo)
+        instance.Opportunity_id = self.oppo
+        instance.save()
+        return instance
