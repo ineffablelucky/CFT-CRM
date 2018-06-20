@@ -1,5 +1,5 @@
 from django import forms
-from .models import Attendance, MyUser
+from .models import Attendance, MyUser, LeaveRequest
 import datetime
 from django.utils.timezone import utc
 from pytz import timezone
@@ -25,7 +25,7 @@ class LeaveForm(forms.ModelForm):
 
 
     class Meta:
-        model = Attendance
+        model = LeaveRequest
         fields = ('name', 'leave_type', 'date', 'end_date', 'note')
 
     def __init__(self, *args, **kwargs):
@@ -72,12 +72,14 @@ class LeaveForm(forms.ModelForm):
     def save(self, commit=True):
         instance = super(LeaveForm, self).save(commit=False)
         instance.user_id = self.logged_user.id
-
-        saved_instance = []
         if commit:
             data = []
             start_date = self.cleaned_data.get('date')
             end_date = self.cleaned_data.get('end_date')
+            instance.date = start_date
+            instance.end_date = end_date
+            instance.save()
+            """
             delta = datetime.timedelta(days=1)
             while start_date <= end_date:
                 data.append(start_date)
@@ -88,7 +90,8 @@ class LeaveForm(forms.ModelForm):
                 instance.date = date
                 instance.save()
                 saved_instance.append(self.instance)
-        return saved_instance
+            """
+        return instance
 
 
 """
