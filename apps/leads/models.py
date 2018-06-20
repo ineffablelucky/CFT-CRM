@@ -8,8 +8,8 @@ from django.db import models
 
 class LEADS(models.Model):
     contact_number=models.BigIntegerField()
-    company_name=models.CharField(max_length=45)
-    contact_person=models.CharField(max_length=45)
+    company_name=models.CharField(max_length=45,unique=True)
+    contact_person=models.CharField(max_length=45,unique=True)
     source=models.CharField(max_length=45)
     source_type=models.CharField(max_length=45)
     description=models.CharField(max_length=45)
@@ -19,4 +19,4 @@ class LEADS(models.Model):
 
 
     def __str__(self):
-        return self.description
+        return self.email

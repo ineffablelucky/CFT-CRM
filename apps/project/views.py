@@ -12,6 +12,8 @@ from ..module.models import Module
 class ProjectList(ListView):
     model = IT_Project
 
+
+
 class Employee_Project_List(ListView):
     model = IT_Project
 
