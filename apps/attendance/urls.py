@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import LeaveRequest, Completed, Clockin, Clock, Clockout, PastAttendance
+from .views import LeaveRequest, Completed, Clockin, Clock, Clockout, PastAttendance #LeaveTable
 
 app_name = 'attendance'
 urlpatterns = [
@@ -11,3 +11,5 @@ urlpatterns = [
     path('clock/out/', Clockout.as_view(), name='clockout'),
     path('userattendance/', PastAttendance.as_view(), name='pastattendance' )
 ]
+
+

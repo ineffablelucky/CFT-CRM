@@ -1,11 +1,14 @@
 from django.urls import path
 from django.views.generic import TemplateView
 from . import views
-from .views import TaskList, Employee_Task_List, TaskCreate
+from .views import TaskList, Employee_Task_List, TaskCreate, Edit_Task, Details_Task
 app_name = 'task'
 
 urlpatterns = [
-    path('', TaskList.as_view(template_name="manager_task_page.html"), name="manager_task_list"),
-    path('add/', TaskCreate.as_view(template_name="add_task.html"), name='add_task'),
-    path('employee/', Employee_Task_List.as_view(template_name="employee_task_page"), name="employee_task_page"),
+    path('<int:pk>/', TaskList.as_view(template_name="manager_task_page.html"), name="manager-task-view"),
+    path('add/', TaskCreate.as_view(), name='task-add'),
+    path('employee/', Employee_Task_List.as_view(template_name="employee_task_page.html"), name="employee-task"),
+    path('update/<int:pk>/', Edit_Task.as_view(), name='task-update'),
+    path('details/<int:pk>/', Details_Task.as_view(), name="task-details"),
+
 ]

@@ -34,3 +34,5 @@ class Attendance(models.Model):
 
     note = models.CharField(max_length=500, null=True)
 
+
+
