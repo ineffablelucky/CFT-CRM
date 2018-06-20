@@ -7,7 +7,7 @@ from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, UpdateView, DeleteView,ListView,DetailView,FormView
 from .models import LEADS
 from django.contrib.messages.views import SuccessMessageMixin
-from .forms import CreateForm,DetailForm,UpdateForm
+from .forms import CreateForm,DetailForm
 
 
 
@@ -54,13 +54,16 @@ class LeadCreate(CreateView):
 
 
 class LeadEdit(UpdateView):
-    form_class = UpdateForm
 
 
-    model = LEADS
+
+    form_class =CreateForm
+
 
     template_name = 'leads/update.html'
+    # form = form_class(initial={"logged_user": request.pk})
 
+    model = LEADS
 
     def get_success_url(self, **kwargs):
         return reverse_lazy('leads:LeadDetails')
