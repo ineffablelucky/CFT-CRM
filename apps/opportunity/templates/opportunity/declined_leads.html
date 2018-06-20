@@ -9,7 +9,7 @@
     <div height="200">Hello {{ user.username }}</div>
     <hr/>
     <div>
-        {% for leads in closed_leads %}
+        {% for leads in declined_leads %}
             <div >
                 <a href="{% url 'meeting:meeting_list' %}">
                     <p>
@@ -23,9 +23,6 @@
                     </p>
                     <p>
                         Assigned To : {{ leads.assigned_to.username }}
-                    </p>
-                    <p>
-                        Amount : {{ leads.price }}
                     </p>
                 </a>
             </div>
