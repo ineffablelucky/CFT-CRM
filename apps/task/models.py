@@ -14,9 +14,11 @@ class Task(models.Model):
     task_start_date_time = models.DateTimeField(blank=True,null=True,)
     task_end_date_time = models.DateTimeField(blank=True,null=True,)
     status = models.CharField(max_length=30, blank=True,null=True, choices=task_status)
+    expected_time = models.CharField(max_length=30, blank=True,null=True, default=4)
 
     def __str__(self):
         return self.task_name
+
 
 
 class Time_Entry(models.Model):

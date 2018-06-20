@@ -35,6 +35,7 @@ class RegistrationForm(UserCreationForm):
 
             designation = self.cleaned_data['designation']
             department = self.cleaned_data['department']
+
             if designation == 'Admin':
                 group_user = Group.objects.get_by_natural_key('Admin_Group')
                 group_user.user_set.add(myuser)
@@ -73,6 +74,7 @@ class RegistrationForm(UserCreationForm):
 
             else:
                 raise Exception("Not correct designation or department")
+
 
         return myuser
 
@@ -115,8 +117,8 @@ class RegistrationForm(UserCreationForm):
             raise forms.ValidationError("Only alphabets are allowed")
 
 
-    def clean_contact(self):
-        data = self.cleaned_data.get('contact')
+    def clean_contact_number(self):
+        data = self.cleaned_data.get('contact_Number')
         if data == None:
             pass
         else:
