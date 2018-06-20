@@ -17,50 +17,66 @@
         <tbody>
             {% for i in details %}
                 <tr>
-                    <td>{{  i.break_up }}</td>
+                    <td>Basic</td>
+                    <td>50% Gross</td>
+                    <td>{{  i.monthly_salary }}</td>
+                    <td> 12*{{  i.monthly_salary }} </td>
+                </tr>
+            {% endfor %}
+            {% for i in details %}
+                <tr>
+                    <td>HRA</td>
                     <td>{{  d.hra_percentage }}</td>
                     <td>{{  i.monthly_salary }}</td>
-                    <td>{{  i.yearly_salary }}</td>
+                    <td> 12*{{  i.monthly_salary }}</td>
                 </tr>
             {% endfor %}
             {% for i in details %}
                 <tr>
-                    <td>{{  i.break_up }}</td>
-                    <td>{{  d.allowances }}</td>
-                    <td>{{  i.monthly_salary }}</td>
-                    <td>{{  i.yearly_salary }}</td>
-                </tr>
-            {% endfor %}
-            {% for i in details %}
-                <tr>
-                    <td>{{  i.break_up }}</td>
+                    <td>PPF</td>
                     <td>{{  d.ppf_percentage }}</td>
                     <td>{{  i.monthly_salary }}</td>
-                    <td>{{  i.yearly_salary }}</td>
+                    <td>12*{{  i.monthly_salary }}</td>
                 </tr>
             {% endfor %}
             {% for i in details %}
                 <tr>
-                    <td>{{  i.break_up }}</td>
-                    <td>{{  deductions }}</td>
+                    <td>Allowances</td>
+                    <td>{{  d.allowances }}</td>
                     <td>{{  i.monthly_salary }}</td>
-                    <td>{{  i.yearly_salary }}</td>
+                    <td>12*{{  i.monthly_salary }}</td>
                 </tr>
             {% endfor %}
             {% for i in details %}
                 <tr>
-                    <td>{{  i.break_up }}</td>
-                    <td>{{ gross}}</td>
+                    <td>Gross</td>
+                    <td></td>
                     <td>{{  i.monthly_salary }}</td>
-                    <td>{{  i.yearly_salary }}</td>
+                    <td>12*{{  i.monthly_salary }}</td>
                 </tr>
             {% endfor %}
             {% for i in details %}
                 <tr>
-                    <td>{{  i.break_up }}</td>
-                    <td>{{ ctc }}</td>
+                    <td>CTC</td>
+                    <td>Gross + (PPF*2)</td>
                     <td>{{  i.monthly_salary }}</td>
-                    <td>{{  i.yearly_salary }}</td>
+                    <td>12*{{  i.montly_salary }}</td>
+                </tr>
+            {% endfor %}
+            {% for i in details %}
+                <tr>
+                    <td>Deduction Amount due to leaves</td>
+                    <td></td>
+                    <td>{{  i.monthly_salary }}</td>%}
+                    <td>12*{{  i.monthly_salary }}</td>
+                </tr>
+            {% endfor %}
+            {% for i in details %}
+                <tr>
+                    <td>Final</td>
+                    <td>Gross - Deduction Amount</td>
+                    <td>{{  i.monthly_salary }}</td>%}
+                    <td>12*{{  i.monthly_salary }}</td>
                 </tr>
             {% endfor %}
         </tbody>

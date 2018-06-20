@@ -27,5 +27,6 @@ urlpatterns = [
     path('salary/', include('apps.salary_percentages.urls')),
     path('leads/', include('apps.leads.urls')),
     path('meeting/', include('apps.meeting.urls')),
-    path('leave/', include('apps.leave.urls'))
+    path('leave/', include('apps.leave.urls')),
+    path('employee_salary/', include('apps.ctc.urls')),
 ]
