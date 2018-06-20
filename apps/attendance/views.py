@@ -75,7 +75,6 @@ class LeaveTable(LoginRequiredMixin, ListView):
 """
 
 
-
 class Completed(LoginRequiredMixin, TemplateView):
     template_name = 'complete.html'
 

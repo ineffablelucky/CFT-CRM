@@ -117,8 +117,8 @@ class RegistrationForm(UserCreationForm):
             raise forms.ValidationError("Only alphabets are allowed")
 
 
-    def clean_contact(self):
-        data = self.cleaned_data.get('contact')
+    def clean_contact_number(self):
+        data = self.cleaned_data.get('contact_Number')
         if data == None:
             pass
         else:
