@@ -54,7 +54,10 @@ body {
     <th>Assigned To</th>
     <th>Start Date</th>
     <th>Expected Time</th>
+    <th>Progress</th>
     <th>Time Taken</th>
+
+    <th>Status</th>
 
     </thead>
 
@@ -67,6 +70,9 @@ body {
         <td>{{ i.task_start_date_time }}</td>
         <td>{{ i.expected_time }}</td>
         <td>--</td>
+        <td>--</td>
+        <td>{{ i.status }}</td>
+
         <!--<td>-->
             <!--<form method="post">-->
                 <!--{% csrf_token %}-->

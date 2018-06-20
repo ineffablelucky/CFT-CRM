@@ -6,6 +6,7 @@ from django.utils import timezone
 from apps.opportunity.models import Opportunity
 from apps.users.models import MyUser
 from apps.client.models import CLIENT
+from datetime import timedelta
 
 class CreateProjectForm(ModelForm):
 
@@ -25,7 +26,7 @@ class CreateProjectForm(ModelForm):
 
     project_description = forms.CharField(
         label= 'PROJECT DESCRIPTION',
-        widget=forms.TextInput()
+        widget=forms.Textarea()
     )
 
     # opportunity = forms.ModelChoiceField(
@@ -93,11 +94,19 @@ class CreateProjectForm(ModelForm):
             'employees_per_project',
             'status',
         )
+    #
+    # def now_plus_30(self):
+    #     return timezone.now() + timedelta(days=30)
 
-    # def __init__(self,  *args, **kwargs):
-    #     super(CreateProjectForm, self).__init__(*args, **kwargs)
-    #     self.fields['project_name'].initial = timezone.now().date
-    #     self.fields['project_description'].widget.attrs['placeholder']= 'asfsadf'
+    def __init__(self,  *args, **kwargs):
+        super(CreateProjectForm, self).__init__(*args, **kwargs)
+        # self.fields['project_name'].initial = timezone.now().date
+        self.fields['project_start_date_time'].initial = timezone.now().date
+        self.fields['project_end_date_time'].initial = timezone.now().date
+        self.fields['project_description'].widget.attrs['placeholder']= 'asfsadf'
+        self.fields['project_name'].widget.attrs['placeholder']= 'write project name here'
+        self.fields['project_description'].widget.attrs['placeholder']= 'write project description here'
+        self.fields['project_total_working_hr'].widget.attrs['placeholder']= '10'
 
     def clean_project_name(self):
         value = self.cleaned_data.get('project_name')

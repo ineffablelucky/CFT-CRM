@@ -18,7 +18,6 @@ class Employee_Project_List(ListView):
     model = IT_Project
 
 class ProjectCreate(CreateView):
-    #model = IT_Project
     form_class = CreateProjectForm
     template_name = 'create_project_form.html'
     success_url = '/project'
@@ -29,19 +28,34 @@ class Edit_Project(UpdateView):
     template_name = "create_project_form.html"
     success_url = '/project'
 
-class Details_Project(DetailView):
+class ListModule(DetailView):
     model = IT_Project
     template_name = "project_view.html"
 
 
+    # print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
+    # context_object_name = 'project'
+    #
+    # def get_queryset(self):
+    #     #print('Helloooooooooooooooo')
+    #     #print(self.kwargs)
+    #     queryset = IT_Project.objects.filter(id=self.kwargs.get('pk'))
+    #     #print(queryset)
+    #     return queryset
+    #
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     context['id'] = self.kwargs.get('pk')
+    #     print(context)
+    #     return context
 
 
 
 
+    # queryset = Module.objects.order_by('module_name')
+    # context_object_name = 'modules'
 
-
-
-#     def form_valid(self, form):
+        #     def form_valid(self, form):
 #         form.save()
 #
 #     def get_success_url(self, **kwargs):
