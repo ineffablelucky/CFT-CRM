@@ -1,6 +1,4 @@
-from django.shortcuts import render, redirect
 from django.urls import path
-from . import views
 from .views import Index,CTC
 app_name = 'ctc'
 

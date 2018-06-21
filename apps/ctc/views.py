@@ -15,8 +15,7 @@ class CTC(LoginRequiredMixin,ListView):
     model = CTC_breakdown
     template_name = 'gross_sal.html'
 
-    def get_queryset(self):
-        details=CTC_breakdown.objects.get(employee_id= self.request.user)
-        year = timezone.now().year
-        d=Salary_calculations.objects.get(financial_year=year)
-        return details
+    #def query_data(self):
+
+
+
