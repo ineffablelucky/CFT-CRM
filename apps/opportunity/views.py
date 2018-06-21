@@ -17,10 +17,15 @@ class ListOppo(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         user_id = MyUser.objects.get(username=self.request.user)
-        print(user_id)
-        queryset = Opportunity.objects.filter(assigned_to=self.request.user)
-        print(type(queryset))
+        #print(user_id)
+        queryset2 = MEETING.objects.filter(extras__in=[self.request.user])
+        queryset = Opportunity.objects.filter(Q(assigned_to=self.request.user) | Q(meeting__in=queryset2)).distinct()
         return queryset
+
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     context['form'] = AddProjManager()
+    #     return context
 
 
 class C_Status(LoginRequiredMixin, UpdateView):

@@ -37,6 +37,18 @@
                 </tr>
             {% endfor %}
         </table>
+        <!--<div>-->
+                <!--<fieldset>-->
+                    <!--<legend>Add Meeting Notes</legend>-->
+                    <!--<form action="" method="post" style="display:inline">-->
+                        <!--{% csrf_token %}-->
+                        <!--<p>-->
+                            <!--{{ form.proj_manager.errors }} {{ form.proj_manager.label }} {{ form.proj_manager }}-->
+                        <!--</p>-->
+                        <!--<input type = submit value="Add ">-->
+                    <!--</form>-->
+                <!--</fieldset>-->
+        <!--</div>-->
     {% else %}
         <div>You don't have permission</div>
     {% endif %}
