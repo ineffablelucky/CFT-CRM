@@ -11,11 +11,11 @@ from apps.project.models import IT_Project
 #     return render(request, 'project_module.html', context)
 class Details_Project(DetailView):
     model = IT_Project
-    template_name = "project_view.html"
+    template_name = "project_details.html"
 
 class ListModule(ListView):
     model = Module
-    template_name = "project_view.html"
+    template_name = "project_details.html"
 
     queryset = Module.objects.order_by('module_name')
     context_object_name = 'modules'

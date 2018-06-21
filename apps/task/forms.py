@@ -7,23 +7,33 @@ from apps.opportunity.models import Opportunity
 from apps.users.models import MyUser
 from apps.client.models import CLIENT
 from apps.project.models import IT_Project
+from django.db.models import Q
+
+
+
 class CreateTaskForm(ModelForm):
 
     task_status = (
+        ('start later', 'start later'),
         ('started', 'started'),
         ('completed', 'completed'),
         ('in progress', 'in progress'),
     )
 
-    project = forms.ModelChoiceField(
-        label='PROJECT NAME',
-        # required=False,
-        queryset=IT_Project.objects.all(),
-        widget=forms.Select(),
+    # project = forms.ModelChoiceField(
+    #     label='PROJECT NAME',
+    #     # required=False,
+    #     queryset=IT_Project.objects.all(),
+    #     widget=forms.Select(),
+    # )
+
+    project = forms.CharField(
+        widget=forms.TextInput(attrs={'readonly': True}), label='PROJECT NAME'
     )
 
     task_name = forms.CharField(
         label = 'TASK NAME',
+
         widget=forms.TextInput(
 
         )
@@ -31,13 +41,14 @@ class CreateTaskForm(ModelForm):
 
     task_description = forms.CharField(
         label= 'TASK DESCRIPTION',
-        widget=forms.TextInput()
+        required=False,
+        widget=forms.Textarea()
     )
 
     employee_id = forms.ModelChoiceField(
-        label='ASSIGNED TO',
+        label='ASSIGN TO',
         # required=False,
-        queryset=MyUser.objects.all(),
+        queryset=MyUser.objects.filter(Q(department='IT') & Q(designation='Employee')),
         widget=forms.Select(),
     )
 
@@ -78,6 +89,29 @@ class CreateTaskForm(ModelForm):
             'status',
             'expected_time',
         )
+    def __init__(self,  *args, **kwargs):
+        super(CreateTaskForm, self).__init__(*args, **kwargs)
+
+        self.fields['task_start_date_time'].initial = timezone.now().date
+        self.fields['task_end_date_time'].initial = timezone.now().date
+        self.fields['task_description'].widget.attrs['placeholder']= 'write task description here'
+        self.fields['task_name'].widget.attrs['placeholder']= 'write task name here'
+        # self.fields['project_description'].widget.attrs['placeholder']= 'write project description here'
+
+
+
+    # def __init__(self, *args, **kwargs):
+    #     self.oppo = kwargs.pop('oppo_id')
+    #     super().__init__(*args, **kwargs)
+    #     self.fields['Opportunity'].initial = self.oppo
+    #
+    # def save(self, commit=True):
+    #     instance = super().save(commit=False)
+    #     print(self.oppo)
+    #     instance.Opportunity_id = self.oppo
+    #     instance.save()
+    #     return instance
+
 
     # def __init__(self,  *args, **kwargs):
     #     super(CreateProjectForm, self).__init__(*args, **kwargs)
@@ -115,6 +149,7 @@ class CreateTaskForm(ModelForm):
     #         raise forms.ValidationError("Only alphabets and numbers are allowed")
     #
 
+   
     def clean_expected_time(self):
          data = self.cleaned_data.get('expected_time')
          data = str(data)
