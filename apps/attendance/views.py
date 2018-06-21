@@ -58,7 +58,7 @@ class LeaveRequest(LoginRequiredMixin, CreateView):
         ins = form.save()
         # for i in ins:
         #     print(i.id)
-        return redirect('/')
+        return HttpResponse("Request Send")
 
 
 
@@ -100,6 +100,8 @@ class Clockin(LoginRequiredMixin, CreateView):
         if not request.user.is_authenticated:
             return HttpResponseForbidden
         elif Attendance.objects.filter(user_id=self.request.user.id, date=datetime.date.today()):
+            a = Attendance.objects.get(user_id = self.request.user.id, date=datetime.date.today())
+            print(type(a.time_in.hour), type(a.time_in.minute), type(a.time_in.second))
             return HttpResponse("Already Clocked In")
 
         else:
@@ -108,8 +110,15 @@ class Clockin(LoginRequiredMixin, CreateView):
                                       time_in=datetime.datetime.today(),
                                       status='present',
                                       )
+            if a.time_in.hour <= 9 and a.time_in.minute <= 30:
+                a.note = "On Time"
+            else:
+                hour_late = a.time_in.hour - 9
+                min_late = a.time_in.hour-30
+                a.note = str(hour_late)+" hrs" + str(min_late) + " mins Late"
+
             a.save()
-            return redirect('/')
+            return redirect('/attendance/userattendance')
 
 
 class Clockout(LoginRequiredMixin, UpdateView):
@@ -129,7 +138,7 @@ class Clockout(LoginRequiredMixin, UpdateView):
             else:
                 a.time_out = datetime.datetime.today()
                 a.save()
-            return redirect('/')
+            return redirect('/attendance/userattendance')
 
 
 class PastAttendance(LoginRequiredMixin, ListView):
@@ -139,6 +148,16 @@ class PastAttendance(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         delta = datetime.timedelta(days=3)
-        queryset = Attendance.objects.filter(Q(user_id=self.request.user) & Q(date__lt=datetime.date.today())
+        queryset = Attendance.objects.filter(Q(user_id=self.request.user) & Q(date__lte=datetime.date.today())
                                              & Q(date__gte=datetime.date.today()-delta))
+        return queryset
+
+
+class ShowAttendance(LoginRequiredMixin, ListView):
+    template_name = 'attendance/showattendance.html'
+    model = Attendance
+    context_object_name = 'attendance'
+
+    def get_queryset(self):
+        queryset = Attendance.objects.filter(date=datetime.date.today())
         return queryset
