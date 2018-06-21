@@ -33,7 +33,10 @@ class CreateMeeting(forms.ModelForm):
 
     def save(self, commit=True):
         instance = super().save(commit=False)
-        print(self.oppo)
+        print("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
+        print(instance)
         instance.Opportunity_id = self.oppo
-        instance.save()
+        if commit:
+            instance.save()
+        instance.extras.set(self.cleaned_data['extras'])
         return instance

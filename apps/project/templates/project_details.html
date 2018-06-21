@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>hjgjkhg</title>
+</head>
+<body>
+<h1>{{ object.project_name }}</h1>
+<p>{{ object.project_description }}</p>
+<p>Project start date: {{ object.project_start_date_time }}</p>
+<p>Project Deadline: {{ object.project_end_date_time|date }}</p>
+<p>status: {{ object.status }}</p>
+Team Members:
+
+    {% for i in object.employees_per_project.all %}
+        <ul><li>{{ i.username }}</li></ul>
+    {% endfor %}
+
+<!--<h1>Hi, Welcome to Project Modules</h1><hr>-->
+
+<!--<form><input type="submit" align="right" formaction="module/" value="CREATE NEW MODULE"></form>-->
+
+<!--<table border="1">-->
+    <!--<thead>-->
+    <!--<th>Module Name</th>-->
+    <!--<th>Module Description</th>-->
+    <!--</thead>-->
+
+    <!--<tbody>-->
+    <!--{% for module in object.modules %}-->
+    <!--<tr>-->
+        <!--<td>{{ module.module_name }}</td>-->
+        <!--<td>{{ module.module_description }}</td>-->
+    <!--</tr>-->
+    <!--{% endfor %}-->
+    <!--</tbody>-->
+<!--</table>-->
+
+
+</body>
+</html>

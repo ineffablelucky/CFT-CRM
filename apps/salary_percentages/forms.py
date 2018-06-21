@@ -14,7 +14,7 @@ class SalaryForm(ModelForm):
         allowances = forms.CharField(
             widget=forms.TextInput(
                 attrs={'type' : 'number'}
-            )
+            ))
         '''
 
     class Meta:
@@ -24,6 +24,7 @@ class SalaryForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super(SalaryForm, self).__init__(*args, **kwargs)
         self.fields['financial_year'].initial = timezone.now().year
-
+        print(type(timezone.now().year))
     #def clean_allowances(self  ):
 
+    

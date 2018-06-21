@@ -8,11 +8,12 @@ from apps.opportunity.forms import ChangeStatus, AddProjManager
 from django.urls import reverse, reverse_lazy
 from django.db.models import Q
 
+
 class ListOppo(LoginRequiredMixin, ListView):
     model = Opportunity
     template_name = 'opportunity/employee_leads.html'
     context_object_name = 'opportunity'
-    print("Hello!!")
+    #print("Hello!!")
 
     def get_queryset(self):
         user_id = MyUser.objects.get(username=self.request.user)

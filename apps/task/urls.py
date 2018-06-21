@@ -5,10 +5,14 @@ from .views import TaskList, Employee_Task_List, TaskCreate, Edit_Task, Details_
 app_name = 'task'
 
 urlpatterns = [
-    path('<int:pk>/', TaskList.as_view(template_name="manager_task_page.html"), name="manager-task-view"),
-    path('add/', TaskCreate.as_view(), name='task-add'),
-    path('employee/', Employee_Task_List.as_view(template_name="employee_task_page.html"), name="employee-task"),
+    path('<int:pk>/', TaskList.as_view(template_name="task_manager_list.html"), name="manager-task-view"),
+
+    path('<int:pk>/add/', TaskCreate.as_view(), name='task-add'),
     path('update/<int:pk>/', Edit_Task.as_view(), name='task-update'),
     path('details/<int:pk>/', Details_Task.as_view(), name="task-details"),
+
+
+
+
 
 ]
