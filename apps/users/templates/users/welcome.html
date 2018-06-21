@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome User</title>
+</head>
+<body>
+
+
+    {% if user.is_authenticated %}
+    {% load users_extras %}
+
+    <h3>Hello {{ user.first_name }} {{user.last_name}}</h3>
+
+        {% if user|has_group:"Employee Group" %}
+        <div>
+
+            <a href="{% url 'attendance:pastattendance' %}"><button>Attendance</button></a><br><br>
+
+            <a href="{% url 'users:profile' user.id %}" blank="True"><button>Profile</button></a><br><br>
+
+            {% if user.department == 'IT' %}
+                <a href="{% url 'project:employee-project' %}"><button>Project</button></a><br><br>
+
+            {% elif user.department == 'Marketing' %}
+                <a href="{% url 'opportunity:list_oppo' %}"><button>Leads</button></a><br><br>
+
+            {% endif %}
+
+            <a href="{% url 'attendance:leave_request' %}"><button>Leave Request</button></a><br><br>
+
+        </div>
+        {% endif %}
+
+        {% if user|has_group:"Marketing Manager Group" %}
+        <div>
+            <a href="{% url 'leads:LeadDetails' %}"><button>Lead Management</button></a><br><br>
+        </div>
+
+        {% elif user|has_group:"IT Manager Group" %}
+        <div>
+            <a href="{% url 'project:manager-project-view' %}"><button>Project Management</button></a>
+        </div>
+        {% endif %}
+
+    <a href="{% url 'users:logout' %}"><button>Log out</button></a>
+
+    {% else %}
+        <h2>Please enter correct details</h2>
+        <p>Login again</p>
+        <a href="{% url 'users:login' %}"><button>Login</button></a>
+    {% endif %}
+
+</body>
+</html>
+
+
+
+

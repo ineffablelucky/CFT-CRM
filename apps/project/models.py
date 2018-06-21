@@ -2,6 +2,7 @@ from django.db import models
 from ..users.models import MyUser
 from ..client. models import CLIENT
 from ..opportunity.models import Opportunity
+from datetime import datetime
 
 class IT_Project(models.Model):
     Project_status = (
@@ -12,11 +13,10 @@ class IT_Project(models.Model):
     )
     opportunity = models.OneToOneField(Opportunity, on_delete=models.PROTECT, blank=True, null=True, default=None)
     project_name = models.CharField(max_length=30, blank=True,null=True,)
-    project_description = models.CharField(max_length=30, blank=True,null=True,)
-    project_manager = models.ForeignKey(MyUser, on_delete=models.CASCADE, related_name='project_name', blank=True,null=True,)
+    project_description = models.CharField(max_length=10000, blank=True,null=True,)
     project_price = models.IntegerField(blank=True,null=True,)
-    project_start_date_time = models.DateTimeField(blank=True,null=True,)
-    project_end_date_time = models.DateTimeField(blank=True,null=True,)
+    project_start_date_time = models.DateTimeField(blank=True,null=True, default=datetime.now())
+    project_end_date_time = models.DateTimeField(blank=True,null=True, default=None)
     project_total_working_hr = models.IntegerField(blank=True,null=True,)
     project_total_time_taken = models.IntegerField(blank=True,null=True,)
     client_id = models.ForeignKey(CLIENT, on_delete=models.CASCADE, blank=True, null=True)
@@ -29,3 +29,7 @@ class IT_Project(models.Model):
     # def get_employees_per_project(self):
     #     return ",".join([str(p) for p in self.employees_per_project.all()])
     #
+
+    def get_employees(self):
+        return ",".join([str(p) for p in self.employees_per_project.all()])
+
