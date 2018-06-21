@@ -31,7 +31,7 @@
 
     <!-- Custom Theme Style -->
     <link href="{% static 'build/css/custom.min.css' %}" rel="stylesheet">
-    {% endblock %}
+    {% endblock stylesheets %}
 
     {% block extra_stylesheets %}
     {% endblock extra_stylesheets %}
@@ -289,6 +289,7 @@
         <!-- /top navigation -->
         {% endblock top-navigation %}
 
+        {% block page-content %}
         <!-- page content -->
         <div class="right_col" role="main">
           <!-- top tiles -->
@@ -982,7 +983,9 @@
           </div>
         </div>
         <!-- /page content -->
+        {% endblock page-content %}
 
+        {% block footer %}
         <!-- footer content -->
         <footer>
           <div class="pull-right">
@@ -991,9 +994,11 @@
           <div class="clearfix"></div>
         </footer>
         <!-- /footer content -->
+        {% endblock footer %}
       </div>
     </div>
 
+    {% block scripts %}
     <!-- jQuery -->
     <script src="{% static 'vendors/jquery/dist/jquery.min.js' %}"></script>
     <!-- Bootstrap -->
@@ -1034,6 +1039,7 @@
 
     <!-- Custom Theme Scripts -->
     <script src="{% static 'build/js/custom.min.js' %}"></script>
+  {% endblock scripts %}
 	
   </body>
 </html>
