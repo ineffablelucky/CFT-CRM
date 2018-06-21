@@ -66,6 +66,10 @@ class C_Leads(ListView):
     def get_queryset(self):
         queryset = Opportunity.objects.filter(status='Approved')
         return queryset
+    #
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     context['oppo_id'] =
 
 
 class D_Leads(ListView):
