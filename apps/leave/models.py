@@ -13,7 +13,6 @@ class Leave(models.Model):
 
 
 def create_profile(sender, **kwargs):
-    print(kwargs)
     if kwargs['created']:
         Leave.objects.create(user=kwargs['instance'])
 

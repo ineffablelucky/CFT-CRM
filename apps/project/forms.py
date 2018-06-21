@@ -3,9 +3,10 @@ from django.forms import ModelForm
 from .models import IT_Project
 from django import forms
 from django.utils import timezone
-from apps.opportunity.models import Opportunity
 from apps.users.models import MyUser
-from apps.client.models import CLIENT
+from django.db.models import Q
+import datetime
+
 
 class CreateProjectForm(ModelForm):
 
@@ -25,7 +26,7 @@ class CreateProjectForm(ModelForm):
 
     project_description = forms.CharField(
         label= 'PROJECT DESCRIPTION',
-        widget=forms.TextInput()
+        widget=forms.Textarea()
     )
 
     # opportunity = forms.ModelChoiceField(
@@ -70,7 +71,7 @@ class CreateProjectForm(ModelForm):
     # )
     employees_per_project = forms.ModelMultipleChoiceField(
         label='ALOT EMPLOYEES TO PROJECT',
-        queryset=MyUser.objects.all(),
+        queryset=MyUser.objects.filter(Q(department='IT') & Q(designation='Employee')),
     )
 
     status = forms.ChoiceField(
@@ -93,11 +94,23 @@ class CreateProjectForm(ModelForm):
             'employees_per_project',
             'status',
         )
+    #
+    # def now_plus_30(self):
+    #     return timezone.now() + timedelta(days=30)
 
-    # def __init__(self,  *args, **kwargs):
-    #     super(CreateProjectForm, self).__init__(*args, **kwargs)
-    #     self.fields['project_name'].initial = timezone.now().date
-    #     self.fields['project_description'].widget.attrs['placeholder']= 'asfsadf'
+    def __init__(self,  *args, **kwargs):
+        super(CreateProjectForm, self).__init__(*args, **kwargs)
+        # self.fields['project_name'].initial = timezone.now().date
+        if self.instance.pk is None:
+            self.fields['project_start_date_time'].initial = timezone.now().date
+            self.fields['project_end_date_time'].initial = timezone.now().date
+        else:
+            d = datetime.datetime.strptime(str(self.instance.project_start_date_time), "%Y-%m-%d %H:%M:%S")
+            self.fields['project_start_date_time'].initial = d.strftime('%d/%m/%Y')
+        self.fields['project_description'].widget.attrs['placeholder']= 'asfsadf'
+        self.fields['project_name'].widget.attrs['placeholder']= 'write project name here'
+        self.fields['project_description'].widget.attrs['placeholder']= 'write project description here'
+        self.fields['project_total_working_hr'].widget.attrs['placeholder']= '10'
 
     def clean_project_name(self):
         value = self.cleaned_data.get('project_name')

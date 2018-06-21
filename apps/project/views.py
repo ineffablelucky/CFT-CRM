@@ -1,24 +1,22 @@
 from django.shortcuts import render, HttpResponseRedirect
 from .models import IT_Project
-from django.views.generic import TemplateView, ListView, CreateView, UpdateView, DeleteView, DetailView
+from django.views.generic import ListView, CreateView, UpdateView, DetailView
 from .forms import CreateProjectForm
-from django.views.generic.edit import FormView
-import json
-from django.http import HttpResponse
-from django.urls import reverse_lazy
-from ..module.models import Module
-
 
 class ProjectList(ListView):
     model = IT_Project
 
-
-
 class Employee_Project_List(ListView):
     model = IT_Project
+    template_name = "my projects.html"
+
+    def get_queryset(self):
+        temp = IT_Project.objects.filter(employees_per_project=self.request.user)
+        print(temp)
+        return temp
+
 
 class ProjectCreate(CreateView):
-    #model = IT_Project
     form_class = CreateProjectForm
     template_name = 'create_project_form.html'
     success_url = '/project'
@@ -29,23 +27,8 @@ class Edit_Project(UpdateView):
     template_name = "create_project_form.html"
     success_url = '/project'
 
-class Details_Project(DetailView):
+class ListModule(DetailView):
     model = IT_Project
-    template_name = "project_view.html"
+    template_name = "project_details.html"
 
 
-
-
-
-
-
-
-
-#     def form_valid(self, form):
-#         form.save()
-#
-#     def get_success_url(self, **kwargs):
-#         return reverse_lazy('project:manager-project-view')
-#
-# class Project_Delete(DeleteView):
-#     model = IT_Project
