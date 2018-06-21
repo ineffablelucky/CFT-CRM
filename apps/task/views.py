@@ -36,7 +36,7 @@ class Employee_Task_List(ListView):
 class TaskCreate(CreateView):
     form_class = CreateTaskForm
     template_name = "create_task_form.html"
-    success_url = '/task/1'
+    success_url = '/task'
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
