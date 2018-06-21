@@ -58,7 +58,7 @@ class LeaveRequest(LoginRequiredMixin, CreateView):
         ins = form.save()
         # for i in ins:
         #     print(i.id)
-        return redirect('/')
+        return HttpResponse("Request Send")
 
 
 
