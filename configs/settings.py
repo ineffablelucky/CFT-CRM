@@ -14,8 +14,15 @@ import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-
+print('base ' + BASE_DIR)
+SETTINGS_DIR = os.path.dirname(__file__)
+print(SETTINGS_DIR)
+PROJECT_PATH = os.path.join(SETTINGS_DIR, os.pardir)
+print(PROJECT_PATH)
+PROJECT_PATH = os.path.abspath(PROJECT_PATH)
+print(PROJECT_PATH)
+TEMPLATE_PATH = os.path.join(PROJECT_PATH, 'static/')
+print(TEMPLATE_PATH)
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
@@ -25,7 +32,7 @@ SECRET_KEY = '8ynr_%1ly_!ga)jn9pil%lrny6i8@#clf!#)frj%lg-0dx(9(o'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -71,12 +78,14 @@ ROOT_URLCONF = 'configs.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [TEMPLATE_PATH,],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
+                'django.template.context_processors.media',
+                'django.template.context_processors.static',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
@@ -139,11 +148,16 @@ USE_TZ = False
 
 STATIC_URL = '/static/'
 
-try:
-    from configs.local_settings import *
-except ImportError as e:
-    pass
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR , 'static'),
+)
 
+STATICFILES_FINDERS = [
+  'django.contrib.staticfiles.finders.FileSystemFinder',
+  'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+]
+
+#STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 LOGIN_REDIRECT_URL='/'
 
@@ -154,3 +168,9 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 AUTH_USER_MODEL = 'users.MyUser'
+
+try:
+    from configs.local_settings import *
+except ImportError as e:
+    pass
+

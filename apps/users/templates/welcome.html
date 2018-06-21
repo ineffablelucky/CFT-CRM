@@ -29,7 +29,7 @@
 
             <a href="{% url 'attendance:leave_request' %}"><button>Leave Request</button></a><br><br>
 
-        </div><br>
+        </div>
         {% endif %}
 
         {% if user|has_group:"Marketing Manager Group" %}
@@ -43,8 +43,7 @@
         </div>
         {% endif %}
 
-
-
+    <a href="{% url 'users:logout' %}"><button>Log out</button></a>
 
     {% else %}
         <h2>Please enter correct details</h2>

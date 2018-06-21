@@ -6,6 +6,13 @@
 </head>
 <body>
 
+    {% if user.is_authenticated %}
+    <h3>Hello {{ user.first_name }} {{user.last_name }}. You are already logged in!</h3>
+    <br>
+    <a href="{% url 'users:logout' %}"><button>Log out</button></a>
+
+
+    {% else %}
     <form method="POST", action="{% url 'users:login' %}">
         {% csrf_token %}
 
@@ -13,6 +20,7 @@
         <label>Password: <input type="password" name="password" /></label>
         <input type="submit" value="Login" />
     </form>
+    {% endif %}
 
 </body>
 </html>
