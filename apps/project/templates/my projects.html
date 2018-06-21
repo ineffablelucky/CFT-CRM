@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Projects</title>
+</head>
+<body>
+<body>
+<h1>My Projects!</h1><hr>
+<br><br>
+<table border="1">
+    <thead>
+    <th>Project ID</th>
+    <th>Project Name</th>
+    <th>Project Head</th>
+    <th>Status</th>
+    <th>Actions</th>
+    </thead>
+
+    <tbody>
+    {% for p in object_list %}
+    <tr>
+        <td>{{ p.id }}</td>
+        <td>{{ p.project_name }}</td>
+        <td>--</td>
+        <td>{{ p.status }}</td>
+        <td>
+            <form method="post" action="{% url 'project:employee-project-view' p.id %}">
+                {% csrf_token %}
+
+                <a href="{% url 'project:employee-project-view' p.id %}"><button>View</button></a>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+</body>
+</html>
+</body>
+</html>
