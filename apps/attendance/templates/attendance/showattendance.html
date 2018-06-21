@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<table border="1">
+    <tr>
+        <th>Employee Id</th>
+        <th>Department</th>
+        <th>Name</th>
+        <th>Clock-in</th>
+        <th>Clock-out</th>
+        <th>Late</th>
+        <th>Attendance</th>
+    </tr>
+    {% for a in attendance %}
+    <tr>
+
+            <td>{{ a.user.id }}</td>
+            <td>{{ a.user.department }}</td>
+            <td>{{ a.user.first_name }} {{a.user.middle_name }} {{ a.user.last_name }}</td>
+            <td>{{ a.time_in }}</td>
+            <td>{{ a.time_out }}</td>
+            <td>{{ a.note }}</td>
+            <td>{{ a.status }}</td>
+
+    </tr>
+    {% endfor %}
+</table>
+</body>
+</html>

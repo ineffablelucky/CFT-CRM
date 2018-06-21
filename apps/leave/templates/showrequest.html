@@ -11,12 +11,12 @@
 <p><b>Date:</b>&nbsp;&nbsp;&nbsp;&nbsp; <b>From:</b> {{ leave.date }} &nbsp;&nbsp; <b>To:</b> {{ leave.end_date }}</p>
 <p><b>Status:</b> {{ leave.status }}</p>
 <p><b>Reason:</b> {{ leave.note }}</p>
-<form action="approve/{{ leave.id }}" method="post">
+<form action="approve/{{ leave.id }}" style="display:inline" method="post">
     {% csrf_token %}
 
     <button type="submit">Approve</button>
 </form>
-<form action="reject/{{ leave.id }}" method="post">
+<form action="reject/{{ leave.id }}" style="display:inline" method="post">
     {% csrf_token %}
 
     <button type="submit">Reject</button>
