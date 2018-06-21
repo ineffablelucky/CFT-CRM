@@ -6,14 +6,14 @@ from django.utils import timezone
 from django.views.generic import FormView,ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-class Index(LoginRequiredMixin,FormView):
+class Download_salary(LoginRequiredMixin,FormView):
     form_class = SalaryGenerationForm
-    template_name = 'get_salary.html'
+    template_name = 'ctc/get_salary.html'
 
 
 class CTC(LoginRequiredMixin,ListView):
     model = CTC_breakdown
-    template_name = 'gross_sal.html'
+    template_name = 'ctc/gross_sal.html'
 
     #def query_data(self):
 
