@@ -27,8 +27,8 @@ class CreateTaskForm(ModelForm):
     # )
 
     project = forms.CharField(
-        widget=forms.TextInput(attrs={'type' :'readonly'}), label='PROJECT NAME'
-        
+        widget=forms.TextInput(attrs={'type':'readonly'}), label='PROJECT NAME'
+
     )
 
     task_name = forms.CharField(

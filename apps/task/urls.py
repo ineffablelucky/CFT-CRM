@@ -11,7 +11,7 @@ urlpatterns = [
     path('update/<int:pk>/', Edit_Task.as_view(), name='task-update'),
     path('details/<int:pk>/', Details_Task.as_view(), name="task-details"),
 
-    path('<int:pk>', Employee_Task_List.as_view(template_name="employee_task_page.html"), name="employee-task"),
+
 
 
 
