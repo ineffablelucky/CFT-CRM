@@ -6,7 +6,8 @@
 </head>
 <body>
 <h1> Leave Request form</h1>
-<form action="{% url 'attendance:leave_request' %}" method="post">
+<div style="float:left; margin-right:20px" >
+<form action="{% url 'attendance:leave_request'%}" method="post">
     {% csrf_token %}
         <div>
             {{ form.name.label }}
@@ -36,7 +37,7 @@
     <p>Reason:</p>
     <p>&emsp;&emsp;&emsp;&emsp;{{ form.note }}</p>-->
 
-</form>
+</form></div>
 <br>
 <br>
 <table border="1">
