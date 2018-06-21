@@ -5,7 +5,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import CreateleaveForm
 from ..attendance.models import Attendance, LeaveRequest
 from .models import Leave
-from django.http import HttpResponseForbidden
+from django.http import HttpResponseForbidden, HttpResponse
 from ..users.models import MyUser
 from django.db.models import Q
 import datetime
@@ -49,24 +49,27 @@ class Approve(LoginRequiredMixin, UpdateView):
 
         else:
             a = LeaveRequest.objects.get(id=self.kwargs.get('id'))
-            a.status = "Approved"
-            key = a.user_id
-            sdate = a.date
-            ltype = a.leave_type
-            edate = a.end_date
-            delta = datetime.timedelta(days=1)
-            while sdate <= edate:
-                l = Leave.objects.get(user_id=key)
-                if ltype == "PL":
-                    l.pl = l.pl-1
-                elif ltype == "CL":
-                    l.cl = l.cl -1
-                else:
-                    l.half_day = l.half_day-1
-                l.save()
-                sdate=sdate+delta
-            a.save()
-            return redirect('/leave/leaverequest')
+            if a.status == "Pending":
+                a.status = "Approved"
+                key = a.user_id
+                sdate = a.date
+                ltype = a.leave_type
+                edate = a.end_date
+                delta = datetime.timedelta(days=1)
+                while sdate <= edate:
+                    l = Leave.objects.get(user_id=key)
+                    if ltype == "PL":
+                        l.pl = l.pl-1
+                    elif ltype == "CL":
+                        l.cl = l.cl -1
+                    else:
+                        l.half_day = l.half_day-1
+                    l.save()
+                    sdate=sdate+delta
+                a.save()
+                return redirect('/leave/leaverequest')
+            else:
+                return HttpResponse("Already Approved or Rejected")
 
 
 class Reject(LoginRequiredMixin, UpdateView):
@@ -77,8 +80,11 @@ class Reject(LoginRequiredMixin, UpdateView):
 
         else:
             a = LeaveRequest.objects.get(id=self.kwargs.get('id'))
-            a.status = "Rejected"
-            a.save()
-            return redirect('/leave/leaverequest')
+            if a.status == "Pending":
+                a.status = "Rejected"
+                a.save()
+                return redirect('/leave/leaverequest')
+            else:
+                return HttpResponse("Already Approved or Rejected")
 
 
