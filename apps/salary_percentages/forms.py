@@ -27,3 +27,4 @@ class SalaryForm(ModelForm):
         print(type(timezone.now().year))
     #def clean_allowances(self  ):
 
+    def

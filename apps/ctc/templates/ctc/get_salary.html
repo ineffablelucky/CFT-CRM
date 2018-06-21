@@ -1,10 +1,16 @@
-{% extends "users/welcome.html" %}
-
-{% block contents %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
     <a href ="{% url 'ctc:ctc' %}">Get CTC Breakdown</a><br><br>
     <form method="GET">
         {% csrf_token %}
         {{  form }}
         <input type="submit" value="Download Salary Slip"/>
     </form>
-{% endblock %}
+
+</body>
+</html>
