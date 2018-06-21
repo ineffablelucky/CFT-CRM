@@ -8,11 +8,12 @@ from apps.opportunity.forms import ChangeStatus, AddProjManager
 from django.urls import reverse, reverse_lazy
 from django.db.models import Q
 
+
 class ListOppo(LoginRequiredMixin, ListView):
     model = Opportunity
     template_name = 'opportunity/employee_leads.html'
     context_object_name = 'opportunity'
-    print("Hello!!")
+    #print("Hello!!")
 
     def get_queryset(self):
         user_id = MyUser.objects.get(username=self.request.user)
@@ -26,7 +27,7 @@ class C_Status(LoginRequiredMixin, UpdateView):
     model = Opportunity
     template_name = 'opportunity/change_status.html'
     form_class = ChangeStatus
-    success_url = reverse_lazy('list_oppo')
+    success_url = reverse_lazy('opportunity:list_oppo')
 
 
 class A_Leads(ListView):
@@ -50,3 +51,24 @@ class A_PManager(UpdateView):
     form_class = AddProjManager
     template_name = 'opportunity/assigned_leads.html'
     success_url = reverse_lazy('opportunity:assign_lead')
+
+
+class C_Leads(ListView):
+    model = Opportunity
+    template_name = 'opportunity/closed_leads.html'
+    context_object_name = 'closed_leads'
+
+    def get_queryset(self):
+        queryset = Opportunity.objects.filter(status='Approved')
+        return queryset
+
+
+class D_Leads(ListView):
+    model = Opportunity
+    template_name = 'opportunity/declined_leads.html'
+    context_object_name = 'declined_leads'
+
+    def get_queryset(self):
+        queryset = Opportunity.objects.filter(status='Rejected')
+        return queryset
+

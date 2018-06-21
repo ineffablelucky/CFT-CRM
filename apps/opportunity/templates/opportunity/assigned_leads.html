@@ -11,7 +11,7 @@
     <div>
         {% for assign in assigned_leads %}
             <div >
-                <a href="{% url 'meeting:meeting_list' %}">
+                <a href="{% url 'opportunity:meeting:meeting_list' assign.id %}">
                     <p>
                         Company Name: {{ assign.assigned_to.username }}
                     </p>
