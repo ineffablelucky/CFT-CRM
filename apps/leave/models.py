@@ -1,5 +1,7 @@
 from django.db import models
 from ..users.models import MyUser
+from django.conf import settings
+from django.db.models.signals import post_save
 
 
 class Leave(models.Model):
@@ -8,3 +10,12 @@ class Leave(models.Model):
     half_day = models.IntegerField(default=8)
     comp_off = models.IntegerField(default=8)
     user = models.OneToOneField(MyUser, on_delete=models.PROTECT, blank=True, default=None)
+
+
+def create_profile(sender, **kwargs):
+    print(kwargs)
+    if kwargs['created']:
+        Leave.objects.create(user=kwargs['instance'])
+
+
+post_save.connect(create_profile, sender=settings.AUTH_USER_MODEL)
