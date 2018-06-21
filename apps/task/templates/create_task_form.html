@@ -8,7 +8,7 @@
 <h1>This is a Task Entry form!</h1><hr>
 
 
-<form method="post" action="">
+<form action="{% url 'task:task-add' project_id %}" method="post">
     {% csrf_token %}
         <div>
             {{ form.project.label }}
