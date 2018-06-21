@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Manager's Task view</title>
+<style>
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.topnav {
+  overflow: hidden;
+  background-color: #333;
+}
+
+.topnav a {
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.topnav a.active {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.topnav-right {
+  float: right;
+}
+</style>
+</head>
+<body>
+<h1>Hi, Welcome to Project's Task List!</h1><hr>
+
+
+<table border="1">
+    <thead>
+    <th>Task Name</th>
+    <th>Task Description</th>
+    <th>Task Start Date</th>
+    <th>Expected Time</th>
+    <th>Progress</th>
+    <th>Status</th>
+    </thead>
+
+    <tbody>
+    {% for i in task_list %}
+    <tr>
+        <td><a href="{% url 'task:task-details' i.id %}">{{ i.task_name }}</a></td>
+        <td>{{ i.task_description}}</td>
+        <td>{{ i.task_start_date_time }}</td>
+        <td>{{ i.expected_time }}</td>
+        <td>--</td>
+        <td>{{ i.status }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+</body>
+</html>

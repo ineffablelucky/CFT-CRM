@@ -30,9 +30,7 @@
                 <hr/>
             </div>
         {% endfor %}
-        <form action="{% url 'meeting:create_meeting' %}">
-            <input type="submit" value="Create Meeting"/>
-        </form>
+     <a href="{% url 'opportunity:meeting:create_meeting' oppo_id %}"><button type="button">Create Meeting</button></a>
     {% else %}
         <div>You don't have permission</div>
     {% endif %}

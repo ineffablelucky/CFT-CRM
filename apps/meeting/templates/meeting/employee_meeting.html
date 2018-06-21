@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Employee Meetings</title>
+</head>
+<body>
+    {% if user.is_authenticated %}
+        <div height="200">Hello {{ user.username }}</div>
+        <hr/>
+        {% for meeting in emp_meeting %}
+            <p>Opportunity ID: {{ meeting.Opportunity.pk }}</p>
+            <p>Meeting ID: {{ meeting.pk }}</p>
+            <p>Date: {{ meeting.date }}</p>
+            <p>
+                Assigned To: {{meeting.Opportunity.assigned_to}}
+            </p>
+            <div>
+                {% if meeting.extras is not NULL %}
+                Extras:<br/>
+                <ul>
+                    {% for extra in meeting.extras.all %}
+                    <li>{{ extra.username }}</li>
+                    {% endfor %}
+                    {% endif %}
+                </ul>
+            </div>
+            <hr/>
+            <hr/>
+        {% endfor %}
+    {% else %}
+        <div>You don't have permission</div>
+    {% endif %}
+</body>
+</html>

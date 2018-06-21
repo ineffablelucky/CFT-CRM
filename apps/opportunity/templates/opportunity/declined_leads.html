@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% if user.is_authenticated %}
+    <div height="200">Hello {{ user.username }}</div>
+    <hr/>
+    <div>
+        {% for leads in declined_leads %}
+            <div >
+                <a href="{% url 'meeting:meeting_list' %}">
+                    <p>
+                        Company Name: {{ leads.lead.company_name }}
+                    </p>
+                    <p>
+                        Project Manager: {{ leads.proj_manager.username }}
+                    </p>
+                    <p>
+                        Project Description : {{ leads.description }}
+                    </p>
+                    <p>
+                        Assigned To : {{ leads.assigned_to.username }}
+                    </p>
+                </a>
+            </div>
+            <hr/>
+            <hr/>
+        {% endfor %}
+    </div>
+{% else %}
+    <div>You don't have permission</div>
+{% endif %}
+</body>
+</html>

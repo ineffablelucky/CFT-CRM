@@ -19,7 +19,6 @@
 
             <a href="{% url 'users:profile' user.id %}" blank="True"><button>Profile</button></a><br><br>
 
-
             {% if user.department == 'IT' %}
                 <a href="{% url 'project:employee-project' %}"><button>Project</button></a><br><br>
 
@@ -28,11 +27,9 @@
 
             {% endif %}
 
-            <a href="{% url 'ctc:index' %}"><button>Salary</button></a><br><br>
-
             <a href="{% url 'attendance:leave_request' %}"><button>Leave Request</button></a><br><br>
 
-        </div><br>
+        </div>
         {% endif %}
 
         {% if user|has_group:"Marketing Manager Group" %}
@@ -45,10 +42,8 @@
             <a href="{% url 'project:manager-project-view' %}"><button>Project Management</button></a>
         </div>
         {% endif %}
-        {% block contents %}
-        {% endblock %}
 
-
+    <a href="{% url 'users:logout' %}"><button>Log out</button></a>
 
     {% else %}
         <h2>Please enter correct details</h2>

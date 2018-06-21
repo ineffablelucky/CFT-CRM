@@ -5,6 +5,36 @@
     <title>Title</title>
 </head>
 <body>
-This is the closed leads page!!
+{% if user.is_authenticated %}
+    <div height="200">Hello {{ user.username }}</div>
+    <hr/>
+    <div>
+        {% for leads in closed_leads %}
+            <div >
+                <a href="{% url 'meeting:meeting_list' %}">
+                    <p>
+                        Company Name: {{ leads.lead.company_name }}
+                    </p>
+                    <p>
+                        Project Manager: {{ leads.proj_manager.username }}
+                    </p>
+                    <p>
+                        Project Description : {{ leads.description }}
+                    </p>
+                    <p>
+                        Assigned To : {{ leads.assigned_to.username }}
+                    </p>
+                    <p>
+                        Amount : {{ leads.price }}
+                    </p>
+                </a>
+            </div>
+            <hr/>
+            <hr/>
+        {% endfor %}
+    </div>
+{% else %}
+    <div>You don't have permission</div>
+{% endif %}
 </body>
 </html>
