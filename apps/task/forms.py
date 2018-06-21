@@ -28,7 +28,6 @@ class CreateTaskForm(ModelForm):
 
     project = forms.CharField(
         widget=forms.TextInput(attrs={'type':'readonly'}), label='PROJECT NAME'
-
     )
 
     task_name = forms.CharField(
@@ -80,7 +79,7 @@ class CreateTaskForm(ModelForm):
     class Meta:
         model = Task
         fields = (
-            # 'project',
+             'project',
             'task_name',
             'task_description',
             'employee_id',
@@ -93,10 +92,11 @@ class CreateTaskForm(ModelForm):
         self.project_id = kwargs.pop('project_id')
         super(CreateTaskForm, self).__init__(*args, **kwargs)
         x = IT_Project.objects.get(id=self.project_id)
-        print('$$$$$$$$$$$$$$$$$$$$$$')
-        print(x.project_name)
+        print(x)
+
         self.fields['project'].initial = x.project_name
-        print('In form')
+
+
         print(self.fields['project'].initial)
         self.fields['task_start_date_time'].initial = timezone.now().date
         self.fields['task_end_date_time'].initial = timezone.now().date
@@ -138,39 +138,39 @@ class CreateTaskForm(ModelForm):
     #     else:
     #         pass
 
-    # def clean_project_name(self):
-    #     data = self.cleaned_data.get('project_name')
-    #     if re.match('^\w*$', data):
-    #     #if re.match(r'^[-a-zA-Z0-9_]+$',data):
-    #         return data
-    #     else:
-    #         raise forms.ValidationError("Only alphabets and numbers are allowed")
-    #
-    # def clean_project_description(self):
-    #     data = self.cleaned_data.get('project_description')
-    #     if re.match('^\w*$', data):
-    #     #if re.match(r'^[-a-zA-Z0-9_]+$',data):
-    #         return data
-    #     else:
-    #         raise forms.ValidationError("Only alphabets and numbers are allowed")
-    #
+    def clean_project_name(self):
+        data = self.cleaned_data.get('project_name')
+        if re.match('^\w*$', data):
+        #if re.match(r'^[-a-zA-Z0-9_]+$',data):
+            return data
+        else:
+            raise forms.ValidationError("Only alphabets and numbers are allowed")
+
+    def clean_project_description(self):
+        data = self.cleaned_data.get('project_description')
+        if re.match('^\w*$', data):
+        #if re.match(r'^[-a-zA-Z0-9_]+$',data):
+            return data
+        else:
+            raise forms.ValidationError("Only alphabets and numbers are allowed")
 
 
-    # def clean_expected_time(self):
-    #      data = self.cleaned_data.get('expected_time')
-    #      data = str(data)
-    #      if re.match(r'^[0-9_]+$', data):
-    #          return data
-    #      else:
-    #          raise forms.ValidationError("Only Numbers are alllowed")
 
-    # def clean_project_total_working_hr(self):
-    #      data = self.cleaned_data.get('project_total_working_hr')
-    #      data = str(data)
-    #      if re.match(r'^[0-9_]+$', data):
-    #          return data
-    #      else:
-    #          raise forms.ValidationError("Only Numbers are alllowed")
+    def clean_expected_time(self):
+         data = self.cleaned_data.get('expected_time')
+         data = str(data)
+         if re.match(r'^[0-9_]+$', data):
+             return data
+         else:
+             raise forms.ValidationError("Only Numbers are alllowed")
+
+    def clean_project_total_working_hr(self):
+         data = self.cleaned_data.get('project_total_working_hr')
+         data = str(data)
+         if re.match(r'^[0-9_]+$', data):
+             return data
+         else:
+             raise forms.ValidationError("Only Numbers are alllowed")
 
     # def clean_task_end_date_time(self):
     #     data = self.cleaned_data.get('project_end_date_time')
