@@ -13,6 +13,14 @@ class TaskList(ListView):
         queryset = Task.objects.filter(project__id=self.kwargs.get('pk'))
         return queryset
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['project_id'] = self.kwargs.get('pk')
+        print("5555555555555555555555555")
+        print(context)
+        return context
+
+
 class Employee_Task_List(ListView):
     model = Task
 
@@ -22,15 +30,25 @@ class Employee_Task_List(ListView):
         queryset = Task.objects.filter(project__id=self.kwargs.get('pk'))
         return queryset
 
+
 class TaskCreate(CreateView):
     form_class = CreateTaskForm
     template_name = "create_task_form.html"
     success_url = '/task/1'
 
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs.update({'project_id': self.kwargs.get('pk')})
+        print('*******************')
+        print(kwargs)
+        return kwargs
+
+
 class Edit_Task(UpdateView):
     form_class = CreateTaskForm
     template_name = "create_task_form.html"
     success_url = '/task'
+
 
 class Details_Task(DetailView):
     model = Task

@@ -51,7 +51,7 @@
 
         {% elif user|has_group:"IT Manager Group" %}
         <div>
-            <a href="{% url 'project:manager-project-view' %}"><button type="button">Project Management</button></a>
+            <a href="{% url 'project:project_manager_list' %}"><button type="button">Project Management</button></a>
         </div>
         {% endif %}
 
