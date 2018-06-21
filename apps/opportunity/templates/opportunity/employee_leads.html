@@ -25,7 +25,7 @@
             </tr>
             {% for op in opportunity %}
                 <tr>
-                    <td><a href="{% url 'meeting:emp_meeting' %}">{{ op.lead.company_name }}</a></td>
+                    <td><a href="{% url 'opportunity:meeting:emp_meeting' op.id %}">{{ op.lead.company_name }}</a></td>
                     <td>{{ op.description }}</td>
                     <td>{{ op.status }}</td>
                     <td>{{ op.client.username}}</td>

@@ -1,25 +1,28 @@
 from .models import LEADS
 from django import forms
 from django.forms import ModelForm
+
 from ..users.models import MyUser
 from .models import LEADS
+from django.db.models import Q
 
 import re
 
 
-class CreateForm(forms.ModelForm):
+class CreateForm(ModelForm):
     description = forms.CharField(
 
         label='Description',
-        required=False,
+
         widget=forms.Textarea()
     )
     website=forms.URLField()
+    x=0;
 
-
-
-
-
+    # def save(self,*args,**kwargs):
+    #     if not self.instance.pk:
+    #         super(CreateForm, self).save(*args, **kwargs)
+    #
 
 
 
@@ -64,12 +67,16 @@ class CreateForm(forms.ModelForm):
 
     def clean_email(self):
         data = self.cleaned_data.get('email')
-        try:
+        # user_id = self.initial.get("logged_user")
+
+        if not self.instance.pk:
             LEADS.objects.get(email=data)
-            print(data, '*********************')
             raise forms.ValidationError("Email already exists")
-        except LEADS.DoesNotExist:
+        else:
             return data
+
+
+
 
 
 
@@ -92,22 +99,13 @@ class CreateForm(forms.ModelForm):
 
     class Meta:
         model = LEADS
-        fields = ('contact_number','company_name','contact_person','source','source_type','email','assigned_boolean')
-
-
-
-
-
-
-
+        fields = ('contact_number','company_name','description','website','contact_person','source','source_type','email','assigned_boolean')
 
 class DetailForm(forms.Form):
     assign = forms.ModelChoiceField(
 
         queryset=MyUser.objects.filter(department='Marketing'),
         empty_label="selected employee"
-
-
 
     )
 

@@ -24,6 +24,7 @@ from .forms import CreateForm,DetailForm
 class LeadDetails(ListView,FormView):
     form_class = DetailForm
 
+
     model = LEADS
     fields='__all__'
     template_name = 'leads/details.html'
@@ -35,14 +36,15 @@ class LeadDetails(ListView,FormView):
 
 
 
+
 class LeadCreate(CreateView):
     model=LEADS
     form_class = CreateForm
     template_name = 'leads/create.html'
 
-    def form_valid(self, form):
-        form.instance.created_by = self.request.user
-        return super().form_valid(form)
+    # def form_valid(self, form):
+    #     form.instance.created_by = self.request.user
+    #     return super().form_valid(form)
 
     success_url = '/leads/details/'
 
@@ -53,10 +55,15 @@ class LeadCreate(CreateView):
 
 class LeadEdit(UpdateView):
 
-    model = LEADS
-    fields = '__all__'
-    template_name = 'leads/update.html'
 
+
+    form_class =CreateForm
+
+
+    template_name = 'leads/update.html'
+    # form = form_class(initial={"logged_user": request.pk})
+
+    model = LEADS
 
     def get_success_url(self, **kwargs):
         return reverse_lazy('leads:LeadDetails')

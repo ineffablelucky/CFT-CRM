@@ -28,7 +28,7 @@ $(document).ready(function() {
 });
 
 </script>
-
+<body>
 <form method="post" action="assign/">
 <div class="container">
 <table border="1" style="margin-right:8px">
@@ -49,7 +49,7 @@ $(document).ready(function() {
 
 {% for leads in object_list %}
     <tr>
-        <td><input type="checkbox" data-id="{{ leads.id }}" class="chk_selector"> </input></td>
+        <td><input type="checkbox" data-id="{{ leads.id }}" class="chk_selector"></input></td>
         <td>{{leads.contact_number}}</td>
         <td>{{leads.company_name}}</td>
         <td>{{leads.contact_person}}</td>
@@ -103,7 +103,7 @@ $(document).ready(function() {
 
     {% csrf_token %}
      <input type="hidden" name="ids" value="" class="id-input">
-    {{ form}}
+    {{ form }}
     <a href="">
         <input type="submit" value="Assign" id="ram"/></a>
 </div>
@@ -140,3 +140,4 @@ $(function(){
 
 
     </script>
+</body>
