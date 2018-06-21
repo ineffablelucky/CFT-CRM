@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect,HttpResponseRedirect,reverse
+from django.shortcuts import render,redirect,HttpResponse
 from . import models
 from .models import Salary_calculations
 from .forms import SalaryForm
@@ -16,7 +16,7 @@ def add(request):
             form.save()
             return redirect('/salary')
         else:
-            return HttpResponseRedirect(reverse('salary_percentages:salary_structure'))
+            return HttpResponse('Sorry! The salary_structure for this year has already been formed')
     else :
         form = SalaryForm()
         return render(request,'work/salary_struct_form.html',{'form':form})
