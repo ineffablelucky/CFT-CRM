@@ -103,7 +103,6 @@ def upload_csv(request):
         if csv_file.multiple_chunks():
             messages.error(request, "Uploaded file is too big (%.2f MB)." % (csv_file.size / (1000 * 1000),))
 
-
             return HttpResponseRedirect(reverse("leads:upload_csv"))
 
         file_data = csv_file.read().decode("utf-8")
