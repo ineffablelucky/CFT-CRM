@@ -1,8 +1,6 @@
-from django.shortcuts import render
 from .models import CTC_breakdown
 from .forms import SalaryGenerationForm
 from apps.salary_percentages.models import Salary_calculations
-from django.utils import timezone
 from django.views.generic import FormView,ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
@@ -13,9 +11,10 @@ class Download_salary(LoginRequiredMixin,FormView):
 
 class CTC(LoginRequiredMixin,ListView):
     model = CTC_breakdown
-    template_name = 'ctc/gross_sal.html'
+    template_name = 'ctc/ctc_breakdown.html'
 
     #def query_data(self):
+
 
 
 
