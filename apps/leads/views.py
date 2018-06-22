@@ -7,7 +7,7 @@ from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, UpdateView, DeleteView,ListView,DetailView,FormView
 from .models import LEADS
 from django.contrib.messages.views import SuccessMessageMixin
-from .forms import CreateForm,DetailForm
+from .forms import CreateForm,DetailForm,UpdateForm
 
 
 
@@ -57,7 +57,7 @@ class LeadEdit(UpdateView):
 
 
 
-    form_class =CreateForm
+    form_class =UpdateForm
 
 
     template_name = 'leads/update.html'
