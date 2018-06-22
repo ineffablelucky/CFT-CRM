@@ -34,6 +34,11 @@ class Attendance(models.Model):
 
     note = models.CharField(max_length=500, null=True)
 
+    class Meta:
+        permissions = (
+            ('view_attendance', 'Can view attendance'),
+        )
+
 
 class LeaveRequest(models.Model):
 
@@ -62,6 +67,9 @@ class LeaveRequest(models.Model):
     note = models.CharField(max_length=500, null=True)
     user = models.ForeignKey(MyUser, on_delete=models.PROTECT, default=None)
 
-
+    class Meta:
+        permissions = (
+            ('view_leaverequest', 'Can view Leave Request'),
+        )
 
 

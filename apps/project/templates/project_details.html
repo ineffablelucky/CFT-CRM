@@ -5,37 +5,42 @@
     <title>project detail page</title>
 </head>
 <body>
-<h1>{{ object.project_name }}</h1>
-<p>{{ object.project_description }}</p>
-<p>Project start date: {{ object.project_start_date_time }}</p>
-<p>Project Deadline: {{ object.project_end_date_time|date }}</p>
-<p>status: {{ object.status }}</p>
-Team Members:
 
-    {% for i in object.employees_per_project.all %}
-        <ul><li>{{ i.username }}</li></ul>
-    {% endfor %}
+{% if user.is_authenticated %}
+    <h1>{{ object.project_name }}</h1>
+    <p>{{ object.project_description }}</p>
+    <p>Project start date: {{ object.project_start_date_time }}</p>
+    <p>Project Deadline: {{ object.project_end_date_time|date }}</p>
+    <p>status: {{ object.status }}</p>
+    Team Members:
 
-<!--<h1>Hi, Welcome to Project Modules</h1><hr>-->
+        {% for i in object.employees_per_project.all %}
+            <ul><li>{{ i.username }}</li></ul>
+        {% endfor %}
 
-<!--<form><input type="submit" align="right" formaction="module/" value="CREATE NEW MODULE"></form>-->
+    <!--<h1>Hi, Welcome to Project Modules</h1><hr>-->
 
-<!--<table border="1">-->
-    <!--<thead>-->
-    <!--<th>Module Name</th>-->
-    <!--<th>Module Description</th>-->
-    <!--</thead>-->
+    <!--<form><input type="submit" align="right" formaction="module/" value="CREATE NEW MODULE"></form>-->
 
-    <!--<tbody>-->
-    <!--{% for module in object.modules %}-->
-    <!--<tr>-->
-        <!--<td>{{ module.module_name }}</td>-->
-        <!--<td>{{ module.module_description }}</td>-->
-    <!--</tr>-->
-    <!--{% endfor %}-->
-    <!--</tbody>-->
-<!--</table>-->
+    <!--<table border="1">-->
+        <!--<thead>-->
+        <!--<th>Module Name</th>-->
+        <!--<th>Module Description</th>-->
+        <!--</thead>-->
 
+        <!--<tbody>-->
+        <!--{% for module in object.modules %}-->
+        <!--<tr>-->
+            <!--<td>{{ module.module_name }}</td>-->
+            <!--<td>{{ module.module_description }}</td>-->
+        <!--</tr>-->
+        <!--{% endfor %}-->
+        <!--</tbody>-->
+    <!--</table>-->
+
+{% else %}
+    <div>You don't have permission</div>
+{% endif %}
 
 </body>
 </html>
