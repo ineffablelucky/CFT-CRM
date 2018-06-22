@@ -52,6 +52,7 @@ class MyUser(AbstractUser):
             ('view_salary_percentages', 'Can view salary percentages'),
             ('view_task', 'Can view tasks'),
             ('view_users', 'Can view users'),
+            ('view_project', 'Can view projects'),
         )
 
 

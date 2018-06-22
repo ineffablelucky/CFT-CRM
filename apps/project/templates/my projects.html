@@ -13,43 +13,45 @@
 
 </head>
 <body>
-<body>
-<h1>My Projects!</h1><hr>
-<br><br>
-<table border="1">
-    <thead>
-    <th>Project ID</th>
-    <th>Project Name</th>
-    <th>Project Head</th>
-    <th>Status</th>
-    <th>Actions</th>
-    </thead>
+{% if user.is_authenticated %}
 
-    <tbody>
-    {% for p in object_list %}
-    <tr>
-        <td>{{ p.id }}</td>
-        <td>{{ p.project_name }}</td>
-        <td>--</td>
-        <td>{{ p.status }}</td>
-        <td>
+    <h1>My Projects!</h1><hr>
+    <br><br>
+    <table border="1">
+        <thead>
+        <th>Project ID</th>
+        <th>Project Name</th>
+        <th>Project Head</th>
+        <th>Status</th>
+        <th>Actions</th>
+        </thead>
 
-                {% csrf_token %}
+        <tbody>
+        {% for p in object_list %}
+        <tr>
+            <td>{{ p.id }}</td>
+            <td>{{ p.project_name }}</td>
+            <td>--</td>
+            <td>{{ p.status }}</td>
+            <td>
 
-                <a href="{% url 'project:project-details' p.id %}"><button>View Details</button></a>
-            </form>
-        </td>
-    </tr>
-    {% endfor %}
-    </tbody>
-</table>
-<br><br>
+                    {% csrf_token %}
 
-<div class="topnav-left">
-<form><input type="submit"  formaction="{% url 'task:employee-task-list' %}" value="SEE MY TASKS"></form>
-</div>
+                    <a href="{% url 'project:project-details' p.id %}"><button>View Details</button></a>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <br><br>
 
-</body>
-</html>
+    <div class="topnav-left">
+    <form><input type="submit"  formaction="{% url 'task:employee-task-list' %}" value="SEE MY TASKS"></form>
+    </div>
+{% else %}
+    <div>You don't have permission</div>
+{% endif %}
+
 </body>
 </html>

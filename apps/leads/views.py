@@ -147,12 +147,15 @@ def LeadsAssign(request):
 
 
     data = (request.POST['ids']).split(',')
-    
+    print(data)
     if len(data) > 0:
         for item in data:
             tmp = Opportunity()
             tmp.lead_id = int(item)
             tmp.assigned_to_id = request.POST.get('assign')
             tmp.save()
+            abc=LEADS.objects.get(id=int(item))
+            abc.assigned_boolean=True
+            abc.save()
     return HttpResponse("this is devesh")
 
