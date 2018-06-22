@@ -6,5 +6,6 @@ app_name = 'salary_percentages'
 urlpatterns = [
     path('', views.salary_structure, name="salary_structure"),
     path('add/',views.add, name="add"),
+    path('upload/csv/',views.upload_csv,name="upload_csv")
 
 ]

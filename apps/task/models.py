@@ -28,3 +28,8 @@ class Time_Entry(models.Model):
     task_start_date_time = models.DateTimeField(blank=True,null=True,)
     task_end_date_time = models.DateTimeField(blank=True,null=True,)
 
+
+    class Meta:
+        permissions = (
+            ('view_task', 'Can view tasks'),
+        )
