@@ -171,13 +171,13 @@
                         <div >
                             <a href="{% url 'opportunity:meeting:meeting_list' assign.id %}">
                                 <p>
-                                    Company Name: {{ assign.assigned_to.username }}
+                                    Company Name: {{ assign.lead.company_name }}
                                 </p>
                                 <p>
                                     Project Manager: {{ assign.proj_manager.username }}
                                 </p>
                                 <p>
-                                    Project Description : {{ assign.description }}
+                                    Project Description : {{ assign.lead.description }}
                                 </p>
                                 <p>
                                     Status : {{ assign.status }}
