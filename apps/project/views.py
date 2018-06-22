@@ -27,6 +27,8 @@ class Employee_Project_List(LoginRequiredMixin,PermissionRequiredMixin, ListView
 
 
 class ProjectCreate(LoginRequiredMixin, CreateView):
+
+
     form_class = CreateProjectForm
     template_name = 'create_project_form.html'
     success_url = '/project'
