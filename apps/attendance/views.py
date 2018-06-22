@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from .forms import LeaveForm
 from django.views.generic import CreateView, TemplateView, UpdateView, ListView
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.shortcuts import redirect
 from django.http import HttpResponseForbidden, HttpResponse
 from ..leave.models import Leave
@@ -13,7 +13,8 @@ import datetime
 from copy import deepcopy
 
 
-class LeaveRequest(LoginRequiredMixin, CreateView):
+class LeaveRequest(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
+    permission_required = ('attendance.add_leaverequest',)
     form_class = LeaveForm
     template_name = 'leaverequest.html'
     success_url = '/'
@@ -86,7 +87,8 @@ class Clock(LoginRequiredMixin,TemplateView):
         return render(request, 'clock_in.html')
 
 
-class Clockin(LoginRequiredMixin, CreateView):
+class Clockin(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
+    permission_required = ('attendance.add_attendance',)
     template_name = 'clock_in.html'
     success_url = '/'
     """
@@ -100,8 +102,6 @@ class Clockin(LoginRequiredMixin, CreateView):
         if not request.user.is_authenticated:
             return HttpResponseForbidden
         elif Attendance.objects.filter(user_id=self.request.user.id, date=datetime.date.today()):
-            a = Attendance.objects.get(user_id = self.request.user.id, date=datetime.date.today())
-            print(type(a.time_in.hour), type(a.time_in.minute), type(a.time_in.second))
             return HttpResponse("Already Clocked In")
 
         else:
@@ -121,8 +121,9 @@ class Clockin(LoginRequiredMixin, CreateView):
             return redirect('/attendance/userattendance')
 
 
-class Clockout(LoginRequiredMixin, UpdateView):
+class Clockout(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     template_name = 'clock_in.html'
+    permission_required = ('attendance.add_attendance',)
 
     def post(self, request, *args, **kwargs):
 
@@ -141,7 +142,8 @@ class Clockout(LoginRequiredMixin, UpdateView):
             return redirect('/attendance/userattendance')
 
 
-class PastAttendance(LoginRequiredMixin, ListView):
+class PastAttendance(LoginRequiredMixin, PermissionRequiredMixin, ListView):
+    permission_required = ('attendance.view_attendance',)
     template_name = 'clock_in.html'
     model = Attendance
     context_object_name = 'attendance'
@@ -153,7 +155,8 @@ class PastAttendance(LoginRequiredMixin, ListView):
         return queryset
 
 
-class ShowAttendance(LoginRequiredMixin, ListView):
+class ShowAttendance(LoginRequiredMixin, PermissionRequiredMixin, ListView):
+    permission_required = ('users.view_attendance',)
     template_name = 'attendance/showattendance.html'
     model = Attendance
     context_object_name = 'attendance'
