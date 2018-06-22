@@ -7,7 +7,7 @@
 	<h1>Change Opportunity Status</h1>
 	<form id="category_form" method="post">
 		{% csrf_token %}
-		{{ form.as_p }}
+		{{ form.status.errors }} {{ form.status.label }}{{ form.status }}
 		<input type="submit" value="Update"/>
 	</form>
 </body>

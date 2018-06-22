@@ -40,3 +40,18 @@ class CreateMeeting(forms.ModelForm):
             instance.save()
         instance.extras.set(self.cleaned_data['extras'])
         return instance
+
+
+class AddMeetingNotes(forms.ModelForm):
+
+    description = forms.CharField(
+        max_length=1000,
+        label='Add Notes',
+        widget=forms.TextInput
+    )
+
+    class Meta:
+        model = MEETING
+        fields = (
+            'description',
+        )

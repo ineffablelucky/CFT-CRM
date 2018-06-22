@@ -29,28 +29,28 @@ class CreateForm(ModelForm):
     def clean_company_name(self):
         data = self.cleaned_data.get('company_name')
         data = data.strip().title()
-        if re.match(r'^[A-Za-z-&_]+$', data):
+        if re.match(r'^[A-Za-z-&_ ]+$', data):
             return data
         else:
             raise forms.ValidationError("Only alphabets are allowed")
 
     def clean_contact_person(self):
         data = self.cleaned_data.get('contact_person')
-        if re.match('^[a-zA-Z]*$', data):
+        if re.match('^[a-zA-Z ]*$', data):
             return data
         else:
             raise forms.ValidationError("Only alphabets are allowed")
 
     def clean_source(self):
         data = self.cleaned_data.get('source')
-        if re.match('^[a-zA-Z-&_:,]*$', data):
+        if re.match('^[a-zA-Z-&_:, ]*$', data):
             return data
         else:
             raise forms.ValidationError("Input is not allowed \n Input can be alphabets and special character like:&,-,_:,comma ")
 
     def clean_source_type(self):
         data = self.cleaned_data.get('source_type')
-        if re.match('^[a-zA-Z-&_:,]*$', data):
+        if re.match('^[a-zA-Z-&_:, ]*$', data):
             return data
         else:
             raise forms.ValidationError(
@@ -58,7 +58,7 @@ class CreateForm(ModelForm):
 
     def clean_description(self):
         data = self.cleaned_data.get('description')
-        if re.match('^[a-zA-Z-&_:,]*$', data):
+        if re.match('^[a-zA-Z-&_:, ]*$', data):
             return data
         else:
             raise forms.ValidationError(
@@ -122,28 +122,28 @@ class UpdateForm(ModelForm):
     def clean_company_name(self):
         data = self.cleaned_data.get('company_name')
         data = data.strip().title()
-        if re.match(r'^[A-Za-z-&_]+$', data):
+        if re.match(r'^[A-Za-z-&_ ]+$', data):
             return data
         else:
             raise forms.ValidationError("Only alphabets are allowed")
 
     def clean_contact_person(self):
         data = self.cleaned_data.get('contact_person')
-        if re.match('^[a-zA-Z]*$', data):
+        if re.match('^[a-zA-Z ]*$', data):
             return data
         else:
             raise forms.ValidationError("Only alphabets are allowed")
 
     def clean_source(self):
         data = self.cleaned_data.get('source')
-        if re.match('^[a-zA-Z-&_:,]*$', data):
+        if re.match('^[a-zA-Z-&_:, ]*$', data):
             return data
         else:
             raise forms.ValidationError("Input is not allowed \n Input can be alphabets and special character like:&,-,_:,comma ")
 
     def clean_source_type(self):
         data = self.cleaned_data.get('source_type')
-        if re.match('^[a-zA-Z-&_:,]*$', data):
+        if re.match('^[a-zA-Z-&_:, ]*$', data):
             return data
         else:
             raise forms.ValidationError(
@@ -151,7 +151,7 @@ class UpdateForm(ModelForm):
 
     def clean_description(self):
         data = self.cleaned_data.get('description')
-        if re.match('^[a-zA-Z-&_:,]*$', data):
+        if re.match('^[a-zA-Z-&_:, ]*$', data):
             return data
         else:
             raise forms.ValidationError(
