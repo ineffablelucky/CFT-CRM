@@ -10,7 +10,7 @@ from apps.project.models import IT_Project
 class TaskList(LoginRequiredMixin,  ListView):
     model = Task
     context_object_name = 'task_list'
-    permission_required = ('users.view_task',)
+    permission_required = ('users.view_task', 'task.view_task',)
 
     def get_queryset(self):
         queryset = Task.objects.filter(project__id=self.kwargs.get('pk'))

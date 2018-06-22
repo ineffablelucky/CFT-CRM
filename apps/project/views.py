@@ -10,8 +10,9 @@ class ProjectList(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     model = IT_Project
     def get_queryset(self):
         queryset = IT_Project.objects.filter(
-            (Q(opportunity__status='Approved') | Q(opportunity=None))
+            Q(opportunity__status='Approved') | Q(opportunity=None)
         )
+        print(queryset)
 
         return queryset
 
