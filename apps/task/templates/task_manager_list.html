@@ -204,7 +204,7 @@
               {% if user.is_authenticated %}
             <h1>Hi, Welcome to Project Manager's Task List!</h1><hr>
             <div class="topnav-right">
-            <form action="{% url 'task:task-add' project_id %}" method="post">
+            <form action="{% url 'task:task-add' %}" method="post">
                 {% csrf_token %}
             <input type="submit" value="CREATE NEW TASK">
             </form>

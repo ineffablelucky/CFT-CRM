@@ -10,6 +10,7 @@ from apps.project.models import IT_Project
 class TaskList(LoginRequiredMixin, ListView):
     model = Task
     context_object_name = 'task_list'
+    template_name = "task_manager_list.html"
 
     def get_queryset(self):
         queryset = Task.objects.filter(project__id=self.kwargs.get('pk'))
