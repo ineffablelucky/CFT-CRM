@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
+
 class MyUser(AbstractUser):
 
     designation_choices = (
@@ -53,3 +54,6 @@ class MyUser(AbstractUser):
             ('view_task', 'Can view tasks'),
             ('view_users', 'Can view users'),
         )
+
+
+
