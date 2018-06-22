@@ -157,5 +157,5 @@ def LeadsAssign(request):
             abc=LEADS.objects.get(id=int(item))
             abc.assigned_boolean=True
             abc.save()
-    return HttpResponse("this is devesh")
+    return HttpResponseRedirect(reverse_lazy("leads:LeadDetails"))
 
