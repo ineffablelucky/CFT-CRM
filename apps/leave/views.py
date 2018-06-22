@@ -1,7 +1,7 @@
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, UpdateView
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from .forms import CreateleaveForm
 from ..attendance.models import Attendance, LeaveRequest
 from .models import Leave
@@ -21,7 +21,8 @@ class LeaveCreation(CreateView):
         return redirect('/')
 
 
-class LeaveApproval(LoginRequiredMixin, ListView):
+class LeaveApproval(LoginRequiredMixin, PermissionRequiredMixin, ListView):
+    permission_required = ('attendance.view_leaverequest',)
     template_name = 'leaves.html'
     model = LeaveRequest
     context_object_name = 'myuser'
@@ -31,7 +32,8 @@ class LeaveApproval(LoginRequiredMixin, ListView):
         return queryset
 
 
-class ShowRequest(LoginRequiredMixin, ListView):
+class ShowRequest(LoginRequiredMixin, PermissionRequiredMixin, ListView):
+    permission_required = ('attendance.view_leaverequest',)
     template_name = 'showrequest.html'
     model = LeaveRequest
     context_object_name = 'leave'
@@ -41,7 +43,8 @@ class ShowRequest(LoginRequiredMixin, ListView):
         return queryset
 
 
-class Approve(LoginRequiredMixin, UpdateView):
+class Approve(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+    permission_required = ('attendance.change_leaverequest',)
 
     def post(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
@@ -72,7 +75,8 @@ class Approve(LoginRequiredMixin, UpdateView):
                 return HttpResponse("Already Approved or Rejected")
 
 
-class Reject(LoginRequiredMixin, UpdateView):
+class Reject(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+    permission_required = ('attendance.change_leaverequest',)
 
     def post(self, request, *args, **kwargs):
         if not request.user.is_authenticated:

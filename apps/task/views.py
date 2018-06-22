@@ -4,8 +4,10 @@ from django.views.generic import TemplateView, ListView
 from .forms import CreateTaskForm
 from django.views.generic import TemplateView, ListView, CreateView, UpdateView, DeleteView, DetailView
 from apps.users.models import MyUser
+from django.contrib.auth.mixins import LoginRequiredMixin
 from apps.project.models import IT_Project
-class TaskList(ListView):
+
+class TaskList(LoginRequiredMixin, ListView):
     model = Task
     context_object_name = 'task_list'
 
@@ -16,12 +18,11 @@ class TaskList(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['project_id'] = self.kwargs.get('pk')
-        print("5555555555555555555555555")
-        print(context)
+
         return context
 
 
-class Employee_Task_List(ListView):
+class Employee_Task_List(LoginRequiredMixin, ListView):
 
     model = Task
     context_object_name = 'emp_task_list'
@@ -33,33 +34,31 @@ class Employee_Task_List(ListView):
         return temp
 
 
-class TaskCreate(CreateView):
+class TaskCreate(LoginRequiredMixin, CreateView):
+    form_class = CreateTaskForm
+    template_name = "create_task_form.html"
+    success_url = '/project'
+
+    # def get_form_kwargs(self):
+    #     kwargs = super().get_form_kwargs()
+    #     kwargs.update({'project_id': self.kwargs.get('pk')})
+    #
+    #     return kwargs
+
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     context['project_id'] = self.kwargs.get('pk')
+    #
+    #     return context
+
+
+class Edit_Task(LoginRequiredMixin, UpdateView):
     form_class = CreateTaskForm
     template_name = "create_task_form.html"
     success_url = '/task'
 
-    def get_form_kwargs(self):
-        kwargs = super().get_form_kwargs()
-        kwargs.update({'project_id': self.kwargs.get('pk')})
-        print('*******************')
-        print(kwargs)
-        return kwargs
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['project_id'] = self.kwargs.get('pk')
-        print("5555555555555555555555555")
-        print(context)
-        return context
-
-
-class Edit_Task(UpdateView):
-    form_class = CreateTaskForm
-    template_name = "create_task_form.html"
-    success_url = '/task'
-
-
-class Details_Task(DetailView):
+class Details_Task(LoginRequiredMixin, DetailView):
     model = Task
     context_object_name = 'task_list'
     template_name = "task_details.html"
