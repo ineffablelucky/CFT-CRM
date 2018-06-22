@@ -12,6 +12,8 @@ def index(request):
 @login_required
 @permission_required('users.view_attendance', raise_exception=True)
 def register(request):
+
+
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
         if form.is_valid():

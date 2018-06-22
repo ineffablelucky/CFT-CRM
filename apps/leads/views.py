@@ -8,6 +8,7 @@ from django.views.generic import CreateView, UpdateView, DeleteView,ListView,Det
 from .models import LEADS
 from django.contrib.messages.views import SuccessMessageMixin
 from .forms import CreateForm,DetailForm,UpdateForm
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
 
 
@@ -21,10 +22,9 @@ from .forms import CreateForm,DetailForm,UpdateForm
 # 	template_name='leads/employee_leads.html'
 
 
-class LeadDetails(ListView,FormView):
+class LeadDetails(LoginRequiredMixin, PermissionRequiredMixin, ListView,FormView):
     form_class = DetailForm
-
-
+    permission_required = ('users.view_leads',)
     model = LEADS
     fields='__all__'
     template_name = 'leads/details.html'
@@ -37,7 +37,8 @@ class LeadDetails(ListView,FormView):
 
 
 
-class LeadCreate(CreateView):
+class LeadCreate(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
+    permission_required = ('leads.add_leads',)
     model=LEADS
     form_class = CreateForm
     template_name = 'leads/create.html'
@@ -53,9 +54,8 @@ class LeadCreate(CreateView):
 
 
 
-class LeadEdit(UpdateView):
-
-
+class LeadEdit(LoginRequiredMixin,PermissionRequiredMixin,UpdateView):
+    permission_required = ('leads.change_leads',)
 
     form_class =UpdateForm
 
@@ -75,10 +75,10 @@ class LeadEdit(UpdateView):
 		#return reverse_lazy('clients:projectdetails', args=(self.object.id,))
 
 
-class LeadDelete(DeleteView):
+class LeadDelete(LoginRequiredMixin,PermissionRequiredMixin,DeleteView):
     model = LEADS
     template_name = 'leads/delete.html'
-
+    permission_required = ('leads.delete_leads',)
     def get_success_url(self, **kwargs):
         return reverse_lazy('leads:LeadDetails')
 
@@ -147,12 +147,15 @@ def LeadsAssign(request):
 
 
     data = (request.POST['ids']).split(',')
-    
+    print(data)
     if len(data) > 0:
         for item in data:
             tmp = Opportunity()
             tmp.lead_id = int(item)
             tmp.assigned_to_id = request.POST.get('assign')
             tmp.save()
-    return HttpResponse("this is devesh")
+            abc=LEADS.objects.get(id=int(item))
+            abc.assigned_boolean=True
+            abc.save()
+    return HttpResponseRedirect(reverse_lazy("leads:LeadDetails"))
 

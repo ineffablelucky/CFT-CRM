@@ -41,30 +41,34 @@ body {
 <body>
 <h1>My Task List!</h1><hr>
 
+{% if user.is_authenticated %}
 
-<table border="1">
-    <thead>
-    <th>Task Name</th>
-    <th>Task Description</th>
-    <th>Task Start Date</th>
-    <th>Expected Time</th>
-    <!--<th>Progress</th>-->
-    <th>Status</th>
-    </thead>
+    <table border="1">
+        <thead>
+        <th>Task Name</th>
+        <th>Task Description</th>
+        <th>Task Start Date</th>
+        <th>Expected Time</th>
+        <!--<th>Progress</th>-->
+        <th>Status</th>
+        </thead>
 
-    <tbody>
-    {% for i in emp_task_list %}
-    <tr>
-        <td><a href="{% url 'task:task-details' i.id %}">{{ i.task_name }}</a></td>
-        <td>{{ i.task_description}}</td>
-        <td>{{ i.task_start_date_time }}</td>
-        <td>{{ i.expected_time }}</td>
-        <!--<td>&#45;&#45;</td>-->
-        <td>{{ i.status }}</td>
-    </tr>
-    {% endfor %}
-    </tbody>
-</table>
+        <tbody>
+        {% for i in emp_task_list %}
+        <tr>
+            <td><a href="{% url 'task:task-details' i.id %}">{{ i.task_name }}</a></td>
+            <td>{{ i.task_description}}</td>
+            <td>{{ i.task_start_date_time }}</td>
+            <td>{{ i.expected_time }}</td>
+            <!--<td>&#45;&#45;</td>-->
+            <td>{{ i.status }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <div>You don't have permission</div>
+{% endif %}
 
 </body>
 </html>

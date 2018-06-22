@@ -39,55 +39,60 @@ body {
 </style>
 </head>
 <body>
-<h1>Hi, Welcome to Project Manager's Task List!</h1><hr>
-<div class="topnav-right">
-<form action="{% url 'task:task-add' project_id %}" method="post">
-    {% csrf_token %}
-<input type="submit" value="CREATE NEW TASK">
-</form>
-</div>
+
+{% if user.is_authenticated %}
+    <h1>Hi, Welcome to Project Manager's Task List!</h1><hr>
+    <div class="topnav-right">
+    <form action="{% url 'task:task-add' %}" method="post">
+        {% csrf_token %}
+    <input type="submit" value="CREATE NEW TASK">
+    </form>
+    </div>
 
 
-<table border="1">
-    <thead>
-    <th>Task Name</th>
-    <th>Task Description</th>
-    <th>Assigned To</th>
-    <th>Start Date</th>
-    <th>Expected Time</th>
-    <th>Progress</th>
-    <th>Time Taken</th>
+    <table border="1">
+        <thead>
+        <th>Task Name</th>
+        <th>Task Description</th>
+        <th>Assigned To</th>
+        <th>Start Date</th>
+        <th>Expected Time</th>
+        <th>Progress</th>
+        <th>Time Taken</th>
 
-    <th>Status</th>
+        <th>Status</th>
 
-    </thead>
+        </thead>
 
-    <tbody>
-    {% for i in task_list %}
-    <tr>
-        <td><a href="{% url 'task:task-details' i.id %}">{{ i.task_name }}</a></td>
-        <td>{{ i.task_description}}</td>
-        <td>{{ i.employee_id }}</td>
-        <td>{{ i.task_start_date_time }}</td>
-        <td>{{ i.expected_time }}</td>
-        <td>--</td>
-        <td>--</td>
-        <td>{{ i.status }}</td>
+        <tbody>
+        {% for i in task_list %}
+        <tr>
+            <td><a href="{% url 'task:task-details' i.id %}">{{ i.task_name }}</a></td>
+            <td>{{ i.task_description}}</td>
+            <td>{{ i.employee_id }}</td>
+            <td>{{ i.task_start_date_time }}</td>
+            <td>{{ i.expected_time }}</td>
+            <td>--</td>
+            <td>--</td>
+            <td>{{ i.status }}</td>
 
-        <!--<td>-->
-            <!--<form method="post">-->
-                <!--{% csrf_token %}-->
+            <!--<td>-->
+                <!--<form method="post">-->
+                    <!--{% csrf_token %}-->
 
-                <!--<a href="{% url 'task:task-details' i.id %}" ><button>View</button></a>-->
-                <!--<a href="{% url 'task:task-update' i.id %}"><button>Edit</button></a>-->
-                <!--<a href=""><button>Delete</button></a>-->
+                    <!--<a href="{% url 'task:task-details' i.id %}" ><button>View</button></a>-->
+                    <!--<a href="{% url 'task:task-update' i.id %}"><button>Edit</button></a>-->
+                    <!--<a href=""><button>Delete</button></a>-->
 
-            <!--</form>-->
-        <!--</td>-->
-    </tr>
-    {% endfor %}
-    </tbody>
-</table>
+                <!--</form>-->
+            <!--</td>-->
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <div>You don't have permission</div>
+{% endif %}
 
 </body>
 </html>
