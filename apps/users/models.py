@@ -39,7 +39,6 @@ class MyUser(AbstractUser):
     designation         = models.CharField(default='NA', choices=designation_choices, max_length=35)
     gender              = models.CharField(default='M', choices=gender_choice, max_length=10)
 
-
     class Meta:
         permissions = (
             ('view_attendance', 'Can view attendance'),
