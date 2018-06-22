@@ -29,7 +29,11 @@ class ListOppo(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     #     return context
 
 
-class C_Status(LoginRequiredMixin, UpdateView):
+class C_Status(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+    permission_required = (
+        'opportunity.change_opportunity',
+        'users.view_opportunity',
+    )
     model = Opportunity
     template_name = 'opportunity/change_status.html'
     form_class = ChangeStatus
@@ -38,7 +42,11 @@ class C_Status(LoginRequiredMixin, UpdateView):
 
 class A_Leads(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     permission_required = (
-        'opportunity.change_opportunity', 'opportunity.add_opportunity', 'opportunity.delete_opportunity'
+        'opportunity.change_opportunity',
+        'opportunity.add_opportunity',
+        'opportunity.delete_opportunity',
+        'users.view_opportunity',
+        'users.view_meeting',
     )
     model = Opportunity
     template_name = 'opportunity/assigned_leads.html'
@@ -55,14 +63,28 @@ class A_Leads(LoginRequiredMixin, PermissionRequiredMixin, ListView):
         return context
 
 
-class A_PManager(UpdateView):
+class A_PManager(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+    permission_required = (
+        'opportunity.change_opportunity',
+        'opportunity.add_opportunity',
+        'opportunity.delete_opportunity',
+        'users.view_meeting',
+        'users.view_opportunity',
+    )
     model = Opportunity
     form_class = AddProjManager
     template_name = 'opportunity/assigned_leads.html'
     success_url = reverse_lazy('opportunity:assign_lead')
 
 
-class C_Leads(ListView):
+class C_Leads(LoginRequiredMixin, PermissionRequiredMixin, ListView):
+    permission_required = (
+        'opportunity.change_opportunity',
+        'opportunity.add_opportunity',
+        'opportunity.delete_opportunity',
+        'users.view_meeting',
+        'users.view_opportunity',
+    )
     model = Opportunity
     template_name = 'opportunity/closed_leads.html'
     context_object_name = 'closed_leads'
@@ -76,7 +98,13 @@ class C_Leads(ListView):
     #     context['oppo_id'] =
 
 
-class D_Leads(ListView):
+class D_Leads(LoginRequiredMixin, PermissionRequiredMixin, ListView):
+    permission_required = (
+        'opportunity.change_opportunity',
+        'opportunity.add_opportunity',
+        'opportunity.delete_opportunity',
+        'users.view_meeting',
+    )
     model = Opportunity
     template_name = 'opportunity/declined_leads.html'
     context_object_name = 'declined_leads'

@@ -5,18 +5,22 @@
     <title>Create Meeting Page</title>
 </head>
 <body>
-    <form method="post" action="{% url 'opportunity:meeting:create_meeting' oppo_id %}">
-        {% csrf_token %}
-        <p>
-            {{ form.Opportunity.errors }} {{ form.Opportunity.label }} {{ form.Opportunity }}
-        </p>
-        <p>
-            {{ form.date.errors }} {{ form.date.label }} {{ form.date }}
-        </p>
-        <p>
-            {{ form.extras.errors }} {{ form.extras.label }} {{ form.extras }}
-        </p>
-        <input type="submit" name="Create"/>
-    </form>
+    {% if user.is_authenticated %}
+        <form method="post" action="{% url 'opportunity:meeting:create_meeting' oppo_id %}">
+            {% csrf_token %}
+            <p>
+                {{ form.Opportunity.errors }} {{ form.Opportunity.label }} {{ form.Opportunity }}
+            </p>
+            <p>
+                {{ form.date.errors }} {{ form.date.label }} {{ form.date }}
+            </p>
+            <p>
+                {{ form.extras.errors }} {{ form.extras.label }} {{ form.extras }}
+            </p>
+            <input type="submit" name="Create"/>
+        </form>
+    {% else %}
+        <div>You don't have permission</div>
+    {% endif %}
 </body>
 </html>
