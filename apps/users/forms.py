@@ -37,7 +37,7 @@ class RegistrationForm(UserCreationForm):
             department = self.cleaned_data['department']
 
             if designation == 'Admin':
-                group_user = Group.objects.get_by_natural_key('Admin_Group')
+                group_user = Group.objects.get_by_natural_key('Admin Group')
                 group_user.user_set.add(myuser)
 
             elif designation == 'Manager' and department == 'Marketing':

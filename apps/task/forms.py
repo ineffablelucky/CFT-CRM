@@ -8,7 +8,7 @@ from apps.users.models import MyUser
 from apps.client.models import CLIENT
 from apps.project.models import IT_Project
 from django.db.models import Q
-
+from datetime import datetime
 
 class CreateTaskForm(ModelForm):
 
@@ -19,16 +19,16 @@ class CreateTaskForm(ModelForm):
         ('in progress', 'in progress'),
     )
 
-    # project = forms.ModelChoiceField(
-    #     label='PROJECT NAME',
-    #     # required=False,
-    #     queryset=IT_Project.objects.all(),
-    #     widget=forms.Select(),
-    # )
-
-    project = forms.CharField(
-        widget=forms.TextInput(attrs={'type':'readonly'}), label='PROJECT NAME'
+    project = forms.ModelChoiceField(
+        label='PROJECT NAME',
+        # required=False,
+        queryset=IT_Project.objects.all(),
+        widget=forms.Select(),
     )
+
+    # project = forms.CharField(
+    #     widget=forms.TextInput(attrs={'type':'readonly'}), label='PROJECT NAME'
+    # )
 
     task_name = forms.CharField(
         label = 'TASK NAME',
@@ -88,20 +88,25 @@ class CreateTaskForm(ModelForm):
             'status',
             'expected_time',
         )
-    def __init__(self,  *args, **kwargs):
-        self.project_id = kwargs.pop('project_id')
-        super(CreateTaskForm, self).__init__(*args, **kwargs)
-        x = IT_Project.objects.get(id=self.project_id)
-        print(x)
+    # def __init__(self,  *args, **kwargs):
+        # self.project_id = kwargs.pop('project_id')
+        # super(CreateTaskForm, self).__init__(*args, **kwargs)
+        # x = IT_Project.objects.get(id=self.project_id)
+        # print(x)
+        #
+        # self.fields['project'].initial = x.project_name
+        #
+        #
+        # print(self.fields['project'].initial)
 
-        self.fields['project'].initial = x.project_name
+
+        # self.fields['task_start_date_time'].initial = timezone.now().date
+        # self.fields['task_end_date_time'].initial = timezone.now().date
 
 
-        print(self.fields['project'].initial)
-        self.fields['task_start_date_time'].initial = timezone.now().date
-        self.fields['task_end_date_time'].initial = timezone.now().date
-        self.fields['task_description'].widget.attrs['placeholder']= 'write task description here'
-        self.fields['task_name'].widget.attrs['placeholder']= 'write task name here'
+
+        # self.fields['task_description'].widget.attrs['placeholder']= 'write task description here'
+        # self.fields['task_name'].widget.attrs['placeholder']= 'write task name here'
         # self.fields['project_description'].widget.attrs['placeholder']= 'write project description here'
 
 
