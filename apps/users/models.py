@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
+
 class MyUser(AbstractUser):
 
     designation_choices = (
@@ -38,7 +39,6 @@ class MyUser(AbstractUser):
     designation         = models.CharField(default='NA', choices=designation_choices, max_length=35)
     gender              = models.CharField(default='M', choices=gender_choice, max_length=10)
 
-
     class Meta:
         permissions = (
             ('view_attendance', 'Can view attendance'),
@@ -54,3 +54,6 @@ class MyUser(AbstractUser):
             ('view_users', 'Can view users'),
             ('view_project', 'Can view projects'),
         )
+
+
+
