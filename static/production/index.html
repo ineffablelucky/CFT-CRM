@@ -76,7 +76,7 @@
                       <!--<li><a href="index3.html">Dashboard3</a></li>-->
                     </ul>
                   </li>
-                  <li><a href="#"><i class="fa fa-edit"></i> Project Management </a>
+                  <li><a href="{% url 'project:project_manager_list' %}"><i class="fa fa-edit"></i> Project Management </a>
                     <!--<ul class="nav child_menu">-->
                       <!--<li><a href="form.html">General Form</a></li>-->
                       <!--<li><a href="form_advanced.html">Advanced Components</a></li>-->
@@ -101,10 +101,10 @@
                   </li>
                   <li><a><i class="fa fa-table"></i> Lead Mangement <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="tables.html">New Leads</a></li>
-                      <li><a href="tables_dynamic.html">Assigned Leads</a></li>
-                      <li><a href="tables_dynamic.html">Closed Leads</a></li>
-                      <li><a href="tables_dynamic.html">Declined Leads</a></li>
+                      <li><a href="{% url 'leads:LeadDetails' %}">New Leads</a></li>
+                      <li><a href="{% url 'opportunity:assign_lead' %}">Assigned Leads</a></li>
+                      <li><a href="{% url 'opportunity:closed_leads' %}">Closed Leads</a></li>
+                      <li><a href="{% url 'opportunity:declined_leads' %}">Declined Leads</a></li>
                     </ul>
                   </li>
                   <li><a><i class="fa fa-bar-chart-o"></i> Reporting </a>
@@ -1040,6 +1040,9 @@
     <!-- Custom Theme Scripts -->
     <script src="{% static 'build/js/custom.min.js' %}"></script>
   {% endblock scripts %}
+
+  {% block extra-script %}
+  {% endblock extra-script %}
 	
   </body>
 </html>
