@@ -205,6 +205,8 @@ body {
           <div class="row tile_count">
 
             <h1>Hi, Welcome to Project Manager's Project List!</h1><hr>
+              {% if user.is_authenticated %}
+              {{ user.username }}
             <div class="topnav-right">
             <form><input type="submit"  formaction="{% url 'project:project-add' %}" value="CREATE NEW PROJECT"></form>
             </div>
@@ -219,28 +221,30 @@ body {
                 <th>Actions</th>
                 </thead>
 
-                <tbody>
-                {% for p in object_list %}
-                <tr>
-                    <td><a href="{% url 'task:manager-task-view' p.id %}">{{ p.project_name }}</a></td>
-                    <!--<td>{{ p.project_description}}</td>-->
-                    <td>{{ p.project_start_date_time }}</td>
-                    <td>{{ p.project_end_date_time }}</td>
-                    <td>--</td>
-                    <td>{{ p.status }}</td>
-                    <td>
+    <tbody>
+    {% for p in object_list %}
+    <tr>
+        <td><a href="{% url 'task:manager-task-view' p.id %}">{{ p.project_name }}</a></td>
+        <!--<td>{{ p.project_description}}</td>-->
+        <td>{{ p.project_start_date_time }}</td>
+        <td>{{ p.project_end_date_time }}</td>
+        <td>--</td>
+        <td>{{ p.status }}</td>
+        <td>
 
-                            {% csrf_token %}
-                            <a href="{% url 'project:project-details' p.id %}"><button>View</button></a>
-                            <a href="{% url 'project:project-update' p.id %}"><button>Edit</button></a>
+                {% csrf_token %}
+                <a href="{% url 'project:project-details' p.id %}"><button>View</button></a>
+                <a href="{% url 'project:project-update' p.id %}"><button>Edit</button></a>
 
-                    </td>
-                </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-
-          </div>
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+              {% else %}
+    <div>You don't have permission</div>
+{% endif %}
+</div>
           <!-- /top tiles -->
 
           <div class="row">
@@ -260,5 +264,3 @@ body {
 
 
 {% endblock page-content %}
-
-

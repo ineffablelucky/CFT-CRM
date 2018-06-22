@@ -167,7 +167,7 @@
           <!-- top tiles -->
           <div class="row tile_count">
 
-
+            {% if user.is_authenticated %}
             <h1>{{ object.project_name }}</h1>
             <p>{{ object.project_description }}</p>
             <p>Project start date: {{ object.project_start_date_time }}</p>
@@ -175,30 +175,9 @@
             <p>status: {{ object.status }}</p>
             Team Members:
 
-                {% for i in object.employees_per_project.all %}
-                    <ul><li>{{ i.username }}</li></ul>
-                {% endfor %}
-
-          </div>
-          <!-- /top tiles -->
-
-          <div class="row">
-
-          </div>
-          <br />
-
-          <div class="row">
-
-          </div>
-
-
-          <div class="row">
-
-          </div>
-</div>
-
-
-{% endblock page-content %}
+    {% for i in object.employees_per_project.all %}
+        <ul><li>{{ i.username }}</li></ul>
+    {% endfor %}
 
 <!--<h1>Hi, Welcome to Project Modules</h1><hr>-->
 
@@ -219,3 +198,28 @@
     <!--{% endfor %}-->
     <!--</tbody>-->
 <!--</table>-->
+
+              {% else %}
+    <div>You don't have permission</div>
+{% endif %}
+
+              </div>
+          <!-- /top tiles -->
+
+          <div class="row">
+
+          </div>
+          <br />
+
+          <div class="row">
+
+          </div>
+
+
+          <div class="row">
+
+          </div>
+</div>
+
+
+{% endblock page-content %}
