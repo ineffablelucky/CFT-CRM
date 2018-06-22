@@ -3,6 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>My Projects</title>
+
+<style>
+
+.topnav-left {
+  float: center;
+}
+</style>
+
 </head>
 <body>
 <body>
@@ -25,16 +33,22 @@
         <td>--</td>
         <td>{{ p.status }}</td>
         <td>
-            <form method="post" action="{% url 'project:employee-project-view' p.id %}">
+
                 {% csrf_token %}
 
-                <a href="{% url 'project:employee-project-view' p.id %}"><button>View</button></a>
+                <a href="{% url 'project:project-details' p.id %}"><button>View Details</button></a>
             </form>
         </td>
     </tr>
     {% endfor %}
     </tbody>
 </table>
+<br><br>
+
+<div class="topnav-left">
+<form><input type="submit"  formaction="{% url 'task:employee-task-list' %}" value="SEE MY TASKS"></form>
+</div>
+
 </body>
 </html>
 </body>
