@@ -7,57 +7,61 @@
 <body>
 <h1>This is a Task Entry form!</h1><hr>
 
+{% if user.is_authenticated %}
 
-<form action="{% url 'task:task-add' project_id %}" method="post">
-    {% csrf_token %}
-        <div>
-            {{ form.project.label }}
-            {{ form.project }}
-            {{ form.project.errors }}
-        </div><br>
-        <div>
-            {{ form.task_name.label }}
-            {{ form.task_name }}
-            {{ form.task_name.errors }}
-        </div><br>
-        <div>
-            {{ form.task_description.label }}
-            {{ form.task_description }}
-            {{ form.task_description.errors }}
-        </div><br>
+    <form action="{% url 'task:task-add' %}" method="post">
+        {% csrf_token %}
+            <div>
+                {{ form.project.label }}
+                {{ form.project }}
+                {{ form.project.errors }}
+            </div><br>
+            <div>
+                {{ form.task_name.label }}
+                {{ form.task_name }}
+                {{ form.task_name.errors }}
+            </div><br>
+            <div>
+                {{ form.task_description.label }}
+                {{ form.task_description }}
+                {{ form.task_description.errors }}
+            </div><br>
 
-        <div>
-            {{ form.employee_id.label }}
-            {{ form.employee_id }}
-            {{ form.employee_id.errors }}
+            <div>
+                {{ form.employee_id.label }}
+                {{ form.employee_id }}
+                {{ form.employee_id.errors }}
 
-        </div><br>
+            </div><br>
 
-        <div>
-            {{ form.task_start_date_time.label }}
-            {{ form.task_start_date_time }}
-            {{ from.task_start_date_time.errors }}
-        </div><br>
+            <div>
+                {{ form.task_start_date_time.label }}
+                {{ form.task_start_date_time }}
+                {{ from.task_start_date_time.errors }}
+            </div><br>
 
-        <div>
-            {{ form.task_end_date_time.label }}
-            {{ form.task_end_date_time }}
-            {{ form.task_end_date_time.errors }}
-        </div><br>
+            <div>
+                {{ form.task_end_date_time.label }}
+                {{ form.task_end_date_time }}
+                {{ form.task_end_date_time.errors }}
+            </div><br>
 
-        <div>
-            {{ form.expected_time.label }}
-            {{ form.expected_time }}
-            {{ form.expected_time.errors }}
-        </div><br>
+            <div>
+                {{ form.expected_time.label }}
+                {{ form.expected_time }}
+                {{ form.expected_time.errors }}
+            </div><br>
 
-        <div>
-            {{ form.status.label }}
-            {{ form.status }}
-            {{ form.status.errors }}
-        </div><br>
-     <input type="submit" value="Submit"/>
-</form>
+            <div>
+                {{ form.status.label }}
+                {{ form.status }}
+                {{ form.status.errors }}
+            </div><br>
+         <input type="submit" value="Submit"/>
+    </form>
+{% else %}
+    <div>You don't have permission</div>
+{% endif %}
 
 </body>
 </html>
