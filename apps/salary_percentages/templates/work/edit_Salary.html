@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <p>CTC: {{ dict.ctc }}<a href="{% url 'salary_percentages:edit_ctc' %}">Edit</a></p>
+    <p>Given Bonus: {{ dict.given_bonus }}<a href="{% url 'salary_percentages:edit_bonus' %}">Edit</a></p>
+    <p>HRA: {{ context.hra }}</p>
+    <p>PPF: {{ context.ppf }}</p>
+    <p>Allowances: {{ context.allowances }}</p>
+    <p>Fixed monthly Salary: {{ context.fixed_monthly_salary }}</p>
+    <a href="{% url 'salary_percentages:salary' %}">Save</a>
+</body>
+</html>

@@ -11,46 +11,46 @@
             <tr>
                 <th>Break up</th>
                 <th>Calculations</th>
-                <th>Monthly Salary</th>
-                <th>Yearly Salary</th>
+                <th>Monthly Amount</th>
+                <th>Yearly Amount</th>
             </tr>
         </thead>
         <tbody>
             <tr>
                 <td>Basic</td>
-                <td>50% Gross</td>
-               <!-- <td>{{  details.monthly_salary }}</td>
-                <td> 12*{{  details.monthly_salary }} </td>-->
+                <td>50% CTC</td>
+                <td>{{  context.basic_amt.basic/12 }}</td>
+                <td> {{  context.basic_amt.basic }} </td>
             </tr>
             <tr>
                 <td>HRA</td>
-                <!--<td>{{  d.hra_percentage }}</td>
-                <td>{{  details.monthly_salary }}</td>
-                <td> 12*{{  i.monthly_salary }}</td>-->
+                <td>{{  struct.hra_percentage }}</td>
+                <td>{{  context.hra_amt.hra/12 }}</td>
+                <td> {{ context.hra_amt.hra  }}</td>
             </tr>
             <tr>
                 <td>PPF</td>
-                <!--<td>{{  d.ppf_percentage }}</td>
-                <td>{{  details.monthly_salary }}</td>
-                <td>12*{{  details.monthly_salary }}</td>-->
+                <td>{{  struct.ppf_percentage }}</td>
+                <td>{{  context.ppf_amt.ppf/12 }}</td>
+                <td>{{  context.ppf_amt.ppf }}</td>
             </tr>
             <tr>
                 <td>Allowances</td>
-                <!--<td>{{  d.allowances }}</td>
-                <td>{{  details.monthly_salary }}</td>
-                <td>12*{{  details.monthly_salary }}</td>-->
+                <td>{{  struct.allowances }}</td>
+                <td>{{  context.allowances_amt.allowances/12 }}</td>
+                <td>{{ context.allowances_amt.allowances }}</td>
             </tr>
             <tr>
                 <td>CTC</td>
                 <td></td>
-                <!--<td>{{  details.monthly_salary }}</td>
-                <td>12*{{  details.monthly_salary }}</td>-->
+                <td>{{ context.ctc/12 }}</td>
+                <td>{{  context.ctc }}</td>
             </tr>
             <tr>
                 <td>CTC Max Bonus</td>
                 <td></td>
-                <!--<td>{{  details.monthly_salary }}</td>
-                <td>12*{{  details.montly_salary }}</td>-->
+                <td>{{ context.max_bonus_amt.ctc_max_bonus/12 }}</td>
+                <td>{{  context.max_bonus_amt.ctc_max_bonus }}</td>
             </tr>
         </tbody>
 

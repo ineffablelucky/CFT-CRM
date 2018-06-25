@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <form actions="{% url 'salary_percentages:edit_Salary' %}" method="POST">
+        {{ form.ctc }}
+        <input type="submit" value="Edit CTC"/>
+    </form>
+
+</body>
+</html>

@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import ModelForm
-from .models import Salary_calculations
+from .models import Salary_calculations,Employee_details
 from django.utils import timezone
 
 class SalaryForm(ModelForm):
@@ -50,6 +50,12 @@ class SalaryForm(ModelForm):
         if type(self.ppf_percentage)>100:
             raise forms.ValidationError('Enter an integral value between 0-100')
         return data'''
+
+class CtcForm(ModelForm):
+    class Meta:
+        model=Employee_details
+        fields=['ctc','given_bonus']
+
 
 
 

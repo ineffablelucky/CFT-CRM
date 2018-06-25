@@ -1,10 +1,31 @@
 import logging
 from django.shortcuts import render,redirect,HttpResponseRedirect,HttpResponse,reverse
 from . import models
-from .models import Salary_calculations
-from .forms import SalaryForm
-from django.views.generic import ListView,CreateView,DetailView,DeleteView,UpdateView,TemplateView
-from django.contrib import messages
+from .models import Salary_calculations,Employee_details
+from .forms import SalaryForm,CtcForm
+from apps.users.models import MyUser
+from apps.ctc.models import CTC_breakdown
+
+def salary(request):
+    context=Employee_details.objects.all()
+    return render(request,'work/salary.html',{'context':context})
+
+def edit_salary(request,id):
+    if request.method=='POST':
+        form=CtcForm(request.POST)
+        form.save()
+        return redirect("{% url 'salary_percentages:edit_salary' %}")
+    context=CTC_breakdown.objects.get(employee_id=id)
+    dict=Employee_details.objects.all(worker_id=id)
+    return render(request,'work/edit_salary.html',{'context':context},{'dict':dict})
+
+def edit_ctc(request,id):
+    form=CtcForm()
+    return render(request,'work/edit_ctc.html',{'form':form})
+
+def edit_bonus(request,id):
+    form=CtcForm()
+    return render(request,'work/edit_bonus.html',{'form':form})
 
 def salary_structure(request):
     context = Salary_calculations.objects.all()
@@ -58,3 +79,7 @@ def upload_csv(request):
 
         logging.getLogger("error_logger").error("Unable to upload file" + repr(e))
         return HttpResponseRedirect(reverse("salary_percetages:upload_csv"))
+
+
+
+
