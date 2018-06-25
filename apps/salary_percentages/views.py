@@ -1,4 +1,5 @@
-from django.shortcuts import render,redirect,HttpResponse
+import logging
+from django.shortcuts import render,redirect,HttpResponseRedirect,HttpResponse,reverse
 from . import models
 from .models import Salary_calculations
 from .forms import SalaryForm
@@ -14,9 +15,46 @@ def add(request):
         form = SalaryForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('/salary')
+            return HttpResponseRedirect(reverse("salary_percentages:salary_structure"))
         else:
             return HttpResponse('Sorry! The salary_structure for this year has already been formed')
     else :
         form = SalaryForm()
         return render(request,'work/salary_struct_form.html',{'form':form})
+
+def upload_csv(request):
+
+    data={}
+    if request.method=="GET":
+        return render(request,'work/upload_csv.html',data)
+
+    try:
+        csv_file = request.FILES('csv_file')
+
+        if not csv_file.name.endswith('.csv'):
+            messages.error('Sorry!! This file is not csv type')
+            return HttpResponseRedirect(reverse("salary_percentages:upload_csv"))
+
+        if csv_file.multiple_chunks():
+            messages.error("Uploaded file is too big(%.2f MB) " % (csv_file.size / (1000*1000)))
+            return HttpResponseRedirect(reverse("salary_percentages:upload_csv"))
+
+        file_data = csv_file.read().decode('utf-8')
+        lines=file_data.split("\n")
+
+        for line in lines:
+            fields=line.split(",")
+
+            data_dict = {}
+            data_dict["financial_year"] = fields[0]
+            data_dict["allowances"] = fields[1]
+            data_dict["hra_percentage"] = fields[2]
+            data_dict["ppf_percentage"] = fields[3]
+            print(data_dict)
+            salary_percentages = Salary_calculations(**data_dict)
+            salary_percentages.save()
+
+    except Exception as e:
+
+        logging.getLogger("error_logger").error("Unable to upload file" + repr(e))
+        return HttpResponseRedirect(reverse("salary_percetages:upload_csv"))

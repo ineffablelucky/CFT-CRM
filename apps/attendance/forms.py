@@ -2,6 +2,7 @@ from django import forms
 from .models import Attendance, MyUser, LeaveRequest
 from ..leave.models import Leave
 import datetime
+from django.db.models import Q
 from django.utils.timezone import utc
 from pytz import timezone
 
@@ -59,7 +60,11 @@ class LeaveForm(forms.ModelForm):
         data3 = self.cleaned_data.get('leave_type')
         data = self.cleaned_data.get('end_date')
         data1 = self.cleaned_data.get('date')
-        if data >= data1:
+
+        if LeaveRequest.objects.filter(Q(user_id=self.logged_user.id) & Q(date=data1) & Q(end_date=data)):
+            raise forms.ValidationError("Already applied for the leaves on the dates mentioned")
+
+        elif data >= data1:
             if data3 == "PL":
                 delta = datetime.timedelta(days=leave.pl)
                 if data - data1 <= delta:
@@ -78,6 +83,8 @@ class LeaveForm(forms.ModelForm):
                     return data
                 else:
                     raise forms.ValidationError("No sufficient Half Day left")
+
+
         else:
             raise forms.ValidationError('End Date should be greater than Start Date')
 

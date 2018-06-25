@@ -33,3 +33,7 @@ class IT_Project(models.Model):
     def get_employees(self):
         return ",".join([str(p) for p in self.employees_per_project.all()])
 
+    class Meta:
+        permissions = (
+            ('view_project', 'Can view projects'),
+        )
