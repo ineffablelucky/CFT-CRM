@@ -12,7 +12,7 @@ class ProjectList(LoginRequiredMixin, PermissionRequiredMixin, ListView):
         queryset = IT_Project.objects.filter(
             (Q(opportunity__status='Approved') | Q(opportunity=None))
         )
-
+        
         return queryset
 
 class Employee_Project_List(LoginRequiredMixin,PermissionRequiredMixin, ListView):

@@ -21,7 +21,7 @@ PROJECT_PATH = os.path.join(SETTINGS_DIR, os.pardir)
 print(PROJECT_PATH)
 PROJECT_PATH = os.path.abspath(PROJECT_PATH)
 print(PROJECT_PATH)
-TEMPLATE_PATH = os.path.join(PROJECT_PATH, 'static/')
+TEMPLATE_PATH = os.path.join(PROJECT_PATH, '')
 print(TEMPLATE_PATH)
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/

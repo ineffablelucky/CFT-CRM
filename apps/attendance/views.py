@@ -6,14 +6,16 @@ from django.shortcuts import redirect
 from django.http import HttpResponseForbidden, HttpResponse
 from ..leave.models import Leave
 from ..attendance.models import Attendance
+from ..attendance.models import LeaveRequest
 from django.db.models import Q
+from ..users.models import MyUser
 
 
 import datetime
 from copy import deepcopy
 
 
-class LeaveRequest(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
+class LeaveRequestView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     permission_required = ('attendance.add_leaverequest',)
     form_class = LeaveForm
     template_name = 'leaverequest.html'
@@ -51,24 +53,25 @@ class LeaveRequest(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     #     return redirect('/')
 
     def get_context_data(self, **kwargs):
-        context = super(LeaveRequest, self).get_context_data(**kwargs)
+        context = super(LeaveRequestView, self).get_context_data(**kwargs)
         context["leave"] = Leave.objects.get(user_id=self.request.user)
+        context["list_leave_request"] = LeaveRequest.objects.filter(user_id=self.request.user)
         return context
 
     def form_valid(self, form):
         ins = form.save()
         # for i in ins:
         #     print(i.id)
-        return HttpResponse("Request Send")
+        return redirect('/attendance/leave')
 
 
 
 
 """
-class LeaveTable(LoginRequiredMixin, ListView):
+class ShowingLeaveRequest(LoginRequiredMixin, ListView):
     template_name = 'leaverequest.html'
     model = Leave
-    context_object_name = 'leave'
+    context_object_name = 'showrequest'
 
     def get_queryset(self):
         queryset = Leave.objects.get(user_id = self.request.user.id)
@@ -112,10 +115,12 @@ class Clockin(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
                                       )
             if a.time_in.hour <= 9 and a.time_in.minute <= 30:
                 a.note = "On Time"
-            else:
+            elif a.time_in.hour<=18 and a.time_in.minute <= 30:
                 hour_late = a.time_in.hour - 9
                 min_late = a.time_in.hour-30
-                a.note = str(hour_late)+" hrs" + str(min_late) + " mins Late"
+                a.note = str(hour_late)+" hrs" + str(min_late) + " min's Late"
+            else:
+                a.status = 'absent'
 
             a.save()
             return redirect('/attendance/userattendance')
@@ -162,5 +167,40 @@ class ShowAttendance(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     context_object_name = 'attendance'
 
     def get_queryset(self):
-        queryset = Attendance.objects.filter(date=datetime.date.today())
+        temp = MyUser.objects.all()
+
+        if datetime.date.today().weekday() == 0:
+            delta = datetime.timedelta(days=3)
+        elif datetime.date.today().weekday() == 6:
+            delta = datetime.timedelta(days=2)
+        else:
+            delta = datetime.timedelta(days=1)
+        p=[]
+        for t in temp:
+           p.append(t.pk)
+        temp2 = Attendance.objects.filter(date=datetime.date.today()-delta)
+        l = []
+        for t in temp2:
+            tt = MyUser.objects.get(id=t.user_id)
+            l.append(tt.pk)
+
+        p = [x for x in p if x not in l]
+        for i in range(len(p)):
+            absent = Attendance.objects.create(user_id=p[i], date=datetime.date.today()-delta,
+                                               status='absent')
+            absent.save()
+        queryset = Attendance.objects.filter(date=datetime.date.today()-delta)
         return queryset
+
+
+"""
+class ShowAbsentEmployee(LoginRequiredMixin, PermissionRequiredMixin, ListView):
+    permission_required = ('users.view_attendance',)
+    template_name = 'attendance/showattendance.html'
+    model = Attendance
+    context_object_name = 'absent'
+
+    def get_queryset(self):
+        queryset = Attendance.objects.filter(date=datetime.date.today())
+        queryset2 = MyUser.objects.filter(~Q())
+"""

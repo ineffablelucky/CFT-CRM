@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views.generic import CreateView, ListView, DetailView
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from apps.meeting.forms import CreateMeeting
 from django.urls import reverse, reverse_lazy
 from apps.meeting.models import MEETING
@@ -8,7 +8,14 @@ from apps.opportunity.models import Opportunity
 from django.db.models import Q
 
 
-class CMeeting(CreateView):
+class CMeeting(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
+    print('Hello World')
+    permission_required = (
+         'users.view_meeting',
+         'meeting.add_meeting',
+         'meeting.change_meeting',
+         'meeting.delete_meeting',
+    )
     form_class = CreateMeeting
     model = MEETING
     template_name = 'meeting/create_meeting.html'
@@ -27,7 +34,11 @@ class CMeeting(CreateView):
         return reverse_lazy('opportunity:meeting:meeting_list', kwargs=self.kwargs)
 
 
-class L_Meeting(ListView):
+class L_Meeting(LoginRequiredMixin, PermissionRequiredMixin, ListView):
+    permission_required = (
+        'users.view_meeting',
+        # 'meeting.change_meeting',
+    )
     model = MEETING
     template_name = 'meeting/meeting_list.html'
     context_object_name = 'meetings'
@@ -42,7 +53,11 @@ class L_Meeting(ListView):
         return context
 
 
-class Emp_Meetings(LoginRequiredMixin, ListView):
+class Emp_Meetings(LoginRequiredMixin, PermissionRequiredMixin, ListView):
+    permission_required = (
+        'users.view_meeting',
+        'meeting.change_meeting',
+    )
     print("heelo Mooto")
     model = MEETING
     template_name = 'meeting/employee_meeting.html'
