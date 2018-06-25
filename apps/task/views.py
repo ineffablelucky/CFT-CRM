@@ -12,6 +12,7 @@ class TaskList(LoginRequiredMixin, PermissionRequiredMixin,ListView):
     model = Task
     context_object_name = 'task_list'
     permission_required = ('users.view_task',)
+    template_name = "task_manager_list.html"
 
     def get_queryset(self):
         queryset = Task.objects.filter(project__id=self.kwargs.get('pk'))

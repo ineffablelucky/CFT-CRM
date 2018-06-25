@@ -172,9 +172,11 @@
                         {% if user.is_authenticated %}
                         <!--{{ user.username }}-->
                             <div class="text-right">
-                                <button type="submit" class="btn createBtn btn-md">
-                                    <a href="{% url 'project:project-add' %}" >CREATE NEW PROJECT</a>
-                                </button>
+                                <a href="{% url 'project:project-add' %}" >
+                                    <button type="submit" class="btn createBtn btn-md">
+                                        CREATE NEW PROJECT
+                                    </button>
+                                </a>
                             </div>
 
                             <table class="table table-striped projects">
