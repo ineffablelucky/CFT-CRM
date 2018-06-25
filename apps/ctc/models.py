@@ -15,8 +15,6 @@ class CTC_breakdown(models.Model):
     year = models.IntegerField(default=timezone.now().year)
     ctc_max_bonus = models.IntegerField(default=12)
     fixed_monthly_salary = models.IntegerField(default = 20000)
-    #given_Bonus = models.IntegerField()
-    #percentage_bonus_of_max_bonus = models.IntegerField()
     #deduction_due_to_leaves
     #final_amount
 
@@ -49,4 +47,4 @@ class CTC_breakdown(models.Model):
 
     @property
     def fixed_amt(self):
-        self.fixed_monthly_salary = (self.basic + self.hra + self.allowances)/12
+       self.fixed_monthly_salary = (self.basic + self.hra + self.allowances)/12

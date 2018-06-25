@@ -1,6 +1,4 @@
 from django.db import models
-from datetime import datetime
-from apps.users.models import MyUser
 from apps.ctc.models import CTC_breakdown
 
 
@@ -16,3 +14,7 @@ class Employee_details(models.Model):
     ctc = models.IntegerField( default=200000)
     given_bonus = models.IntegerField(default=0)
     percentage_bonus_of_max_bonus=models.IntegerField(default=0)
+
+    def percentage_bonus_amt(self):
+        a=CTC_breakdown.objects.filter(employee_id=self.worker_id).values('ctc_max_bonus')
+        self.percentage_bonus_of_max_bonus=int((self.given_bonus/a)*100)
