@@ -115,10 +115,12 @@ class Clockin(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
                                       )
             if a.time_in.hour <= 9 and a.time_in.minute <= 30:
                 a.note = "On Time"
-            else:
+            elif a.time_in.hour<=18 and a.time_in.minute <= 30:
                 hour_late = a.time_in.hour - 9
                 min_late = a.time_in.hour-30
-                a.note = str(hour_late)+" hrs" + str(min_late) + " mins Late"
+                a.note = str(hour_late)+" hrs" + str(min_late) + " min's Late"
+            else:
+                a.status = 'absent'
 
             a.save()
             return redirect('/attendance/userattendance')
@@ -165,18 +167,29 @@ class ShowAttendance(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     context_object_name = 'attendance'
 
     def get_queryset(self):
-        # temp = MyUser.Attendance_set.all()
-        # print(temp)
-        queryset = Attendance.objects.filter(date=datetime.date.today())
-        for a in attend:
-            p.append(a.user_id)
-        for a in attend:
-            m = MyUser.objects.filter(~Q(id=a.user_id))
-            for j in m:
-                if Attendance.objects.filter(Q(user_id=j.id) & Q(date=datetime.date.today()-delta)) is None:
+        temp = MyUser.objects.all()
 
-                    absent = Attendance.objects.create(user_id=j.id, date=datetime.date.today()-delta, status='absent')
-                    absent.save()
+        if datetime.date.today().weekday() == 0:
+            delta = datetime.timedelta(days=3)
+        elif datetime.date.today().weekday() == 6:
+            delta = datetime.timedelta(days=2)
+        else:
+            delta = datetime.timedelta(days=1)
+        p=[]
+        for t in temp:
+           p.append(t.pk)
+        temp2 = Attendance.objects.filter(date=datetime.date.today()-delta)
+        l = []
+        for t in temp2:
+            tt = MyUser.objects.get(id=t.user_id)
+            l.append(tt.pk)
+
+        p = [x for x in p if x not in l]
+        for i in range(len(p)):
+            absent = Attendance.objects.create(user_id=p[i], date=datetime.date.today()-delta,
+                                               status='absent')
+            absent.save()
+        queryset = Attendance.objects.filter(date=datetime.date.today()-delta)
         return queryset
 
 

@@ -8,10 +8,27 @@ from pytz import timezone
 
 
 class LeaveForm(forms.ModelForm):
-    name = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'readonly': True}), label='Name')
-    date = forms.DateField(widget=forms.TextInput(attrs={'type' : 'date'}), label='Start Date')
-    end_date = forms.DateField(widget=forms.TextInput(attrs={'type' : 'date'}), label='End Date')
-    note = forms.CharField(max_length=500, widget=forms.Textarea)
+    name = forms.CharField(
+        max_length=100,
+        widget=forms.TextInput(attrs={'readonly': True, 'class': ''}),
+        label='Name'
+    )
+
+    date = forms.DateField(
+        widget=forms.TextInput(attrs={'type': 'date', 'class': ''}),
+        label='Start Date'
+    )
+
+    end_date = forms.DateField(
+        widget=forms.TextInput(attrs={'type': 'date', 'class': ''}),
+        label='End Date'
+    )
+
+    note = forms.CharField(
+        max_length=500,
+        widget=forms.Textarea(attrs={'class': ''})
+    )
+
     LEAVE_TYPE_CHOICES = (
         ('PL', 'Privilege leave'),
         ('CL', 'Casual leave'),
@@ -20,11 +37,10 @@ class LeaveForm(forms.ModelForm):
 
     leave_type = forms.ChoiceField(
         choices=LEAVE_TYPE_CHOICES,
-        widget=forms.Select(),
+        widget=forms.Select(attrs={'class': ''}),
         label='Type of Leave'
 
     )
-
 
     class Meta:
         model = LeaveRequest
