@@ -6,11 +6,12 @@ from django.views.generic import TemplateView, ListView, CreateView, UpdateView,
 from apps.users.models import MyUser
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from apps.project.models import IT_Project
+from django.core.exceptions import PermissionDenied
 
-class TaskList(LoginRequiredMixin,  ListView):
+class TaskList(LoginRequiredMixin, PermissionRequiredMixin,ListView):
     model = Task
     context_object_name = 'task_list'
-    permission_required = ('users.view_task', 'task.view_task',)
+    permission_required = ('users.view_task',)
 
     def get_queryset(self):
         queryset = Task.objects.filter(project__id=self.kwargs.get('pk'))
@@ -61,7 +62,8 @@ class Edit_Task(LoginRequiredMixin, UpdateView):
     success_url = '/task'
 
 
-class Details_Task(LoginRequiredMixin, DetailView):
+class Details_Task(LoginRequiredMixin, PermissionRequiredMixin, DetailView):
+    permission_required = ('task.view_task',)
     model = Task
     context_object_name = 'task_list'
     template_name = "task_details.html"

@@ -10,7 +10,7 @@ from django.db.models import Q
 
 
 class ListOppo(LoginRequiredMixin, PermissionRequiredMixin, ListView):
-    permission_required = ('users.view_opportunity',)
+    permission_required = ('opportunity.view_opportunity',)
     model = Opportunity
     template_name = 'opportunity/employee_leads.html'
     context_object_name = 'opportunity'

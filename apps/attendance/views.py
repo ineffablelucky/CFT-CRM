@@ -6,14 +6,16 @@ from django.shortcuts import redirect
 from django.http import HttpResponseForbidden, HttpResponse
 from ..leave.models import Leave
 from ..attendance.models import Attendance
+from ..attendance.models import LeaveRequest
 from django.db.models import Q
+from ..users.models import MyUser
 
 
 import datetime
 from copy import deepcopy
 
 
-class LeaveRequest(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
+class LeaveRequestView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     permission_required = ('attendance.add_leaverequest',)
     form_class = LeaveForm
     template_name = 'leaverequest.html'
@@ -51,24 +53,25 @@ class LeaveRequest(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     #     return redirect('/')
 
     def get_context_data(self, **kwargs):
-        context = super(LeaveRequest, self).get_context_data(**kwargs)
+        context = super(LeaveRequestView, self).get_context_data(**kwargs)
         context["leave"] = Leave.objects.get(user_id=self.request.user)
+        context["list_leave_request"] = LeaveRequest.objects.filter(user_id=self.request.user)
         return context
 
     def form_valid(self, form):
         ins = form.save()
         # for i in ins:
         #     print(i.id)
-        return HttpResponse("Request Send")
+        return redirect('/attendance/leave')
 
 
 
 
 """
-class LeaveTable(LoginRequiredMixin, ListView):
+class ShowingLeaveRequest(LoginRequiredMixin, ListView):
     template_name = 'leaverequest.html'
     model = Leave
-    context_object_name = 'leave'
+    context_object_name = 'showrequest'
 
     def get_queryset(self):
         queryset = Leave.objects.get(user_id = self.request.user.id)
@@ -162,5 +165,29 @@ class ShowAttendance(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     context_object_name = 'attendance'
 
     def get_queryset(self):
+        # temp = MyUser.Attendance_set.all()
+        # print(temp)
         queryset = Attendance.objects.filter(date=datetime.date.today())
+        for a in attend:
+            p.append(a.user_id)
+        for a in attend:
+            m = MyUser.objects.filter(~Q(id=a.user_id))
+            for j in m:
+                if Attendance.objects.filter(Q(user_id=j.id) & Q(date=datetime.date.today()-delta)) is None:
+
+                    absent = Attendance.objects.create(user_id=j.id, date=datetime.date.today()-delta, status='absent')
+                    absent.save()
         return queryset
+
+
+"""
+class ShowAbsentEmployee(LoginRequiredMixin, PermissionRequiredMixin, ListView):
+    permission_required = ('users.view_attendance',)
+    template_name = 'attendance/showattendance.html'
+    model = Attendance
+    context_object_name = 'absent'
+
+    def get_queryset(self):
+        queryset = Attendance.objects.filter(date=datetime.date.today())
+        queryset2 = MyUser.objects.filter(~Q())
+"""
