@@ -25,4 +25,9 @@ class Opportunity(models.Model):
     )
 
     def __str__(self):
-        return self.description
+        return self.lead.description
+
+    class Meta:
+        permissions = (
+            ('view_opportunity', 'Can view opportunities'),
+        )

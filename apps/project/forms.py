@@ -20,13 +20,15 @@ class CreateProjectForm(ModelForm):
     project_name = forms.CharField(
         label = 'PROJECT NAME',
         widget=forms.TextInput(
-
+            attrs={'class': '',}
         )
     )
 
     project_description = forms.CharField(
         label= 'PROJECT DESCRIPTION',
-        widget=forms.Textarea()
+        widget=forms.Textarea(
+            attrs={'class': '',}
+        )
     )
 
     # opportunity = forms.ModelChoiceField(
@@ -45,40 +47,58 @@ class CreateProjectForm(ModelForm):
     #     label='PROJECT PRICE',
     #     widget=forms.TextInput()
     # )
+
+
     project_start_date_time = forms.CharField(
         label='PROJECT START DATE',
         required=False,
         widget=forms.TextInput(
-            attrs={'type': 'date'}
+            attrs={'type': 'date', 'class': '',}
         )
     )
+
+
     project_end_date_time = forms.CharField(
         label='PROJECT END DATE',
         required=False,
         widget=forms.TextInput(
-            attrs={'type': 'date'}
+            attrs={'type': 'date', 'class': '',}
         )
     )
+
+
     project_total_working_hr = forms.IntegerField(
         label='TOTAL WORKING HOURS',
-        widget=forms.TextInput()
+        widget=forms.TextInput(
+            attrs={'class': '', }
+        )
     )
+
+
     # client_id = forms.ModelChoiceField(
     #     label='CLIENT',
     #     required=False,
     #     queryset=CLIENT.objects.all(),
     #     widget=forms.Select()
     # )
+
+
     employees_per_project = forms.ModelMultipleChoiceField(
         label='ALOT EMPLOYEES TO PROJECT',
         queryset=MyUser.objects.filter(Q(department='IT') & Q(designation='Employee')),
+        widget=forms.TextInput(
+            attrs={'class': '', }
+        )
     )
 
     status = forms.ChoiceField(
         label='STATUS',
         choices=Project_status,
-        widget=forms.Select()
+        widget=forms.TextInput(
+            attrs={'class': '', }
+        )
     )
+
 
     class Meta:
         model = IT_Project
@@ -94,9 +114,11 @@ class CreateProjectForm(ModelForm):
             'employees_per_project',
             'status',
         )
+
     #
     # def now_plus_30(self):
     #     return timezone.now() + timedelta(days=30)
+
 
     def __init__(self,  *args, **kwargs):
         super(CreateProjectForm, self).__init__(*args, **kwargs)

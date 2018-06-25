@@ -1,84 +1,252 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Manager's Project view</title>
-    <style>
-body {
-  margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
-}
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+    <!--<meta charset="UTF-8">-->
 
-.topnav {
-  overflow: hidden;
-  background-color: #333;
-}
+{% extends 'static/production/index.html' %}
 
-.topnav a {
-  float: left;
-  color: #f2f2f2;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-  font-size: 17px;
-}
 
-.topnav a:hover {
-  background-color: #ddd;
-  color: black;
-}
+    <title>{% block title %} Manager's Project View {% endblock title %}</title>
 
-.topnav a.active {
-  background-color: #4CAF50;
-  color: white;
-}
-
-.topnav-right {
-  float: right;
-}
+{% block extra-stylesheets %}
+<style>
+    .createBtn{
+        font-weight: bold;
+        box-shadow: 0 0 1px 1px grey;
+     }
 </style>
-</head>
-<body>
-<h1>Hi, Welcome to Project Manager's Project List!</h1><hr>
-{% if user.is_authenticated %}
-    {{ user.username }}
-    <div class="topnav-right">
-    <form><input type="submit"  formaction="{% url 'project:project-add' %}" value="CREATE NEW PROJECT"></form>
-    </div>
+{% endblock %}
 
-    <table border="1">
-        <thead>
-            <th>Project Name</th><!--<th>Project Description</th>-->
-            <th>Project start date</th>
-            <th>Project End date</th>
-            <th>Progress</th>
-            <th>Status</th>
-            <th>Actions</th>
-        </thead>
 
-        <tbody>
-            {% for p in object_list %}
-            <tr>
-            <td><a href="{% url 'task:manager-task-view' p.id %}">{{ p.project_name }}</a></td>
-            <!--<td>{{ p.project_description}}</td>-->
-            <td>{{ p.project_start_date_time }}</td>
-            <td>{{ p.project_end_date_time }}</td>
-            <td>--</td>
-            <td>{{ p.status }}</td>
-            <td>
+{% block sidebar %}
+    <div class="col-md-3 left_col">
+          <div class="left_col scroll-view">
+            <div class="navbar nav_title" style="border: 0;">
+              <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>Gentelella Alela!</span></a>
+            </div>
 
-                {% csrf_token %}
-                <a href="{% url 'project:project-details' p.id %}"><button>View</button></a>
-                <a href="{% url 'project:project-update' p.id %}"><button>Edit</button></a>
+            <div class="clearfix"></div>
 
-            </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-{% else %}
-    <div>You don't have permission</div>
-{% endif %}
+            <!-- menu profile quick info -->
+            <div class="profile clearfix">
+              <div class="profile_pic">
+                <img src="images/img.jpg" alt="..." class="img-circle profile_img">
+              </div>
+              <div class="profile_info">
+                <span>Welcome,</span>
+                <h2>John Doe</h2>
+              </div>
+            </div>
+            <!-- /menu profile quick info -->
 
-</body>
-</html>
+            <br />
+
+            <!-- sidebar menu -->
+            <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+              <div class="menu_section">
+                <h3>General</h3>
+                <ul class="nav side-menu">
+                  <li><a><i class="fa fa-home"></i> Account Management <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a href="index.html">Salary Management</a></li>
+                      <li><a href="index2.html">Client Billing</a></li>
+                      <!--<li><a href="index3.html">Dashboard3</a></li>-->
+                    </ul>
+                  </li>
+                  <li><a href="{% url 'project:project_manager_list' %}"><i class="fa fa-edit"></i> Project Management </a>
+                    <ul class="nav child_menu">
+                      <li><a href="form.html">General Form</a></li>
+                      <li><a href="form_advanced.html">Advanced Components</a></li>
+                      <li><a href="form_validation.html">Form Validation</a></li>
+                      <li><a href="form_wizards.html">Form Wizard</a></li>
+                      <li><a href="form_upload.html">Form Upload</a></li>
+                      <li><a href="form_buttons.html">Form Buttons</a></li>
+                    </ul>
+                  </li>
+                  <li><a><i class="fa fa-desktop"></i> HR Management <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a href="{% url 'attendance:show_attendance' %}">Attendance Management</a></li>
+                      <li><a href="{% url 'leave:leave_request' %}">Leave Management</a></li>
+                      <li><a href="typography.html">Employee Management</a></li>
+                      <!--<li><a href="icons.html">Icons</a></li>-->
+                      <!--<li><a href="glyphicons.html">Glyphicons</a></li>-->
+                      <!--<li><a href="widgets.html">Widgets</a></li>-->
+                      <!--<li><a href="invoice.html">Invoice</a></li>-->
+                      <!--<li><a href="inbox.html">Inbox</a></li>-->
+                      <!--<li><a href="calendar.html">Calendar</a></li>-->
+                    </ul>
+                  </li>
+                  <li><a><i class="fa fa-table"></i> Lead Management <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a href="{% url 'leads:LeadDetails' %}">New Leads</a></li>
+                      <li><a href="{% url 'opportunity:assign_lead' %}">Assigned Leads</a></li>
+                      <li><a href="{% url 'opportunity:closed_leads' %}">Closed Leads</a></li>
+                      <li><a href="{% url 'opportunity:declined_leads' %}">Declined Leads</a></li>
+                    </ul>
+                  </li>
+                  <li><a><i class="fa fa-bar-chart-o"></i> Reporting </a>
+                    <!--<ul class="nav child_menu">-->
+                      <!--<li><a href="chartjs.html">Chart JS</a></li>-->
+                      <!--<li><a href="chartjs2.html">Chart JS2</a></li>-->
+                      <!--<li><a href="morisjs.html">Moris JS</a></li>-->
+                      <!--<li><a href="echarts.html">ECharts</a></li>-->
+                      <!--<li><a href="other_charts.html">Other Charts</a></li>-->
+                    <!--</ul>-->
+                  </li>
+                  <!--<li><a><i class="fa fa-clone"></i>Layouts <span class="fa fa-chevron-down"></span></a>-->
+                    <!--<ul class="nav child_menu">-->
+                      <!--<li><a href="fixed_sidebar.html">Fixed Sidebar</a></li>-->
+                      <!--<li><a href="fixed_footer.html">Fixed Footer</a></li>-->
+                    <!--</ul>-->
+                  <!--</li>-->
+                </ul>
+              </div>
+
+            </div>
+            <!-- /sidebar menu -->
+
+            <!-- /menu footer buttons -->
+            <div class="sidebar-footer hidden-small">
+              <a data-toggle="tooltip" data-placement="top" title="Settings">
+                <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+              </a>
+              <a data-toggle="tooltip" data-placement="top" title="FullScreen">
+                <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
+              </a>
+              <a data-toggle="tooltip" data-placement="top" title="Lock">
+                <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
+              </a>
+              <a data-toggle="tooltip" data-placement="top" title="Logout" href="login.html">
+                <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+              </a>
+            </div>
+            <!-- /menu footer buttons -->
+          </div>
+        </div>
+{% endblock sidebar %}
+
+
+{% block page-content %}
+
+<div class="right_col" role="main">
+         <div class="">
+            <div class="page-title">
+              <div class="title_left">
+                <h3>Projects <small>Listing page</small></h3>
+              </div>
+
+              <div class="title_right">
+                <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search for...">
+                    <span class="input-group-btn">
+                      <button class="btn btn-default" type="button">Go!</button>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="clearfix">
+
+            </div>
+
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="x_panel">
+                      <div class="x_title">
+                        <h2>Projects</h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                          <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                          </li>
+                        </ul>
+                        <div class="clearfix"></div>
+                      </div>
+                      <div class="x_content">
+
+
+
+
+
+                        <!--<h1>Hi, Welcome to Project Manager's Project List!</h1><hr>-->
+                        {% if user.is_authenticated %}
+                        <!--{{ user.username }}-->
+                            <div class="text-right">
+                                <button type="submit" class="btn createBtn btn-md">
+                                    <a href="{% url 'project:project-add' %}" >CREATE NEW PROJECT</a>
+                                </button>
+                            </div>
+
+                            <table class="table table-striped projects">
+                                <thead>
+                                    <tr>
+                                      <th>Project Name</th>
+                                      <th>Start Date</th>
+                                      <th>End Date</th>
+                                      <th>Progress</th>
+                                      <th>Status</th>
+                                      <th style="width: 20%">Actions</th>
+                                    </tr>
+                                </thead>
+                                <!--</thead>-->
+
+                                <tbody>
+                                    {% for p in object_list %}
+                                        <tr>
+                                            <td>
+                                                <a href="{% url 'task:manager-task-view' p.id %}">{{ p.project_name }}</a>
+                                            </td>
+                                            <!--<td>{{ p.project_description}}</td>-->
+                                            <td>{{ p.project_start_date_time }}</td>
+                                            <td>{{ p.project_end_date_time }}</td>
+                                            <td class="project_progress">
+                                                <div class="progress progress_sm">
+                                                     <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="57"></div>
+                                                </div>
+                                                <small>57% Complete</small>
+                                            </td>
+                                            <td>
+                                                <button type="button" class="btn statusBtn btn-xs">{{ p.status }}</button>
+                                            </td>
+                                            <td>
+                                                {% csrf_token %}
+                                                <a href="{% url 'project:project-details' p.id %}" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> View </a>
+                                                <a href="{% url 'project:project-update' p.id %}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Edit </a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+
+                        {% else %}
+                            <div>You don't have permission</div>
+                        {% endif %}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+        </div>
+</div>
+
+
+{% endblock page-content %}
+
+
+  {% block extra-script %}
+    <script>
+        var length = document.getElementsByClassName('statusBtn').length;
+            for(var i=0; i<length; i++){
+                var value = document.getElementsByClassName('statusBtn')[i].innerHTML;
+                    if(value == "active"){
+                        document.getElementsByClassName('statusBtn')[i].classList.add("btn-primary");
+                    }else if( value == "cancelled"){
+                        document.getElementsByClassName('statusBtn')[i].classList.add("btn-danger");
+                    }else if( value == "inactive"){
+                        document.getElementsByClassName('statusBtn')[i].classList.add("btn-warning");
+                    }else if( value == "completed"){
+                        document.getElementsByClassName('statusBtn')[i].classList.add("btn-success");
+                    }
+            }
+    </script>
+  {% endblock extra-script %}
