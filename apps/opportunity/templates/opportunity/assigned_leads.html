@@ -157,47 +157,41 @@
         </div>
 {% endblock sidebar %}
 
-{% block page-content %}
-<div class="right_col" role="main">
-          <!-- top tiles -->
-          <div class="row tile_count">
-
-
-            {% if user.is_authenticated %}
-                <div height="200">Hello {{ user.username }}</div>
-                <hr/>
-                <div>
-                    {% for assign in assigned_leads %}
-                        <div >
-                            <a href="{% url 'opportunity:meeting:meeting_list' assign.id %}">
-                                <p>
-                                    Company Name: {{ assign.lead.company_name }}
-                                </p>
-                                <p>
-                                    Project Manager: {{ assign.proj_manager.username }}
-                                </p>
-                                <p>
-                                    Project Description : {{ assign.lead.description|safe }}
-                                </p>
-                                <p>
-                                    Status : {{ assign.status }}
-                                </p>
-                                <p>
-                                    Assigned To : {{ assign.assigned_to.username }}
-                                </p>
-                            </a>
-                        </div>
-                        <div>
-                            <fieldset>
-                                <legend>Assign Project Manager</legend>
-                                <form action="{% url 'opportunity:add_proj_manager' assign.pk %}" method="post" style="display:inline">
-                                    {% csrf_token %}
-                                    <p>
-                                        {{ form.proj_manager.errors }} {{ form.proj_manager.label }} {{ form.proj_manager }}
-                                    </p>
-                                    <input type = submit value="Assign">
-                                </form>
-                            </fieldset>
+                  <div class="x_content">
+                    {% if user.is_authenticated %}
+                            {% for assign in assigned_leads %}
+                        <div class="row">
+                                <div class="col-lg-9 text-left">
+                                    <a href="{% url 'opportunity:meeting:meeting_list' assign.id %}">
+                                        <p>
+                                            Company Name: {{ assign.lead.company_name }}
+                                        </p>
+                                        <p>
+                                            Project Manager: {{ assign.proj_manager.username }}
+                                        </p>
+                                        <p>
+                                            Project Description : {{ assign.lead.description }}
+                                        </p>
+                                        <p>
+                                            Status : {{ assign.status }}
+                                        </p>
+                                        <p>
+                                            Assigned To : {{ assign.assigned_to.username }}
+                                        </p>
+                                    </a>
+                                </div>
+                                <div class="col-lg-3 text-center">
+                                    <form action="{% url 'opportunity:add_proj_manager' assign.pk %}" method="post" class="form-group">
+                                        <fieldset>
+                                            <legend>Assign Project Manager</legend>
+                                            {% csrf_token %}
+                                            <p>
+                                                {{ form.proj_manager.errors }} {{ form.proj_manager.label }} {{ form.proj_manager }}
+                                            </p>
+                                            <input type = submit value="Assign" style="margin-bottom:15px; margin-top:15px">
+                                        </fieldset>
+                                    </form>
+                                </div>
                         </div>
                         <hr/>
                         <hr/>

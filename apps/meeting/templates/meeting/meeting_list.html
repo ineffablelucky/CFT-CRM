@@ -157,59 +157,41 @@
         </div>
 {% endblock sidebar %}
 
-{% block page-content %}
-<div class="right_col" role="main">
-          <!-- top tiles -->
-          <div class="row tile_count">
-
-     {% if user.is_authenticated %}
-        <div height="200">Hello {{ user.username }}</div>
-        <hr/>
-        {% for meeting in meetings %}
-            <div>
-                <p>Opportunity ID: {{ meeting.Opportunity.pk }}</p>
-                <p>Meeting ID: {{ meeting.pk }}</p>
-                <p>Date: {{ meeting.date }}</p>
-                <p>
-                    Assigned To: {{meeting.Opportunity.assigned_to}}
-                </p>
-                <p>
-                    Meeting Notes : {{ meeting.description|safe }}
-                </p>
-                <p>
-                    {% if meeting.extras is not NULL %}
-                    Extras:<br/>
-                    <ul>
-                        {% for extra in meeting.extras.all %}
-                            <li>{{ extra.username }}</li>
-                        {% endfor %}
+                  <div class="x_content">
+                     {% if user.is_authenticated %}
+                        <!--<div height="200">Hello {{ user.username }}</div>-->
+                      <div class="row">
+                        {% for meeting in meetings %}
+                            <div>
+                                <p>Opportunity ID: {{ meeting.Opportunity.pk }}</p>
+                                <p>Meeting ID: {{ meeting.pk }}</p>
+                                <p>Date: {{ meeting.date }}</p>
+                                <p>
+                                    Assigned To: {{meeting.Opportunity.assigned_to}}
+                                </p>
+                                <p>
+                                    {% if meeting.extras is not NULL %}
+                                    Extras:<br/>
+                                    <ul>
+                                        {% for extra in meeting.extras.all %}
+                                            <li>{{ extra.username }}</li>
+                                        {% endfor %}
+                                    {% endif %}
+                                    </ul>
+                                </p>
+                                <hr/>
+                                <hr/>
+                            </div>
+                            {% endfor %}
+                        </div>
+                     <a href="{% url 'opportunity:meeting:create_meeting' oppo_id %}"><button type="button">Create Meeting</button></a>
+                    {% else %}
+                        <div>You don't have permission</div>
                     {% endif %}
-                    </ul>
-                </p>
-                <hr/>
-                <hr/>
+                    </div>
+                </div>
+              </div>
             </div>
-        {% endfor %}
-     <a href="{% url 'opportunity:meeting:create_meeting' oppo_id %}"><button type="button">Create Meeting</button></a>
-    {% else %}
-        <div>You don't have permission</div>
-    {% endif %}
-
-               </div>
-          <!-- /top tiles -->
-
-          <div class="row">
-
-          </div>
-          <br />
-
-          <div class="row">
-
-          </div>
-
-
-          <div class="row">
-
           </div>
         </div>
 
