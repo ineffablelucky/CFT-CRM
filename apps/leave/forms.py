@@ -1,5 +1,6 @@
 from django import forms
 from .models import Leave, MyUser
+from ..attendance.models import Attendance
 from django.db.models import Q
 
 
@@ -35,6 +36,17 @@ class CreateleaveForm(forms.ModelForm):
         return saved_instance
 
 
+"""
+class EmployeeAttendanceForm(forms.ModelForm):
+    date = forms.DateField(
+        widget=forms.TextInput(attrs={'type': 'date', 'class': ''}),
+        label='Select Date'
+    )
+
+    class Meta:
+        model = Attendance
+        fields = ('date',)
+"""
 
 
 

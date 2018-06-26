@@ -98,3 +98,12 @@ class Reject(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
                 return HttpResponse("Already Approved or Rejected")
 
 
+"""
+class EmployeeAttendanceView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
+    permission_required = ('attendance.view_leaverequest',)
+    template_name = 'leaves.html'
+    model = Attendance
+    form_class = EmployeeAttendanceForm
+    print("hII")
+"""
+
