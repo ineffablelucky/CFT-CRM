@@ -174,9 +174,9 @@
                 {% for a in attendance %}
                 <tr>
 
-                        <td>{{ a.user.id }}</td>
+                    <td><a href="showattendance/{{ a.user.id }}"> {{ a.user.id }}</a></td>
                         <td>{{ a.user.department }}</td>
-                        <td>{{ a.user.first_name }} {{a.user.middle_name }} {{ a.user.last_name }}</td>
+                    <td><a href="showattendance/{{ a.user.id }}"> {{ a.user.first_name }} {{a.user.middle_name }} {{ a.user.last_name }}</a></td>
                         <td>{{ a.time_in }}</td>
                         <td>{{ a.time_out }}</td>
                         <td>{{ a.note }}</td>

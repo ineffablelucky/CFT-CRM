@@ -31,6 +31,12 @@ class LeaveApproval(LoginRequiredMixin, PermissionRequiredMixin, ListView):
         queryset = LeaveRequest.objects.all()
         return queryset
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data()
+        attend = Attendance.objects.filter(date=datetime.date.today()-datetime.timedelta(days=1), status='absent')
+        context['attend'] = attend
+        return context
+
 
 class ShowRequest(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     permission_required = ('attendance.view_leaverequest',)
