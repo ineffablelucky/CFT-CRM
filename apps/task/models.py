@@ -20,6 +20,11 @@ class Task(models.Model):
     def __str__(self):
         return self.task_name
 
+    class Meta:
+        permissions = (
+            ('view_task', 'Can view tasks'),
+        )
+
 
 
 class Time_Entry(models.Model):

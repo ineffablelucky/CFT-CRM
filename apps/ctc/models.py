@@ -12,7 +12,7 @@ class CTC_breakdown(models.Model):
     ppf = models.IntegerField(default=12)
     allowances = models.IntegerField(default=12)
     ctc = models.IntegerField(default=12)
-    year = models.IntegerField(max_length=5, default=timezone.now().year)
+    year = models.IntegerField(default=timezone.now().year)
     ctc_max_bonus = models.IntegerField(default=12)
     #given_Bonus = models.IntegerField()
     #percentage_bonus_of_max_bonus = models.IntegerField()

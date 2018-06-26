@@ -65,6 +65,25 @@
 
 
 </table>
+<br>
+<br>
+<div>
+    <table border="1">
+        <tr>
+            <th>From Date</th>
+            <th>End Date</th>
+            <th>Status</th>
+        </tr>
+        {% for i in list_leave_request %}
+        <tr>
+            <td>{{ i.date }}</td>
+            <td>{{ i.end_date }}</td>
+            <td>{{ i.status }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+</div>
 
 </body>
 </html>

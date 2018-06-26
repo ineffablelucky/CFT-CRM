@@ -31,10 +31,10 @@
 
     <!-- Custom Theme Style -->
     <link href="{% static 'build/css/custom.min.css' %}" rel="stylesheet">
-    {% endblock %}
+    {% endblock stylesheets %}
 
-    {% block extra_stylesheets %}
-    {% endblock extra_stylesheets %}
+    {% block extra-stylesheets %}
+    {% endblock extra-stylesheets %}
   </head>
 
   <body class="nav-md">
@@ -76,7 +76,7 @@
                       <!--<li><a href="index3.html">Dashboard3</a></li>-->
                     </ul>
                   </li>
-                  <li><a href="#"><i class="fa fa-edit"></i> Project Management </a>
+                  <li><a href="{% url 'project:project_manager_list' %}"><i class="fa fa-edit"></i> Project Management </a>
                     <!--<ul class="nav child_menu">-->
                       <!--<li><a href="form.html">General Form</a></li>-->
                       <!--<li><a href="form_advanced.html">Advanced Components</a></li>-->
@@ -88,8 +88,8 @@
                   </li>
                   <li><a><i class="fa fa-desktop"></i> HR Management <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="general_elements.html">Attendance Management</a></li>
-                      <li><a href="media_gallery.html">Leave Management</a></li>
+                      <li><a href="{% url 'attendance:show_attendance' %}">Attendance Management</a></li>
+                      <li><a href="{% url 'leave:leave_request' %}">Leave Management</a></li>
                       <li><a href="typography.html">Employee Management</a></li>
                       <!--<li><a href="icons.html">Icons</a></li>-->
                       <!--<li><a href="glyphicons.html">Glyphicons</a></li>-->
@@ -101,10 +101,10 @@
                   </li>
                   <li><a><i class="fa fa-table"></i> Lead Mangement <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="tables.html">New Leads</a></li>
-                      <li><a href="tables_dynamic.html">Assigned Leads</a></li>
-                      <li><a href="tables_dynamic.html">Closed Leads</a></li>
-                      <li><a href="tables_dynamic.html">Declined Leads</a></li>
+                      <li><a href="{% url 'leads:LeadDetails' %}">New Leads</a></li>
+                      <li><a href="{% url 'opportunity:assign_lead' %}">Assigned Leads</a></li>
+                      <li><a href="{% url 'opportunity:closed_leads' %}">Closed Leads</a></li>
+                      <li><a href="{% url 'opportunity:declined_leads' %}">Declined Leads</a></li>
                     </ul>
                   </li>
                   <li><a><i class="fa fa-bar-chart-o"></i> Reporting </a>
@@ -289,6 +289,7 @@
         <!-- /top navigation -->
         {% endblock top-navigation %}
 
+        {% block page-content %}
         <!-- page content -->
         <div class="right_col" role="main">
           <!-- top tiles -->
@@ -982,7 +983,9 @@
           </div>
         </div>
         <!-- /page content -->
+        {% endblock page-content %}
 
+        {% block footer %}
         <!-- footer content -->
         <footer>
           <div class="pull-right">
@@ -991,9 +994,11 @@
           <div class="clearfix"></div>
         </footer>
         <!-- /footer content -->
+        {% endblock footer %}
       </div>
     </div>
 
+    {% block scripts %}
     <!-- jQuery -->
     <script src="{% static 'vendors/jquery/dist/jquery.min.js' %}"></script>
     <!-- Bootstrap -->
@@ -1034,6 +1039,10 @@
 
     <!-- Custom Theme Scripts -->
     <script src="{% static 'build/js/custom.min.js' %}"></script>
+  {% endblock scripts %}
+
+  {% block extra-script %}
+  {% endblock extra-script %}
 	
   </body>
 </html>

@@ -5,7 +5,7 @@ from .views import TaskList, Employee_Task_List, TaskCreate, Edit_Task, Details_
 app_name = 'task'
 
 urlpatterns = [
-    path('<int:pk>/', TaskList.as_view(template_name="task_manager_list.html"), name="manager-task-view"),
+    path('<int:pk>/', TaskList.as_view(), name="manager-task-view"),
 
     # path('<int:pk>/add/', TaskCreate.as_view(), name='task-add'),
     path('add/', TaskCreate.as_view(), name='task-add'),
