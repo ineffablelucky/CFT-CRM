@@ -194,7 +194,7 @@ $(document).ready(function() {
         var id = $('.chk_selector').attr('data-id');
         $.ajax({url: "../edit/" + id , success:function(data){
             $('.modal-body').html(data);
-            
+
         }});
     });
 
