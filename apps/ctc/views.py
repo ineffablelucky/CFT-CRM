@@ -16,7 +16,8 @@ class CTC(LoginRequiredMixin,ListView):
     context_object_name = 'context'
 
     def get_queryset(self):
-        queryset = CTC_breakdown.objects.get(employee_id = self.request.user)
+        print(self.request.user.id)
+        queryset = CTC_breakdown.objects.get(employee = self.request.user)
         return queryset
 
     def get_context_data(self,**kwargs):

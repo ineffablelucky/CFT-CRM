@@ -18,32 +18,32 @@
             <tr>
                 <td>Basic</td>
                 <td>50% CTC</td>
-                <td>{{  context.basic_amt.basic }}</td>
-                <td> {{  context.basic_amt.basic }} </td>
+                <td class="monthly"></td>
+                <td class="yearly"> {{  context.basic }} </td>
             </tr>
             <tr>
                 <td>HRA</td>
                 <td>{{  struct.hra_percentage }}</td>
-                <td>{{  context.hra_amt.hra }}</td>
-                <td> {{ context.hra_amt.hra  }}</td>
+                <td class="monthly"></td>
+                <td class="yearly"> {{ context.hra  }}</td>
             </tr>
             <tr>
                 <td>PPF</td>
                 <td>{{  struct.ppf_percentage }}</td>
-                <td>{{  context.ppf_amt.ppf }}</td>
-                <td>{{  context.ppf_amt.ppf }}</td>
+                <td class="monthly"></td>
+                <td class="yearly">{{  context.ppf }}</td>
             </tr>
             <tr>
                 <td>Allowances</td>
                 <td>{{  struct.allowances }}</td>
-                <td>{{  context.allowances_amt.allowances }}</td>
-                <td>{{ context.allowances_amt.allowances }}</td>
+                <td class="monthly"></td>
+                <td class="yearly">{{ context.allowances }}</td>
             </tr>
             <tr>
                 <td>CTC</td>
                 <td></td>
-                <td>{{ context.ctc }}</td>
-                <td>{{  context.ctc }}</td>
+                <td class="monthly"></td>
+                <td class="yearly">{{  context.basic }}</td>
             </tr>
             <tr>
                 <td>CTC Max Bonus</td>
@@ -52,6 +52,16 @@
                 <td>{{  context.max_bonus_amt.ctc_max_bonus }}</td>
             </tr>
         </tbody>
+</table>
 
+<script>
+    var monthlyAmt = document.getElementsByClassName("monthly");
+    var yearlyAmt = document.getElementsByClassName("yearly");
+
+    for(var i=0;i<monthlyAmt.length;i++){
+        monthlyAmt[i].innerHTML = (yearlyAmt[i].innerHTML)/12;
+
+    }
+</script>
 </body>
 </html>

@@ -59,6 +59,7 @@ class CtcForm(ModelForm):
             instance.save()
             instance.percentage_bonus_amt()
             instance.save()
+            #tmp = Ctc_breakdown.objects.create(basic = instance.ctc*0.5)
         return instance
 
     class Meta:

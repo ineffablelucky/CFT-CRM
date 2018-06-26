@@ -5,7 +5,7 @@
     <title>Title</title>
 </head>
 <body>
-    <form actions="{% url 'salary_percentages:edit_salary' %}" method="POST">
+    <form action="{% url 'salary_percentages:edit_salary' id=request_id.id %}" method="POST" >
         {{ form.ctc }}
         <input type="submit" value="Edit CTC"/>
     </form>

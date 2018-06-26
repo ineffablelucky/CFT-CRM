@@ -5,8 +5,8 @@
     <title>Title</title>
 </head>
 <body>
-    <p>CTC: {{ dict.ctc }}<a href="{% url 'salary_percentages:edit_ctc' %}">Edit</a></p>
-    <p>Given Bonus: {{ dict.given_bonus }}<a href="{% url 'salary_percentages:edit_bonus' %}">Edit</a></p>
+    <p>CTC: {{ employee_detail_object.ctc }}<a href="{% url 'salary_percentages:edit_ctc' id=context.employee_id %}">Edit</a></p>
+    <p>Given Bonus: {{ employee_detail_object.given_bonus }}<a href="{% url 'salary_percentages:edit_bonus' id=context.employee_id %}">Edit</a></p>
     <p>HRA: {{ context.hra }}</p>
     <p>PPF: {{ context.ppf }}</p>
     <p>Allowances: {{ context.allowances }}</p>

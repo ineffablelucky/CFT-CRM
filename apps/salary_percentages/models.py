@@ -16,7 +16,7 @@ class Employee_details(models.Model):
     percentage_bonus_of_max_bonus=models.IntegerField(default=0,null=True)
 
     def percentage_bonus_amt(self):
-        a=CTC_breakdown.objects.filter(employee_id=self.worker).values('ctc_max_bonus')
+        a=CTC_breakdown.objects.filter(employee_id=self.worker_id).values('ctc_max_bonus')
         self.percentage_bonus_of_max_bonus=int((self.given_bonus/a)*100)
 
 def create_profile(sender,**kwargs):

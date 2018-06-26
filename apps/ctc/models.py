@@ -19,33 +19,33 @@ class CTC_breakdown(models.Model):
     #final_amount
 
     def ctc_amt(self):
-        a = s_percent.models.Employee_details.objects.filter(worker_id = self.employee_id).values('ctc')
+        a = s_percent.models.Employee_details.objects.filter(worker_id=self.employee_id).values('ctc').get()
         return a
 
-    @property
+    def save(self, *args, **kwargs):
+        self.basic = int((self.ctc_amt().get('ctc')) * 0.5)
+        print(self.basic)
+        super(CTC_breakdown, self).save(*args, **kwargs)
+
     def basic_amt(self):
-        self.basic = 0.5*self.ctc_amt()
+        self.basic = int(self.ctc_amt().get('ctc') * 0.5)
+        return self.basic
 
-    @property
     def hra_amt(self):
-        a = s_percent.models.Salary_calculations.objects.filter(financial_year=self.year).values('hra_percentage')
-        self.hra = int((a*self.basic)/100)
+        a = s_percent.models.Salary_calculations.objects.filter(financial_year=self.year).values('hra_percentage').get()
+        self.hra = int((a.get('hra_percentage')*self.basic)/100)
 
-    @property
     def allowances_amt(self):
-        a = s_percent.models.Salary_calculations.objects.filter(financial_year=self.year).values('allowances')
-        self.allowances = int((a*self.basic)/100)
+        a = s_percent.models.Salary_calculations.objects.filter(financial_year=self.year).values('allowances').get()
+        self.allowances = int((a.get('allowances')*self.basic)/100)
 
-    @property
     def ppf_amt(self):
-        a = s_percent.models.Salary_calculations.objects.filter(financial_year=self.year).values('ppf_percentage')
-        self.ppf = int((a*self.basic)/100)
+        a = s_percent.models.Salary_calculations.objects.filter(financial_year=self.year).values('ppf_percentage').get()
+        self.ppf = int((a.get('ppf_percentage')*self.basic)/100)
 
-    @property
     def max_bonus_amt(self):
-        self.ctc_max_bonus = (self.ctc_amt()-(self.basic+self.allowances+self.hra+(2*self.ppf)))
+        self.ctc_max_bonus = int((self.ctc_amt().get('ctc')-(self.basic+self.allowances+self.hra+(2*self.ppf))))
 
-    @property
     def fixed_amt(self):
        self.fixed_monthly_salary = (self.basic + self.hra + self.allowances)/12
 
