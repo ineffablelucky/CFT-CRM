@@ -3,6 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>task details</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<style>
+    form {
+    display: inline-block; //Or display: inline;
+}
+</style>
+
 </head>
 <body>
 hello welcome to task details page!
@@ -15,8 +23,65 @@ hello welcome to task details page!
     <p>STATUS: {{ object.status }}</p>
     <p>ASSIGNED TO: {{ object.employee_id }}</p>
     <p>EXPECTED TIME IN HOURS: {{ object.expected_time }}</p>
+    <p>DESCRIPTION: {{ object.task_description }}</p>
+    <!--<p>TIME ALREADY SPENT: &#45;&#45;</p>-->
+    <p>Current state of task: --   {{ object.task_current_state }}</p>
 {% else %}
     <div>You don't have permission</div>
 {% endif %}
+<br><br>
+
+{% if object.task_current_state == "stopped" %}
+
+    <form action="{% url 'task:taskstart' object.id %}" action="post">
+        {% csrf_token %}
+
+        <input type="submit" value="START TASK"/>
+
+    </form>
+
+{% else %}
+
+    <form action="{% url 'task:taskend' object.id %}" action="post">
+        {% csrf_token %}
+
+        <input type="submit" value="PAUSE"/>
+    </form>
+{% endif %}
+
+{% if object.task_current_state == "stopped" %}
+
+    <form action="{% url 'task:taskstart' object.id %}" action="post">
+        {% csrf_token %}
+
+        <input type="submit" value="RESUME"/>
+
+    </form><BR><BR>
+{% else %}
+    <form action="{% url 'task:taskend' object.id %}" action="post">
+        {% csrf_token %}
+
+            <input type="submit" value="END TASK"/>
+
+    </form><br>
+{% endif %}
+
+
+<!--<script>-->
+    <!--$(document).ready(function(){-->
+        <!--var elem = $('.change-btn');-->
+            <!--$('.change-btn').click(function(){-->
+            <!--if($(this).val() === "START TASK"){-->
+                <!--$(this).val("PAUSE");-->
+            <!--}else if($(this).val() === "PAUSE"){-->
+                <!--$(this).val("RESUME");-->
+            <!--}-->
+        <!--});-->
+    <!--});-->
+
+<!--</script>-->
+
 </body>
+
+
 </html>

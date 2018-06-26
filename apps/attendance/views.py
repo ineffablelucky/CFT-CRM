@@ -164,3 +164,4 @@ class ShowAttendance(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     def get_queryset(self):
         queryset = Attendance.objects.filter(date=datetime.date.today())
         return queryset
+
