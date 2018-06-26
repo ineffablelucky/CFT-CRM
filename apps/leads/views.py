@@ -68,6 +68,7 @@ class LeadEdit(LoginRequiredMixin,PermissionRequiredMixin,UpdateView):
     def get_success_url(self, **kwargs):
         return reverse_lazy('leads:LeadDetails')
 
+
 	# success_url = reverse_lazy('clients:projectdetails')
 
 

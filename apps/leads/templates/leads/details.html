@@ -47,6 +47,9 @@
                     {% if object_list %}
                       <form method="post" action="assign/">
                       <div class="">
+
+                          
+
                         <table class="table table-striped jambo_table bulk_action">
                          <thead>
                             <tr class="headings">
@@ -89,7 +92,7 @@
                                     <td>{{leads.assigned_boolean}}</td>
                                     <td class=" last">
                                         <a href="{% url 'leads:LeadEdit' leads.id %}">
-                                            <button type="button">Edit</button>
+                                            <button type="button" id="edit" >Edit</button>
                                         </a>
                                         <a href="{% url 'leads:LeadDelete' leads.id %}">
                                             <button type="button">Delete</button>
@@ -136,8 +139,6 @@
 {% block extra-script %}
 <script>
 $(function(){
-
-
     $('.chk_selector').click(function(){
         if($(this).prop('checked') == true){
             var id = $(this).data('id');
@@ -166,11 +167,10 @@ $(document).ready(function() {
 
 
         var $button = $("#ram").hide(),
-            $cbs = $('input').click(function() {
+            $cbs = $('.chk_selector').click(function() {
                 $button.toggle( $cbs.is(":checked") );
             });
-
-
     });
+
 </script>
 {% endblock extra-script %}

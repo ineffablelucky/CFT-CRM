@@ -1,17 +1,9 @@
-{% extends 'static/production/index.html' %}
-
-
-
-{% block page-content %}
-<div class="right_col" role="main">
-          <!-- top tiles -->
-          <div class="row tile_count">
-
+    <div class="contianer-fluid text-center" role="main">
 
             <form method="post">
 
                 {% csrf_token %}
-            <div>
+                    <div>
                         {{ form.contact_number.label }}
                         {{ form.contact_number }}
                         {{ form.contact_number.errors }}
@@ -27,7 +19,6 @@
                         {{ form.contact_person.label }}
                         {{ form.contact_person }}
                         {{ form.contact_person.errors }}
-
                     </div><br>
 
                     <div>
@@ -44,7 +35,6 @@
 
 
                     <div>
-
                        {{ form.description.label }}
                        {{ form.description }}
                        {{ form.description.errors }}
@@ -54,39 +44,20 @@
                         {{ form.email.label }}
                         {{ form.email }}
                         {{ form.email.errors }}
-                    </div>
-                <br>
+                    </div><br>
 
                     <div>
                         {{ form.website.label }}
                         {{ form.website }}
                         {{ form.website.errors }}
                     </div><br>
-
-
                 <input type="submit" value="Submit" />
+                <!--<button type="button" id="btn">Submit</button>-->
             </form>
-
-          </div>
-          <!-- /top tiles -->
-
-          <div class="row">
-
-          </div>
-          <br />
-
-          <div class="row">
-
-          </div>
+    </div>
 
 
-          <div class="row">
 
-          </div>
-        </div>
-
-
-{% endblock page-content %}
 
 
 

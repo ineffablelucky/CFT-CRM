@@ -127,6 +127,23 @@
 
 
 {% block page-content %}
+                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                              <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title text-center" id="exampleModalLabel">Project Details</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                  </div>
+                                </div>
+                              </div>
+                        </div>
 
 <div class="right_col" role="main">
          <div class="">
@@ -208,12 +225,12 @@
                                                 <small>57% Complete</small>
                                             </td>
                                             <td>
-                                                <button type="button" class="btn statusBtn btn-xs">{{ p.status }}</button>
+                                                <button type="button"  class="btn statusBtn btn-xs">{{ p.status }}</button>
                                             </td>
                                             <td>
                                                 {% csrf_token %}
-                                                <a href="{% url 'project:project-details' p.id %}" class="btn btn-primary btn-xs"><i class="fa fa-folder"></i> View </a>
-                                                <a href="{% url 'project:project-update' p.id %}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i> Edit </a>
+                                                <button type="button" data-id ="{{ p.id }}" data-toggle="modal" data-target="#exampleModal" class="btn viewBtn btn-primary btn-xs"><i class="fa fa-folder"></i> View </button>
+                                                <a href="{% url 'project:project-update' p.id %}" class="btn editBtn btn-info btn-xs"><i class="fa fa-pencil"></i> Edit </a>
                                             </td>
                                         </tr>
                                     {% endfor %}
@@ -237,6 +254,15 @@
 
   {% block extra-script %}
     <script>
+        $('.viewBtn').click(function(event){
+            event.preventDefault();
+            var id = $(this).attr('data-id');
+            $.get( 'details/1/'  , function(data){
+                $('.modal-body').html(data);
+            });
+        });
+
+
         var length = document.getElementsByClassName('statusBtn').length;
             for(var i=0; i<length; i++){
                 var value = document.getElementsByClassName('statusBtn')[i].innerHTML;
