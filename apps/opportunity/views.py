@@ -73,7 +73,7 @@ class A_PManager(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     )
     model = Opportunity
     form_class = AddProjManager
-    template_name = 'opportunity/assigned_leads.html'
+    #template_name = 'opportunity/assigned_leads.html'
     success_url = reverse_lazy('opportunity:assign_lead')
 
 
