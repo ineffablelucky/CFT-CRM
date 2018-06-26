@@ -20,54 +20,61 @@
 {% block page-content %}
 
 <div class="right_col" role="main">
-          <!-- top tiles -->
-          <div class="row tile_count" style = "float:left; margin-right:20px">
+      <div class="">
+            <div class="page-title">
+              <div class="title_left">
+                <h3>HR Management</h3>
+              </div>
+            </div>
 
-            {% for m in myuser %}
-                <p>Name:{{ m.user.first_name }}</p>
-                <p>Department:{{ m.user.department }}</p>
-                <p>Status: {{ m.status }}</p>
-                <a href="showrequest/{{ m.id }}"><button>View Request</button></a>
-                <hr/>
-            {% endfor %}
+            <div class="clearfix"></div>
+             <div class="row">
+                  <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="x_panel">
+                      <div class="x_title">
+                        <h2>Attendance Management</h2>
 
-          </div>
-          <div style="float:right">
+                        <div class="clearfix"></div>
+                      </div>
+                      <div class="x_content">
+                          <div class="row">
+                              <div class="col-lg-10">
+                                {% for m in myuser %}
+                                    <p>Name:{{ m.user.first_name }}</p>
+                                    <p>Department:{{ m.user.department }}</p>
+                                    <p>Status: {{ m.status }}</p>
+                                    <a href="showrequest/{{ m.id }}"><button>View Request</button></a>
+                                    <hr/>
+                                {% endfor %}
+                              </div>
+                              <div class="col-lg-2" style="border-left:2px solid grey">
+                                  <h3>Absentee</h3>
+                                  <!--<p>Date : <input type="text" id="calendar" /></p>-->
+                                  <form action="{% url 'leave:leave_request'%}" method="get">
+                                       <div>{{ form.date.label }} {{ form.date }} {{ form.date.errors }}
+                                        <button type="submit">Submit</button>
+                                       </div>
 
-
-              <h3>Absentee</h3>
-              <!--<p>Date : <input type="text" id="calendar" /></p>-->
-              <form action="{% url 'leave:leave_request'%}" method="get">
-                   <div>{{ form.date.label }} {{ form.date }} {{ form.date.errors }}</div>
-                  <button type="submit">Submit</button>
-              </form>
-              <table border="1">
-                  <tr>
-                    <th>Name</th>
-                    <th>Department</th>
-                  </tr>
-                  {% for a in attend %}
-                    <tr>
-                        <td>{{ a.user.first_name }} {{ a.user.middle_name }} {{ a.user.last_name }}</td>
-                        <td>{{ a.user.department }}</td>
-                    </tr>
-                  {% endfor %}
-              </table>
-
-          </div>
-          <div class="row">
-
-          </div>
-          <br />
-
-          <div class="row">
-
-          </div>
-
-
-          <div class="row">
-
-          </div>
+                                  </form>
+                                  <table border="1">
+                                      <tr>
+                                        <th>Name</th>
+                                        <th>Department</th>
+                                      </tr>
+                                      {% for a in attend %}
+                                        <tr>
+                                            <td>{{ a.user.first_name }} {{ a.user.middle_name }} {{ a.user.last_name }}</td>
+                                            <td>{{ a.user.department }}</td>
+                                        </tr>
+                                      {% endfor %}
+                                  </table>
+                              </div>
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+             </div>
+      </div>
 </div>
 
 {% endblock page-content %}
