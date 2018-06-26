@@ -15,6 +15,9 @@
             <p>
                 Assigned To: {{meeting.Opportunity.assigned_to}}
             </p>
+            <p>
+                Meeting Notes: {{ meeting.description }}
+            </p>
             <div>
                 {% if meeting.extras is not NULL %}
                 Extras:<br/>
@@ -24,6 +27,18 @@
                     {% endfor %}
                     {% endif %}
                 </ul>
+            </div>
+            <div>
+                <fieldset>
+                    <legend>Meeting Notes</legend>
+                    <form method="post" action="{% url 'opportunity:meeting:add_meeting_notes' pk=meeting.Opportunity.pk meeting_id=meeting.pk %}">
+                        {% csrf_token %}
+                        <p>
+                            {{ form.description.errors }} {{ form.description.label }} {{ form.description }}
+                        </p>
+                        <input type="submit" value="Add">
+                    </form>
+                </fieldset>
             </div>
             <hr/>
             <hr/>

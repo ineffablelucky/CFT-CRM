@@ -25,7 +25,6 @@ class LeaveForm(forms.ModelForm):
 
     )
 
-
     class Meta:
         model = LeaveRequest
         fields = ('name', 'leave_type', 'date', 'end_date', 'note')
