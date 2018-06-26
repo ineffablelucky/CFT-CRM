@@ -34,9 +34,12 @@ class LeaveApproval(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data()
         date = self.request.GET.get('date', None)
-        attend = Attendance.objects.filter(status='absent')
+        if datetime.date.today().weekday() == 0:
+            attend = Attendance.objects.filter(date=datetime.date.today()-datetime.timedelta(days=3), status='absent')
+        else:
+            attend = Attendance.objects.filter(date=datetime.date.today()-datetime.timedelta(days=1), status='absent')
         if date is not None:
-            attend = attend.filter(date=date)
+            attend = Attendance.objects.filter(date=date, status='absent')
         context['attend'] = attend
         context['form'] = EmployeeAttendanceForm()
         return context
