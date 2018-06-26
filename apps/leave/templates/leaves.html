@@ -163,7 +163,7 @@
 
 <div class="right_col" role="main">
           <!-- top tiles -->
-          <div class="row tile_count">
+          <div class="row tile_count" style = "float:left; margin-right:20px">
 
             {% for m in myuser %}
                 <p>Name:{{ m.user.first_name }}</p>
@@ -172,6 +172,22 @@
                 <a href="showrequest/{{ m.id }}"><button>View Request</button></a>
                 <hr/>
             {% endfor %}
+
+          </div>
+          <div style="float:right">
+              <h3>Absentee</h3>
+              <table border="1">
+                  <tr>
+                    <th>Name</th>
+                    <th>Department</th>
+                  </tr>
+                  {% for a in attend %}
+                    <tr>
+                        <td>{{ a.user.first_name }} {{ a.user.middle_name }} {{ a.user.last_name }}</td>
+                        <td>{{ a.user.department }}</td>
+                    </tr>
+                  {% endfor %}
+              </table>
 
           </div>
           <div class="row">
