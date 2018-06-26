@@ -50,7 +50,7 @@ class EmployeeAttendanceForm(forms.ModelForm):
     def clean_date(self):
         date = self.cleaned_data.get('date')
         if date >= datetime.date.today():
-            raise forms.ValidationError("Please Enter smaller date")
+            return forms.ValidationError("Please Enter smaller date")
         else:
             return date
 
