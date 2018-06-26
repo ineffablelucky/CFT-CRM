@@ -43,6 +43,10 @@
                         <p class="text-muted font-13 m-b-30">
 
                         </p>
+                        <form action="{% url 'attendance:show_attendance' %}"   method="get">
+                            <div>{{ form.date.label }} {{ form.date }} {{ form.date.errors }}</div>
+                            <button type="submit">Submit</button>
+                        </form>
                         <table id="datatable"  class="table table-striped table-bordered">
                             <thead>
                                 <tr>
