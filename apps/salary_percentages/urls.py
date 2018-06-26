@@ -1,4 +1,3 @@
-from django.shortcuts import render, redirect
 from django.urls import path
 from . import views
 app_name = 'salary_percentages'

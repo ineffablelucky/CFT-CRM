@@ -52,9 +52,19 @@ class SalaryForm(ModelForm):
         return data'''
 
 class CtcForm(ModelForm):
+
+    def save(self, commit=True):
+        instance = super().save(commit=False)
+        if commit:
+            instance.save()
+            instance.percentage_bonus_amt()
+            instance.save()
+        return instance
+
     class Meta:
         model=Employee_details
         fields=['ctc','given_bonus']
+
 
 
 
