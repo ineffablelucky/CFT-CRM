@@ -13,7 +13,7 @@ def edit_salary(request,id):
     if request.method == 'POST':
         form = CtcForm(request.POST)
         form.save()
-        return redirect("{% url 'salary_percentages:edit_salary' id=context.employee_id %}")
+        return HttpResponseRedirect(reverse("salary_percentages:edit_salary"))
     employee_detail_object = Employee_details.objects.get(worker_id=id)
     context=CTC_breakdown.objects.get(employee_id=id)
     return render(request,'work/edit_salary.html',{'context':context, 'employee_detail_object' : employee_detail_object})
