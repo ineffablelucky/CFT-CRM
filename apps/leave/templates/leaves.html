@@ -163,7 +163,7 @@
 
 <div class="right_col" role="main">
           <!-- top tiles -->
-          <div class="row tile_count">
+          <div class="row tile_count" style = "float:left; margin-right:20px">
 
             {% for m in myuser %}
                 <p>Name:{{ m.user.first_name }}</p>
@@ -174,7 +174,7 @@
             {% endfor %}
 
           </div>
-          <div>
+          <div style="float:right">
               <h3>Absentee</h3>
               <table border="1">
                   <tr>
