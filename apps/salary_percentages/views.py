@@ -10,18 +10,17 @@ def salary(request):
     return render(request,'work/salary.html',{'context':context})
 
 def edit_salary(request,id):
+    if request.method == 'POST':
+        form = CtcForm(request.POST)
+        form.save()
+        return redirect("{% url 'salary_percentages:edit_salary' id=context.employee_id %}")
     employee_detail_object = Employee_details.objects.get(worker_id=id)
     context=CTC_breakdown.objects.get(employee_id=id)
     return render(request,'work/edit_salary.html',{'context':context, 'employee_detail_object' : employee_detail_object})
 
 def edit_ctc(request,id):
-    if request.method == 'POST':
-        form = CtcForm(request.POST)
-        form.save()
-        return redirect("{% url 'salary_percentages:edit_salary' id=id %}")
-    else:
-        form=CtcForm()
-        return render(request,'work/edit_ctc.html',{'form':form,'request_id':id})
+    form=CtcForm()
+    return render(request,'work/edit_ctc.html',{'form':form,'request_id':id})
 
 def edit_bonus(request,id):
     form=CtcForm()
