@@ -2,7 +2,7 @@ from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-from .forms import CreateleaveForm
+from .forms import CreateleaveForm, EmployeeAttendanceForm
 from ..attendance.models import Attendance, LeaveRequest
 from .models import Leave
 from django.http import HttpResponseForbidden, HttpResponse
@@ -33,9 +33,19 @@ class LeaveApproval(LoginRequiredMixin, PermissionRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data()
-        attend = Attendance.objects.filter(date=datetime.date.today()-datetime.timedelta(days=1), status='absent')
+        date = self.request.GET.get('date', None)
+        attend = Attendance.objects.filter(status='absent')
+        if date is not None:
+            attend = attend.filter(date=date)
         context['attend'] = attend
+        context['form'] = EmployeeAttendanceForm()
         return context
+
+
+class EmployeeAttendanceView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
+    permission_required = ('attendance.view_leaverequest',)
+    template_name = 'leaves.html'
+    model = Attendance
 
 
 class ShowRequest(LoginRequiredMixin, PermissionRequiredMixin, ListView):
@@ -98,12 +108,5 @@ class Reject(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
                 return HttpResponse("Already Approved or Rejected")
 
 
-"""
-class EmployeeAttendanceView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
-    permission_required = ('attendance.view_leaverequest',)
-    template_name = 'leaves.html'
-    model = Attendance
-    form_class = EmployeeAttendanceForm
-    print("hII")
-"""
+
 

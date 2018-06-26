@@ -36,7 +36,11 @@
 
 
               <h3>Absentee</h3>
-              <p>Date : <input type="text" id="calendar" /></p>
+              <!--<p>Date : <input type="text" id="calendar" /></p>-->
+              <form action="{% url 'leave:leave_request'%}" method="get">
+                   <div>{{ form.date.label }} {{ form.date }} {{ form.date.errors }}</div>
+                  <button type="submit">Submit</button>
+              </form>
               <table border="1">
                   <tr>
                     <th>Name</th>
