@@ -137,6 +137,25 @@ class LeaveForm(forms.ModelForm):
         return instance
 
 
+class AttendanceForm(forms.ModelForm):
+    date = forms.DateField(
+        widget=forms.TextInput(attrs={'type': 'date', 'class': ''}),
+        label='Select Date'
+    )
+
+    class Meta:
+        model = Attendance
+        fields = ('date',)
+    """
+    def __init__(self, *args, **kwargs):
+        super(AttendanceForm, self).__init__(*args, **kwargs)
+        if datetime.date.today().weekday() == 0:
+            self.fields['date'].initial = datetime.date.today()-datetime.timedelta(days=3)
+        else:
+            self.fields['date'].initial = datetime.date.today() - datetime.timedelta(days=1)
+    """
+
+
 """
 class ClockinForm(forms.ModelForm):
     name = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'readonly': True}), label='Name')

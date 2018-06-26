@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .forms import LeaveForm
+from .forms import LeaveForm, AttendanceForm
 from django.views.generic import CreateView, TemplateView, UpdateView, ListView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.shortcuts import redirect
@@ -189,9 +189,19 @@ class ShowAttendance(LoginRequiredMixin, PermissionRequiredMixin, ListView):
             absent = Attendance.objects.create(user_id=p[i], date=datetime.date.today()-delta,
                                                status='absent')
             absent.save()
-        queryset = Attendance.objects.filter(date=datetime.date.today()-delta)
+        date = self.request.GET.get('date', None)
+        if datetime.date.today().weekday() == 0:
+            queryset = Attendance.objects.filter(date=datetime.date.today()-datetime.timedelta(days=3))
+        else:
+            queryset = Attendance.objects.filter(date=datetime.date.today() - datetime.timedelta(days=1))
+        if date is not None:
+            queryset = Attendance.objects.filter(date=date)
         return queryset.order_by('user_id')
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data()
+        context['form'] = AttendanceForm()
+        return context
 
 class EmployAttendance(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     permission_required = ('users.view_users', 'attendance.view_attendance')
