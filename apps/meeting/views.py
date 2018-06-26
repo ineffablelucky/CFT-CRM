@@ -76,11 +76,9 @@ class Emp_Meetings(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data()
-        form = AddMeetingNotes()
+        form = AddMeetingNotes(initial={'logged_user': self.request.user})
         context['form'] = form
-        # kwargs.update({'editing_user': self.request.user})
-        # print('printing kwargs{{{{{{{{{{{{{{{{{{{{{{')
-        # print(kwargs)
+        #print(form)
         return context
 
     # def get_form_kwargs(self):
@@ -93,7 +91,6 @@ class Emp_Meetings(LoginRequiredMixin, ListView):
 class AddMeetingNotesView(LoginRequiredMixin, UpdateView):
     form_class = AddMeetingNotes
     model = MEETING
-    #template_name = 'meeting/employee_meeting.html'
 
     def get_success_url(self):
         return reverse_lazy('opportunity:meeting:emp_meeting', args=[self.kwargs['pk']])
@@ -101,9 +98,11 @@ class AddMeetingNotesView(LoginRequiredMixin, UpdateView):
     def get_object(self):
         return MEETING.objects.get(pk=self.kwargs.get('meeting_id'))
 
-    # def get_form_kwargs(self):
-    #     kwargs = super().get_form_kwargs()
-    #     kwargs.update({'editing_user': self.request.user})
-    #     print('printing kwargs $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$')
-    #     print(kwargs)
-    #     return kwargs
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs.update()
+        # print('Printing get_form_kwargs')
+        # print('printing kwargs $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$')
+        kwargs['initial'].update({'logged_user': self.request.user})
+        #print(kwargs['initial'])
+        return kwargs

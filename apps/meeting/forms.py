@@ -62,18 +62,31 @@ class AddMeetingNotes(forms.ModelForm):
             'description',
         )
 
-    def save(self, commit=True, user1=''):
-        self.user1 = str(user1)
+    def __init__(self, *args, **kwargs):
+        # print('printing init')
+        # print(kwargs)
+        initial = kwargs.get('initial', None)
+        # print('Printing initial')
+        # print(initial)
+        self.logged_user = initial.pop('logged_user')
+        #print(temp)
+        kwargs.update(initial=initial)
+        # print(kwargs.pop('logged_user'))
+        # self.user = kwargs.pop('logged_user')
+        # print(self.user)
+        super().__init__(*args, **kwargs)
+
+    def save(self, commit=True):
         instance = super().save(commit=False)
-        print(instance.description)
-
-        # print(self.editing_user)
-
-
-        # prev.description += '\n' + self.user1 + ': ' + instance.description
+        # print(instance)
         #
-        # instance.description = prev.description
-        commit = False
+        # print(self.logged_user)
+
+        prev = MEETING.objects.get(id=instance.id)
+        # print('printing prev')
+        # print(prev.description)
+        prev.description += '<br>' + self.logged_user.username + ': ' + instance.description
+        instance.description = prev.description
         if commit:
             instance.save()
         return instance

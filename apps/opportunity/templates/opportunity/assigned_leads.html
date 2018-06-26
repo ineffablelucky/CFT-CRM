@@ -177,7 +177,7 @@
                                     Project Manager: {{ assign.proj_manager.username }}
                                 </p>
                                 <p>
-                                    Project Description : {{ assign.lead.description }}
+                                    Project Description : {{ assign.lead.description|safe }}
                                 </p>
                                 <p>
                                     Status : {{ assign.status }}

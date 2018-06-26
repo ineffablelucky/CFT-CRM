@@ -174,7 +174,7 @@
                     Assigned To: {{meeting.Opportunity.assigned_to}}
                 </p>
                 <p>
-                    Meeting Notes : {{ meeting.description }}
+                    Meeting Notes : {{ meeting.description|safe }}
                 </p>
                 <p>
                     {% if meeting.extras is not NULL %}
