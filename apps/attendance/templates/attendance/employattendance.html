@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Employ Attendance</title>
+</head>
+<body>
+<p>Name : {{ employee.first_name }} {{ employee.middle_name }} {{ employee.last_name }} </p>
+<p>Department : {{ employee.department }} </p>
+<table border="1">
+    <tr>
+        <th>Date</th>
+        <th>Clock In</th>
+        <th>Clock Out</th>
+        <th>Working Hours</th>
+        <th>Attendance</th>
+    <tr>
+    {% for a in o %}
+        <tr>
+            <td>{{ a.date }}</td>
+            <td>{{ a.time_in }}</td>
+            <td>{{ a.time_out }}</td>
+            <td>{{ a.working_hours }}</td>
+            <td>{{ a.status }}</td>
+        </tr>
+    {% endfor %}
+</table>
+
+</body>
+</html>

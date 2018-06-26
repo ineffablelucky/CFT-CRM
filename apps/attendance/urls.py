@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import LeaveRequestView, Completed, Clockin, Clock, Clockout, PastAttendance, ShowAttendance
+from .views import LeaveRequestView, Completed, Clockin, Clock, Clockout, PastAttendance, ShowAttendance, EmployAttendance
 
 app_name = 'attendance'
 urlpatterns = [
@@ -9,7 +9,8 @@ urlpatterns = [
     path('clock/in/', Clockin.as_view(), name='clockin'),
     path('clock/out/', Clockout.as_view(), name='clockout'),
     path('userattendance/', PastAttendance.as_view(), name='pastattendance'),
-    path('', ShowAttendance.as_view(), name='show_attendance')
+    path('', ShowAttendance.as_view(), name='show_attendance'),
+    path('showattendance/<int:id>', EmployAttendance.as_view(), name='employ_attendance')
 ]
 
 

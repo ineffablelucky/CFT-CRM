@@ -115,12 +115,12 @@ class Clockin(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
                                       )
             if a.time_in.hour <= 9 and a.time_in.minute <= 30:
                 a.note = "On Time"
-            elif a.time_in.hour<=18 and a.time_in.minute <= 30:
-                hour_late = a.time_in.hour - 9
-                min_late = a.time_in.hour-30
-                a.note = str(hour_late)+" hrs" + str(min_late) + " min's Late"
-            else:
+            elif a.time_in.hour > 18 and a.time_in.minute >30:
                 a.status = 'absent'
+            else:
+                delta = datetime.timedelta(hours=9, minutes=30)
+                late = a.time_in - delta
+                a.note = str(late.hour)+" hrs" + str(late.minute) + " min's Late"
 
             a.save()
             return redirect('/attendance/userattendance')
@@ -161,7 +161,7 @@ class PastAttendance(LoginRequiredMixin, PermissionRequiredMixin, ListView):
 
 
 class ShowAttendance(LoginRequiredMixin, PermissionRequiredMixin, ListView):
-    permission_required = ('users.view_attendance',)
+    permission_required = ('users.view_users', 'attendance.view_attendance')
     template_name = 'attendance/showattendance.html'
     model = Attendance
     context_object_name = 'attendance'
@@ -190,7 +190,49 @@ class ShowAttendance(LoginRequiredMixin, PermissionRequiredMixin, ListView):
                                                status='absent')
             absent.save()
         queryset = Attendance.objects.filter(date=datetime.date.today()-delta)
+        return queryset.order_by('user_id')
+
+
+class EmployAttendance(LoginRequiredMixin, PermissionRequiredMixin, ListView):
+    permission_required = ('users.view_users', 'attendance.view_attendance')
+    template_name = 'attendance/employattendance.html'
+    model = Attendance
+    context_object_name = 'attendance'
+
+    def get_queryset(self):
+        queryset = Attendance.objects.filter(user_id=self.kwargs.get('id'))
         return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data()
+        context['employee'] = MyUser.objects.get(id=self.kwargs.get('id'))
+        abc = Attendance.objects.filter(user_id=self.kwargs.get('id'))
+        working_hours = []
+        context['ab']=[]
+        tmp = []
+        for a in abc:
+            if a.time_out is None:
+                wh = 0
+                s = str(wh)
+                working_hours.append(s)
+
+            elif a.status is 'absent':
+                wh = 0
+                s = str(wh)
+                working_hours.append(s)
+
+            else:
+                delta = datetime.timedelta(hours=a.time_in.hour, minutes=a.time_in.minute)
+                wh = a.time_out-delta
+                s = str(wh.hour)+" hrs " + str(wh.minute) + " min's"
+                working_hours.append(s)
+            a.working_hours = s
+            tmp.append(a)
+
+        context['o'] = tmp
+
+        return context
+
 
 
 """
