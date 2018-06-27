@@ -46,6 +46,7 @@ class CTC_breakdown(models.Model):
     #def basic_amt(self):
     #    self.basic = int(self.ctc_amt().get('ctc') * 0.5)
     #    return self.basic
+        
 
 def create_profile(sender, **kwargs):
     if kwargs['created']:
