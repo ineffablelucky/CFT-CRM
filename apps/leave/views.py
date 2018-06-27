@@ -83,9 +83,9 @@ class Approve(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
                     if ltype == "PL":
                         l.pl = l.pl-1
                     elif ltype == "CL":
-                        l.cl = l.cl -1
+                        l.cl = l.cl - 1
                     else:
-                        l.half_day = l.half_day-1
+                        l.half_day = l.half_day+1
                     l.save()
                     sdate=sdate+delta
                 a.save()

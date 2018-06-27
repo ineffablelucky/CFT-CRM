@@ -32,7 +32,7 @@ class LeaveForm(forms.ModelForm):
     LEAVE_TYPE_CHOICES = (
         ('PL', 'Privilege leave'),
         ('CL', 'Casual leave'),
-        ('Half Day', 'Half Day'),
+        ('Half Day', 'Half Day')
     )
 
     leave_type = forms.ChoiceField(
@@ -72,7 +72,7 @@ class LeaveForm(forms.ModelForm):
         return data
     """
     def clean_end_date(self):
-        leave = Leave.objects.get(user_id= self.logged_user.id)
+        leave = Leave.objects.get(user_id=self.logged_user.id)
         data3 = self.cleaned_data.get('leave_type')
         data = self.cleaned_data.get('end_date')
         data1 = self.cleaned_data.get('date')
@@ -94,11 +94,7 @@ class LeaveForm(forms.ModelForm):
                 else:
                     raise forms.ValidationError("No sufficient CL left")
             elif data3 == "Half Day":
-                delta = datetime.timedelta(days=leave.half_day)
-                if data - data1 <= delta:
                     return data
-                else:
-                    raise forms.ValidationError("No sufficient Half Day left")
 
 
         else:
