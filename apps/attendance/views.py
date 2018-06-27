@@ -190,16 +190,18 @@ class ShowAttendance(LoginRequiredMixin, PermissionRequiredMixin, ListView):
                                                status='absent')
             absent.save()
         date = self.request.GET.get('date', None)
-        queryset = Attendance.objects.all()
+        if datetime.date.today().weekday() == 0:
+            queryset = Attendance.objects.filter(date=datetime.date.today()-datetime.timedelta(days=3))
+        else:
+            queryset = Attendance.objects.filter(date=datetime.date.today() - datetime.timedelta(days=1))
         if date is not None:
-            queryset = queryset.filter(date=date)
+            queryset = Attendance.objects.filter(date=date)
         return queryset.order_by('user_id')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data()
         context['form'] = AttendanceForm()
         return context
-
 
 class EmployAttendance(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     permission_required = ('users.view_users', 'attendance.view_attendance')
