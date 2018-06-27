@@ -37,7 +37,7 @@ def auth_login(request):
         user = authenticate(username=username, password=password)
         if user:
             login(request, user)
-        return render(request, 'welcome.html')
+        return redirect('welcome/')
     else:
         return render(request, 'registration/login.html')
 
@@ -47,7 +47,11 @@ def lout(request):
 
 
 def profile(request, id):
-
     user = MyUser.objects.get(pk = id)
     print(user)
     return render(request, 'profile.html', {'user':user})
+
+def welcome(request):
+    return render(request, 'welcome.html')
+
+

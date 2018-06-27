@@ -1,5 +1,6 @@
 from django import forms
-from .models import Attendance, MyUser
+from .models import Attendance, MyUser, LeaveRequest
+from ..leave.models import Leave
 import datetime
 from django.utils.timezone import utc
 from pytz import timezone
@@ -25,7 +26,7 @@ class LeaveForm(forms.ModelForm):
 
 
     class Meta:
-        model = Attendance
+        model = LeaveRequest
         fields = ('name', 'leave_type', 'date', 'end_date', 'note')
 
     def __init__(self, *args, **kwargs):
@@ -54,10 +55,29 @@ class LeaveForm(forms.ModelForm):
         return data
     """
     def clean_end_date(self):
+        leave = Leave.objects.get(user_id= self.logged_user.id)
+        data3 = self.cleaned_data.get('leave_type')
         data = self.cleaned_data.get('end_date')
         data1 = self.cleaned_data.get('date')
         if data >= data1:
-            return data
+            if data3 == "PL":
+                delta = datetime.timedelta(days=leave.pl)
+                if data - data1 <= delta:
+                    return data
+                else:
+                    raise forms.ValidationError("No sufficient PL left")
+            elif data3 == "CL":
+                delta = datetime.timedelta(days=leave.cl)
+                if data - data1 <= delta:
+                    return data
+                else:
+                    raise forms.ValidationError("No sufficient CL left")
+            elif data3 == "Half Day":
+                delta = datetime.timedelta(days=leave.half_day)
+                if data - data1 <= delta:
+                    return data
+                else:
+                    raise forms.ValidationError("No sufficient Half Day left")
         else:
             raise forms.ValidationError('End Date should be greater than Start Date')
 
@@ -72,12 +92,14 @@ class LeaveForm(forms.ModelForm):
     def save(self, commit=True):
         instance = super(LeaveForm, self).save(commit=False)
         instance.user_id = self.logged_user.id
-
-        saved_instance = []
         if commit:
             data = []
             start_date = self.cleaned_data.get('date')
             end_date = self.cleaned_data.get('end_date')
+            instance.date = start_date
+            instance.end_date = end_date
+            instance.save()
+            """
             delta = datetime.timedelta(days=1)
             while start_date <= end_date:
                 data.append(start_date)
@@ -88,7 +110,8 @@ class LeaveForm(forms.ModelForm):
                 instance.date = date
                 instance.save()
                 saved_instance.append(self.instance)
-        return saved_instance
+            """
+        return instance
 
 
 """

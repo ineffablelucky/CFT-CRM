@@ -34,3 +34,34 @@ class Attendance(models.Model):
 
     note = models.CharField(max_length=500, null=True)
 
+
+class LeaveRequest(models.Model):
+
+    LEAVE_TYPE_CHOICES = (
+        ('PL', 'Privilege leave'),
+        ('CL', 'Casual leave'),
+        ('Half Day', 'Half Day'),
+    )
+    leave_type = models.CharField(
+        max_length=8,
+        choices=LEAVE_TYPE_CHOICES,
+        null=True,
+    )
+    date = models.DateField(null=True)
+    end_date = models.DateField(null=True)
+    STATUS_CHOICES = (
+        ('Approved', 'Approved'),
+        ('Pending', 'Pending'),
+        ('Rejected', 'Rejected')
+    )
+    status = models.CharField(
+        max_length=9,
+        choices=STATUS_CHOICES,
+        default='Pending',
+    )
+    note = models.CharField(max_length=500, null=True)
+    user = models.ForeignKey(MyUser, on_delete=models.PROTECT, default=None)
+
+
+
+

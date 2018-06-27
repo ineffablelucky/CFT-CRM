@@ -10,5 +10,5 @@ class MEETING(models.Model):
     date = models.DateField()
     extras = models.ManyToManyField(MyUser, related_name='meetings_extra', blank=True, null=True)
 
-    def __str__(self):
-        return self.description
+    def __unicode__(self):
+        return self.date

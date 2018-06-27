@@ -1,8 +1,7 @@
 <form method="post">
 
     {% csrf_token %}
-
-    <div>
+<div>
             {{ form.contact_number.label }}
             {{ form.contact_number }}
             {{ form.contact_number.errors }}
@@ -53,6 +52,7 @@
             {{ form.website }}
             {{ form.website.errors }}
         </div><br>
+
 
     <input type="submit" value="Submit" />
 </form>

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Requests for leaves</title>
+</head>
+<body>
+{% for m in myuser %}
+    <p>Name:{{ m.user.first_name }}</p>
+    <p>Department:{{ m.user.department }}</p>
+    <p>Status: {{ m.status }}</p>
+    <a href="showrequest/{{ m.id }}"><button>View Request</button></a>
+    <hr/>
+{% endfor %}
+</body>
+</html>
