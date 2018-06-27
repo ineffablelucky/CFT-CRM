@@ -8,15 +8,18 @@ from django.conf import settings
 class CTC_breakdown(models.Model):
 
     employee = models.OneToOneField(MyUser, on_delete=models.PROTECT, null=True)
-    basic = models.IntegerField(default=12)
-    hra = models.IntegerField(default=12)
-    ppf = models.IntegerField(default=12)
-    allowances = models.IntegerField(default=12)
+    basic = models.IntegerField(default=18000)
+    hra = models.IntegerField(default=40)
+    ppf = models.IntegerField(default=13)
+    allowances = models.IntegerField(default=10)
     year = models.IntegerField(default=timezone.now().year)
-    ctc_max_bonus = models.IntegerField(default=12)
+    ctc_max_bonus = models.IntegerField(default=5)
     fixed_monthly_salary = models.IntegerField(default = 20000)
     #deduction_due_to_leaves
     #final_amount
+
+    def __str__(self):
+        return "%d%d"%(self.year,self.employee)
 
     def ctc_amt(self):
         a = s_percent.models.Employee_details.objects.filter(worker_id=self.employee_id).values('ctc').get()

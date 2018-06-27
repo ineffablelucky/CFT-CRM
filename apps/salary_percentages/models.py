@@ -9,11 +9,17 @@ class Salary_calculations(models.Model):
     hra_percentage = models.IntegerField(default=12, null=False)
     ppf_percentage =  models.IntegerField(default=20, null=False)
 
+    def __str__(self):
+        return "%d"%(self.financial_year)
+
 class Employee_details(models.Model):
     worker=models.OneToOneField(CTC_breakdown,to_field='employee',on_delete=models.PROTECT,null=True)
     ctc = models.IntegerField( default=200000,null=True)
     given_bonus = models.IntegerField(default=0,null=True)
     percentage_bonus_of_max_bonus=models.IntegerField(default=0,null=True)
+
+    def __str__(self):
+        return '%d'%(self.worker)
 
     def percentage_bonus_amt(self):
         a=CTC_breakdown.objects.filter(employee_id=self.worker_id).values('ctc_max_bonus')

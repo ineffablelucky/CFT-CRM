@@ -4,6 +4,7 @@ from .models import Salary_calculations,Employee_details
 from .forms import SalaryForm,CtcForm
 from apps.ctc.models import CTC_breakdown
 from django.contrib.auth import get_user_model
+from django.contrib import messages
 
 def salary(request):
     context=get_user_model().objects.all()
@@ -12,8 +13,12 @@ def salary(request):
 def edit_salary(request,id):
     if request.method == 'POST':
         form = CtcForm(request.POST)
-        form.save()
-        return HttpResponseRedirect(reverse('salary_percentages:edit_salary',args=(id)))
+        if form.is_valid():
+            print('asfdd')
+            form.save()
+        else:
+            print(form.errors)
+        return HttpResponseRedirect(reverse('salary_percentages:edit_salary',kwargs={'id' : 9}))
     employee_detail_object = Employee_details.objects.get(worker_id=id)
     context=CTC_breakdown.objects.get(employee_id=id)
     return render(request,'work/edit_salary.html',{'context':context, 'employee_detail_object' : employee_detail_object})
@@ -52,11 +57,11 @@ def upload_csv(request):
         csv_file = request.FILES('csv_file')
 
         if not csv_file.name.endswith('.csv'):
-            #messages.error('Sorry!! This file is not csv type')
+            messages.error('Sorry!! This file is not csv type')
             return HttpResponseRedirect(reverse("salary_percentages:upload_csv"))
 
         if csv_file.multiple_chunks():
-            #messages.error("Uploaded file is too big(%.2f MB) " % (csv_file.size / (1000*1000)))
+            messages.error("Uploaded file is too big(%.2f MB) " % (csv_file.size / (1000*1000)))
             return HttpResponseRedirect(reverse("salary_percentages:upload_csv"))
 
         file_data = csv_file.read().decode('utf-8')

@@ -57,8 +57,6 @@ class CtcForm(ModelForm):
         instance = super().save(commit=False)
         if commit:
             instance.save()
-            instance.percentage_bonus_amt()
-            instance.save()
             #tmp = Ctc_breakdown.objects.create(basic = instance.ctc*0.5)
         return instance
 
