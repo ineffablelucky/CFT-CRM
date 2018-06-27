@@ -1,27 +1,15 @@
-<!--<!DOCTYPE html>-->
-<!--<html lang="en">-->
-<!--<head>-->
-    <!--<meta charset="UTF-8">-->
-    <!--<title>project detail page</title>-->
-<!--</head>-->
-<!--<body>-->
-
-
-
-
-
-
-            {% if user.is_authenticated %}
-            <h1>{{ object.project_name }}</h1>
-            <p>{{ object.project_description }}</p>
-            <p>Project start date: {{ object.project_start_date_time }}</p>
-            <p>Project Deadline: {{ object.project_end_date_time|date }}</p>
-            <p>status: {{ object.status }}</p>
-            Team Members:
+{% if user.is_authenticated %}
+            <h1>Project Name: {{ object.project_name }}</h1>
+            <h5>Description: {{ object.project_description }}</h5>
+            <h5>Project start date: {{ object.project_start_date_time }}</h5>
+            <h5>Project Deadline: {{ object.project_end_date_time|date }}</h5>
+            <h5>Status: {{ object.status }}</h5>
+            <h5>Team Members:
 
     {% for i in object.employees_per_project.all %}
         <ul><li>{{ i.username }}</li></ul>
-    {% endfor %}
+
+    {% endfor %}</h5>
 
 
               {% else %}

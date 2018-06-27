@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <title> Employee Leads</title>
     <link rel="stylesheet" href="{% static 'opportunity/style.css' %}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
 
 </head>
 <body>
@@ -25,7 +27,7 @@
             </tr>
             {% for op in opportunity %}
                 <tr>
-                    <td><a href="{% url 'opportunity:meeting:emp_meeting' op.id %}">{{ op.lead.company_name }}</a></td>
+                    <td><a id="data"  href="{% url 'opportunity:meeting:emp_meeting' op.id %}">{{ op.lead.company_name }}</a></td>
                     <td>{{ op.lead.description }}</td>
                     <td>{{ op.status }}</td>
                     <td>{{ op.client.username}}</td>
@@ -33,7 +35,8 @@
                     <td>{{ op.lead.contact_person }}</td>
                     <td>{{ op.lead.email }}</td>
                     <td>{{ op.lead.contact_number }}</td>
-                    <td><a href="{% url 'opportunity:change_status' op.id %}"> Edit </a></td>
+                    <td><a id="edit" href="{% url 'opportunity:change_status' op.id %}"> Edit </a></td>
+                    <!--<td><button type="button" data-id = "{{ op.id }}" class ="edit" data-toggle="modal" data-target="#exampleModalLong">Edit</button></td>-->
                 </tr>
             {% endfor %}
         </table>
@@ -52,5 +55,21 @@
     {% else %}
         <div>You don't have permission</div>
     {% endif %}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+ <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<script>
+    $('.edit').click(function(){
+        var id = $(this).attr('data-id');
+
+        $.ajax({url: id +"/change_status" , success:function(data){
+            $('.modal-body').html(data);
+        },
+            data: { status: 'approved'}
+        });
+    });
+</script>
+
 </body>
 </html>

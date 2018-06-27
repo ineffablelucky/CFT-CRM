@@ -6,18 +6,20 @@ import datetime
 
 class CreateMeeting(forms.ModelForm):
     Opportunity = forms.CharField(
-        widget=forms.TextInput(attrs={'readonly': True}), label='Opportunity ID'
+        widget=forms.TextInput(attrs={'readonly': True, 'class': 'form-control col-md-7 col-xs-12'}),
+        label='Opportunity ID'
     )
 
     date = forms.DateField(
         label='Meeting Date',
         widget=forms.TextInput(
-            attrs={'type': 'date'}
+            attrs={'type': 'date', 'class': 'form-control col-md-7 col-xs-12'}
         )
     )
     extras = forms.ModelMultipleChoiceField(
         label='Extra Personnel',
         queryset=MyUser.objects.filter(department='Marketing'),
+        #widget=attrs={'class': 'form-control col-md-7 col-xs-12'}
     )
 
     class Meta:

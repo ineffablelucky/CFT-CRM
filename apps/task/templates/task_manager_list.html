@@ -18,12 +18,29 @@
 {% endblock %}
 
 {% block page-content %}
+                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                              <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title text-center" id="exampleModalLabel">Project Details</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                  </div>
+                                </div>
+                              </div>
+                        </div>
 
     <div class="right_col" role="main">
           <div class="">
             <div class="page-title">
               <div class="title_left">
-                <h3>Hi, Welcome to Project Manager's Task List! </h3>
+                <h3>Project Management</h3>
               </div>
             </div>
 
@@ -33,11 +50,7 @@
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>Default Example <small>Users</small></h2>
-                    <ul class="nav navbar-right panel_toolbox">
-                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                      </li>
-                    </ul>
+                    <h2>Projects</h2>
                     <div class="clearfix"></div>
                   </div>
                   <div class="x_content">
@@ -50,8 +63,8 @@
                             <!--<input type="submit" value="CREATE NEW TASK">-->
                         <!--</form>-->
                       <div class="text-right" style="margin-bottom: 10px">
-                        <a href="{% url 'task:task-add' %}" >
-                            <button type="submit" class="btn createBtn btn-md">
+                        <a class="createTask" href="{% url 'task:task-add' %}" >
+                            <button data-toggle="modal" data-target="#exampleModal" type="button" class="btn createBtn btn-md">
                                 Create New Task
                             </button>
                         </a>
@@ -116,5 +129,17 @@
     <script src="{% static 'vendors/jszip/dist/jszip.min.js' %}"></script>
     <script src="{% static 'vendors/pdfmake/build/pdfmake.min.js' %}"></script>
     <script src="{% static 'vendors/pdfmake/build/vfs_fonts.js' %}"></script>
+
+    <script>
+        $(document).ready(function(){
+            var url = $('.createTask').attr('href');
+            $('.createTask').click(function(event){
+                event.preventDefault();
+                $.ajax({url: "" + url , success: function(data){
+                  $('.modal-body').html(data);
+                }});
+            });
+        });
+    </script>
 
 {% endblock %}

@@ -5,7 +5,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMix
 from django.shortcuts import redirect
 from django.http import HttpResponseForbidden, HttpResponse
 from ..leave.models import Leave
-from ..attendance.models import Attendance
+from ..attendance.models import Attendance, LeaveRequest
 from ..attendance.models import LeaveRequest
 from django.db.models import Q
 from ..users.models import MyUser
@@ -175,10 +175,18 @@ class ShowAttendance(LoginRequiredMixin, PermissionRequiredMixin, ListView):
             delta = datetime.timedelta(days=2)
         else:
             delta = datetime.timedelta(days=1)
-        p=[]
+        p = []
         for t in temp:
-           p.append(t.pk)
+            p.append(t.pk)
         temp2 = Attendance.objects.filter(date=datetime.date.today()-delta)
+        for t in temp2:
+            if t.status == 'absent':
+                if LeaveRequest.objects.filter(Q(user_id=t.user_id) & Q(date__gte=datetime.date.today() - delta)
+                                        & Q(end_date__lte=datetime.date.today()-delta)
+                                        & Q(status='Approved')):
+                    t.status = 'On Leave'
+                    t.save()
+
         l = []
         for t in temp2:
             tt = MyUser.objects.get(id=t.user_id)
@@ -188,11 +196,18 @@ class ShowAttendance(LoginRequiredMixin, PermissionRequiredMixin, ListView):
         for i in range(len(p)):
             absent = Attendance.objects.create(user_id=p[i], date=datetime.date.today()-delta,
                                                status='absent')
+            if LeaveRequest.objects.get(Q(user_id=p[i]) & Q(date__gte=datetime.date.today()-delta)
+                                        & Q(end_date__lte=datetime.date.today()-delta)
+                                        & Q(status='Approved')):
+                absent.status = 'On Leave'
             absent.save()
         date = self.request.GET.get('date', None)
-        queryset = Attendance.objects.all()
+        if datetime.date.today().weekday() == 0:
+            queryset = Attendance.objects.filter(date=datetime.date.today()-datetime.timedelta(days=3))
+        else:
+            queryset = Attendance.objects.filter(date=datetime.date.today() - datetime.timedelta(days=1))
         if date is not None:
-            queryset = queryset.filter(date=date)
+            queryset = Attendance.objects.filter(date=date)
         return queryset.order_by('user_id')
 
     def get_context_data(self, **kwargs):

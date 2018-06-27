@@ -86,7 +86,7 @@ class CreateProjectForm(ModelForm):
     employees_per_project = forms.ModelMultipleChoiceField(
         label='ALOT EMPLOYEES TO PROJECT',
         queryset=MyUser.objects.filter(Q(department='IT') & Q(designation='Employee')),
-        widget=forms.Select(
+        widget=forms.SelectMultiple(
             attrs={'class': 'form-control col-md-7 col-xs-12', }
         )
     )
