@@ -257,6 +257,12 @@ class EmployAttendance(LoginRequiredMixin, PermissionRequiredMixin, ListView):
         return context
 
 
+class CalendarView(LoginRequiredMixin, PermissionRequiredMixin, TemplateView):
+    permission_required = ('attendance.view_attendance',)
+    template_name = 'attendance/calendar.html'
+    model = Attendance
+    context_object_name = 'attendance'
+
 
 """
 class ShowAbsentEmployee(LoginRequiredMixin, PermissionRequiredMixin, ListView):

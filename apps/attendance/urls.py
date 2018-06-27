@@ -1,5 +1,6 @@
 from django.urls import path
 from .views import LeaveRequestView, Completed, Clockin, Clock, Clockout, PastAttendance, ShowAttendance, EmployAttendance
+from .views import CalendarView
 
 app_name = 'attendance'
 urlpatterns = [
@@ -10,7 +11,8 @@ urlpatterns = [
     path('clock/out/', Clockout.as_view(), name='clockout'),
     path('userattendance/', PastAttendance.as_view(), name='pastattendance'),
     path('', ShowAttendance.as_view(), name='show_attendance'),
-    path('showattendance/<int:id>', EmployAttendance.as_view(), name='employ_attendance')
+    path('showattendance/<int:id>', EmployAttendance.as_view(), name='employ_attendance'),
+    path('calendar', CalendarView.as_view(), name='calendar')
 ]
 
 

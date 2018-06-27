@@ -82,8 +82,16 @@ class Approve(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
                     l = Leave.objects.get(user_id=key)
                     if ltype == "PL":
                         l.pl = l.pl-1
+                        if sdate.weekday() == 6:
+                            l.pl = l.pl+1
+                        elif sdate.weekday() == 5:
+                            l.pl = l.pl+1
                     elif ltype == "CL":
                         l.cl = l.cl - 1
+                        if sdate.weekday() == 6:
+                            l.cl = l.cl+1
+                        elif sdate.weekday() == 5:
+                            l.cl = l.cl+1
                     else:
                         l.half_day = l.half_day+1
                     l.save()
