@@ -53,6 +53,13 @@ class SalaryForm(ModelForm):
 
 class CtcForm(ModelForm):
 
+    given_bonus=forms.IntegerField()
+    ctc=forms.IntegerField()
+
+    class Meta:
+        model=Employee_details
+        fields=['ctc','given_bonus']
+
     def save(self, commit=True):
         instance = super().save(commit=False)
         if commit:
@@ -60,9 +67,6 @@ class CtcForm(ModelForm):
             #tmp = Ctc_breakdown.objects.create(basic = instance.ctc*0.5)
         return instance
 
-    class Meta:
-        model=Employee_details
-        fields=['ctc','given_bonus']
 
 
 

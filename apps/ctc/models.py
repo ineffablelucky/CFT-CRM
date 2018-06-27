@@ -19,39 +19,33 @@ class CTC_breakdown(models.Model):
     #final_amount
 
     def __str__(self):
-        return "%d%d"%(self.year,self.employee)
+        return "%d"%(self.year)
+
+    #def __init__(self):
+    #    self.basic=self.basic_amt()
+    #    self.hra=self.hra_amt()
+    #    self.allowances=self.allowances_amt()
+    #    self.ppf=self.ppf_amt()
 
     def ctc_amt(self):
-        a = s_percent.models.Employee_details.objects.filter(worker_id=self.employee_id).values('ctc').get()
-        return a
+        a = s_percent.models.Employee_details.objects.get(worker_id=self.employee_id)
+        return a.ctc
 
     def save(self, *args, **kwargs):
-        self.basic = int((self.ctc_amt().get('ctc')) * 0.5)
-        print(self.basic)
+        ctc_value=s_percent.models.Employee_details.objects.get(worker_id=self.employee_id)
+        a = s_percent.models.Salary_calculations.objects.get(financial_year=self.year)
+
+        self.basic = int((ctc_value.get('ctc')) * 0.5)
+        self.hra = int((a.hra_percentage*self.basic)/100)
+        self.allowances=int((a.allowances*self.basic)/100)
+        self.ppf=int((a.ppf_percentage*self.basic)/100)
+        self.ctc_max_bonus=int((ctc_value.ctc-(self.basic+self.allowances+self.hra+(2*self.ppf))))
+        self.fixed_monthly_salary= int((self.basic + self.hra + self.allowances)/12)
         super(CTC_breakdown, self).save(*args, **kwargs)
 
-    def basic_amt(self):
-        self.basic = int(self.ctc_amt().get('ctc') * 0.5)
-        return self.basic
-
-    def hra_amt(self):
-        a = s_percent.models.Salary_calculations.objects.filter(financial_year=self.year).values('hra_percentage').get()
-        self.hra = int((a.get('hra_percentage')*self.basic)/100)
-
-    def allowances_amt(self):
-        a = s_percent.models.Salary_calculations.objects.filter(financial_year=self.year).values('allowances').get()
-        self.allowances = int((a.get('allowances')*self.basic)/100)
-
-    def ppf_amt(self):
-        a = s_percent.models.Salary_calculations.objects.filter(financial_year=self.year).values('ppf_percentage').get()
-        self.ppf = int((a.get('ppf_percentage')*self.basic)/100)
-
-    def max_bonus_amt(self):
-        self.ctc_max_bonus = int((self.ctc_amt().get('ctc')-(self.basic+self.allowances+self.hra+(2*self.ppf))))
-
-    def fixed_amt(self):
-       self.fixed_monthly_salary = (self.basic + self.hra + self.allowances)/12
-
+    #def basic_amt(self):
+    #    self.basic = int(self.ctc_amt().get('ctc') * 0.5)
+    #    return self.basic
 
 def create_profile(sender, **kwargs):
     if kwargs['created']:

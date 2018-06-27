@@ -13,12 +13,15 @@ def salary(request):
 def edit_salary(request,id):
     if request.method == 'POST':
         form = CtcForm(request.POST)
+        a=Employee_details.objects.get(worker_id=id)
+        a.ctc=request.POST['ctc']
+        #a.given_bonus=request.POST.get['given_bonus',False]
+        a.save()
         if form.is_valid():
-            print('asfdd')
             form.save()
         else:
             print(form.errors)
-        return HttpResponseRedirect(reverse('salary_percentages:edit_salary',kwargs={'id' : 9}))
+        return HttpResponseRedirect(reverse('salary_percentages:edit_salary',kwargs={'id' : id}))
     employee_detail_object = Employee_details.objects.get(worker_id=id)
     context=CTC_breakdown.objects.get(employee_id=id)
     return render(request,'work/edit_salary.html',{'context':context, 'employee_detail_object' : employee_detail_object})

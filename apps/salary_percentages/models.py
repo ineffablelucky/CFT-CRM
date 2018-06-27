@@ -19,7 +19,7 @@ class Employee_details(models.Model):
     percentage_bonus_of_max_bonus=models.IntegerField(default=0,null=True)
 
     def __str__(self):
-        return '%d'%(self.worker)
+        return '%d'%(self.worker_id)
 
     def percentage_bonus_amt(self):
         a=CTC_breakdown.objects.filter(employee_id=self.worker_id).values('ctc_max_bonus')

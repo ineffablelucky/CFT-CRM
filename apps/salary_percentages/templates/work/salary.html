@@ -5,10 +5,10 @@
     <title>Title</title>
 </head>
 <body>
+    <a href="{% url 'salary_percentages:salary_structure' %}"><button>View Salary Structure</button></a>
     <a href ="{% url 'salary_percentages:salary' %}"><button>Edit Salary</button></a>
     {% for i in context %}
-        {{ i.id }}<a href="{% url 'salary_percentages:edit_salary' i.id %}">Edit Salary</a>
+        {{ i.id }}<a href="{% url 'salary_percentages:edit_salary' i.id %}">Edit Salary</a><br>
     {% endfor %}
-    <a href="{% url 'salary_percentages:salary_structure' %}">View Salary Structure</a>
 </body>
 </html>
