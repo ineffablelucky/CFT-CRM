@@ -135,7 +135,7 @@ class LeaveForm(forms.ModelForm):
 
 class AttendanceForm(forms.ModelForm):
     date = forms.DateField(
-        widget=forms.TextInput(attrs={'type': 'date', 'class': ''}),
+        widget=forms.TextInput(attrs={'type': 'date', 'class': 'form-control has-feedback-left'}),
         label='Select Date'
     )
 
