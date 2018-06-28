@@ -94,7 +94,7 @@ class CreateProjectForm(ModelForm):
     status = forms.ChoiceField(
         label='STATUS',
         choices=Project_status,
-        widget=forms.TextInput(
+        widget=forms.Select(
             attrs={'class': '', }
         )
     )
