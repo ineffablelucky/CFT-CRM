@@ -92,6 +92,10 @@ class Details_Task(LoginRequiredMixin, DetailView,):
 
         return context
 
+class Details_Task_Emp(LoginRequiredMixin, DetailView,):
+    model = Task
+    context_object_name = 'task_list'
+    template_name = "test.html"
 
 
 
