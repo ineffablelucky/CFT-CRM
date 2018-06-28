@@ -1,0 +1,96 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+    <!--<meta charset="UTF-8">-->
+    <!--<title>task details</title>-->
+<!--</head>-->
+<!--<body>-->
+
+{% extends 'static/production/index.html' %}
+
+
+    <title>{% block title %} Employee's Task View {% endblock title %}</title>
+
+
+
+
+{% block page-content %}
+
+<div class="right_col" role="main">
+          <!-- top tiles -->
+          <div class="row tile_count">
+            hello welcome to task details page!
+            {% if user.is_authenticated %}
+
+                <h1>{{ object.project }}</h1>
+                <h2>{{ object.task_name }}</h2>
+                <p>{{ object.task_description }}</p>
+                <p>TASK START DATE: {{ object.task_start_date_time }}</p>
+                <p>STATUS: {{ object.status }}</p>
+                <p>ASSIGNED TO: {{ object.employee_id }}</p>
+                <p>EXPECTED TIME IN HOURS: {{ object.expected_time }}</p>
+                <p>DESCRIPTION: {{ object.task_description }}</p>
+
+                <p>TIME ALREADY SPENT: {{ time }} </p>
+                {{ context }}
+
+                <p>Current state of task: --   {{ object.task_current_state }}</p>
+            {% else %}
+                <div>You don't have permission</div>
+            {% endif %}
+
+
+{% if object.task_current_state == "stopped" %}
+
+    <!--<form action="{% url 'task:taskstart' object.id %}" action="post">-->
+        <!--{% csrf_token %}-->
+
+        <!--<input type="submit" value="START TASK"/>-->
+
+    <!--</form>-->
+
+     <a class="startBtn" href="{% url 'task:taskstart' object.id %}"><button type="button" >START TASK</button></a>
+{% else %}
+
+    <!--<form action="{% url 'task:taskend' object.id %}" action="post">-->
+        <!--{% csrf_token %}-->
+
+        <!--<input type="submit" value="PAUSE"/>-->
+    <!--</form>-->
+      <a href="{% url 'task:taskend' object.id %}"><button>PAUSE</button></a>
+              <a href="{% url 'task:taskend' object.id %}"><button>END TASK</button></a>
+
+{% endif %}
+
+
+</div>
+          <!-- /top tiles -->
+
+          <div class="row">
+
+          </div>
+          <br />
+
+          <div class="row">
+
+          </div>
+
+
+          <div class="row">
+
+          </div>
+</div>
+{% endblock page-content %}
+
+{% block extra-script %}
+
+
+ <script>
+     $(document).ready(function(){
+        $('.startBtn').click(function(){
+            $(this).attr('disabled', true);
+            <!--alert("asda");-->
+        });
+     });
+ </script>
+{% endblock %}
