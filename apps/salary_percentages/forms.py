@@ -25,12 +25,12 @@ class SalaryForm(ModelForm):
         self.fields['financial_year'].initial = timezone.now().year
         print(type(timezone.now().year))
 
-    # def clean_financial_year(self):
-    #     data=self.cleaned_data['financial_year']
-    #     if Salary_calculations.objects.filter(financial_year=data).exists():
-    #         raise forms.ValidationError('Salary Structure for this year has already been formed ')
-    #     return data
-    #
+    def clean_financial_year(self):
+        data=self.cleaned_data['financial_year']
+        if Salary_calculations.objects.filter(financial_year=data).exists():
+            raise forms.ValidationError('Salary Structure for this year has already been formed ')
+        return data
+
     # def clean_allowances(self):
     #     data=self.cleaned_data['allowances']
     #     if type(self.allowances) not in data:

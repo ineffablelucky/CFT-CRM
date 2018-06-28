@@ -11,15 +11,18 @@ class Salary_calculations(models.Model):
     hra_percentage = models.IntegerField(default=12, null=False)
     ppf_percentage =  models.IntegerField(default=20, null=False)
 
+    def __str__(self):
+        return "%d" % (self.financial_year)
+
     class Meta:
         permissions = (
             ('view_Salary_calculations', 'Can view salary calculations'),
         )
-    def __str__(self):
-        return "%d"%(self.financial_year)
 
-class \
-        CTC_breakdown(models.Model):
+
+
+class CTC_breakdown(models.Model):
+
     employee=models.OneToOneField(MyUser,on_delete=models.PROTECT,null=True)
     ctc = models.IntegerField( default=200000,null=True)
     basic = models.IntegerField(default=18000)
