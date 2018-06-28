@@ -92,11 +92,26 @@ class Details_Task(LoginRequiredMixin, DetailView,):
 
         return context
 
+
 class Details_Task_Emp(LoginRequiredMixin, DetailView,):
     model = Task
     context_object_name = 'task_list'
     template_name = "test.html"
 
+    def get_context_data(self, **kwargs):
+        context=super().get_context_data()
+        s=""
+        if Time_Entry.objects.filter(task_id=self.kwargs.get('pk')).last() is None:
+            s="No time spent"
+        else:
+            q=Time_Entry.objects.filter(task_id=self.kwargs.get('pk')).last()
+            if q.time_spent is not None:
+                    print("ENtered if")
+                    s = str(q.time_spent.hour)+ " hrs "+str(q.time_spent.minute)+" min's"
+                    print(s)
+        context['time']=s
+
+        return context
 
 
 def entry(request, pk):
