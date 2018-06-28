@@ -1,15 +1,4 @@
-<!--<!DOCTYPE html>-->
-<!--<html lang="en">-->
-<!--<head>-->
-    <!--<meta charset="UTF-8">-->
-    <!--<title>task details</title>-->
-<!--</head>-->
-<!--<body>-->
-
 {% extends 'static/production/index.html' %}
-
-
-    <title>{% block title %} Manager's Task View {% endblock title %}</title>
 
 {% block sidebar %}
     <div class="col-md-3 left_col">
@@ -39,36 +28,36 @@
               <div class="menu_section">
                 <h3>General</h3>
                 <ul class="nav side-menu">
-                  <li><a><i class="fa fa-home"></i> Account Management <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="index.html">Salary Management</a></li>
-                      <li><a href="index2.html">Client Billing</a></li>
-                      <!--<li><a href="index3.html">Dashboard3</a></li>-->
-                    </ul>
-                  </li>
-                  <li><a href="{% url 'project:project_manager_list' %}"><i class="fa fa-edit"></i> Project Management </a>
-                    <ul class="nav child_menu">
-                      <li><a href="form.html">General Form</a></li>
-                      <li><a href="form_advanced.html">Advanced Components</a></li>
-                      <li><a href="form_validation.html">Form Validation</a></li>
-                      <li><a href="form_wizards.html">Form Wizard</a></li>
-                      <li><a href="form_upload.html">Form Upload</a></li>
-                      <li><a href="form_buttons.html">Form Buttons</a></li>
-                    </ul>
-                  </li>
-                  <li><a><i class="fa fa-desktop"></i> HR Management <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="{% url 'attendance:show_attendance' %}">Attendance Management</a></li>
-                      <li><a href="{% url 'leave:leave_request' %}">Leave Management</a></li>
-                      <li><a href="typography.html">Employee Management</a></li>
-                      <!--<li><a href="icons.html">Icons</a></li>-->
-                      <!--<li><a href="glyphicons.html">Glyphicons</a></li>-->
-                      <!--<li><a href="widgets.html">Widgets</a></li>-->
-                      <!--<li><a href="invoice.html">Invoice</a></li>-->
-                      <!--<li><a href="inbox.html">Inbox</a></li>-->
-                      <!--<li><a href="calendar.html">Calendar</a></li>-->
-                    </ul>
-                  </li>
+                  <!--<li><a><i class="fa fa-home"></i> Account Management <span class="fa fa-chevron-down"></span></a>-->
+                    <!--<ul class="nav child_menu">-->
+                      <!--<li><a href="index.html">Salary Management</a></li>-->
+                      <!--<li><a href="index2.html">Client Billing</a></li>-->
+                      <!--&lt;!&ndash;<li><a href="index3.html">Dashboard3</a></li>&ndash;&gt;-->
+                    <!--</ul>-->
+                  <!--</li>-->
+                  <!--<li><a href="#"><i class="fa fa-edit"></i> Project Management </a>-->
+                    <!--<ul class="nav child_menu">-->
+                      <!--<li><a href="form.html">General Form</a></li>-->
+                      <!--<li><a href="form_advanced.html">Advanced Components</a></li>-->
+                      <!--<li><a href="form_validation.html">Form Validation</a></li>-->
+                      <!--<li><a href="form_wizards.html">Form Wizard</a></li>-->
+                      <!--<li><a href="form_upload.html">Form Upload</a></li>-->
+                      <!--<li><a href="form_buttons.html">Form Buttons</a></li>-->
+                    <!--</ul>-->
+                  <!--</li>-->
+                  <!--<li><a><i class="fa fa-desktop"></i> HR Management <span class="fa fa-chevron-down"></span></a>-->
+                    <!--<ul class="nav child_menu">-->
+                      <!--<li><a href="general_elements.html">Attendance Management</a></li>-->
+                      <!--<li><a href="media_gallery.html">Leave Management</a></li>-->
+                      <!--<li><a href="typography.html">Employee Management</a></li>-->
+                      <!--&lt;!&ndash;<li><a href="icons.html">Icons</a></li>&ndash;&gt;-->
+                      <!--&lt;!&ndash;<li><a href="glyphicons.html">Glyphicons</a></li>&ndash;&gt;-->
+                      <!--&lt;!&ndash;<li><a href="widgets.html">Widgets</a></li>&ndash;&gt;-->
+                      <!--&lt;!&ndash;<li><a href="invoice.html">Invoice</a></li>&ndash;&gt;-->
+                      <!--&lt;!&ndash;<li><a href="inbox.html">Inbox</a></li>&ndash;&gt;-->
+                      <!--&lt;!&ndash;<li><a href="calendar.html">Calendar</a></li>&ndash;&gt;-->
+                    <!--</ul>-->
+                  <!--</li>-->
                   <li><a><i class="fa fa-table"></i> Lead Management <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="{% url 'leads:LeadDetails' %}">New Leads</a></li>
@@ -77,15 +66,15 @@
                       <li><a href="{% url 'opportunity:declined_leads' %}">Declined Leads</a></li>
                     </ul>
                   </li>
-                  <li><a><i class="fa fa-bar-chart-o"></i> Reporting </a>
-                    <!--<ul class="nav child_menu">-->
-                      <!--<li><a href="chartjs.html">Chart JS</a></li>-->
-                      <!--<li><a href="chartjs2.html">Chart JS2</a></li>-->
-                      <!--<li><a href="morisjs.html">Moris JS</a></li>-->
-                      <!--<li><a href="echarts.html">ECharts</a></li>-->
-                      <!--<li><a href="other_charts.html">Other Charts</a></li>-->
-                    <!--</ul>-->
-                  </li>
+                  <!--<li><a><i class="fa fa-bar-chart-o"></i> Reporting </a>-->
+                    <!--&lt;!&ndash;<ul class="nav child_menu">&ndash;&gt;-->
+                      <!--&lt;!&ndash;<li><a href="chartjs.html">Chart JS</a></li>&ndash;&gt;-->
+                      <!--&lt;!&ndash;<li><a href="chartjs2.html">Chart JS2</a></li>&ndash;&gt;-->
+                      <!--&lt;!&ndash;<li><a href="morisjs.html">Moris JS</a></li>&ndash;&gt;-->
+                      <!--&lt;!&ndash;<li><a href="echarts.html">ECharts</a></li>&ndash;&gt;-->
+                      <!--&lt;!&ndash;<li><a href="other_charts.html">Other Charts</a></li>&ndash;&gt;-->
+                    <!--&lt;!&ndash;</ul>&ndash;&gt;-->
+                  <!--</li>-->
                   <!--<li><a><i class="fa fa-clone"></i>Layouts <span class="fa fa-chevron-down"></span></a>-->
                     <!--<ul class="nav child_menu">-->
                       <!--<li><a href="fixed_sidebar.html">Fixed Sidebar</a></li>-->
@@ -159,83 +148,3 @@
           </div>
         </div>
 {% endblock sidebar %}
-
-
-{% block page-content %}
-
-<div class="right_col" role="main">
-          <!-- top tiles -->
-          <div class="row tile_count">
-            hello welcome to task details page!
-            {% if user.is_authenticated %}
-
-                <h1>{{ object.project }}</h1>
-                <h2>{{ object.task_name }}</h2>
-                <p>{{ object.task_description }}</p>
-                <p>TASK START DATE: {{ object.task_start_date_time }}</p>
-                <p>STATUS: {{ object.status }}</p>
-                <p>ASSIGNED TO: {{ object.employee_id }}</p>
-                <p>EXPECTED TIME IN HOURS: {{ object.expected_time }}</p>
-                <p>DESCRIPTION: {{ object.task_description }}</p>
-                <!--<p>TIME ALREADY SPENT: &#45;&#45;</p>-->
-                <p>Current state of task: --   {{ object.task_current_state }}</p>
-            {% else %}
-                <div>You don't have permission</div>
-            {% endif %}
-
-
-{% if object.task_current_state == "stopped" %}
-
-    <form action="{% url 'task:taskstart' object.id %}" action="post">
-        {% csrf_token %}
-
-        <input type="submit" value="START TASK"/>
-
-    </form>
-
-{% else %}
-
-    <form action="{% url 'task:taskend' object.id %}" action="post">
-        {% csrf_token %}
-
-        <input type="submit" value="PAUSE"/>
-    </form>
-{% endif %}
-
-{% if object.task_current_state == "stopped" %}
-
-    <form action="{% url 'task:taskstart' object.id %}" action="post">
-        {% csrf_token %}
-
-        <input type="submit" value="RESUME"/>
-
-    </form><BR><BR>
-{% else %}
-    <form action="{% url 'task:taskend' object.id %}" action="post">
-        {% csrf_token %}
-
-            <input type="submit" value="END TASK"/>
-
-    </form><br>
-
-
-{% endif %}
-
-</div>
-          <!-- /top tiles -->
-
-          <div class="row">
-
-          </div>
-          <br />
-
-          <div class="row">
-
-          </div>
-
-
-          <div class="row">
-
-          </div>
-</div>
-{% endblock page-content %}
