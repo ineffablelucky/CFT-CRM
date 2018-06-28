@@ -9,7 +9,8 @@ from .models import LEADS
 from django.contrib.messages.views import SuccessMessageMixin
 from .forms import CreateForm,DetailForm,UpdateForm
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-
+from apps.opportunity.models import Opportunity
+from django.contrib.auth.decorators import permission_required, login_required
 
 
 
@@ -24,7 +25,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMix
 
 class LeadDetails(LoginRequiredMixin, PermissionRequiredMixin, ListView,FormView):
     form_class = DetailForm
-    permission_required = ('users.view_leads',)
+    permission_required = ('leads.view_leads', 'users.view_users')
     model = LEADS
     fields='__all__'
     template_name = 'leads/details.html'
@@ -85,9 +86,9 @@ class LeadDelete(LoginRequiredMixin,PermissionRequiredMixin,DeleteView):
 
 	#success_url = reverse_lazy('LeadIndex')
 
-
+@login_required
+@permission_required('leads.view_leads', raise_exception=True)
 def upload_csv(request):
-
     data = {}
     if "GET" == request.method:
         return render(request, "leads/upload_csv.html", data)
@@ -142,10 +143,9 @@ def upload_csv(request):
 
     return HttpResponseRedirect(reverse("leads:upload_csv"))
 
-from apps.opportunity.models import Opportunity
+@login_required
+@permission_required('leads.view_leads', raise_exception=True)
 def LeadsAssign(request):
-
-
     data = (request.POST['ids']).split(',')
     print(data)
     if len(data) > 0:

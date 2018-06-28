@@ -9,3 +9,8 @@ class Module(models.Model):
 
     def __str__(self):
         return self.module_name
+
+    class Meta:
+        permissions = (
+            ('view_Module', 'Can view Modules'),
+        )

@@ -14,3 +14,8 @@ class MEETING(models.Model):
 
     def __unicode__(self):
         return self.date
+
+    class Meta:
+        permissions = (
+            ('view_meeting', 'Can view Meetings'),
+        )
