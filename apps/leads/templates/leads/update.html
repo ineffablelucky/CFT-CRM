@@ -155,7 +155,7 @@
           <div class="row tile_count">
 
 
-            <form method="post">
+            <form method="post" action="{% url 'leads:LeadEdit' leads.id %}">
 
                 {% csrf_token %}
             <div>
