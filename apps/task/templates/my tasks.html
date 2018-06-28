@@ -48,7 +48,7 @@ body {
         <th>Task Name</th>
         <th>Task Description</th>
         <th>Task Start Date</th>
-        <th>Expected Time</th>
+        <th>Expected Time In Hours</th>
         <!--<th>Progress</th>-->
         <th>Status</th>
         </thead>
@@ -56,7 +56,7 @@ body {
         <tbody>
         {% for i in emp_task_list %}
         <tr>
-            <td><a href="{% url 'task:task-details' i.id %}">{{ i.task_name }}</a></td>
+            <td><a href="{% url 'task:my-task-details' i.id %}">{{ i.task_name }}</a></td>
             <td>{{ i.task_description}}</td>
             <td>{{ i.task_start_date_time }}</td>
             <td>{{ i.expected_time }}</td>

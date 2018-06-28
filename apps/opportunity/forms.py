@@ -2,6 +2,7 @@ from django import forms
 from apps.opportunity.models import Opportunity
 from apps.users.models import MyUser
 from django.db.models import Q
+from apps.client.models import CLIENT
 
 
 class ChangeStatus(forms.ModelForm):
@@ -29,3 +30,13 @@ class AddProjManager(forms.ModelForm):
     class Meta:
         model = Opportunity
         fields = ('proj_manager',)
+
+
+class CreateClientForm(forms.ModelForm):
+    opportunity = forms.ModelChoiceField(queryset=Opportunity.objects.filter(status='Approved'))
+
+    class Meta:
+        model = CLIENT
+        fields = (
+            'company_name',
+        )
