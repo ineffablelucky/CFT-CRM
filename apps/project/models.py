@@ -26,12 +26,6 @@ class IT_Project(models.Model):
     def __str__(self):
         return self.project_name
 
-    # def get_employees_per_project(self):
-    #     return ",".join([str(p) for p in self.employees_per_project.all()])
-    #
-
-    def get_employees(self):
-        return ",".join([str(p) for p in self.employees_per_project.all()])
 
     class Meta:
         permissions = (

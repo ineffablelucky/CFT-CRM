@@ -1,4 +1,4 @@
-
+from django.db import models
 from .models import Task, Time_Entry
 from django.views.generic import TemplateView, ListView
 from .forms import CreateTaskForm
@@ -6,16 +6,19 @@ from django.views.generic import TemplateView, ListView, CreateView, UpdateView,
 from apps.users.models import MyUser
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from apps.project.models import IT_Project
-from datetime import datetime
+
 from django.urls import reverse, reverse_lazy
 from django.http import HttpResponseForbidden, HttpResponse
 from django.shortcuts import redirect
-
+from django.db.models import Sum, ExpressionWrapper, F, fields
+import datetime
+from django.db.models import Q
 
 class TaskList(LoginRequiredMixin,  ListView):
     model = Task
     context_object_name = 'task_list'
     permission_required = ('users.view_task',)
+    template_name = 'task_manager_list.html'
 
     def get_queryset(self):
         queryset = Task.objects.filter(project__id=self.kwargs.get('pk'))
@@ -27,6 +30,7 @@ class TaskList(LoginRequiredMixin,  ListView):
         context['project_id'] = self.kwargs.get('pk')
 
         return context
+
 
 
 class Employee_Task_List(LoginRequiredMixin, PermissionRequiredMixin, ListView):
@@ -68,53 +72,105 @@ class Edit_Task(LoginRequiredMixin, UpdateView):
     success_url = '/task'
 
 
-class Details_Task(LoginRequiredMixin, DetailView):
+class Details_Task(LoginRequiredMixin, DetailView,):
     model = Task
     context_object_name = 'task_list'
     template_name = "task_details.html"
-#
-# class Start_Task(LoginRequiredMixin, CreateView):
+
+    def get_context_data(self, **kwargs):
+        context=super().get_context_data()
+        s=""
+        if Time_Entry.objects.filter(task_id=self.kwargs.get('pk')).last() is None:
+            s="No time spent"
+        else:
+            q=Time_Entry.objects.filter(task_id=self.kwargs.get('pk')).last()
+            if q.time_spent is not None:
+                    print("ENtered if")
+                    s = str(q.time_spent.hour)+ " hrs "+str(q.time_spent.minute)+" min's"
+                    print(s)
+        context['time']=s
+
+        return context
+
+
+
 
 def entry(request, pk):
-        print("helloooooooooooooooooooooooooooooo")
 
         if not request.user.is_authenticated:
             return HttpResponseForbidden
         # elif Time_Entry.objects.filter(task_start_date_time=datetime.today()):
         #     return HttpResponse("Task Already started! You can start working")
         else:
+
             tas = Task.objects.get(pk=pk)
+
+
             a = Time_Entry.objects.create(task=tas,
-                                      task_start_date_time=datetime.today(),
-                                      )
+                                          task_start_date_time=datetime.datetime.now(),
+                                          )
+            a.save()
             print(tas)
             tas.task_current_state = 'running'
-            print("printing tas. task curent state", tas.task_current_state)
-
             tas.save()
-            a.save()
-            # b.save()
-            # print(b.task_current_state)
-
             return redirect(reverse('task:task-details', kwargs={'pk' : tas.id}))
 
 
 
 
 def end(request, pk):
-        print("byeeeeeeeeeeeeeeeeeeeeeeee")
+
         if not request.user.is_authenticated:
             return HttpResponseForbidden
         else:
             tas = Task.objects.get(pk=pk)
+            tmp = Time_Entry.objects.filter(task=tas, task_end_date_time=None).order_by('-id').first()
+            one = datetime.datetime.now()
+            print(type(one))
+            tmp.task_end_date_time = one
+            tmp.save()
 
-            b = Time_Entry.objects.create(
-                                      task = tas,
-                                      task_end_date_time=datetime.today(),
-                                      )
+            #for storing the value of time_per_session
+            delta = datetime.timedelta(hours=tmp.task_start_date_time.hour, minutes=tmp.task_start_date_time.minute)
+            var = tmp.task_end_date_time-delta
+            print(type(var))
+            print(var)
+            s=str(var.hour)+"hrs" + str(var.minute)+" minute"
+            print(s)
+            tmp.time_per_session = var
+            tmp.save()
+
+            #for storing the value of time spent
+            # using last entry of time spent + new time_per_session entry
+
+            if tmp.id == 1:
+                tmp.time_spent = tmp.time_per_session
+                tmp.save()
+
+            # elif tmp.time_spent is None:
+            #     tmp.time_spent = tmp.time_per_session
+            #     tmp.save()
+
+            else:
+                print("*********************************")
+                print(tmp.id)
+
+                new1 = Time_Entry.objects.get(Q(id=(tmp.id-1)) & Q(task=tas))
+                print(new1)
+                h=new1.time_spent.hour
+                m=new1.time_spent.minute
+                time_spent_delta = tmp.time_per_session + datetime.timedelta(hours=h, minutes=m)
+                print(time_spent_delta)
+                tmp.time_spent = time_spent_delta
+                tmp.save()
+
+
+
 
             tas.task_current_state = 'stopped'
             tas.save()
-            b.save()
+
+            print(tmp.id)
+
 
             return redirect(reverse('task:task-details', kwargs= {'pk' : tas.id}))

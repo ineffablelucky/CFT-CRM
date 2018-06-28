@@ -35,8 +35,8 @@ class Task(models.Model):
 
 class Time_Entry(models.Model):
 
-    task = models.ForeignKey(Task, on_delete=models.PROTECT, blank=True, null=True)
+    task = models.ForeignKey(Task, on_delete=models.PROTECT, blank=True, null=True, related_name="taskname")
     task_start_date_time = models.DateTimeField(blank=True,null=True,)
     task_end_date_time = models.DateTimeField(blank=True,null=True,)
-
-
+    time_per_session = models.DateTimeField(max_length=30, blank=True, null=True,)
+    time_spent = models.DateTimeField(max_length=30, blank=True, null=True,)

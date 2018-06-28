@@ -86,7 +86,7 @@ class CreateProjectForm(ModelForm):
     employees_per_project = forms.ModelMultipleChoiceField(
         label='ALOT EMPLOYEES TO PROJECT',
         queryset=MyUser.objects.filter(Q(department='IT') & Q(designation='Employee')),
-        widget=forms.TextInput(
+        widget=forms.SelectMultiple(
             attrs={'class': '', }
         )
     )
@@ -94,7 +94,7 @@ class CreateProjectForm(ModelForm):
     status = forms.ChoiceField(
         label='STATUS',
         choices=Project_status,
-        widget=forms.TextInput(
+        widget=forms.Select(
             attrs={'class': '', }
         )
     )
