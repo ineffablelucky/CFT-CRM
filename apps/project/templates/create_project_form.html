@@ -132,7 +132,12 @@
           </div>
         </div>
 {% endblock page-content %}
-
+$(".datepicker").datepicker({
+        format: 'dd/mm/yyyy',
+        autoclose: true,
+        changeYear: true,
+        changeMonth: true
+      });
 {% block extra-script %}
 <script>
     $(document).ready(function(){
@@ -140,5 +145,7 @@
             window.history.back();
         });
     });
+
+
 </script>
 {% endblock %}

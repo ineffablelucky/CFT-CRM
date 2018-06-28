@@ -18,7 +18,6 @@ class ListOppo(LoginRequiredMixin, PermissionRequiredMixin, ListView):
 
     def get_queryset(self):
         user_id = MyUser.objects.get(username=self.request.user)
-        #print(user_id)
         queryset2 = MEETING.objects.filter(extras__in=[self.request.user])
         queryset = Opportunity.objects.filter(Q(assigned_to=self.request.user) | Q(meeting__in=queryset2)).distinct()
         return queryset
@@ -28,25 +27,26 @@ class ListOppo(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     #     context['form'] = AddProjManager()
     #     return context
 
-
+#change status
 class C_Status(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     permission_required = (
         'opportunity.change_opportunity',
-        'users.view_opportunity',
+        'opportunity.view_opportunity',
     )
     model = Opportunity
     template_name = 'opportunity/change_status.html'
     form_class = ChangeStatus
     success_url = reverse_lazy('opportunity:list_oppo')
 
-
+#assigned leads
 class A_Leads(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     permission_required = (
         'opportunity.change_opportunity',
         'opportunity.add_opportunity',
         'opportunity.delete_opportunity',
-        'users.view_opportunity',
-        'users.view_meeting',
+        'users.view_users',
+        'opportunity.view_opportunity',
+        'meeting.view_meeting',
     )
     model = Opportunity
     template_name = 'opportunity/assigned_leads.html'
@@ -62,28 +62,28 @@ class A_Leads(LoginRequiredMixin, PermissionRequiredMixin, ListView):
         context['form'] = AddProjManager()
         return context
 
-
+#assign project manager
 class A_PManager(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     permission_required = (
         'opportunity.change_opportunity',
         'opportunity.add_opportunity',
         'opportunity.delete_opportunity',
-        'users.view_meeting',
-        'users.view_opportunity',
+        'users.view_users',
+        'opportunity.view_opportunity',
     )
     model = Opportunity
     form_class = AddProjManager
     #template_name = 'opportunity/assigned_leads.html'
     success_url = reverse_lazy('opportunity:assign_lead')
 
-
+#closed leads
 class C_Leads(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     permission_required = (
         'opportunity.change_opportunity',
         'opportunity.add_opportunity',
         'opportunity.delete_opportunity',
-        'users.view_meeting',
-        'users.view_opportunity',
+        'users.view_users',
+        'opportunity.view_opportunity',
     )
     model = Opportunity
     template_name = 'opportunity/closed_leads.html'
@@ -97,13 +97,14 @@ class C_Leads(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     #     context = super().get_context_data(**kwargs)
     #     context['oppo_id'] =
 
-
+#declined leads
 class D_Leads(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     permission_required = (
         'opportunity.change_opportunity',
         'opportunity.add_opportunity',
         'opportunity.delete_opportunity',
-        'users.view_meeting',
+        'users.view_users',
+        'opportunity.view_opportunity',
     )
     model = Opportunity
     template_name = 'opportunity/declined_leads.html'

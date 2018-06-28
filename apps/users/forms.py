@@ -1,7 +1,7 @@
 from django.forms import ModelForm
 from .models import  MyUser
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
 from django.contrib.auth.models import Group
 import re
 
@@ -166,10 +166,10 @@ class RegistrationForm(UserCreationForm):
 
     def clean_designation(self):
         designation = self.cleaned_data.get('designation')
-        departmnt = self.cleaned_data.get('department')
-        if designation == departmnt:
+        department = self.cleaned_data.get('department')
+        if designation == department:
             raise forms.ValidationError("designation and department both can not be NA")
-        elif designation == 'Client' and departmnt != 'NA':
+        elif designation == 'Client' and department != 'NA':
             raise forms.ValidationError('not correct match of designation and department')
         else:
             return designation
@@ -210,5 +210,12 @@ class RegistrationForm(UserCreationForm):
         required=False,
     )
 
+class ResetPasswordForm(UserCreationForm):
+    class Meta:
+        model = MyUser
+        fields = (
+            'password1',
+            'password2',
+        )
 
 

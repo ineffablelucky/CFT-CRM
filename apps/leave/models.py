@@ -11,6 +11,10 @@ class Leave(models.Model):
     comp_off = models.IntegerField(default=8)
     user = models.OneToOneField(MyUser, on_delete=models.PROTECT, blank=True, default=None)
 
+    class Meta:
+        permissions = (
+            ('view_Leave', 'Can view Leave'),
+        )
 
 def create_profile(sender, **kwargs):
     if kwargs['created']:

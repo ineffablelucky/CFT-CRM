@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Invalid Email</title>
+</head>
+<body>
+
+<h4>Email you entered was not found!
+    Please enter a correct emailand <a href="{% url 'users:forgot_password' %}">try again.</a>
+    Or <a href="{% url 'users:login' %}">login</a> into your account using previous password!
+</h4>
+
+</body>
+</html>

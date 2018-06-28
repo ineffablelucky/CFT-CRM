@@ -181,10 +181,10 @@ class ShowAttendance(LoginRequiredMixin, PermissionRequiredMixin, ListView):
         temp2 = Attendance.objects.filter(date=datetime.date.today()-delta)
         for t in temp2:
             if t.status == 'absent':
-                if LeaveRequest.objects.filter(Q(user_id=t.user_id) & Q(date__gte=datetime.date.today() - delta)
-                                        & Q(end_date__lte=datetime.date.today()-delta)
+                if LeaveRequest.objects.filter(Q(user_id=t.user_id) & Q(date__lte=datetime.date.today() - delta)
+                                        & Q(end_date__gte=datetime.date.today()-delta)
                                         & Q(status='Approved')):
-                    t.status = 'On Lea'
+                    t.status = 'On Leave'
                     t.save()
 
         l = []
@@ -198,7 +198,7 @@ class ShowAttendance(LoginRequiredMixin, PermissionRequiredMixin, ListView):
                                                status='absent')
             # if LeaveRequest.objects.get(Q(user_id=p[i]) & Q(date__gte=datetime.date.today()-delta)
             #                             & Q(end_date__lte=datetime.date.today()-delta)
-            #                             & Q(status='Approved')):
+            #                             & Q(status='Approved')) is not None:
             #     absent.status = 'On Leave'
             absent.save()
         date = self.request.GET.get('date', None)
@@ -256,6 +256,12 @@ class EmployAttendance(LoginRequiredMixin, PermissionRequiredMixin, ListView):
 
         return context
 
+
+class CalendarView(LoginRequiredMixin, PermissionRequiredMixin, TemplateView):
+    permission_required = ('attendance.view_attendance',)
+    template_name = 'attendance/calendar.html'
+    model = Attendance
+    context_object_name = 'attendance'
 
 
 """

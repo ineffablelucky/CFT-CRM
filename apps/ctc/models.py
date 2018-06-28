@@ -40,3 +40,7 @@ class CTC_breakdown(models.Model):
     def max_bonus_amt(self):
         b = (self.ctc-(self.basic+self.allowances+self.hra+(2*self.ppf)))
 
+    class Meta:
+        permissions = (
+            ('view_ctc', 'Can view CTC'),
+        )
