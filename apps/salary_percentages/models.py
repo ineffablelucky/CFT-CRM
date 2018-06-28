@@ -23,7 +23,7 @@ class Salary_calculations(models.Model):
 
 class CTC_breakdown(models.Model):
 
-    employee=models.OneToOneField(MyUser,on_delete=models.PROTECT,null=True)
+    employee=models.OneToOneField(MyUser,on_delete=models.PROTECT,null=True,related_name='employee')
     ctc = models.IntegerField( default=200000,null=True)
     basic = models.IntegerField(default=18000)
     hra = models.IntegerField(default=40)
@@ -34,8 +34,8 @@ class CTC_breakdown(models.Model):
     given_bonus = models.IntegerField(default=0, null=True)
     percentage_bonus_of_max_bonus = models.IntegerField(default=0, null=True)
     fixed_monthly_salary = models.IntegerField(default=20000)
-    # deduction_due_to_leaves
-    # final_amount
+    #deduction_due_to_leaves_monthly=models.FloatField(default=0)
+    #final_monthly_salary=models.FloatField(default=20000)
 
     # def __init__(self):
     #    self.basic=self.basic_amt()
@@ -52,6 +52,7 @@ class CTC_breakdown(models.Model):
         self.ctc_max_bonus = int((self.ctc - (self.basic + self.allowances + self.hra + (2 * self.ppf))))
         self.percentage_bonus_of_max_bonus = int((self.given_bonus / self.ctc_max_bonus) * 100)
         self.fixed_monthly_salary = int((self.basic + self.hra + self.allowances) / 12)
+        #self.final_monthly_salary = float(self.fixed_monthly_salary-self.deduction_due_to_leaves_monthly)
         super(CTC_breakdown, self).save(*args, **kwargs)
 
         # def basic_amt(self):

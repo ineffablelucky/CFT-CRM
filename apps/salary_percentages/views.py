@@ -6,8 +6,11 @@ from django.contrib.auth import get_user_model
 from django.contrib import messages
 
 def salary(request):
-    context=get_user_model().objects.all()
+    context=CTC_breakdown.objects.all()
     return render(request,'work/salary.html',{'context':context})
+# def salary(request):
+#     context=get_user_model().objects.all()
+#     return render(request,'work/salary.html',{'context':context})
 
 def edit_salary(request,id):
     if request.method == 'POST':
