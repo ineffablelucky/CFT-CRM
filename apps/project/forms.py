@@ -49,7 +49,7 @@ class CreateProjectForm(ModelForm):
     # )
 
 
-    project_start_date_time = forms.CharField(
+    project_start_date_time = forms.DateField(
         label='PROJECT START DATE',
         required=False,
         widget=forms.TextInput(
@@ -58,7 +58,7 @@ class CreateProjectForm(ModelForm):
     )
 
 
-    project_end_date_time = forms.CharField(
+    project_end_date_time = forms.DateField(
         label='PROJECT END DATE',
         required=False,
         widget=forms.TextInput(
