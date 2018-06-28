@@ -41,19 +41,13 @@ class MyUser(AbstractUser):
 
     class Meta:
         permissions = (
-            # ('view_attendance', 'Can view attendance'),
-            # ('view_client', 'Can view clients'),
-            # ('view_leads', 'Can view leads'),
-            # ('view_leave', 'Can view leaves'),
-            # ('view_meeting', 'Can view meetings'),
-            # ('view_module', 'Can view modules'),
-            # ('view_monthly_salary', 'Can view monthly salary'),
-            # ('view_opportunity', 'Can view opportunities'),
-            # ('view_salary_percentages', 'Can view salary percentages'),
-            # ('view_task', 'Can view tasks'),
-             ('view_users', 'Can view users'),
-            # ('view_project', 'Can view projects'),
+            ('view_users', 'Can view users'),
         )
+
+class user_token(models.Model):
+    token = models.CharField(default=None, blank=True, max_length=255)
+    user = models.OneToOneField(MyUser, on_delete=models.CASCADE, blank=True, null=True)
+
 
 
 

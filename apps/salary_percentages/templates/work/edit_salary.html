@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <p>CTC: {{ ctc_objects.ctc }}<a href="{% url 'salary_percentages:edit_ctc' ctc_objects.employee_id %}">Edit</a></p>
+    <p>Given Bonus: {{ ctc_objects.given_bonus }}<a href="{% url 'salary_percentages:edit_bonus' ctc_objects.employee_id %}">Edit</a></p>
+    <p>HRA: {{ ctc_objects.hra }}</p>
+    <p>PPF: {{ ctc_objects.ppf }}</p>
+    <p>Allowances: {{ ctc_objects.allowances }}</p>
+    <p>Fixed monthly Salary: {{ ctc_objects.fixed_monthly_salary }}</p>
+    <a href="{% url 'salary_percentages:salary' %}">Save</a>
+</body>
+</html>

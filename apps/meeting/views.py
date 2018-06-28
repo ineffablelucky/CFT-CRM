@@ -9,9 +9,9 @@ from django.db.models import Q
 
 
 class CMeeting(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
-    print('Hello World')
     permission_required = (
-         'users.view_meeting',
+         'users.view_users',
+         'meeting.view_meeting',
          'meeting.add_meeting',
          'meeting.change_meeting',
          'meeting.delete_meeting',
@@ -36,7 +36,8 @@ class CMeeting(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
 
 class L_Meeting(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     permission_required = (
-        'users.view_meeting',
+        'users.view_users',
+        'meeting.view_meeting',
         'meeting.change_meeting',
     )
     model = MEETING
@@ -57,13 +58,13 @@ Add PermissionRequiredMixin after editing
 """
 
 
-class Emp_Meetings(LoginRequiredMixin, ListView):
-    # permission_required = (
-    #     'users.view_meeting',
-    #     'meeting.change_meeting',
-    #     'opportunity.change_opportunity'
-    # )
-    #print("heelo Mooto")
+class Emp_Meetings(LoginRequiredMixin, PermissionRequiredMixin, ListView):
+    permission_required = (
+        'meeting.view_meeting',
+        'meeting.change_meeting',
+        'opportunity.change_opportunity'
+    )
+
     model = MEETING
     template_name = 'meeting/employee_meeting.html'
     context_object_name = 'emp_meeting'
@@ -88,9 +89,10 @@ class Emp_Meetings(LoginRequiredMixin, ListView):
     #     return kwargs
 
 
-class AddMeetingNotesView(LoginRequiredMixin, UpdateView):
+class AddMeetingNotesView(LoginRequiredMixin,PermissionRequiredMixin, UpdateView):
     form_class = AddMeetingNotes
     model = MEETING
+    permission_required = ('meeting.view_meeting', 'meeting.change_meeting',)
 
     def get_success_url(self):
         return reverse_lazy('opportunity:meeting:emp_meeting', args=[self.kwargs['pk']])

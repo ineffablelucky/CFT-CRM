@@ -19,6 +19,9 @@ class CreateTaskForm(ModelForm):
         ('in progress', 'in progress'),
     )
 
+
+
+
     project = forms.ModelChoiceField(
         label='PROJECT NAME',
         # required=False,
@@ -27,7 +30,7 @@ class CreateTaskForm(ModelForm):
     )
 
     # project = forms.CharField(
-    #     widget=forms.TextInput(attrs={'type':'readonly'}), label='PROJECT NAME'
+    #     widget=forms.TextInput(attrs={'readonly': True}), label='PROJECT NAME'
     # )
 
     task_name = forms.CharField(
@@ -79,7 +82,7 @@ class CreateTaskForm(ModelForm):
     class Meta:
         model = Task
         fields = (
-             'project',
+            'project',
             'task_name',
             'task_description',
             'employee_id',
@@ -88,46 +91,8 @@ class CreateTaskForm(ModelForm):
             'status',
             'expected_time',
         )
-    # def __init__(self,  *args, **kwargs):
-        # self.project_id = kwargs.pop('project_id')
-        # super(CreateTaskForm, self).__init__(*args, **kwargs)
-        # x = IT_Project.objects.get(id=self.project_id)
-        # print(x)
-        #
-        # self.fields['project'].initial = x.project_name
-        #
-        #
-        # print(self.fields['project'].initial)
 
 
-        # self.fields['task_start_date_time'].initial = timezone.now().date
-        # self.fields['task_end_date_time'].initial = timezone.now().date
-
-
-
-        # self.fields['task_description'].widget.attrs['placeholder']= 'write task description here'
-        # self.fields['task_name'].widget.attrs['placeholder']= 'write task name here'
-        # self.fields['project_description'].widget.attrs['placeholder']= 'write project description here'
-
-
-
-    # def __init__(self, *args, **kwargs):
-    #     self.oppo = kwargs.pop('oppo_id')
-    #     super().__init__(*args, **kwargs)
-    #     self.fields['Opportunity'].initial = self.oppo
-    #
-    # def save(self, commit=True):
-    #     instance = super().save(commit=False)
-    #     print(self.oppo)
-    #     instance.Opportunity_id = self.oppo
-    #     instance.save()
-    #     return instance
-
-
-    # def __init__(self,  *args, **kwargs):
-    #     super(CreateProjectForm, self).__init__(*args, **kwargs)
-    #     self.fields['project_name'].initial = timezone.now().date
-    #     self.fields['project_description'].widget.attrs['placeholder']= 'asfsadf'
 
     # def clean_task_name(self):
     #     value = self.cleaned_data.get('task_name')
