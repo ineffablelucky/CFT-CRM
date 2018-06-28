@@ -20,14 +20,14 @@ class CreateProjectForm(ModelForm):
     project_name = forms.CharField(
         label = 'PROJECT NAME',
         widget=forms.TextInput(
-            attrs={'class': '',}
+            attrs={'class': 'form-control col-md-7 col-xs-12',}
         )
     )
 
     project_description = forms.CharField(
         label= 'PROJECT DESCRIPTION',
         widget=forms.Textarea(
-            attrs={'class': '',}
+            attrs={'class': 'form-control col-md-7 col-xs-12',}
         )
     )
 
@@ -53,7 +53,7 @@ class CreateProjectForm(ModelForm):
         label='PROJECT START DATE',
         required=False,
         widget=forms.TextInput(
-            attrs={'type': 'date', 'class': '',}
+            attrs={'type': 'date', 'class': 'form-control col-md-7 col-xs-12',}
         )
     )
 
@@ -62,7 +62,7 @@ class CreateProjectForm(ModelForm):
         label='PROJECT END DATE',
         required=False,
         widget=forms.TextInput(
-            attrs={'type': 'date', 'class': '',}
+            attrs={'type': 'date', 'class': 'form-control col-md-7 col-xs-12',}
         )
     )
 
@@ -70,7 +70,7 @@ class CreateProjectForm(ModelForm):
     project_total_working_hr = forms.IntegerField(
         label='TOTAL WORKING HOURS',
         widget=forms.TextInput(
-            attrs={'class': '', }
+            attrs={'class': 'form-control col-md-7 col-xs-12', }
         )
     )
 
@@ -86,8 +86,8 @@ class CreateProjectForm(ModelForm):
     employees_per_project = forms.ModelMultipleChoiceField(
         label='ALOT EMPLOYEES TO PROJECT',
         queryset=MyUser.objects.filter(Q(department='IT') & Q(designation='Employee')),
-        widget=forms.TextInput(
-            attrs={'class': '', }
+        widget=forms.SelectMultiple(
+            attrs={'class': 'form-control col-md-7 col-xs-12', }
         )
     )
 
@@ -95,7 +95,7 @@ class CreateProjectForm(ModelForm):
         label='STATUS',
         choices=Project_status,
         widget=forms.Select(
-            attrs={'class': '', }
+            attrs={'class': 'form-control col-md-7 col-xs-12', }
         )
     )
 

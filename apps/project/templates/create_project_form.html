@@ -13,114 +13,132 @@
 
 
 {% block page-content %}
+        <div class="right_col" role="main">
+          <div class="">
+            {% if user.is_authenticated %}
+            <div class="page-title">
+              <div class="title_left">
+                <h3>This is a Project Entry form!</h3>
+              </div>
+            </div>
+            <div class="clearfix"></div>
+
+            <div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                      <h2>Project Info</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                      {% if object.id %}
+                        <form method="post" action="{% url 'project:project-update' object.id %}" class="form-horizontal form-label-left" novalidate>
+                      {% else %}
+                        <form method="post" action="{% url 'project:project-add' %}" class="form-horizontal form-label-left" novalidate>
+                      {% endif %}
+
+                      {% csrf_token %}
+                        <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Project Name</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                              <!--<input id="name" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="2" name="name" placeholder="both name(s) e.g Jon Doe" required="required" type="text">-->
+                              {{ form.project_name }}
+                            </div>
+                            {{ form.project_name.errors }}
+                        </div>
 
 
-<div class="right_col" role="main">
-          <!-- top tiles -->
-          <div class="row tile_count">
-{% if user.is_authenticated %}
-
-    <h1>This is a Project Entry form!</h1><hr>
-
-{% if object.id %}
-    <form method="post" action="{% url 'project:project-update' object.id %}">
-{% else %}
-    <form method="post" action="{% url 'project:project-add' %}">
-{% endif %}
-
-    {% csrf_token %}
-        <div>
-            {{ form.project_name.label }}
-            {{ form.project_name }}
-            {{ form.project_name.errors }}
-        </div><br>
-
-        <div>
-            {{ form.project_description.label }}
-            {{ form.project_description }}
-            {{ form.project_description.errors }}
-        </div><br>
-
-        <!--<div>-->
-            <!--{{ form.opportunity.label }}-->
-            <!--{{ form.opportunity }}-->
-            <!--{{ form.opportunity.errors }}-->
-
-        <!--</div><br>-->
-
-        <!--<div>-->
-            <!--{{ form.project_manager.label }}-->
-            <!--{{ form.project_manager }}-->
-            <!--{{ from.project_manager.errors }}-->
-        <!--</div><br>-->
-
-        <!--<div>-->
-            <!--{{ form.project_price.label }}-->
-            <!--{{ form.project_price }}-->
-            <!--{{ form.project_price.errors }}-->
-        <!--</div><br>-->
+                         <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" >Project Description</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                              <!--<textarea id="textarea" required="required" name="textarea" class="form-control col-md-7 col-xs-12"></textarea>-->
+                              {{ form.project_description }}
+                            </div>
+                             {{ form.project_description.errors }}
+                         </div>
 
 
-        <div>
+                          <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Project Start Date</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                              <!--<input id="name" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="2" name="name" placeholder="both name(s) e.g Jon Doe" required="required" type="text">-->
+                              {{ form.project_start_date_time}}
+                            </div>
+                              {{ form.project_start_date_time.errors }}
+                          </div>
 
-           {{ form.project_start_date_time.label }}
-           {{ form.project_start_date_time}}
-           {{ form.project_start_date_time.errors }}
-        </div><br>
 
-        <div>
-            {{ form.project_end_date_time.label }}
-            {{ form.project_end_date_time }}
-            {{ form.project_end_date_time.errors }}
+                         <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Project End Date</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                              <!--<input id="name" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="2" name="name" placeholder="both name(s) e.g Jon Doe" required="required" type="text">-->
+                              {{ form.project_end_date_time }}
+                            </div>
+                             {{ form.project_end_date_time.errors }}
+                         </div>
+
+
+                         <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Total Working Hours</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                              <!--<input id="name" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="2" name="name" placeholder="both name(s) e.g Jon Doe" required="required" type="text">-->
+                              {{ form.project_total_working_hr }}
+                            </div>
+                             {{ form.project_total_working_hr.errors }}
+                         </div>
+
+
+                         <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Allot Employees To Project</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                              <!--<input id="name" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="2" name="name" placeholder="both name(s) e.g Jon Doe" required="required" type="text">-->
+                              {{ form.employees_per_project }}
+                            </div>
+                             {{ form.employees_per_project.errors }}
+                         </div>
+
+
+                         <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Status</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                              <!--<input id="name" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="2" name="name" placeholder="both name(s) e.g Jon Doe" required="required" type="text">-->
+                              {{ form.status }}
+                            </div>
+                             {{ form.status.errors }}
+                         </div>
+
+
+                         <div class="ln_solid"></div>
+
+                            <div class="form-group">
+                                <div class="col-md-6 col-md-offset-3">
+                                    <button type="button" id="cancel" class="btn btn-primary">Cancel</button>
+                                    <button id="send" type="submit" class="btn btn-success">Submit</button>
+                                </div>
+                            </div>
+                      </form>
+                        </form>
+                            {% else %}
+                                <div>You don't have permission</div>
+                            {% endif %}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-    <br>
-
-        <div>
-            {{ form.project_total_working_hr.label }}
-            {{ form.project_total_working_hr }}
-            {{ form.project_total_working_hr.errors }}
-        </div><br>
-
-        <!--<div>-->
-            <!--{{ form.client_id.label }}-->
-            <!--{{ form.client_id }}-->
-            <!--{{ form.client_id.errors }}-->
-
-        <!--</div><br>-->
-        <div>
-            {{ form.employees_per_project.label }}
-            {{ form.employees_per_project }}
-            {{ form.employees_per_project.errors }}
-            <br>
-        </div><br>
-
-        <div>
-            {{ form.status.label }}
-            {{ form.status }}
-            {{ form.status.errors }}
-        </div><br>
-
-
-
-     <input type="submit" value="Submit" />
-    </form>
-        {% else %}
-    <div>You don't have permission</div>
-        {% endif %} </div>
-          <!-- /top tiles -->
-
-          <div class="row">
-
-          </div>
-          <br />
-
-          <div class="row">
-
-          </div>
-
-
-          <div class="row">
-
-          </div>
-</div>
 {% endblock page-content %}
+
+{% block extra-script %}
+<script>
+    $(document).ready(function(){
+        $('#cancel').click(function(){
+            window.history.back();
+        });
+    });
+</script>
+{% endblock %}
