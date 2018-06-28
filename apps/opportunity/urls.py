@@ -12,4 +12,5 @@ urlpatterns = [
     path('closed_leads', views.C_Leads.as_view(), name='closed_leads'),
     path('declined_leads', views.D_Leads.as_view(), name='declined_leads'),
     path('<int:pk>/meeting/', include('apps.meeting.urls', namespace='meeting')),
+    path('add_client/', include('apps.client.urls', namespace='client')),
 ]

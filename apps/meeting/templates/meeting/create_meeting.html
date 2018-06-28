@@ -192,11 +192,25 @@
                                 {{ form.date.errors }}
                             </div>
                             <div class="form-group">
-                                <label class="control-label col-md-3 col-sm-3 col-xs-12">{{ form.extras.label }}</label>
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12" >{{ form.extras.label }}</label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
-
-                                    <div class="col-md-4">
-                                        {{ form.extras }}
+                                        <!--{{ form.extras }}-->
+                                        <select name="{{ form.extras.name }}" class="form-control">
+                                            {% for choice in form.extras.field.choices %}
+                                                <!--<option value="{{ choice.0 }}">Hello</option>-->
+                                                <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                                            {% endfor %}
+                                        </select>
+                                        <!--<div class="form-group">-->
+                                            <!--<label for="exampleFormControlSelect2">Example multiple select</label>-->
+                                            <!--<select multiple class="form-control" id="exampleFormControlSelect2">-->
+                                                <!--<option>1</option>-->
+                                                <!--<option>2</option>-->
+                                                <!--<option>3</option>-->
+                                                <!--<option>4</option>-->
+                                                <!--<option>5</option>-->
+                                            <!--</select>-->
+                                        <!--</div>-->
                                     </div>
                                 </div>
                             </div>
@@ -217,6 +231,9 @@
 
 {% endblock page-content %}
 
-
+{% block extra-script %}
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.5/js/bootstrap-select.min.js"></script>
+{% endblock extra-script %}
 
 
