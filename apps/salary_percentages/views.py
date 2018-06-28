@@ -1,8 +1,7 @@
 import logging
-from django.shortcuts import render,redirect,HttpResponseRedirect,HttpResponse,reverse
-from .models import Salary_calculations,Employee_details
+from django.shortcuts import render,HttpResponseRedirect,HttpResponse,reverse
+from .models import Salary_calculations,CTC_breakdown
 from .forms import SalaryForm,CtcForm
-from apps.ctc.models import CTC_breakdown
 from django.contrib.auth import get_user_model
 from django.contrib import messages
 
@@ -12,19 +11,20 @@ def salary(request):
 
 def edit_salary(request,id):
     if request.method == 'POST':
-        form = CtcForm(request.POST)
-        a=Employee_details.objects.get(worker_id=id)
-        a.ctc=request.POST['ctc']
-        #a.given_bonus=request.POST.get['given_bonus',False]
+        # form = CtcForm(request.POST)
+        # if form.is_valid():
+        #     form.save()
+        # else:
+        #     print(form.errors)
+        a=CTC_breakdown.objects.get(employee_id=id)
+        if 'ctc' in request.POST:
+            a.ctc= int(request.POST['ctc'])
+        if 'given_bonus' in request.POST:
+            a.given_bonus=int(request.POST.get('given_bonus', 0))
         a.save()
-        if form.is_valid():
-            form.save()
-        else:
-            print(form.errors)
         return HttpResponseRedirect(reverse('salary_percentages:edit_salary',kwargs={'id' : id}))
-    employee_detail_object = Employee_details.objects.get(worker_id=id)
-    context=CTC_breakdown.objects.get(employee_id=id)
-    return render(request,'work/edit_salary.html',{'context':context, 'employee_detail_object' : employee_detail_object})
+    ctc_objects=CTC_breakdown.objects.get(employee_id=id)
+    return render(request,'work/edit_salary.html',{'ctc_objects':ctc_objects})
 
 def edit_ctc(request,id):
     form=CtcForm()

@@ -5,12 +5,12 @@
     <title>Title</title>
 </head>
 <body>
-    <p>CTC: {{ employee_detail_object.ctc }}<a href="{% url 'salary_percentages:edit_ctc' id=context.employee_id %}">Edit</a></p>
-    <p>Given Bonus: {{ employee_detail_object.given_bonus }}<a href="{% url 'salary_percentages:edit_bonus' id=context.employee_id %}">Edit</a></p>
-    <p>HRA: {{ context.hra }}</p>
-    <p>PPF: {{ context.ppf }}</p>
-    <p>Allowances: {{ context.allowances }}</p>
-    <p>Fixed monthly Salary: {{ context.fixed_monthly_salary }}</p>
+    <p>CTC: {{ ctc_objects.ctc }}<a href="{% url 'salary_percentages:edit_ctc' ctc_objects.employee_id %}">Edit</a></p>
+    <p>Given Bonus: {{ ctc_objects.given_bonus }}<a href="{% url 'salary_percentages:edit_bonus' ctc_objects.employee_id %}">Edit</a></p>
+    <p>HRA: {{ ctc_objects.hra }}</p>
+    <p>PPF: {{ ctc_objects.ppf }}</p>
+    <p>Allowances: {{ ctc_objects.allowances }}</p>
+    <p>Fixed monthly Salary: {{ ctc_objects.fixed_monthly_salary }}</p>
     <a href="{% url 'salary_percentages:salary' %}">Save</a>
 </body>
 </html>
