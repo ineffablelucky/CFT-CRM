@@ -184,7 +184,7 @@ class ShowAttendance(LoginRequiredMixin, PermissionRequiredMixin, ListView):
                 if LeaveRequest.objects.filter(Q(user_id=t.user_id) & Q(date__gte=datetime.date.today() - delta)
                                         & Q(end_date__lte=datetime.date.today()-delta)
                                         & Q(status='Approved')):
-                    t.status = 'On Leave'
+                    t.status = 'On Lea'
                     t.save()
 
         l = []
@@ -196,10 +196,10 @@ class ShowAttendance(LoginRequiredMixin, PermissionRequiredMixin, ListView):
         for i in range(len(p)):
             absent = Attendance.objects.create(user_id=p[i], date=datetime.date.today()-delta,
                                                status='absent')
-            if LeaveRequest.objects.get(Q(user_id=p[i]) & Q(date__gte=datetime.date.today()-delta)
-                                        & Q(end_date__lte=datetime.date.today()-delta)
-                                        & Q(status='Approved')):
-                absent.status = 'On Leave'
+            # if LeaveRequest.objects.get(Q(user_id=p[i]) & Q(date__gte=datetime.date.today()-delta)
+            #                             & Q(end_date__lte=datetime.date.today()-delta)
+            #                             & Q(status='Approved')):
+            #     absent.status = 'On Leave'
             absent.save()
         date = self.request.GET.get('date', None)
         if datetime.date.today().weekday() == 0:
