@@ -14,9 +14,9 @@
 {% block page-content %}
 <div class="right_col" role="main">
     <!-- top tiles -->
-    <!--<div class="row">-->
-        <!--<a href="{% url 'opportunity:client:add_client_form' %}"><button type="button">Add Client</button></a>-->
-    <!--</div>-->
+    <div class="row">
+        <a href="{% url 'opportunity:create_client' %}"><button type="button"> Add Client</button></a>
+    </div>
     <div class="row tile_count">
         {% if user.is_authenticated %}
         <div height="200">Hello {{ user.username }}</div>
@@ -32,7 +32,7 @@
                         Project Manager: {{ leads.proj_manager.username }}
                     </p>
                     <p>
-                        Project Description : {{ leads.description }}
+                        Project Description : {{ leads.lead.description }}
                     </p>
                     <p>
                         Assigned To : {{ leads.assigned_to.username }}

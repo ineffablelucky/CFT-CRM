@@ -8,8 +8,3 @@ from django.db.models import Q
 from apps.client.forms import AddClientForm
 
 
-class AddClientView(CreateView):
-    form_class = AddClientForm
-    model = CLIENT
-    template_name = 'client/add_client.html'
-    print('Hello World')

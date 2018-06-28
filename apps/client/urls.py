@@ -5,5 +5,5 @@ from ..meeting.views import L_Meeting
 
 app_name = 'client'
 urlpatterns = [
-    path('', views.AddClientView.as_view(), name='add_client_form'),
+
 ]

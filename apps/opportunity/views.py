@@ -4,10 +4,10 @@ from apps.opportunity.models import Opportunity
 from apps.meeting.models import MEETING
 from apps.users.models import MyUser
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-from apps.opportunity.forms import ChangeStatus, AddProjManager
+from apps.opportunity.forms import ChangeStatus, AddProjManager, CreateClientForm
 from django.urls import reverse, reverse_lazy
 from django.db.models import Q
-
+from apps.client.models import CLIENT
 
 class ListOppo(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     permission_required = ('opportunity.view_opportunity',)
@@ -113,3 +113,8 @@ class D_Leads(LoginRequiredMixin, PermissionRequiredMixin, ListView):
         queryset = Opportunity.objects.filter(status='Rejected')
         return queryset
 
+
+class CreateClientView(LoginRequiredMixin, CreateView):
+    form_class = CreateClientForm
+    template_name = 'opportunity/create_client.html'
+    model = CLIENT

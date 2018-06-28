@@ -195,7 +195,7 @@
                                 <label class="control-label col-md-3 col-sm-3 col-xs-12" >{{ form.extras.label }}</label>
                                 <div class="col-md-6 col-sm-6 col-xs-12">
                                         <!--{{ form.extras }}-->
-                                        <select name="{{ form.extras.name }}" class="form-control">
+                                        <select name="{{ form.extras.name }}" class="form-control" multiple>
                                             {% for choice in form.extras.field.choices %}
                                                 <!--<option value="{{ choice.0 }}">Hello</option>-->
                                                 <option value="{{ choice.0 }}">{{ choice.1 }}</option>
