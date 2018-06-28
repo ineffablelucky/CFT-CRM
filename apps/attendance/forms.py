@@ -32,7 +32,7 @@ class LeaveForm(forms.ModelForm):
     LEAVE_TYPE_CHOICES = (
         ('PL', 'Privilege leave'),
         ('CL', 'Casual leave'),
-        ('Half Day', 'Half Day'),
+        ('Half Day', 'Half Day')
     )
 
     leave_type = forms.ChoiceField(
@@ -72,7 +72,7 @@ class LeaveForm(forms.ModelForm):
         return data
     """
     def clean_end_date(self):
-        leave = Leave.objects.get(user_id= self.logged_user.id)
+        leave = Leave.objects.get(user_id=self.logged_user.id)
         data3 = self.cleaned_data.get('leave_type')
         data = self.cleaned_data.get('end_date')
         data1 = self.cleaned_data.get('date')
@@ -82,24 +82,39 @@ class LeaveForm(forms.ModelForm):
 
         elif data >= data1:
             if data3 == "PL":
-                delta = datetime.timedelta(days=leave.pl)
+                sdate = data1
+                edate = data
+                count = 0
+                d = datetime.timedelta(days=1)
+                while sdate <= edate:
+                    if sdate.weekday() == 5:
+                        count = count+1
+                    elif sdate.weekday() == 6:
+                        count = count+1
+                    sdate = sdate+d
+                delta = datetime.timedelta(days=leave.pl+count)
                 if data - data1 <= delta:
                     return data
                 else:
                     raise forms.ValidationError("No sufficient PL left")
             elif data3 == "CL":
-                delta = datetime.timedelta(days=leave.cl)
+                sdate = data1
+                edate = data
+                count = 0
+                d = datetime.timedelta(days=1)
+                while sdate <= edate:
+                    if sdate.weekday() == 5:
+                        count = count + 1
+                    elif sdate.weekday() == 6:
+                        count = count+1
+                    sdate = sdate + d
+                delta = datetime.timedelta(days=leave.cl+count)
                 if data - data1 <= delta:
                     return data
                 else:
                     raise forms.ValidationError("No sufficient CL left")
             elif data3 == "Half Day":
-                delta = datetime.timedelta(days=leave.half_day)
-                if data - data1 <= delta:
                     return data
-                else:
-                    raise forms.ValidationError("No sufficient Half Day left")
-
 
         else:
             raise forms.ValidationError('End Date should be greater than Start Date')
@@ -119,6 +134,12 @@ class LeaveForm(forms.ModelForm):
             data = []
             start_date = self.cleaned_data.get('date')
             end_date = self.cleaned_data.get('end_date')
+            if LeaveRequest.objects.filter(Q(user_id=self.logged_user.id) & Q(date__gte=start_date)
+                                           & Q(end_date__lte=end_date) & Q(status='Pending')) is not None:
+                leave = LeaveRequest.objects.filter(Q(user_id=self.logged_user.id) & Q(date__gte=start_date)
+                                                    & Q(end_date__lte=end_date) & Q(status='Pending'))
+                for l in leave:
+                    l.delete()
             instance.date = start_date
             instance.end_date = end_date
             instance.save()
@@ -135,6 +156,25 @@ class LeaveForm(forms.ModelForm):
                 saved_instance.append(self.instance)
             """
         return instance
+
+
+class AttendanceForm(forms.ModelForm):
+    date = forms.DateField(
+        widget=forms.TextInput(attrs={'type': 'date', 'class': 'form-control has-feedback-left'}),
+        label='Select Date'
+    )
+
+    class Meta:
+        model = Attendance
+        fields = ('date',)
+    """
+    def __init__(self, *args, **kwargs):
+        super(AttendanceForm, self).__init__(*args, **kwargs)
+        if datetime.date.today().weekday() == 0:
+            self.fields['date'].initial = datetime.date.today()-datetime.timedelta(days=3)
+        else:
+            self.fields['date'].initial = datetime.date.today() - datetime.timedelta(days=1)
+    """
 
 
 """

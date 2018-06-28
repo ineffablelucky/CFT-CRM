@@ -2,7 +2,7 @@ from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-from .forms import CreateleaveForm
+from .forms import CreateleaveForm, EmployeeAttendanceForm
 from ..attendance.models import Attendance, LeaveRequest
 from .models import Leave
 from django.http import HttpResponseForbidden, HttpResponse
@@ -33,9 +33,22 @@ class LeaveApproval(LoginRequiredMixin, PermissionRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data()
-        attend = Attendance.objects.filter(date=datetime.date.today()-datetime.timedelta(days=1), status='absent')
+        date = self.request.GET.get('date', None)
+        if datetime.date.today().weekday() == 0:
+            attend = Attendance.objects.filter(date=datetime.date.today()-datetime.timedelta(days=3), status='absent')
+        else:
+            attend = Attendance.objects.filter(date=datetime.date.today()-datetime.timedelta(days=1), status='absent')
+        if date is not None:
+            attend = Attendance.objects.filter(date=date, status='absent')
         context['attend'] = attend
+        context['form'] = EmployeeAttendanceForm()
         return context
+
+
+class EmployeeAttendanceView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
+    permission_required = ('attendance.view_leaverequest',)
+    template_name = 'leaves.html'
+    model = Attendance
 
 
 class ShowRequest(LoginRequiredMixin, PermissionRequiredMixin, ListView):
@@ -69,10 +82,18 @@ class Approve(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
                     l = Leave.objects.get(user_id=key)
                     if ltype == "PL":
                         l.pl = l.pl-1
+                        if sdate.weekday() == 6:
+                            l.pl = l.pl+1
+                        elif sdate.weekday() == 5:
+                            l.pl = l.pl+1
                     elif ltype == "CL":
-                        l.cl = l.cl -1
+                        l.cl = l.cl - 1
+                        if sdate.weekday() == 6:
+                            l.cl = l.cl+1
+                        elif sdate.weekday() == 5:
+                            l.cl = l.cl+1
                     else:
-                        l.half_day = l.half_day-1
+                        l.half_day = l.half_day+1
                     l.save()
                     sdate=sdate+delta
                 a.save()
@@ -96,5 +117,7 @@ class Reject(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
                 return redirect('/leave/leaverequest')
             else:
                 return HttpResponse("Already Approved or Rejected")
+
+
 
 

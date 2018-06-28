@@ -20,14 +20,14 @@ class CreateProjectForm(ModelForm):
     project_name = forms.CharField(
         label = 'PROJECT NAME',
         widget=forms.TextInput(
-            attrs={'class': '',}
+            attrs={'class': 'form-control col-md-7 col-xs-12',}
         )
     )
 
     project_description = forms.CharField(
         label= 'PROJECT DESCRIPTION',
         widget=forms.Textarea(
-            attrs={'class': '',}
+            attrs={'class': 'form-control col-md-7 col-xs-12',}
         )
     )
 
@@ -49,20 +49,30 @@ class CreateProjectForm(ModelForm):
     # )
 
 
-    project_start_date_time = forms.CharField(
+    project_start_date_time = forms.DateField(
         label='PROJECT START DATE',
         required=False,
         widget=forms.TextInput(
-            attrs={'type': 'date', 'class': '',}
+            attrs={'type': 'date', 'class': 'form-control col-md-7 col-xs-12',}
         )
     )
+    #
+    # project_start_date_time = forms.DateField(
+    #     label='PROJECT START DATE',
+    #
+    #     widget = forms.DateInput(
+    #         format='%d/%m/%Y',
+    #         attrs={'class': 'datepicker form-control',
+    #                                                    'placeholder': 'Select a date'}), required = False)
 
 
-    project_end_date_time = forms.CharField(
+
+
+    project_end_date_time = forms.DateField(
         label='PROJECT END DATE',
         required=False,
         widget=forms.TextInput(
-            attrs={'type': 'date', 'class': '',}
+            attrs={'type': 'date', 'class': 'form-control col-md-7 col-xs-12',}
         )
     )
 
@@ -70,7 +80,7 @@ class CreateProjectForm(ModelForm):
     project_total_working_hr = forms.IntegerField(
         label='TOTAL WORKING HOURS',
         widget=forms.TextInput(
-            attrs={'class': '', }
+            attrs={'class': 'form-control col-md-7 col-xs-12', }
         )
     )
 
@@ -86,16 +96,16 @@ class CreateProjectForm(ModelForm):
     employees_per_project = forms.ModelMultipleChoiceField(
         label='ALOT EMPLOYEES TO PROJECT',
         queryset=MyUser.objects.filter(Q(department='IT') & Q(designation='Employee')),
-        widget=forms.TextInput(
-            attrs={'class': '', }
+        widget=forms.SelectMultiple(
+            attrs={'class': 'form-control col-md-7 col-xs-12', }
         )
     )
 
     status = forms.ChoiceField(
         label='STATUS',
         choices=Project_status,
-        widget=forms.TextInput(
-            attrs={'class': '', }
+        widget=forms.Select(
+            attrs={'class': 'form-control col-md-7 col-xs-12', }
         )
     )
 
@@ -123,12 +133,12 @@ class CreateProjectForm(ModelForm):
     def __init__(self,  *args, **kwargs):
         super(CreateProjectForm, self).__init__(*args, **kwargs)
         # self.fields['project_name'].initial = timezone.now().date
-        if self.instance.pk is None:
-            self.fields['project_start_date_time'].initial = timezone.now().date
-            self.fields['project_end_date_time'].initial = timezone.now().date
-        else:
-            d = datetime.datetime.strptime(str(self.instance.project_start_date_time), "%Y-%m-%d %H:%M:%S")
-            self.fields['project_start_date_time'].initial = d.strftime('%d/%m/%Y')
+        # if self.instance.pk is None:
+        #     self.fields['project_start_date_time'].initial = timezone.now().date
+        #     self.fields['project_end_date_time'].initial = timezone.now().date
+        # else:
+        #     d = datetime.datetime.strptime(str(self.instance.project_start_date_time), "%Y-%m-%d %H:%M:%S")
+        #     self.fields['project_start_date_time'].initial = d.strftime('%d/%m/%Y')
         self.fields['project_description'].widget.attrs['placeholder']= 'asfsadf'
         self.fields['project_name'].widget.attrs['placeholder']= 'write project name here'
         self.fields['project_description'].widget.attrs['placeholder']= 'write project description here'
@@ -181,11 +191,11 @@ class CreateProjectForm(ModelForm):
          else:
              raise forms.ValidationError("Only Numbers are alllowed")
 
-    def clean_project_end_date_time(self):
-        data = self.cleaned_data.get('project_end_date_time')
-        value = self.cleaned_data.get('project_start_date_time')
-
-        if(data > value):
-            return data
-        else:
-            raise forms.ValidationError("Project end date should be either same or more than start date!")
+    # def clean_project_end_date_time(self):
+    #     data = self.cleaned_data.get('project_end_date_time')
+    #     value = self.cleaned_data.get('project_start_date_time')
+    #
+    #     if(data > value):
+    #         return data
+    #     else:
+    #         raise forms.ValidationError("Project end date should be either same or more than start date!")

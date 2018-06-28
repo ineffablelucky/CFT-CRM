@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Meeting Notes</title>
+</head>
+<body>
+    {% if user.is_authenticated %}
+        <div height="200">Hello {{ user.username }}</div>
+        <form>
+            <fieldset>
+                <legend>Add Meeting Notes</legend>
+
+            </fieldset>
+        </form>
+    {% else %}
+        <div>You don't have permission</div>
+    {% endif %}
+</body>
+</html>

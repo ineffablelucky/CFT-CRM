@@ -8,308 +8,63 @@
 
 {% extends 'static/production/index.html' %}
 
-{% block sidebar %}
-<div class="col-md-3 left_col">
-          <div class="left_col scroll-view">
-            <div class="navbar nav_title" style="border: 0;">
-              <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>Gentelella Alela!</span></a>
-            </div>
 
-            <div class="clearfix"></div>
-
-            <!-- menu profile quick info -->
-            <div class="profile clearfix">
-              <div class="profile_pic">
-                <img src="images/img.jpg" alt="..." class="img-circle profile_img">
-              </div>
-              <div class="profile_info">
-                <span>Welcome,</span>
-                <h2>John Doe</h2>
-              </div>
-            </div>
-            <!-- /menu profile quick info -->
-
-            <br />
-
-            <!-- sidebar menu -->
-            <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
-              <div class="menu_section">
-                <h3>General</h3>
-                <ul class="nav side-menu">
-                  <li><a><i class="fa fa-home"></i> Account Management <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="index.html">Salary Management</a></li>
-                      <li><a href="index2.html">Client Billing</a></li>
-                      <!--<li><a href="index3.html">Dashboard3</a></li>-->
-                    </ul>
-                  </li>
-                  <li><a href="{% url 'project:project_manager_list' %}"><i class="fa fa-edit"></i> Project Management </a>
-                    <!--<ul class="nav child_menu">-->
-                      <!--<li><a href="form.html">General Form</a></li>-->
-                      <!--<li><a href="form_advanced.html">Advanced Components</a></li>-->
-                      <!--<li><a href="form_validation.html">Form Validation</a></li>-->
-                      <!--<li><a href="form_wizards.html">Form Wizard</a></li>-->
-                      <!--<li><a href="form_upload.html">Form Upload</a></li>-->
-                      <!--<li><a href="form_buttons.html">Form Buttons</a></li>-->
-                    <!--</ul>-->
-                  </li>
-                  <li><a><i class="fa fa-desktop"></i> HR Management <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="{% url 'attendance:show_attendance' %}">Attendance Management</a></li>
-                      <li><a href="{% url 'leave:leave_request' %}">Leave Management</a></li>
-                      <li><a href="typography.html">Employee Management</a></li>
-                      <!--<li><a href="icons.html">Icons</a></li>-->
-                      <!--<li><a href="glyphicons.html">Glyphicons</a></li>-->
-                      <!--<li><a href="widgets.html">Widgets</a></li>-->
-                      <!--<li><a href="invoice.html">Invoice</a></li>-->
-                      <!--<li><a href="inbox.html">Inbox</a></li>-->
-                      <!--<li><a href="calendar.html">Calendar</a></li>-->
-                    </ul>
-                  </li>
-                  <li><a><i class="fa fa-table"></i> Lead Management <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="{% url 'leads:LeadDetails' %}">New Leads</a></li>
-                      <li><a href="{% url 'opportunity:assign_lead' %}">Assigned Leads</a></li>
-                      <li><a href="{% url 'opportunity:closed_leads' %}">Closed Leads</a></li>
-                      <li><a href="{% url 'opportunity:declined_leads' %}">Declined Leads</a></li>
-                    </ul>
-                  </li>
-                  <li><a><i class="fa fa-bar-chart-o"></i> Reporting </a>
-                    <!--<ul class="nav child_menu">-->
-                      <!--<li><a href="chartjs.html">Chart JS</a></li>-->
-                      <!--<li><a href="chartjs2.html">Chart JS2</a></li>-->
-                      <!--<li><a href="morisjs.html">Moris JS</a></li>-->
-                      <!--<li><a href="echarts.html">ECharts</a></li>-->
-                      <!--<li><a href="other_charts.html">Other Charts</a></li>-->
-                    <!--</ul>-->
-                  </li>
-                  <li><a><i class="fa fa-clone"></i>Layouts <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="fixed_sidebar.html">Fixed Sidebar</a></li>
-                      <li><a href="fixed_footer.html">Fixed Footer</a></li>
-                    </ul>
-                  </li>
-                </ul>
-              </div>
-              <!--<div class="menu_section">-->
-                <!--<h3>Live On</h3>-->
-                <!--<ul class="nav side-menu">-->
-                  <!--<li><a><i class="fa fa-bug"></i> Additional Pages <span class="fa fa-chevron-down"></span></a>-->
-                    <!--<ul class="nav child_menu">-->
-                      <!--<li><a href="e_commerce.html">E-commerce</a></li>-->
-                      <!--<li><a href="projects.html">Projects</a></li>-->
-                      <!--<li><a href="project_detail.html">Project Detail</a></li>-->
-                      <!--<li><a href="contacts.html">Contacts</a></li>-->
-                      <!--<li><a href="profile.html">Profile</a></li>-->
-                    <!--</ul>-->
-                  <!--</li>-->
-                  <!--<li><a><i class="fa fa-windows"></i> Extras <span class="fa fa-chevron-down"></span></a>-->
-                    <!--<ul class="nav child_menu">-->
-                      <!--<li><a href="page_403.html">403 Error</a></li>-->
-                      <!--<li><a href="page_404.html">404 Error</a></li>-->
-                      <!--<li><a href="page_500.html">500 Error</a></li>-->
-                      <!--<li><a href="plain_page.html">Plain Page</a></li>-->
-                      <!--<li><a href="login.html">Login Page</a></li>-->
-                      <!--<li><a href="pricing_tables.html">Pricing Tables</a></li>-->
-                    <!--</ul>-->
-                  <!--</li>-->
-                  <!--<li><a><i class="fa fa-sitemap"></i> Multilevel Menu <span class="fa fa-chevron-down"></span></a>-->
-                    <!--<ul class="nav child_menu">-->
-                        <!--<li><a href="#level1_1">Level One</a>-->
-                        <!--<li><a>Level One<span class="fa fa-chevron-down"></span></a>-->
-                          <!--<ul class="nav child_menu">-->
-                            <!--<li class="sub_menu"><a href="level2.html">Level Two</a>-->
-                            <!--</li>-->
-                            <!--<li><a href="#level2_1">Level Two</a>-->
-                            <!--</li>-->
-                            <!--<li><a href="#level2_2">Level Two</a>-->
-                            <!--</li>-->
-                          <!--</ul>-->
-                        <!--</li>-->
-                        <!--<li><a href="#level1_2">Level One</a>-->
-                        <!--</li>-->
-                    <!--</ul>-->
-                  <!--</li>                  -->
-                  <!--<li><a href="javascript:void(0)"><i class="fa fa-laptop"></i> Landing Page <span class="label label-success pull-right">Coming Soon</span></a></li>-->
-                <!--</ul>-->
-              <!--</div>-->
-
-            </div>
-            <!-- /sidebar menu -->
-
-            <!-- /menu footer buttons -->
-            <div class="sidebar-footer hidden-small">
-              <a data-toggle="tooltip" data-placement="top" title="Settings">
-                <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
-              </a>
-              <a data-toggle="tooltip" data-placement="top" title="FullScreen">
-                <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
-              </a>
-              <a data-toggle="tooltip" data-placement="top" title="Lock">
-                <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
-              </a>
-              <a data-toggle="tooltip" data-placement="top" title="Logout" href="login.html">
-                <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
-              </a>
-            </div>
-            <!-- /menu footer buttons -->
-          </div>
-        </div>
-{% endblock sidebar %}
 
 
 {% block page-content %}
 <div class="right_col" role="main">
-          <!-- top tiles -->
-          <div class="row tile_count">
-            {% if user.is_authenticated %}
-                <div height="200">Hello {{ user.username }}</div>
-                <hr/>
-                <div>
-                    {% for leads in closed_leads %}
-                        <div >
-                            <a href="{% url 'meeting:meeting_list' %}">
-                                <p>
-                                    Company Name: {{ leads.lead.company_name }}
-                                </p>
-                                <p>
-                                    Project Manager: {{ leads.proj_manager.username }}
-                                </p>
-                                <p>
-                                    Project Description : {{ leads.description }}
-                                </p>
-                                <p>
-                                    Assigned To : {{ leads.assigned_to.username }}
-                                </p>
-                                <p>
-                                    Amount : {{ leads.price }}
-                                </p>
-                            </a>
-                        </div>
-                        <hr/>
-                        <hr/>
-                    {% endfor %}
-                </div>
-            {% else %}
-                <div>You don't have permission</div>
-            {% endif %}
-          </div>
-          <!-- /top tiles -->
-
-          <div class="row">
-
-          </div>
-          <br />
-
-          <div class="row">
-
-          </div>
-
-
-          <div class="row">
-
-          </div>
+    <!-- top tiles -->
+    <div class="row">
+        <a href="{% url 'opportunity:create_client' %}"><button type="button"> Add Client</button></a>
+    </div>
+    <div class="row tile_count">
+        {% if user.is_authenticated %}
+        <div height="200">Hello {{ user.username }}</div>
+        <hr/>
+        <div>
+            {% for leads in closed_leads %}
+            <div >
+                <a href="{% url 'opportunity:meeting:meeting_list' leads.pk %}">
+                    <p>
+                        Company Name: {{ leads.lead.company_name }}
+                    </p>
+                    <p>
+                        Project Manager: {{ leads.proj_manager.username }}
+                    </p>
+                    <p>
+                        Project Description : {{ leads.lead.description }}
+                    </p>
+                    <p>
+                        Assigned To : {{ leads.assigned_to.username }}
+                    </p>
+                    <p>
+                        Amount : {{ leads.price }}
+                    </p>
+                </a>
+            </div>
+            <hr/>
+            <hr/>
+            {% endfor %}
         </div>
+        {% else %}
+        <div>You don't have permission</div>
+        {% endif %}
+    </div>
+    <!-- /top tiles -->
 
-<!--<a href="{% url 'leads:LeadCreate' %}"><button>Create Lead</button></a>-->
-<!--{% if object_list %}-->
+    <div class="row">
+    </div>
+    <br />
 
-<!--<script>-->
-    <!---->
-    <!--$(document).ready(function() {-->
-    <!---->
-    <!---->
-        <!--var $button = $("#ram").hide(),-->
-            <!--$cbs = $('input').click(function() {-->
-                <!--$button.toggle( $cbs.is(":checked") );-->
-            <!--});-->
-    <!---->
-    <!---->
-    <!--});-->
-    <!---->
-    <!--</script>-->
-<!--<form method="post" action="assign/">-->
-<!--<div class="container">-->
-<!--<table border="1" style="margin-right:8px">-->
-    <!--<tr><th>-->
-        <!--S.No-->
-    <!--</th>-->
-        <!--<th>contact_number</th>-->
-    <!--<th>comany_name</th>-->
-    <!--<th>contact_person</th>-->
-    <!--<th>source</th>-->
-    <!--<th>source_type</th>-->
-    <!--<th>description</th>-->
-    <!--<th>email</th>-->
-    <!--<th>website</th>-->
-    <!--<th>assigned_boolean</th>-->
-    <!--</tr>-->
+    <div class="row">
+
+    </div>
 
 
-<!--{% for leads in object_list %}-->
-    <!--<tr>-->
-        <!--<td><input type="checkbox" data-id="{{ leads.id }}" class="chk_selector"></input></td>-->
-        <!--<td>{{leads.contact_number}}</td>-->
-        <!--<td>{{leads.company_name}}</td>-->
-        <!--<td>{{leads.contact_person}}</td>-->
-        <!--<td>{{leads.source}}</td>-->
-        <!--<td>{{leads.source_type}}</td>-->
-        <!--<td>{{leads.description}}</td>-->
-        <!--<td>{{leads.email}}</td>-->
-        <!--<td>{{leads.website}}</td>-->
-        <!--<td>{{leads.assigned_boolean}}</td>-->
-        <!--<td><a href="{% url 'leads:LeadEdit' leads.id %}"><button type="button">Edit</button>-->
-        <!--</a>-->
-        <!--</td>-->
-        <!--<td><a href="{% url 'leads:LeadDelete' leads.id %}"><button type="button">Delete</button>-->
-        <!--</a>-->
-        <!--</td>-->
-<!--{% endfor %}-->
-    <!--</tr>-->
+    <div class="row">
 
-<!--</table>-->
-<!--</div>-->
-<!--{% else %}-->
-<!--<h1>no leads available</h1>-->
-
-<!--{% endif %}-->
-
-<!--<div class="container-fluid">-->
-
-
-
-<!--&lt;!&ndash;<button id="console" type="button">Console</button>&ndash;&gt;-->
-<!--&lt;!&ndash;&lt;!&ndash;<div class="container">&ndash;&gt;&ndash;&gt;-->
-    <!--&lt;!&ndash;&lt;!&ndash;<div class="dropdown">&ndash;&gt;&ndash;&gt;-->
-        <!--&lt;!&ndash;&lt;!&ndash;<a href=""  data-toggle = "dropdown" style="position:absolute; right:500px; top:151px;"><input type="" >Assign</input></a>&ndash;&gt;&ndash;&gt;-->
-        <!--&lt;!&ndash;&lt;!&ndash;<ul class="dropdown-menu">&ndash;&gt;&ndash;&gt;-->
-            <!--&lt;!&ndash;&lt;!&ndash;<li class="dropdown-item">asd</li>&ndash;&gt;&ndash;&gt;-->
-            <!--&lt;!&ndash;&lt;!&ndash;<li class="dropdown-item">Asdafs</li>&ndash;&gt;&ndash;&gt;-->
-        <!--&lt;!&ndash;&lt;!&ndash;</ul>&ndash;&gt;&ndash;&gt;-->
-    <!--&lt;!&ndash;&lt;!&ndash;</div>&ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;&lt;!&ndash;</div>&ndash;&gt;&ndash;&gt;-->
-
-<!--&lt;!&ndash;&lt;!&ndash;<div class="dropdown">&ndash;&gt;&ndash;&gt;-->
-  <!--&lt;!&ndash;&lt;!&ndash;<button onclick="myFunction()" class="dropbtn">Dropdown</button>&ndash;&gt;&ndash;&gt;-->
-  <!--&lt;!&ndash;&lt;!&ndash;<div id="myDropdown" class="dropdown-content">&ndash;&gt;&ndash;&gt;-->
-    <!--&lt;!&ndash;&lt;!&ndash;<a href="#">Link 1</a>&ndash;&gt;&ndash;&gt;-->
-    <!--&lt;!&ndash;&lt;!&ndash;<a href="#">Link 2</a>&ndash;&gt;&ndash;&gt;-->
-    <!--&lt;!&ndash;&lt;!&ndash;<a href="#">Link 3</a>&ndash;&gt;&ndash;&gt;-->
-  <!--&lt;!&ndash;&lt;!&ndash;</div>&ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;&lt;!&ndash;</div>&ndash;&gt;&ndash;&gt;-->
-
-
-
-    <!--{% csrf_token %}-->
-     <!--<input type="hidden" name="ids" value="" class="id-input">-->
-    <!--{{ form }}-->
-    <!--<a href="">-->
-        <!--<input type="submit" value="Assign" id="ram"/></a>-->
-<!--</div>-->
-<!--</form>-->
-<!--<a href="{% url 'leads:upload_csv' %}" style="position:relative; left:1550px;-->
-<!--bottom:38px"><button>Import Leads</button></a>-->
-
+    </div>
+</div>
 {% endblock page-content %}
 
 
