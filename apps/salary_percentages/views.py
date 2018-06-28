@@ -20,7 +20,7 @@ def edit_salary(request,id):
         if 'ctc' in request.POST:
             a.ctc= int(request.POST['ctc'])
         if 'given_bonus' in request.POST:
-            a.given_bonus=int(request.POST.get('given_bonus', 0))
+            a.given_bonus=int(request.POST['given_bonus'])
         a.save()
         return HttpResponseRedirect(reverse('salary_percentages:edit_salary',kwargs={'id' : id}))
     ctc_objects=CTC_breakdown.objects.get(employee_id=id)
