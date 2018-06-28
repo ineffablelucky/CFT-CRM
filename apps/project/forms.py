@@ -3,9 +3,10 @@ from django.forms import ModelForm
 from .models import IT_Project
 from django import forms
 from django.utils import timezone
-from apps.opportunity.models import Opportunity
 from apps.users.models import MyUser
-from apps.client.models import CLIENT
+from django.db.models import Q
+import datetime
+
 
 class CreateProjectForm(ModelForm):
 
@@ -19,13 +20,15 @@ class CreateProjectForm(ModelForm):
     project_name = forms.CharField(
         label = 'PROJECT NAME',
         widget=forms.TextInput(
-
+            attrs={'class': 'form-control col-md-7 col-xs-12',}
         )
     )
 
     project_description = forms.CharField(
         label= 'PROJECT DESCRIPTION',
-        widget=forms.TextInput()
+        widget=forms.Textarea(
+            attrs={'class': 'form-control col-md-7 col-xs-12',}
+        )
     )
 
     # opportunity = forms.ModelChoiceField(
@@ -44,40 +47,58 @@ class CreateProjectForm(ModelForm):
     #     label='PROJECT PRICE',
     #     widget=forms.TextInput()
     # )
+
+
     project_start_date_time = forms.CharField(
         label='PROJECT START DATE',
         required=False,
         widget=forms.TextInput(
-            attrs={'type': 'date'}
+            attrs={'type': 'date', 'class': 'form-control col-md-7 col-xs-12',}
         )
     )
+
+
     project_end_date_time = forms.CharField(
         label='PROJECT END DATE',
         required=False,
         widget=forms.TextInput(
-            attrs={'type': 'date'}
+            attrs={'type': 'date', 'class': 'form-control col-md-7 col-xs-12',}
         )
     )
+
+
     project_total_working_hr = forms.IntegerField(
         label='TOTAL WORKING HOURS',
-        widget=forms.TextInput()
+        widget=forms.TextInput(
+            attrs={'class': 'form-control col-md-7 col-xs-12', }
+        )
     )
+
+
     # client_id = forms.ModelChoiceField(
     #     label='CLIENT',
     #     required=False,
     #     queryset=CLIENT.objects.all(),
     #     widget=forms.Select()
     # )
+
+
     employees_per_project = forms.ModelMultipleChoiceField(
         label='ALOT EMPLOYEES TO PROJECT',
-        queryset=MyUser.objects.all(),
+        queryset=MyUser.objects.filter(Q(department='IT') & Q(designation='Employee')),
+        widget=forms.SelectMultiple(
+            attrs={'class': 'form-control col-md-7 col-xs-12', }
+        )
     )
 
     status = forms.ChoiceField(
         label='STATUS',
         choices=Project_status,
-        widget=forms.Select()
+        widget=forms.Select(
+            attrs={'class': 'form-control col-md-7 col-xs-12', }
+        )
     )
+
 
     class Meta:
         model = IT_Project
@@ -94,10 +115,24 @@ class CreateProjectForm(ModelForm):
             'status',
         )
 
-    # def __init__(self,  *args, **kwargs):
-    #     super(CreateProjectForm, self).__init__(*args, **kwargs)
-    #     self.fields['project_name'].initial = timezone.now().date
-    #     self.fields['project_description'].widget.attrs['placeholder']= 'asfsadf'
+    #
+    # def now_plus_30(self):
+    #     return timezone.now() + timedelta(days=30)
+
+
+    def __init__(self,  *args, **kwargs):
+        super(CreateProjectForm, self).__init__(*args, **kwargs)
+        # self.fields['project_name'].initial = timezone.now().date
+        if self.instance.pk is None:
+            self.fields['project_start_date_time'].initial = timezone.now().date
+            self.fields['project_end_date_time'].initial = timezone.now().date
+        else:
+            d = datetime.datetime.strptime(str(self.instance.project_start_date_time), "%Y-%m-%d %H:%M:%S")
+            self.fields['project_start_date_time'].initial = d.strftime('%d/%m/%Y')
+        self.fields['project_description'].widget.attrs['placeholder']= 'asfsadf'
+        self.fields['project_name'].widget.attrs['placeholder']= 'write project name here'
+        self.fields['project_description'].widget.attrs['placeholder']= 'write project description here'
+        self.fields['project_total_working_hr'].widget.attrs['placeholder']= '10'
 
     def clean_project_name(self):
         value = self.cleaned_data.get('project_name')

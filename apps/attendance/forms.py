@@ -2,28 +2,45 @@ from django import forms
 from .models import Attendance, MyUser, LeaveRequest
 from ..leave.models import Leave
 import datetime
+from django.db.models import Q
 from django.utils.timezone import utc
 from pytz import timezone
 
 
 class LeaveForm(forms.ModelForm):
-    name = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'readonly': True}), label='Name')
-    date = forms.DateField(widget=forms.TextInput(attrs={'type' : 'date'}), label='Start Date')
-    end_date = forms.DateField(widget=forms.TextInput(attrs={'type' : 'date'}), label='End Date')
-    note = forms.CharField(max_length=500, widget=forms.Textarea)
+    name = forms.CharField(
+        max_length=100,
+        widget=forms.TextInput(attrs={'readonly': True, 'class': ''}),
+        label='Name'
+    )
+
+    date = forms.DateField(
+        widget=forms.TextInput(attrs={'type': 'date', 'class': ''}),
+        label='Start Date'
+    )
+
+    end_date = forms.DateField(
+        widget=forms.TextInput(attrs={'type': 'date', 'class': ''}),
+        label='End Date'
+    )
+
+    note = forms.CharField(
+        max_length=500,
+        widget=forms.Textarea(attrs={'class': ''})
+    )
+
     LEAVE_TYPE_CHOICES = (
         ('PL', 'Privilege leave'),
         ('CL', 'Casual leave'),
-        ('Half Day', 'Half Day'),
+        ('Half Day', 'Half Day')
     )
 
     leave_type = forms.ChoiceField(
         choices=LEAVE_TYPE_CHOICES,
-        widget=forms.Select(),
+        widget=forms.Select(attrs={'class': ''}),
         label='Type of Leave'
 
     )
-
 
     class Meta:
         model = LeaveRequest
@@ -55,11 +72,15 @@ class LeaveForm(forms.ModelForm):
         return data
     """
     def clean_end_date(self):
-        leave = Leave.objects.get(user_id= self.logged_user.id)
+        leave = Leave.objects.get(user_id=self.logged_user.id)
         data3 = self.cleaned_data.get('leave_type')
         data = self.cleaned_data.get('end_date')
         data1 = self.cleaned_data.get('date')
-        if data >= data1:
+
+        if LeaveRequest.objects.filter(Q(user_id=self.logged_user.id) & Q(date=data1) & Q(end_date=data)):
+            raise forms.ValidationError("Already applied for the leaves on the dates mentioned")
+
+        elif data >= data1:
             if data3 == "PL":
                 delta = datetime.timedelta(days=leave.pl)
                 if data - data1 <= delta:
@@ -73,11 +94,9 @@ class LeaveForm(forms.ModelForm):
                 else:
                     raise forms.ValidationError("No sufficient CL left")
             elif data3 == "Half Day":
-                delta = datetime.timedelta(days=leave.half_day)
-                if data - data1 <= delta:
                     return data
-                else:
-                    raise forms.ValidationError("No sufficient Half Day left")
+
+
         else:
             raise forms.ValidationError('End Date should be greater than Start Date')
 
@@ -112,6 +131,25 @@ class LeaveForm(forms.ModelForm):
                 saved_instance.append(self.instance)
             """
         return instance
+
+
+class AttendanceForm(forms.ModelForm):
+    date = forms.DateField(
+        widget=forms.TextInput(attrs={'type': 'date', 'class': 'form-control has-feedback-left'}),
+        label='Select Date'
+    )
+
+    class Meta:
+        model = Attendance
+        fields = ('date',)
+    """
+    def __init__(self, *args, **kwargs):
+        super(AttendanceForm, self).__init__(*args, **kwargs)
+        if datetime.date.today().weekday() == 0:
+            self.fields['date'].initial = datetime.date.today()-datetime.timedelta(days=3)
+        else:
+            self.fields['date'].initial = datetime.date.today() - datetime.timedelta(days=1)
+    """
 
 
 """

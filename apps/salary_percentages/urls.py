@@ -4,7 +4,8 @@ from . import views
 app_name = 'salary_percentages'
 
 urlpatterns = [
-    path('', views.table, name="index"),
+    path('', views.salary_structure, name="salary_structure"),
     path('add/',views.add, name="add"),
+    path('upload/csv/',views.upload_csv,name="upload_csv")
 
 ]

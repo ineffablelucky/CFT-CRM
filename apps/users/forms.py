@@ -37,36 +37,56 @@ class RegistrationForm(UserCreationForm):
             department = self.cleaned_data['department']
 
             if designation == 'Admin':
-                group_user = Group.objects.get_by_natural_key('Admin_Group')
+                group_user = Group.objects.get_by_natural_key('Admin Group')
                 group_user.user_set.add(myuser)
 
             elif designation == 'Manager' and department == 'Marketing':
                 group_user = Group.objects.get_by_natural_key('Marketing Manager Group')
                 group_user.user_set.add(myuser)
-                group_user1 = Group.objects.get_by_natural_key('Employee Group')
-                group_user1.user_set.add(myuser)
+                group_user = Group.objects.get_by_natural_key('Marketing Employee Group')
+                group_user.user_set.add(myuser)
+                group_user = Group.objects.get_by_natural_key('Employee Group')
+                group_user.user_set.add(myuser)
 
             elif designation == 'Manager' and department == 'HR':
                 group_user = Group.objects.get_by_natural_key('HR Manager Group')
                 group_user.user_set.add(myuser)
-                group_user1 = Group.objects.get_by_natural_key('Employee Group')
-                group_user1.user_set.add(myuser)
+                group_user = Group.objects.get_by_natural_key('HR Employee Group')
+                group_user.user_set.add(myuser)
+                group_user = Group.objects.get_by_natural_key('Employee Group')
+                group_user.user_set.add(myuser)
 
             elif designation == 'Manager' and department == 'IT':
                 group_user = Group.objects.get_by_natural_key('IT Manager Group')
                 group_user.user_set.add(myuser)
-                group_user1 = Group.objects.get_by_natural_key('Employee Group')
-                group_user1.user_set.add(myuser)
-
-            elif department == 'Accounts':
-                group_user = Group.objects.get_by_natural_key('Accounts Group')
+                group_user = Group.objects.get_by_natural_key('IT Employee Group')
                 group_user.user_set.add(myuser)
-                group_user1 = Group.objects.get_by_natural_key('Employee Group')
-                group_user1.user_set.add(myuser)
+                group_user = Group.objects.get_by_natural_key('Employee Group')
+                group_user.user_set.add(myuser)
+
+            elif department == 'Accounts' and designation == 'Manager':
+                group_user = Group.objects.get_by_natural_key('Account Manager Group')
+                group_user.user_set.add(myuser)
+                group_user = Group.objects.get_by_natural_key('Account Employee Group')
+                group_user .user_set.add(myuser)
+                group_user = Group.objects.get_by_natural_key('Employee Group')
+                group_user.user_set.add(myuser)
 
             elif designation == 'Employee':
                 group_user = Group.objects.get_by_natural_key('Employee Group')
                 group_user.user_set.add(myuser)
+                if department == 'HR':
+                    group_user = Group.objects.get_by_natural_key('HR Employee Group')
+                    group_user.user_set.add(myuser)
+                elif department == 'IT':
+                    group_user = Group.objects.get_by_natural_key('IT Employee Group')
+                    group_user.user_set.add(myuser)
+                elif department == 'Marketing':
+                    group_user = Group.objects.get_by_natural_key('Marketing Employee Group')
+                    group_user.user_set.add(myuser)
+                elif department == 'Accounts':
+                    group_user = Group.objects.get_by_natural_key('Account Employee Group')
+                    group_user.user_set.add(myuser)
 
             elif designation == 'Client':
                 group_user = Group.objects.get_by_natural_key('Client Group')

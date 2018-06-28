@@ -4,11 +4,15 @@
 	<title>Change opportunity Status</title>
 </head>
 <body>
-	<h1>Change Opportunity Status</h1>
-	<form id="category_form" method="post">
-		{% csrf_token %}
-		{{ form.as_p }}
-		<input type="submit" value="Update"/>
-	</form>
+	{% if user.is_authenticated %}
+		<h1>Change Opportunity Status</h1>
+		<form id="category_form" method="post">
+			{% csrf_token %}
+			{{ form.status.errors }} {{ form.status.label }}{{ form.status }}
+			<input type="submit" value="Update"/>
+		</form>
+	{% else %}
+    	<div>You don't have permission</div>
+	{% endif %}
 </body>
 </html>

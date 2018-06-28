@@ -7,11 +7,13 @@ from .models import MyUser
 
 
 def index(request):
-    return render(request, 'index.html')
+    return render(request, 'users/index.html')
 
 @login_required
 @permission_required('users.view_attendance', raise_exception=True)
 def register(request):
+
+
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
         if form.is_valid():
@@ -20,13 +22,8 @@ def register(request):
     else:
         form = RegistrationForm()
 
-
-    form.password1 = request.POST.get('password1')
-    form.password2 = request.POST.get('password2')
-
-    print(form.password1, form.password2)
     context = {'form' : form}
-    return render(request,'registration/register.html',context)
+    return render(request,'users/registration/register.html',context)
 
 
 def auth_login(request):
@@ -39,7 +36,7 @@ def auth_login(request):
             login(request, user)
         return redirect('welcome/')
     else:
-        return render(request, 'registration/login.html')
+        return render(request, 'users/registration/login.html')
 
 def lout(request):
     logout(request)
@@ -49,9 +46,9 @@ def lout(request):
 def profile(request, id):
     user = MyUser.objects.get(pk = id)
     print(user)
-    return render(request, 'profile.html', {'user':user})
+    return render(request, 'users/profile.html', {'user':user})
 
 def welcome(request):
-    return render(request, 'welcome.html')
+    return render(request, 'users/welcome.html')
 
 

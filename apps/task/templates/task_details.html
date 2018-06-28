@@ -1,0 +1,53 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+    <!--<meta charset="UTF-8">-->
+    <!--<title>task details</title>-->
+<!--</head>-->
+<!--<body>-->
+
+{% extends 'static/production/index.html' %}
+
+
+    <title>{% block title %} Manager's Task View {% endblock title %}</title>
+
+
+
+
+{% block page-content %}
+
+<div class="right_col" role="main">
+          <!-- top tiles -->
+          <div class="row tile_count">
+            hello welcome to task details page!
+            {% if user.is_authenticated %}
+
+                <h1>{{ object.project }}</h1>
+                <h2>{{ object.task_name }}</h2>
+                <p>{{ object.task_description }}</p>
+                <p>TASK START DATE: {{ object.task_start_date_time }}</p>
+                <p>STATUS: {{ object.status }}</p>
+                <p>ASSIGNED TO: {{ object.employee_id }}</p>
+                <p>EXPECTED TIME IN HOURS: {{ object.expected_time }}</p>
+            {% else %}
+                <div>You don't have permission</div>
+            {% endif %}
+
+          </div>
+          <!-- /top tiles -->
+
+          <div class="row">
+
+          </div>
+          <br />
+
+          <div class="row">
+
+          </div>
+
+
+          <div class="row">
+
+          </div>
+</div>
+{% endblock page-content %}

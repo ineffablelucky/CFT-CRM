@@ -7,20 +7,22 @@
 <body>
 
  <p>Username:{{ request.user.username }}</p>
-<form action="{% url 'attendance:clockin' %}" method="post">
+ <div>
+<form action="{% url 'attendance:clockin' %}" style="display:inline" method="post">
     {% csrf_token %}
-    <div>
 
-        <input type="submit" value="clock in">
-    </div>
-</form>
+    <input type="submit" value="clock in"></form>&nbsp;
 
-<form action="{% url 'attendance:clockout' %}" method="post">
+
+
+<form action="{% url 'attendance:clockout' %}" style="display:inline" method="post">
     {% csrf_token %}
-    <div>
+
         <input type="submit" value="clock out">
-    </div>
+
 </form>
+</div><br>
+
 <table border="1">
     <tr>
         <th>Date</th>

@@ -14,7 +14,7 @@ class SalaryForm(ModelForm):
         allowances = forms.CharField(
             widget=forms.TextInput(
                 attrs={'type' : 'number'}
-            )
+            ))
         '''
 
     class Meta:
@@ -24,6 +24,32 @@ class SalaryForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super(SalaryForm, self).__init__(*args, **kwargs)
         self.fields['financial_year'].initial = timezone.now().year
+        print(type(timezone.now().year))
 
-    #def clean_allowances(self  ):
+    def clean_financial_year(self):
+        data=self.cleaned_data['financial_year']
+        if Salary_calculations.objects.filter(financial_year=data).exists():
+            raise forms.ValidationError('Salary Structure for this year has already been formed ')
+        return data
+
+    '''def clean_allowances(self):
+        data=self.cleaned_data['allowances']
+        if type(self.allowances) not in data:
+            raise forms.ValidationError('Enter an integral value between 0-100')
+        return data
+
+    def clean_hra_percentage(self):
+        data=self.cleaned_data['hra_percentage']
+        if type(self.hra_percentage) not in data:
+            raise forms.ValidationError('Enter an integral value between 0-100')
+        return data
+
+
+    def clean_ppf_percentage(self):
+        data=self.cleaned_data['ppf_percentage']
+        if type(self.ppf_percentage)>100:
+            raise forms.ValidationError('Enter an integral value between 0-100')
+        return data'''
+
+
 

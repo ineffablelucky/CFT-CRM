@@ -1,40 +1,238 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Meeting List</title>
-</head>
-<body>
-     {% if user.is_authenticated %}
-        <div height="200">Hello {{ user.username }}</div>
-        <hr/>
-        {% for meeting in meetings %}
-            <div>
-                <p>Opportunity ID: {{ meeting.Opportunity.pk }}</p>
-                <p>Meeting ID: {{ meeting.pk }}</p>
-                <p>Date: {{ meeting.date }}</p>
-                <p>
-                    Assigned To: {{meeting.Opportunity.assigned_to}}
-                </p>
-                <p>
-                    {% if meeting.extras is not NULL %}
-                    Extras:<br/>
-                    <ul>
-                        {% for extra in meeting.extras.all %}
-                            <li>{{ extra.username }}</li>
-                        {% endfor %}
-                    {% endif %}
-                    </ul>
-                </p>
-                <hr/>
-                <hr/>
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+    <!--<meta charset="UTF-8">-->
+    <!--<title>Meeting List</title>-->
+<!--</head>-->
+<!--<body>-->
+
+{% extends 'static/production/index.html' %}
+
+{% block page-content %}
+<!-- Modal -->
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="right_col" role="main">
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h3>Meeting Creation Form</h3>
             </div>
-        {% endfor %}
-          <form action="{% url 'opportunity:meeting:create_meeting' oppo_id %}">
-            <input type="submit" value="Create Meeting"/>
-          </form>
-    {% else %}
-        <div>You don't have permission</div>
-    {% endif %}
-</body>
-</html>
+        </div>
+        <div class="clearfix"></div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Create Meeting</h2>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <br />
+                        <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" method="post" action="{% url 'opportunity:meeting:create_meeting' oppo_id %}">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">{{ form.Opportunity.label }} </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    {{ form.Opportunity }}
+                                </div>
+                                {{ form.Opportunity.errors }}
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">{{ form.date.label }}<span class="required">*</span></label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    {{ form.date }}
+                                </div>
+                                {{ form.date.errors }}
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">{{ form.extras.label }}</label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+
+                                    <div class="col-md-4">
+                                        {{ form.extras }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ln_solid"></div>
+                            <div class="form-group">
+                                <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                                    <button class="btn btn-primary" type="button">Cancel</button>
+                                    <button type="submit" class="btn btn-success">Create</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="right_col" role="main">
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h3>Hi, Welcome to Marketing Manager's Meeting List! </h3>
+            </div>
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Meetings List</h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                            </li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+
+                    <div class="x_content">
+                        {% if user.is_authenticated %}
+                        <!--<div height="200">Hello {{ user.username }}</div>-->
+                        <div class="row">
+                            {% for meeting in meetings %}
+                            <div>
+                                <p>Opportunity ID: {{ meeting.Opportunity.pk }}</p>
+                                <p>Meeting ID: {{ meeting.pk }}</p>
+                                <p>Date: {{ meeting.date }}</p>
+                                <p>
+                                    Assigned To: {{meeting.Opportunity.assigned_to}}
+                                </p>
+                                <p>
+                                    {% if meeting.extras is not NULL %}
+                                    Extras:<br/>
+                                <ul>
+                                    {% for extra in meeting.extras.all %}
+                                    <li>{{ extra.username }}</li>
+                                    {% endfor %}
+                                    {% endif %}
+                                </ul>
+                                </p>
+                                <hr/>
+                                <hr/>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <a href="{% url 'opportunity:meeting:create_meeting' oppo_id %}"><button type="button">Create Meeting</button></a>
+                        <!-- Button trigger modal -->
+                        <button id="hello_world" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                            Launch demo modal
+                        </button>
+                        {% else %}
+                        <div>You don't have permission</div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock page-content %}
+
+{% block extra-script %}
+<script>
+    $(document).ready(function(){
+    $("#hello_world").click(function(){
+        $(this).toggle();
+    });
+});
+</script>
+{% endblock extra-script %}
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h3>Meeting Creation Form</h3>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Create Meeting</h2>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <br />
+                        <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" method="post" action="{% url 'opportunity:meeting:create_meeting' oppo_id %}">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">{{ form.Opportunity.label }} </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    {{ form.Opportunity }}
+                                </div>
+                                {{ form.Opportunity.errors }}
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">{{ form.date.label }}<span class="required">*</span></label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    {{ form.date }}
+                                </div>
+                                {{ form.date.errors }}
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">{{ form.extras.label }}</label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+
+                                    <div class="col-md-4">
+                                        {{ form.extras }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ln_solid"></div>
+                            <div class="form-group">
+                                <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                                    <button class="btn btn-primary" type="button">Cancel</button>
+                                    <button type="submit" class="btn btn-success">Create</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>

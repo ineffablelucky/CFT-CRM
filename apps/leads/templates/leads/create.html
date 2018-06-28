@@ -1,99 +1,226 @@
-<form method="post">
-    {% csrf_token %}
+{% extends 'static/production/index.html' %}
 
 
 
-<!-- <p><label for="id_name">Contact no.</label>
-        <input type="number" id="id_name" name="contact_number" value="{{form.contact_number.value}}">
-    {{form.contact_number.errors}}
-   <p> <label for="id_name1">Comany Name</label>
-        <input type="text" id="id_name1" name="company_name" value="{{form.company_name.value|default:''}}">
-  {{form.company_name.errors}}
-    <p><label for="id_name2">Contact Person</label>
-        <input type="text" id="id_name2" name="contact_person" value="{{form.contact_person.value}}">
-    {{form.contact_person.errors}}
-    <p><label for="id_name3">Source</label>
-        <input type="text" id="id_name3"  name="source" value="{{form.source.value}}">
-    {{form.source.errors}}
-    <p><label for="id_name4">Source Type</label>
-        <input type="text" id="id_name4" name="source_type" value="{{form.source_type.value}}">
-    {{form.source_type.errors}}
-    <p><label for="id_name5">Description</label>
-        <input type="text" id="id_name5" name="description" value="{{form.description.value}}">
-    {{form.description.errors}}
-    <p><label for="id_name6">Email</label>
-        <input type="email" id="id_name6" name="email" value="{{form.email.value}}">
-    {{form.email.errors}}
-    <p><label for="id_name7">Website</label>
-        <input type="url" id="id_name7" name="website" value="{{form.website.value}}">
-    {{form.website.errors}}
-    <p><label for="id_name7">Assigned Boolean</label>
-        <input type="checkbox" id="id_name8" name="assigned_boolean" value="{{form.assigned_boolean.value}}">
+{% block page-content %}
+<div class="right_col" role="main">
+          <!-- top tiles -->
+          <div class="row tile_count">
 
-{{form.assigned_boolean.errors}}
-
--->
-
-   <!--{{form.contact_number}}-->
-    <!--{{form.company_name}}-->
-    <!--{{form.contact_person}}-->
-    <!--{{form.source}}-->
-    <!--{{form.source_type}}-->
-    <!--{{form.description}}-->
-    <!--{{form.email}}-->
-
-    <!--{{form.assigned_boolean}}-->
-<div>
-            {{ form.contact_number.label }}
-            {{ form.contact_number }}
-            {{ form.contact_number.errors }}
-        </div><br>
-
-        <div>
-            {{ form.company_name.label }}
-            {{ form.company_name }}
-            {{ form.company_name.errors }}
-        </div><br>
-
-        <div>
-            {{ form.contact_person.label }}
-            {{ form.contact_person }}
-            {{ form.contact_person.errors }}
-
-        </div><br>
-
-        <div>
-            {{ form.source.label }}
-            {{ form.source }}
-            {{ form.source.errors }}
-        </div><br>
-
-        <div>
-            {{ form.source_type.label }}
-            {{ form.source_type }}
-            {{ form.source_type.errors }}
-        </div><br>
+            <form method="post">
+                {% csrf_token %}
 
 
-        <div>
 
-           {{ form.description.label }}
-           {{ form.description }}
-           {{ form.description.errors }}
-        </div><br>
+            <!-- <p><label for="id_name">Contact no.</label>
+                    <input type="number" id="id_name" name="contact_number" value="{{form.contact_number.value}}">
+                {{form.contact_number.errors}}
+               <p> <label for="id_name1">Comany Name</label>
+                    <input type="text" id="id_name1" name="company_name" value="{{form.company_name.value|default:''}}">
+              {{form.company_name.errors}}
+                <p><label for="id_name2">Contact Person</label>
+                    <input type="text" id="id_name2" name="contact_person" value="{{form.contact_person.value}}">
+                {{form.contact_person.errors}}
+                <p><label for="id_name3">Source</label>
+                    <input type="text" id="id_name3"  name="source" value="{{form.source.value}}">
+                {{form.source.errors}}
+                <p><label for="id_name4">Source Type</label>
+                    <input type="text" id="id_name4" name="source_type" value="{{form.source_type.value}}">
+                {{form.source_type.errors}}
+                <p><label for="id_name5">Description</label>
+                    <input type="text" id="id_name5" name="description" value="{{form.description.value}}">
+                {{form.description.errors}}
+                <p><label for="id_name6">Email</label>
+                    <input type="email" id="id_name6" name="email" value="{{form.email.value}}">
+                {{form.email.errors}}
+                <p><label for="id_name7">Website</label>
+                    <input type="url" id="id_name7" name="website" value="{{form.website.value}}">
+                {{form.website.errors}}
+                <p><label for="id_name7">Assigned Boolean</label>
+                    <input type="checkbox" id="id_name8" name="assigned_boolean" value="{{form.assigned_boolean.value}}">
 
-        <div>
-            {{ form.email.label }}
-            {{ form.email }}
-            {{ form.email.errors }}
+            {{form.assigned_boolean.errors}}
+
+            -->
+
+               <!--{{form.contact_number}}-->
+                <!--{{form.company_name}}-->
+                <!--{{form.contact_person}}-->
+                <!--{{form.source}}-->
+                <!--{{form.source_type}}-->
+                <!--{{form.description}}-->
+                <!--{{form.email}}-->
+
+                <!--{{form.assigned_boolean}}-->
+            <div>
+                        {{ form.contact_number.label }}
+                        {{ form.contact_number }}
+                        {{ form.contact_number.errors }}
+                    </div><br>
+
+                    <div>
+                        {{ form.company_name.label }}
+                        {{ form.company_name }}
+                        {{ form.company_name.errors }}
+                    </div><br>
+
+                    <div>
+                        {{ form.contact_person.label }}
+                        {{ form.contact_person }}
+                        {{ form.contact_person.errors }}
+
+                    </div><br>
+
+                    <div>
+                        {{ form.source.label }}
+                        {{ form.source }}
+                        {{ form.source.errors }}
+                    </div><br>
+
+                    <div>
+                        {{ form.source_type.label }}
+                        {{ form.source_type }}
+                        {{ form.source_type.errors }}
+                    </div><br>
+
+
+                    <div>
+
+                       {{ form.description.label }}
+                       {{ form.description }}
+                       {{ form.description.errors }}
+                    </div><br>
+
+                    <div>
+                        {{ form.email.label }}
+                        {{ form.email }}
+                        {{ form.email.errors }}
+                    </div>
+                <br>
+
+                    <div>
+                        {{ form.website.label }}
+                        {{ form.website }}
+                        {{ form.website.errors }}
+                    </div><br>
+
+                    <input type="submit" value="Submit" />
+            </form>
+          </div>
+          <!-- /top tiles -->
+
+          <div class="row">
+
+          </div>
+          <br />
+
+          <div class="row">
+
+          </div>
+
+
+          <div class="row">
+
+          </div>
         </div>
-    <br>
 
-        <div>
-            {{ form.website.label }}
-            {{ form.website }}
-            {{ form.website.errors }}
-        </div><br>
+<!--<a href="{% url 'leads:LeadCreate' %}"><button>Create Lead</button></a>-->
+<!--{% if object_list %}-->
 
-        <input type="submit" value="Submit" />
-</form>
+<!--<script>-->
+    <!---->
+    <!--$(document).ready(function() {-->
+    <!---->
+    <!---->
+        <!--var $button = $("#ram").hide(),-->
+            <!--$cbs = $('input').click(function() {-->
+                <!--$button.toggle( $cbs.is(":checked") );-->
+            <!--});-->
+    <!---->
+    <!---->
+    <!--});-->
+    <!---->
+    <!--</script>-->
+<!--<form method="post" action="assign/">-->
+<!--<div class="container">-->
+<!--<table border="1" style="margin-right:8px">-->
+    <!--<tr><th>-->
+        <!--S.No-->
+    <!--</th>-->
+        <!--<th>contact_number</th>-->
+    <!--<th>comany_name</th>-->
+    <!--<th>contact_person</th>-->
+    <!--<th>source</th>-->
+    <!--<th>source_type</th>-->
+    <!--<th>description</th>-->
+    <!--<th>email</th>-->
+    <!--<th>website</th>-->
+    <!--<th>assigned_boolean</th>-->
+    <!--</tr>-->
+
+
+<!--{% for leads in object_list %}-->
+    <!--<tr>-->
+        <!--<td><input type="checkbox" data-id="{{ leads.id }}" class="chk_selector"></input></td>-->
+        <!--<td>{{leads.contact_number}}</td>-->
+        <!--<td>{{leads.company_name}}</td>-->
+        <!--<td>{{leads.contact_person}}</td>-->
+        <!--<td>{{leads.source}}</td>-->
+        <!--<td>{{leads.source_type}}</td>-->
+        <!--<td>{{leads.description}}</td>-->
+        <!--<td>{{leads.email}}</td>-->
+        <!--<td>{{leads.website}}</td>-->
+        <!--<td>{{leads.assigned_boolean}}</td>-->
+        <!--<td><a href="{% url 'leads:LeadEdit' leads.id %}"><button type="button">Edit</button>-->
+        <!--</a>-->
+        <!--</td>-->
+        <!--<td><a href="{% url 'leads:LeadDelete' leads.id %}"><button type="button">Delete</button>-->
+        <!--</a>-->
+        <!--</td>-->
+<!--{% endfor %}-->
+    <!--</tr>-->
+
+<!--</table>-->
+<!--</div>-->
+<!--{% else %}-->
+<!--<h1>no leads available</h1>-->
+
+<!--{% endif %}-->
+
+<!--<div class="container-fluid">-->
+
+
+
+<!--&lt;!&ndash;<button id="console" type="button">Console</button>&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;<div class="container">&ndash;&gt;&ndash;&gt;-->
+    <!--&lt;!&ndash;&lt;!&ndash;<div class="dropdown">&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;<a href=""  data-toggle = "dropdown" style="position:absolute; right:500px; top:151px;"><input type="" >Assign</input></a>&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;<ul class="dropdown-menu">&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;<li class="dropdown-item">asd</li>&ndash;&gt;&ndash;&gt;-->
+            <!--&lt;!&ndash;&lt;!&ndash;<li class="dropdown-item">Asdafs</li>&ndash;&gt;&ndash;&gt;-->
+        <!--&lt;!&ndash;&lt;!&ndash;</ul>&ndash;&gt;&ndash;&gt;-->
+    <!--&lt;!&ndash;&lt;!&ndash;</div>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;</div>&ndash;&gt;&ndash;&gt;-->
+
+<!--&lt;!&ndash;&lt;!&ndash;<div class="dropdown">&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;&lt;!&ndash;<button onclick="myFunction()" class="dropbtn">Dropdown</button>&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;&lt;!&ndash;<div id="myDropdown" class="dropdown-content">&ndash;&gt;&ndash;&gt;-->
+    <!--&lt;!&ndash;&lt;!&ndash;<a href="#">Link 1</a>&ndash;&gt;&ndash;&gt;-->
+    <!--&lt;!&ndash;&lt;!&ndash;<a href="#">Link 2</a>&ndash;&gt;&ndash;&gt;-->
+    <!--&lt;!&ndash;&lt;!&ndash;<a href="#">Link 3</a>&ndash;&gt;&ndash;&gt;-->
+  <!--&lt;!&ndash;&lt;!&ndash;</div>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;</div>&ndash;&gt;&ndash;&gt;-->
+
+
+
+    <!--{% csrf_token %}-->
+     <!--<input type="hidden" name="ids" value="" class="id-input">-->
+    <!--{{ form }}-->
+    <!--<a href="">-->
+        <!--<input type="submit" value="Assign" id="ram"/></a>-->
+<!--</div>-->
+<!--</form>-->
+<!--<a href="{% url 'leads:upload_csv' %}" style="position:relative; left:1550px;-->
+<!--bottom:38px"><button>Import Leads</button></a>-->
+
+{% endblock page-content %}

@@ -8,7 +8,7 @@ class Attendance(models.Model):
     STATUS_CHOICES = (
         ('Present', 'Present'),
         ('Absent', 'Absent'),
-        ('Pending', 'Pending')
+        ('On Leave', 'On Leave')
     )
     LEAVE_TYPE_CHOICES = (
         ('PL', 'Privilege leave'),
@@ -20,9 +20,9 @@ class Attendance(models.Model):
     time_in = models.DateTimeField(null=True)
     time_out = models.DateTimeField(null=True)
     status = models.CharField(
-        max_length=7,
+        max_length=10,
         choices = STATUS_CHOICES,
-        default = 'Pending',
+        default = 'Absent',
     )
 
     leave_type = models.CharField(
@@ -33,6 +33,11 @@ class Attendance(models.Model):
     user = models.ForeignKey(MyUser, on_delete=models.PROTECT, default=None)
 
     note = models.CharField(max_length=500, null=True)
+
+    class Meta:
+        permissions = (
+            ('view_attendance', 'Can view attendance'),
+        )
 
 
 class LeaveRequest(models.Model):
@@ -62,6 +67,9 @@ class LeaveRequest(models.Model):
     note = models.CharField(max_length=500, null=True)
     user = models.ForeignKey(MyUser, on_delete=models.PROTECT, default=None)
 
-
+    class Meta:
+        permissions = (
+            ('view_leaverequest', 'Can view Leave Request'),
+        )
 
 

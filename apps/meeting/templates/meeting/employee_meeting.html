@@ -5,6 +5,46 @@
     <title>Employee Meetings</title>
 </head>
 <body>
-This is the employee meeting page!!
+    {% if user.is_authenticated %}
+        <div height="200">Hello {{ user.username }}</div>
+        <hr/>
+        {% for meeting in emp_meeting %}
+            <p>Opportunity ID: {{ meeting.Opportunity.pk }}</p>
+            <p>Meeting ID: {{ meeting.pk }}</p>
+            <p>Date: {{ meeting.date }}</p>
+            <p>
+                Assigned To: {{meeting.Opportunity.assigned_to}}
+            </p>
+            <p>
+                Meeting Notes: {{ meeting.description|safe }}
+            </p>
+            <div>
+                {% if meeting.extras is not NULL %}
+                Extras:<br/>
+                <ul>
+                    {% for extra in meeting.extras.all %}
+                    <li>{{ extra.username }}</li>
+                    {% endfor %}
+                    {% endif %}
+                </ul>
+            </div>
+            <div>
+                <fieldset>
+                    <legend>Meeting Notes</legend>
+                    <form method="post" action="{% url 'opportunity:meeting:add_meeting_notes' pk=meeting.Opportunity.pk meeting_id=meeting.pk %}">
+                        {% csrf_token %}
+                        <p>
+                            {{ form.description.errors }} {{ form.description.label }} {{ form.description }}
+                        </p>
+                        <input type="submit" value="Add">
+                    </form>
+                </fieldset>
+            </div>
+            <hr/>
+            <hr/>
+        {% endfor %}
+    {% else %}
+        <div>You don't have permission</div>
+    {% endif %}
 </body>
 </html>

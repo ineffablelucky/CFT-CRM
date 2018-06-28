@@ -19,10 +19,15 @@ class Opportunity(models.Model):
     assigned_to = models.ForeignKey(MyUser, on_delete=models.PROTECT, blank=True, related_name='assigned_to')
     lead = models.OneToOneField(LEADS, on_delete=models.PROTECT, blank=True)
     client = models.ForeignKey(CLIENT, on_delete=models.PROTECT, blank=True, null=True)
-    status = models.CharField(max_length=20, choices=CHOICES)
+    status = models.CharField(max_length=20, choices=CHOICES, default='Pending')
     proj_manager = models.ForeignKey(
         MyUser, on_delete=models.PROTECT, related_name='proj_manager', blank=True, null=True
     )
 
     def __str__(self):
-        return self.description
+        return self.lead.description
+
+    class Meta:
+        permissions = (
+            ('view_opportunity', 'Can view opportunities'),
+        )
