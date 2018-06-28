@@ -82,20 +82,39 @@ class LeaveForm(forms.ModelForm):
 
         elif data >= data1:
             if data3 == "PL":
-                delta = datetime.timedelta(days=leave.pl)
+                sdate = data1
+                edate = data
+                count = 0
+                d = datetime.timedelta(days=1)
+                while sdate <= edate:
+                    if sdate.weekday() == 5:
+                        count = count+1
+                    elif sdate.weekday() == 6:
+                        count = count+1
+                    sdate = sdate+d
+                delta = datetime.timedelta(days=leave.pl+count)
                 if data - data1 <= delta:
                     return data
                 else:
                     raise forms.ValidationError("No sufficient PL left")
             elif data3 == "CL":
-                delta = datetime.timedelta(days=leave.cl)
+                sdate = data1
+                edate = data
+                count = 0
+                d = datetime.timedelta(days=1)
+                while sdate <= edate:
+                    if sdate.weekday() == 5:
+                        count = count + 1
+                    elif sdate.weekday() == 6:
+                        count = count+1
+                    sdate = sdate + d
+                delta = datetime.timedelta(days=leave.cl+count)
                 if data - data1 <= delta:
                     return data
                 else:
                     raise forms.ValidationError("No sufficient CL left")
             elif data3 == "Half Day":
                     return data
-
 
         else:
             raise forms.ValidationError('End Date should be greater than Start Date')
@@ -115,6 +134,12 @@ class LeaveForm(forms.ModelForm):
             data = []
             start_date = self.cleaned_data.get('date')
             end_date = self.cleaned_data.get('end_date')
+            if LeaveRequest.objects.filter(Q(user_id=self.logged_user.id) & Q(date__gte=start_date)
+                                           & Q(end_date__lte=end_date) & Q(status='Pending')) is not None:
+                leave = LeaveRequest.objects.filter(Q(user_id=self.logged_user.id) & Q(date__gte=start_date)
+                                                    & Q(end_date__lte=end_date) & Q(status='Pending'))
+                for l in leave:
+                    l.delete()
             instance.date = start_date
             instance.end_date = end_date
             instance.save()
