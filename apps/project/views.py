@@ -9,11 +9,10 @@ class ProjectList(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     permission_required = ('users.view_project',)
     model = IT_Project
     def get_queryset(self):
-        queryset = IT_Project.objects.filter(
-            (Q(opportunity__status='Approved') | Q(opportunity=None))
+        queryset = IT_Project.objects.all(
         )
-
-        return queryset
+        print(queryset)
+        return None
 
 class Employee_Project_List(LoginRequiredMixin,PermissionRequiredMixin, ListView):
     permission_required = ('project.view_project',)
