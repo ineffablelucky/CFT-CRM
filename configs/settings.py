@@ -12,17 +12,19 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 
 import os
 
+BASE_URL = 'http://localhost:8000/'
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-print('base ' + BASE_DIR)
+
 SETTINGS_DIR = os.path.dirname(__file__)
-print(SETTINGS_DIR)
+
 PROJECT_PATH = os.path.join(SETTINGS_DIR, os.pardir)
-print(PROJECT_PATH)
+
 PROJECT_PATH = os.path.abspath(PROJECT_PATH)
-print(PROJECT_PATH)
+
 TEMPLATE_PATH = os.path.join(PROJECT_PATH, '')
-print(TEMPLATE_PATH)
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 

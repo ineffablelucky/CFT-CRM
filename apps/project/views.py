@@ -6,7 +6,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMix
 from django.db.models import Q
 
 class ProjectList(LoginRequiredMixin, PermissionRequiredMixin, ListView):
-    permission_required = ('users.view_project',)
+    permission_required = ('project.view_it_project', 'users.view_users',)
     model = IT_Project
     def get_queryset(self):
         queryset = IT_Project.objects.all(
@@ -15,13 +15,13 @@ class ProjectList(LoginRequiredMixin, PermissionRequiredMixin, ListView):
         return None
 
 class Employee_Project_List(LoginRequiredMixin,PermissionRequiredMixin, ListView):
-    permission_required = ('project.view_project',)
+    permission_required = ('project.view_it_project',)
     model = IT_Project
     template_name = "my projects.html"
 
     def get_queryset(self):
         temp = IT_Project.objects.filter(employees_per_project=self.request.user)
-        print(temp)
+        #print(temp)
         return temp
 
 

@@ -40,3 +40,8 @@ class Time_Entry(models.Model):
     task_end_date_time = models.DateTimeField(blank=True,null=True,)
     time_per_session = models.DateTimeField(max_length=30, blank=True, null=True,)
     time_spent = models.DateTimeField(max_length=30, blank=True, null=True,)
+
+    class Meta:
+        permissions = (
+            ('view_Time_Entry', 'Can view Time Entry'),
+        )

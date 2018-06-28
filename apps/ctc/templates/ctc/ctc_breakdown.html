@@ -5,54 +5,63 @@
     <title>Salary info</title>
 </head>
 <body>
-<!--<h1> Year: {{CTC_breakdown.year}}</h1>-->
 <table border ="1">
         <thead>
             <tr>
                 <th>Break up</th>
                 <th>Calculations</th>
-                <th>Monthly Salary</th>
-                <th>Yearly Salary</th>
+                <th>Monthly Amount</th>
+                <th>Yearly Amount</th>
             </tr>
         </thead>
         <tbody>
             <tr>
                 <td>Basic</td>
-                <td>50% Gross</td>
-               <!-- <td>{{  details.monthly_salary }}</td>
-                <td> 12*{{  details.monthly_salary }} </td>-->
+                <td>50% CTC</td>
+                <td class="monthly"></td>
+                <td class="yearly"> {{  context.basic }} </td>
             </tr>
             <tr>
                 <td>HRA</td>
-                <!--<td>{{  d.hra_percentage }}</td>
-                <td>{{  details.monthly_salary }}</td>
-                <td> 12*{{  i.monthly_salary }}</td>-->
+                <td>{{  struct.hra_percentage }}</td>
+                <td class="monthly"></td>
+                <td class="yearly"> {{ context.hra  }}</td>
             </tr>
             <tr>
                 <td>PPF</td>
-                <!--<td>{{  d.ppf_percentage }}</td>
-                <td>{{  details.monthly_salary }}</td>
-                <td>12*{{  details.monthly_salary }}</td>-->
+                <td>{{  struct.ppf_percentage }}</td>
+                <td class="monthly"></td>
+                <td class="yearly">{{  context.ppf }}</td>
             </tr>
             <tr>
                 <td>Allowances</td>
-                <!--<td>{{  d.allowances }}</td>
-                <td>{{  details.monthly_salary }}</td>
-                <td>12*{{  details.monthly_salary }}</td>-->
+                <td>{{  struct.allowances }}</td>
+                <td class="monthly"></td>
+                <td class="yearly">{{ context.allowances }}</td>
             </tr>
             <tr>
                 <td>CTC</td>
                 <td></td>
-                <!--<td>{{  details.monthly_salary }}</td>
-                <td>12*{{  details.monthly_salary }}</td>-->
+                <td></td>
+                <td>{{  context.ctc }}</td>
             </tr>
             <tr>
                 <td>CTC Max Bonus</td>
                 <td></td>
-                <!--<td>{{  details.monthly_salary }}</td>
-                <td>12*{{  details.montly_salary }}</td>-->
+                <td></td>
+                <td>{{  context.ctc_max_bonus }}</td>
             </tr>
         </tbody>
+</table>
 
+<script>
+    var monthlyAmt = document.getElementsByClassName("monthly");
+    var yearlyAmt = document.getElementsByClassName("yearly");
+
+    for(var i=0;i<monthlyAmt.length;i++){
+        monthlyAmt[i].innerHTML = (yearlyAmt[i].innerHTML)/12;
+
+    }
+</script>
 </body>
 </html>

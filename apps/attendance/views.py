@@ -178,7 +178,6 @@ class ShowAttendance(LoginRequiredMixin, PermissionRequiredMixin, ListView):
         p = []
         for t in temp:
             p.append(t.pk)
-
         temp2 = Attendance.objects.filter(date=datetime.date.today()-delta)
         for t in temp2:
             if t.status == 'absent':
