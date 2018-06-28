@@ -11,7 +11,7 @@ from django.db.models import Q
 import datetime
 
 
-class LeaveCreation(LoginRequiredMixinCreateView):
+class LeaveCreation(LoginRequiredMixin, CreateView):
     form_class = CreateleaveForm
     template_name = 'assignleave.html'
     success_url = '/'
