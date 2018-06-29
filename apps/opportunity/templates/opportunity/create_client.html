@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    {% if user.is_authenticated %}
+        <div height="200">Hello {{ user.username }}</div>
+        <hr/>
+        <form action="{% url 'opportunity:create_client' %}" method="post"></form>
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Add Client">
+    {% else %}
+        <div>You don't have permission</div>
+    {% endif %}
+</body>
+</html>

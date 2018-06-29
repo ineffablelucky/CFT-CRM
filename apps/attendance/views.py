@@ -5,7 +5,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMix
 from django.shortcuts import redirect
 from django.http import HttpResponseForbidden, HttpResponse
 from ..leave.models import Leave
-from ..attendance.models import Attendance
+from ..attendance.models import Attendance, LeaveRequest
 from ..attendance.models import LeaveRequest
 from django.db.models import Q
 from ..users.models import MyUser
@@ -175,10 +175,18 @@ class ShowAttendance(LoginRequiredMixin, PermissionRequiredMixin, ListView):
             delta = datetime.timedelta(days=2)
         else:
             delta = datetime.timedelta(days=1)
-        p=[]
+        p = []
         for t in temp:
-           p.append(t.pk)
+            p.append(t.pk)
         temp2 = Attendance.objects.filter(date=datetime.date.today()-delta)
+        for t in temp2:
+            if t.status == 'absent':
+                if LeaveRequest.objects.filter(Q(user_id=t.user_id) & Q(date__lte=datetime.date.today() - delta)
+                                        & Q(end_date__gte=datetime.date.today()-delta)
+                                        & Q(status='Approved')):
+                    t.status = 'On Leave'
+                    t.save()
+
         l = []
         for t in temp2:
             tt = MyUser.objects.get(id=t.user_id)
@@ -188,20 +196,26 @@ class ShowAttendance(LoginRequiredMixin, PermissionRequiredMixin, ListView):
         for i in range(len(p)):
             absent = Attendance.objects.create(user_id=p[i], date=datetime.date.today()-delta,
                                                status='absent')
+            # if LeaveRequest.objects.get(Q(user_id=p[i]) & Q(date__gte=datetime.date.today()-delta)
+            #                             & Q(end_date__lte=datetime.date.today()-delta)
+            #                             & Q(status='Approved')) is not None:
+            #     absent.status = 'On Leave'
             absent.save()
-        date = self.request.GET.get('date', None)
+        from_date = self.request.GET.get('date', None)
+        to_date = self.request.GET.get('to_date', None)
         if datetime.date.today().weekday() == 0:
             queryset = Attendance.objects.filter(date=datetime.date.today()-datetime.timedelta(days=3))
         else:
             queryset = Attendance.objects.filter(date=datetime.date.today() - datetime.timedelta(days=1))
-        if date is not None:
-            queryset = Attendance.objects.filter(date=date)
-        return queryset.order_by('user_id')
+        if from_date is not None and to_date is not None:
+            queryset = Attendance.objects.filter(Q(date__gte=from_date) & Q(date__lte=to_date))
+        return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data()
         context['form'] = AttendanceForm()
         return context
+
 
 class EmployAttendance(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     permission_required = ('users.view_users', 'attendance.view_attendance')
@@ -210,13 +224,22 @@ class EmployAttendance(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     context_object_name = 'attendance'
 
     def get_queryset(self):
+        from_date = self.request.GET.get('date', None)
+        to_date = self.request.GET.get('to_date', None)
         queryset = Attendance.objects.filter(user_id=self.kwargs.get('id'))
+        if from_date is not None and to_date is not None:
+            queryset = Attendance.objects.filter(Q(user_id=self.kwargs.get('id')) & Q(date__gte=from_date) & Q(date__lte=to_date))
         return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data()
+        context['form'] = AttendanceForm()
         context['employee'] = MyUser.objects.get(id=self.kwargs.get('id'))
+        from_date = self.request.GET.get('date', None)
+        to_date = self.request.GET.get('to_date', None)
         abc = Attendance.objects.filter(user_id=self.kwargs.get('id'))
+        if from_date is not None and to_date is not None:
+            abc = Attendance.objects.filter(Q(user_id=self.kwargs.get('id')) & Q(date__gte=from_date) & Q(date__lte=to_date))
         working_hours = []
         context['ab']=[]
         tmp = []
@@ -243,6 +266,12 @@ class EmployAttendance(LoginRequiredMixin, PermissionRequiredMixin, ListView):
 
         return context
 
+
+class CalendarView(LoginRequiredMixin, PermissionRequiredMixin, TemplateView):
+    permission_required = ('attendance.view_attendance',)
+    template_name = 'attendance/calendar.html'
+    model = Attendance
+    context_object_name = 'attendance'
 
 
 """

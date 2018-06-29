@@ -15,7 +15,7 @@ class Opportunity(models.Model):
 
     )
     price = models.BigIntegerField(default=0, blank=True, null=True)
-    description = models.TextField(max_length=1000)
+    project_description = models.TextField(max_length=1000)
     assigned_to = models.ForeignKey(MyUser, on_delete=models.PROTECT, blank=True, related_name='assigned_to')
     lead = models.OneToOneField(LEADS, on_delete=models.PROTECT, blank=True)
     client = models.ForeignKey(CLIENT, on_delete=models.PROTECT, blank=True, null=True)
@@ -23,6 +23,9 @@ class Opportunity(models.Model):
     proj_manager = models.ForeignKey(
         MyUser, on_delete=models.PROTECT, related_name='proj_manager', blank=True, null=True
     )
+    project_start_date = models.DateField(blank=True, null=True)
+    project_end_date = models.DateField(blank=True, null=True)
+    project_name = models.CharField(max_length=100, null=True, blank=True)
 
     def __str__(self):
         return self.lead.description

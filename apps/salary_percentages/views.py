@@ -1,10 +1,41 @@
 import logging
-from django.shortcuts import render,redirect,HttpResponseRedirect,HttpResponse,reverse
-from . import models
-from .models import Salary_calculations
-from .forms import SalaryForm
-from django.views.generic import ListView,CreateView,DetailView,DeleteView,UpdateView,TemplateView
+from django.shortcuts import render,HttpResponseRedirect,HttpResponse,reverse
+from .models import Salary_calculations,CTC_breakdown
+from .forms import SalaryForm,CtcForm
+from django.contrib.auth import get_user_model
 from django.contrib import messages
+
+def salary(request):
+    context=CTC_breakdown.objects.all()
+    return render(request,'work/salary.html',{'context':context})
+# def salary(request):
+#     context=get_user_model().objects.all()
+#     return render(request,'work/salary.html',{'context':context})
+
+def edit_salary(request,id):
+    if request.method == 'POST':
+        # form = CtcForm(request.POST)
+        # if form.is_valid():
+        #     form.save()
+        # else:
+        #     print(form.errors)
+        a=CTC_breakdown.objects.get(employee_id=id)
+        if 'ctc' in request.POST:
+            a.ctc= int(request.POST['ctc'])
+        if 'given_bonus' in request.POST:
+            a.given_bonus=int(request.POST['given_bonus'])
+        a.save()
+        return HttpResponseRedirect(reverse('salary_percentages:edit_salary',kwargs={'id' : id}))
+    ctc_objects=CTC_breakdown.objects.get(employee_id=id)
+    return render(request,'work/edit_salary.html',{'ctc_objects':ctc_objects})
+
+def edit_ctc(request,id):
+    form=CtcForm()
+    return render(request,'work/edit_ctc.html',{'form':form,'request_id':id})
+
+def edit_bonus(request,id):
+    form=CtcForm()
+    return render(request,'work/edit_bonus.html',{'form':form,'request_id':id})
 
 def salary_structure(request):
     context = Salary_calculations.objects.all()
@@ -29,7 +60,7 @@ def upload_csv(request):
         return render(request,'work/upload_csv.html',data)
 
     try:
-        csv_file = request.FILES('csv_file')
+        csv_file = request.FILES("csv_file")
 
         if not csv_file.name.endswith('.csv'):
             messages.error('Sorry!! This file is not csv type')
@@ -54,7 +85,11 @@ def upload_csv(request):
             salary_percentages = Salary_calculations(**data_dict)
             salary_percentages.save()
 
+
     except Exception as e:
 
-        logging.getLogger("error_logger").error("Unable to upload file" + repr(e))
-        return HttpResponseRedirect(reverse("salary_percetages:upload_csv"))
+        logging.getLogger("error_logger").error("Unable to upload file. " + repr(e))
+    return HttpResponseRedirect(reverse("salary_percentages:upload_csv"))
+
+
+
