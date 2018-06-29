@@ -25,7 +25,7 @@ class Opportunity(models.Model):
     )
     project_start_date = models.DateField(blank=True, null=True)
     project_end_date = models.DateField(blank=True, null=True)
-    project_name = models.CharField()
+    project_name = models.CharField(max_length=100)
 
     def __str__(self):
         return self.lead.description
