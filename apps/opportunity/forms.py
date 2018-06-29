@@ -7,6 +7,10 @@ from django.contrib.auth.forms import UserCreationForm
 import re
 import datetime
 from django.contrib.auth.hashers import make_password
+from django.core.mail import send_mail
+from django.utils.crypto import get_random_string
+from apps.project.models import IT_Project
+
 
 class ChangeStatus(forms.ModelForm):
     Opportunity_status = (
@@ -52,6 +56,12 @@ class CreateClientForm(forms.ModelForm):
         label='Company Name',
         required=True
     )
+    client_address = forms.CharField(
+        max_length=10000,
+        widget=forms.Textarea(),
+        label='Client Address',
+        required=True
+    )
     project_name = forms.CharField(
         max_length=100,
         label='Project Name'
@@ -71,6 +81,9 @@ class CreateClientForm(forms.ModelForm):
         label='Project End Date'
     )
 
+    project_total_working_hr = forms.IntegerField(
+        label='Project Total Working Hours'
+    )
     # password = forms.CharField(
     #     widget=forms.HiddenInput(),
     #     required=False,
@@ -93,7 +106,6 @@ class CreateClientForm(forms.ModelForm):
         fields = (
             'email',
             'username',
-            #'middle_name'
         )
 
     def clean_email(self):
@@ -140,20 +152,43 @@ class CreateClientForm(forms.ModelForm):
         instance.username = '_'.join(re.findall(r'\S+', self.cleaned_data.get('company_name')))
         # creating password
         password = instance.username + '1234'
-        print('Password ', password)
-        # print('Printing Instance')
-        # print(type(instance))
-        # print(self.__dict__)
-        # print('$$$$$$$$$$$$$$$$$$$$')
-        # print(self.cleaned_data.get('company_name'))
-        # print(instance.username)
-        #instance.set_password(self.cleaned_data["password1"])
-
         instance.first_name = 'client'
         instance.designation = 'Client'
-        #instance.password = make_password(password)
-        print(instance)
-        #commit = False
-        # if commit:
-        #     instance.save()
+        instance.password = make_password(password)
+        project_name = self.cleaned_data.get('project_name')
+        project_description = self.cleaned_data.get('project_description')
+        project_start_date = self.cleaned_data.get('project_start_date')
+        project_end_date = self.cleaned_data.get('project_end_date')
+        client_address = self.cleaned_data.get('client_address')
+        opportunity = self.cleaned_data.get('opportunity')
+        amount = self.cleaned_data.get('amount')
+        company_name = self.cleaned_data.get('company_name')
+        project_end_date = self.cleaned_data.get('project_end_date')
+        project_total_working_hr = self.cleaned_data.get('project_total_working_hr')
+        if commit:
+            instance.save()
+        project = IT_Project.objects.create(
+            project_name=project_name,
+            project_description=project_description,
+            project_start_date_time=project_start_date,
+            project_end_date_time=project_end_date,
+            project_total_working_hr=project_total_working_hr,
+            opportunity=opportunity,
+        )
+        print('printing project')
+        project.save()
+        print(project)
+        client = CLIENT.objects.create(
+            company_name=company_name,
+            address=client_address,
+            client_user=instance
+        )
+        client.save()
+        project = IT_Project.objects.get(opportunity=opportunity)
+        project.client_id = client
+        project.save()
+        opportunity_modify = Opportunity.objects.get(pk=opportunity.pk)
+        opportunity_modify.price = amount
+        opportunity_modify.client = client
+        opportunity_modify.save()
         return instance
