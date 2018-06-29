@@ -6,7 +6,7 @@
 {% extends 'static/production/index.html' %}
 
 
-    <title>{% block title %} Company Projects{% endblock title %}</title>
+    <title>{% block title %} Projects from opportunities{% endblock title %}</title>
 
 {% block extra-stylesheets %}
 <style>
@@ -78,11 +78,11 @@
                                     {% for p in object_list %}
                                         <tr>
                                             <td>
-                                                <a href="{% url 'task:manager-task-view' p.id %}">{{ p.project_name }}</a>
+                                                <a href="">{{ p.project_name }}</a>
                                             </td>
                                             <!--<td>{{ p.project_description}}</td>-->
-                                            <td>{{ p.project_start_date_time }}</td>
-                                            <td>{{ p.project_end_date_time }}</td>
+                                            <td>{{ p.project_start_date }}</td>
+                                            <td>{{ p.project_end_date }}</td>
                                             <td class="project_progress">
                                                 <div class="progress progress_sm">
                                                      <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="57"></div>
@@ -94,8 +94,8 @@
                                             </td>
                                             <td>
                                                 {% csrf_token %}
-                                                <button type="button" data-id ="{{ p.id }}" data-toggle="modal" data-target="#exampleModal" class="btn viewBtn btn-primary btn-xs"><i class="fa fa-folder"></i> View </button>
-                                                <a href="{% url 'project:project-update' p.id %}" class="btn editBtn btn-info btn-xs"><i class="fa fa-pencil"></i> Edit </a>
+                                                <a href="" class="btn editBtn btn-info btn-xs"><i class="fa fa-pencil"></i> view </a>
+                                                <!--<button type="button" data-id ="{{ p.id }}" data-toggle="modal" data-target="#exampleModal" class="btn viewBtn btn-primary btn-xs"><i class="fa fa-folder"></i> View </button>-->
                                             </td>
                                         </tr>
                                     {% endfor %}
@@ -122,7 +122,7 @@
         $('.viewBtn').click(function(event){
             event.preventDefault();
             var id = $(this).attr('data-id');
-            $.get( 'details/1/'  , function(data){
+            $.get( 'details/{{ i.id }}/'  , function(data){
                 $('.modal-body').html(data);
             });
         });
