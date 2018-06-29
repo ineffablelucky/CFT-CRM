@@ -38,9 +38,14 @@ class createcomplaintsform(ModelForm):
 
         )
     )
+    againstEmp1 = forms.ChoiceField(
 
 
+        widget=forms.Select(
+
+        )
+    )
 
     class Meta:
         model=Complaints
-        fields=('fromEmp','againstEmp','description','date')
+        fields=('fromEmp','againstEmp','againstEmp1','description','date')
