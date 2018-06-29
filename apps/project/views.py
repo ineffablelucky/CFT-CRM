@@ -13,7 +13,7 @@ class ProjectList(LoginRequiredMixin, PermissionRequiredMixin, ListView):
 
     def get_queryset(self):
         queryset = IT_Project.objects.all()
-        print(queryset)
+        # print(queryset)
         return queryset
 
 class OppProjectList(LoginRequiredMixin, PermissionRequiredMixin, ListView):
@@ -23,7 +23,7 @@ class OppProjectList(LoginRequiredMixin, PermissionRequiredMixin, ListView):
 
     def get_queryset(self):
         queryset = Opportunity.objects.filter(Q(status = 'Approved') & Q(assigned_to = self.request.user))
-        print(queryset)
+        # print(queryset)
         return queryset
 
 class Employee_Project_List(LoginRequiredMixin,PermissionRequiredMixin, ListView):

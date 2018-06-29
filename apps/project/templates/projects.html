@@ -60,13 +60,6 @@
                         <!--<h1>Hi, Welcome to Project Manager's Project List!</h1><hr>-->
                         {% if user.is_authenticated %}
                         <!--{{ user.username }}-->
-                            <div class="text-right">
-                                <a href="{% url 'project:project-add' %}" >
-                                    <button type="submit" class="btn createBtn btn-md">
-                                        CREATE NEW PROJECT
-                                    </button>
-                                </a>
-                            </div>
 
                             <table class="table table-striped projects">
                                 <thead>
