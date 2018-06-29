@@ -1,5 +1,6 @@
 from django.shortcuts import render, HttpResponseRedirect
 from .models import IT_Project
+from apps.opportunity.models import Opportunity
 from django.views.generic import ListView, CreateView, UpdateView, DetailView
 from .forms import CreateProjectForm
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
@@ -8,11 +9,22 @@ from django.db.models import Q
 class ProjectList(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     permission_required = ('project.view_it_project', 'users.view_users',)
     model = IT_Project
+    template_name = 'project_manager_list.html'
+
     def get_queryset(self):
-        queryset = IT_Project.objects.all(
-        )
+        queryset = IT_Project.objects.all()
         print(queryset)
-        return None
+        return queryset
+
+class OppProjectList(LoginRequiredMixin, PermissionRequiredMixin, ListView):
+    permission_required = ('project.view_it_project', 'users.view_users',)
+    model = IT_Project
+    template_name = 'projects.html'
+
+    def get_queryset(self):
+        queryset = Opportunity.objects.filter(Q(status = 'Approved') & Q(assigned_to = self.request.user))
+        print(queryset)
+        return queryset
 
 class Employee_Project_List(LoginRequiredMixin,PermissionRequiredMixin, ListView):
     permission_required = ('project.view_it_project',)
