@@ -2,13 +2,14 @@ from django.urls import path, include
 from django.views.generic import TemplateView
 from . import views
 
-from .views import ProjectList, Employee_Project_List, ProjectCreate, Edit_Project, ListModule
+from .views import ProjectList, Employee_Project_List, ProjectCreate, Edit_Project, ListModule, OppProjectList
 from apps.task.views import Employee_Task_List
 app_name = 'project'
 
 urlpatterns = [
 
     path('', ProjectList.as_view(template_name="project_manager_list.html"), name="project_manager_list"),
+    path('opp/', OppProjectList.as_view(), name='opportunity-projects'),
 
     path('add/', ProjectCreate.as_view(), name='project-add'),
     path('update/<int:pk>/', Edit_Project.as_view(), name='project-update'),
