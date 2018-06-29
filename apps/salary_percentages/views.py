@@ -60,7 +60,7 @@ def upload_csv(request):
         return render(request,'work/upload_csv.html',data)
 
     try:
-        csv_file = request.FILES('csv_file')
+        csv_file = request.FILES("csv_file")
 
         if not csv_file.name.endswith('.csv'):
             messages.error('Sorry!! This file is not csv type')
@@ -85,11 +85,11 @@ def upload_csv(request):
             salary_percentages = Salary_calculations(**data_dict)
             salary_percentages.save()
 
+
     except Exception as e:
 
-        logging.getLogger("error_logger").error("Unable to upload file" + repr(e))
-        return HttpResponseRedirect(reverse("salary_percetages:upload_csv"))
-
+        logging.getLogger("error_logger").error("Unable to upload file. " + repr(e))
+    return HttpResponseRedirect(reverse("salary_percentages:upload_csv"))
 
 
 
