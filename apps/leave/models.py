@@ -19,7 +19,8 @@ class Leave(models.Model):
 
 def create_profile(sender, **kwargs):
     if kwargs['created']:
-        Leave.objects.create(user=kwargs['instance'])
+        if kwargs.get('instance').designation != 'Client':
+            Leave.objects.create(user=kwargs['instance'])
 
 
 post_save.connect(create_profile, sender=settings.AUTH_USER_MODEL)
