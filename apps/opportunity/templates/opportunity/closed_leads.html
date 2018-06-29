@@ -13,156 +13,58 @@
 
 {% block page-content %}
 <div class="right_col" role="main">
-          <!-- top tiles -->
-          <div class="row tile_count">
-            {% if user.is_authenticated %}
-                <div height="200">Hello {{ user.username }}</div>
-                <hr/>
-                <div>
-                    {% for leads in closed_leads %}
-                        <div >
-                            <a href="{% url 'meeting:meeting_list' %}">
-                                <p>
-                                    Company Name: {{ leads.lead.company_name }}
-                                </p>
-                                <p>
-                                    Project Manager: {{ leads.proj_manager.username }}
-                                </p>
-                                <p>
-                                    Project Description : {{ leads.description }}
-                                </p>
-                                <p>
-                                    Assigned To : {{ leads.assigned_to.username }}
-                                </p>
-                                <p>
-                                    Amount : {{ leads.price }}
-                                </p>
-                            </a>
-                        </div>
-                        <hr/>
-                        <hr/>
-                    {% endfor %}
-                </div>
-            {% else %}
-                <div>You don't have permission</div>
-            {% endif %}
-          </div>
-          <!-- /top tiles -->
-
-          <div class="row">
-
-          </div>
-          <br />
-
-          <div class="row">
-
-          </div>
-
-
-          <div class="row">
-
-          </div>
+    <!-- top tiles -->
+    <div class="row">
+        <a href="{% url 'opportunity:create_client' %}"><button type="button"> Add Client</button></a>
+    </div>
+    <div class="row tile_count">
+        {% if user.is_authenticated %}
+        <div height="200">Hello {{ user.username }}</div>
+        <hr/>
+        <div>
+            {% for leads in closed_leads %}
+            <div >
+                <a href="{% url 'opportunity:meeting:meeting_list' leads.pk %}">
+                    <p>
+                        Company Name: {{ leads.lead.company_name }}
+                    </p>
+                    <p>
+                        Project Manager: {{ leads.proj_manager.username }}
+                    </p>
+                    <p>
+                        Project Description : {{ leads.lead.description }}
+                    </p>
+                    <p>
+                        Assigned To : {{ leads.assigned_to.username }}
+                    </p>
+                    <p>
+                        Amount : {{ leads.price }}
+                    </p>
+                </a>
+            </div>
+            <hr/>
+            <hr/>
+            {% endfor %}
         </div>
+        {% else %}
+        <div>You don't have permission</div>
+        {% endif %}
+    </div>
+    <!-- /top tiles -->
 
-<!--<a href="{% url 'leads:LeadCreate' %}"><button>Create Lead</button></a>-->
-<!--{% if object_list %}-->
+    <div class="row">
+    </div>
+    <br />
 
-<!--<script>-->
-    <!---->
-    <!--$(document).ready(function() {-->
-    <!---->
-    <!---->
-        <!--var $button = $("#ram").hide(),-->
-            <!--$cbs = $('input').click(function() {-->
-                <!--$button.toggle( $cbs.is(":checked") );-->
-            <!--});-->
-    <!---->
-    <!---->
-    <!--});-->
-    <!---->
-    <!--</script>-->
-<!--<form method="post" action="assign/">-->
-<!--<div class="container">-->
-<!--<table border="1" style="margin-right:8px">-->
-    <!--<tr><th>-->
-        <!--S.No-->
-    <!--</th>-->
-        <!--<th>contact_number</th>-->
-    <!--<th>comany_name</th>-->
-    <!--<th>contact_person</th>-->
-    <!--<th>source</th>-->
-    <!--<th>source_type</th>-->
-    <!--<th>description</th>-->
-    <!--<th>email</th>-->
-    <!--<th>website</th>-->
-    <!--<th>assigned_boolean</th>-->
-    <!--</tr>-->
+    <div class="row">
+
+    </div>
 
 
-<!--{% for leads in object_list %}-->
-    <!--<tr>-->
-        <!--<td><input type="checkbox" data-id="{{ leads.id }}" class="chk_selector"></input></td>-->
-        <!--<td>{{leads.contact_number}}</td>-->
-        <!--<td>{{leads.company_name}}</td>-->
-        <!--<td>{{leads.contact_person}}</td>-->
-        <!--<td>{{leads.source}}</td>-->
-        <!--<td>{{leads.source_type}}</td>-->
-        <!--<td>{{leads.description}}</td>-->
-        <!--<td>{{leads.email}}</td>-->
-        <!--<td>{{leads.website}}</td>-->
-        <!--<td>{{leads.assigned_boolean}}</td>-->
-        <!--<td><a href="{% url 'leads:LeadEdit' leads.id %}"><button type="button">Edit</button>-->
-        <!--</a>-->
-        <!--</td>-->
-        <!--<td><a href="{% url 'leads:LeadDelete' leads.id %}"><button type="button">Delete</button>-->
-        <!--</a>-->
-        <!--</td>-->
-<!--{% endfor %}-->
-    <!--</tr>-->
+    <div class="row">
 
-<!--</table>-->
-<!--</div>-->
-<!--{% else %}-->
-<!--<h1>no leads available</h1>-->
-
-<!--{% endif %}-->
-
-<!--<div class="container-fluid">-->
-
-
-
-<!--&lt;!&ndash;<button id="console" type="button">Console</button>&ndash;&gt;-->
-<!--&lt;!&ndash;&lt;!&ndash;<div class="container">&ndash;&gt;&ndash;&gt;-->
-    <!--&lt;!&ndash;&lt;!&ndash;<div class="dropdown">&ndash;&gt;&ndash;&gt;-->
-        <!--&lt;!&ndash;&lt;!&ndash;<a href=""  data-toggle = "dropdown" style="position:absolute; right:500px; top:151px;"><input type="" >Assign</input></a>&ndash;&gt;&ndash;&gt;-->
-        <!--&lt;!&ndash;&lt;!&ndash;<ul class="dropdown-menu">&ndash;&gt;&ndash;&gt;-->
-            <!--&lt;!&ndash;&lt;!&ndash;<li class="dropdown-item">asd</li>&ndash;&gt;&ndash;&gt;-->
-            <!--&lt;!&ndash;&lt;!&ndash;<li class="dropdown-item">Asdafs</li>&ndash;&gt;&ndash;&gt;-->
-        <!--&lt;!&ndash;&lt;!&ndash;</ul>&ndash;&gt;&ndash;&gt;-->
-    <!--&lt;!&ndash;&lt;!&ndash;</div>&ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;&lt;!&ndash;</div>&ndash;&gt;&ndash;&gt;-->
-
-<!--&lt;!&ndash;&lt;!&ndash;<div class="dropdown">&ndash;&gt;&ndash;&gt;-->
-  <!--&lt;!&ndash;&lt;!&ndash;<button onclick="myFunction()" class="dropbtn">Dropdown</button>&ndash;&gt;&ndash;&gt;-->
-  <!--&lt;!&ndash;&lt;!&ndash;<div id="myDropdown" class="dropdown-content">&ndash;&gt;&ndash;&gt;-->
-    <!--&lt;!&ndash;&lt;!&ndash;<a href="#">Link 1</a>&ndash;&gt;&ndash;&gt;-->
-    <!--&lt;!&ndash;&lt;!&ndash;<a href="#">Link 2</a>&ndash;&gt;&ndash;&gt;-->
-    <!--&lt;!&ndash;&lt;!&ndash;<a href="#">Link 3</a>&ndash;&gt;&ndash;&gt;-->
-  <!--&lt;!&ndash;&lt;!&ndash;</div>&ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;&lt;!&ndash;</div>&ndash;&gt;&ndash;&gt;-->
-
-
-
-    <!--{% csrf_token %}-->
-     <!--<input type="hidden" name="ids" value="" class="id-input">-->
-    <!--{{ form }}-->
-    <!--<a href="">-->
-        <!--<input type="submit" value="Assign" id="ram"/></a>-->
-<!--</div>-->
-<!--</form>-->
-<!--<a href="{% url 'leads:upload_csv' %}" style="position:relative; left:1550px;-->
-<!--bottom:38px"><button>Import Leads</button></a>-->
-
+    </div>
+</div>
 {% endblock page-content %}
 
 

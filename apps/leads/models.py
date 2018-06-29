@@ -17,6 +17,10 @@ class LEADS(models.Model):
     website=models.CharField(max_length=45)
     assigned_boolean=models.BooleanField()
 
-
     def __str__(self):
         return self.email
+
+    class Meta:
+        permissions = (
+            ('view_leads', 'Can view leads'),
+        )
