@@ -120,5 +120,6 @@ class D_Leads(LoginRequiredMixin, PermissionRequiredMixin, ListView):
 class CreateClientView(LoginRequiredMixin, CreateView):
     form_class = CreateClientForm
     template_name = 'opportunity/create_client.html'
+    success_url = '/'
     print('Hello world')
 
