@@ -50,18 +50,19 @@ class CreateTaskForm(ModelForm):
     employee_id = forms.ModelChoiceField(
         label='ASSIGN TO',
         # required=False,
+
         queryset=MyUser.objects.filter(Q(department='IT') & Q(designation='Employee')),
         widget=forms.Select(),
     )
 
-    task_start_date_time = forms.CharField(
+    task_start_date_time = forms.DateField(
         label='TASK START DATE',
         required=False,
         widget=forms.TextInput(
             attrs={'type': 'date'}
         )
     )
-    task_end_date_time = forms.CharField(
+    task_end_date_time = forms.DateField(
         label='TASK END DATE',
         required=False,
         widget=forms.TextInput(
@@ -142,11 +143,3 @@ class CreateTaskForm(ModelForm):
          else:
              raise forms.ValidationError("Only Numbers are alllowed")
 
-    # def clean_task_end_date_time(self):
-    #     data = self.cleaned_data.get('project_end_date_time')
-    #     value = self.cleaned_data.get('project_start_date_time')
-    #
-    #     if(data > value):
-    #         return data
-    #     else:
-    #         raise forms.ValidationError("Project end date should be either same or more than start date!")

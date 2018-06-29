@@ -3,7 +3,7 @@ from apps.opportunity.models import Opportunity
 from apps.users.models import MyUser
 from django.db.models import Q
 from apps.client.models import CLIENT
-
+from django.contrib.auth.forms import UserCreationForm
 
 class ChangeStatus(forms.ModelForm):
     Opportunity_status = (
@@ -32,11 +32,21 @@ class AddProjManager(forms.ModelForm):
         fields = ('proj_manager',)
 
 
-class CreateClientForm(forms.ModelForm):
+class CreateClientForm(UserCreationForm):
     opportunity = forms.ModelChoiceField(queryset=Opportunity.objects.filter(status='Approved'))
 
+    email = forms.CharField(
+        label='Email ',
+        widget=forms.TextInput(),
+    )
+
+    company_name = forms.CharField(
+        max_length=100, label='Company Name'
+    )
+
     class Meta:
-        model = CLIENT
+        model = MyUser
         fields = (
-            'company_name',
+            'email',
         )
+
