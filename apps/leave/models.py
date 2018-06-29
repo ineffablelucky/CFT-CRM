@@ -16,6 +16,7 @@ class Leave(models.Model):
             ('view_Leave', 'Can view Leave'),
         )
 
+
 def create_profile(sender, **kwargs):
     if kwargs['created']:
         Leave.objects.create(user=kwargs['instance'])
