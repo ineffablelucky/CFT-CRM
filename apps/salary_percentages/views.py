@@ -6,8 +6,11 @@ from django.contrib.auth import get_user_model
 from django.contrib import messages
 
 def salary(request):
-    context=get_user_model().objects.all()
+    context=CTC_breakdown.objects.all()
     return render(request,'work/salary.html',{'context':context})
+# def salary(request):
+#     context=get_user_model().objects.all()
+#     return render(request,'work/salary.html',{'context':context})
 
 def edit_salary(request,id):
     if request.method == 'POST':
@@ -20,7 +23,7 @@ def edit_salary(request,id):
         if 'ctc' in request.POST:
             a.ctc= int(request.POST['ctc'])
         if 'given_bonus' in request.POST:
-            a.given_bonus=int(request.POST.get('given_bonus', 0))
+            a.given_bonus=int(request.POST['given_bonus'])
         a.save()
         return HttpResponseRedirect(reverse('salary_percentages:edit_salary',kwargs={'id' : id}))
     ctc_objects=CTC_breakdown.objects.get(employee_id=id)

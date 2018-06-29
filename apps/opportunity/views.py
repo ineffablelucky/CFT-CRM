@@ -98,6 +98,8 @@ class C_Leads(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     #     context['oppo_id'] =
 
 #declined leads
+
+
 class D_Leads(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     permission_required = (
         'opportunity.change_opportunity',
@@ -118,4 +120,5 @@ class D_Leads(LoginRequiredMixin, PermissionRequiredMixin, ListView):
 class CreateClientView(LoginRequiredMixin, CreateView):
     form_class = CreateClientForm
     template_name = 'opportunity/create_client.html'
-    model = CLIENT
+    print('Hello world')
+

@@ -28,4 +28,5 @@ urlpatterns = [
     path('leads/', include('apps.leads.urls')),
     path('leave/', include('apps.leave.urls')),
     path('employee_salary/', include('apps.ctc.urls')),
+    path('complaints/',include('apps.complaints.urls')),
 ]
