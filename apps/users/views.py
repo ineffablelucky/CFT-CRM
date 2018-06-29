@@ -33,7 +33,11 @@ def register(request):
 
 
 def auth_login(request):
-    if request.method == 'POST':
+    if request.user.is_authenticated:
+        print(request.user)
+        return render(request, 'users/welcome.html')
+
+    elif request.method == 'POST':
         username = request.POST.get('email_or_username')
         password = request.POST.get('password')
 
@@ -41,8 +45,7 @@ def auth_login(request):
         if user:
             login(request, user)
         return redirect('welcome/')
-    else:
-        return render(request, 'users/registration/Login/login.html')
+    return render(request, 'users/registration/Login/login.html')
 
 def lout(request):
     logout(request)

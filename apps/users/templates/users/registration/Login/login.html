@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 {% load static %}
+
 <html>
     <head>
         <title>Login</title>
@@ -25,11 +26,11 @@
                         <form method="POST", action="{% url 'users:login' %}">
                         {% csrf_token %}
                             <div class="form-group" style="position: relative">
-                                <input class="form-control form-control-lg"  name="email_or_username" id="username" placeholder="Email-Id/Contact No." autofocus>
+                                <input class="form-control form-control-lg"  name="email_or_username" id="username" placeholder="Email-Id/Username" autofocus>
                                 <span class="bar-1"></span>
                             </div>
                             <div class="form-group" style="position: relative">
-                                <input class="form-control form-control-lg" type="password" name="password" id="password" placeholder="********************">
+                                <input class="form-control form-control-lg" type="password" name="password" id="password" placeholder="***************">
                                 <span class="bar-2"></span>
                             </div>
                             <div class="row">

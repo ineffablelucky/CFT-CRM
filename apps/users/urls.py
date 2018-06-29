@@ -21,7 +21,7 @@ urlpatterns = [
     path('reset-link/<str:key>/', views.verify, name='verify'),
     path('reset-password/<str:token>/', views.reset_password, name='reset_password'),
 
-    path('tmp/', TemplateView.as_view(template_name="apps/users/templates/users/tmp.html")),
+    path('tmp/', TemplateView.as_view(template_name="apps/users/templates/users/temporary.html")),
     path('about/', TemplateView.as_view(template_name="static/production/index.html")),
 
 ]

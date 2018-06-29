@@ -31,7 +31,7 @@ class MyUser(AbstractUser):
     middle_name         = models.CharField(blank=True, max_length=35, default=None)
     last_name           = models.CharField(blank=True, max_length=35, default=None)
     age                 = models.IntegerField(null=True, blank=True, default=None)
-    contact             = models.BigIntegerField(null=True, blank=True, default=None)
+    contact             = models.CharField(null=True, blank=True, default=None, max_length=10 )
     salary              = models.IntegerField(null=True, blank=True, default=None)
     created_on          = models.DateTimeField(auto_now_add=True)
     date_of_joining     = models.DateField(blank=True, null=True)
