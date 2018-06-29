@@ -24,6 +24,7 @@ class CreateTaskForm(ModelForm):
 
     project = forms.ModelChoiceField(
         label='PROJECT NAME',
+        empty_label=None,
         # required=False,
         queryset=IT_Project.objects.all(),
         widget=forms.Select(),
@@ -93,31 +94,20 @@ class CreateTaskForm(ModelForm):
             'expected_time',
         )
 
+    # def __init__(self,  *args, **kwargs):
+    #     super(CreateTaskForm, self).__init__(*args, **kwargs)
+    #     self.project_nm = kwargs.pop('project_name')
+    #     self.fields['project'].initial = self.project_nm
 
-
-    # def clean_task_name(self):
-    #     value = self.cleaned_data.get('task_name')
-    #     if len(value) < 3:
-    #         raise forms.ValidationError('Name too small')
-    #     return value
-
-    # def clean_opportunity(self):
-    #     value = self.cleaned_data['opportunity']
-    #     print(" ##############################  ",value.id)
-    #     if self.instance.pk is not None:
-    #         return value
-    #     else:
-    #         pass
-
-    def clean_project_name(self):
-        data = self.cleaned_data.get('project_name')
+    def clean_task_name(self):
+        data = self.cleaned_data.get('task_name')
         if re.match('^\w*$', data):
         #if re.match(r'^[-a-zA-Z0-9_]+$',data):
             return data
         else:
             raise forms.ValidationError("Only alphabets and numbers are allowed")
 
-    def clean_project_description(self):
+    def clean_task_description(self):
         data = self.cleaned_data.get('project_description')
         if re.match('^\w*$', data):
         #if re.match(r'^[-a-zA-Z0-9_]+$',data):
@@ -135,11 +125,4 @@ class CreateTaskForm(ModelForm):
          else:
              raise forms.ValidationError("Only Numbers are alllowed")
 
-    def clean_project_total_working_hr(self):
-         data = self.cleaned_data.get('project_total_working_hr')
-         data = str(data)
-         if re.match(r'^[0-9_]+$', data):
-             return data
-         else:
-             raise forms.ValidationError("Only Numbers are alllowed")
 

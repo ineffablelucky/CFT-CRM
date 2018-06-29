@@ -129,7 +129,7 @@
         $('.viewBtn').click(function(event){
             event.preventDefault();
             var id = $(this).attr('data-id');
-            $.get( 'details/1/'  , function(data){
+            $.get( 'details/' + id   , function(data){
                 $('.modal-body').html(data);
             });
         });
