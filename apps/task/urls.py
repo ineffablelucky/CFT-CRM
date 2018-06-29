@@ -7,8 +7,8 @@ app_name = 'task'
 urlpatterns = [
     path('<int:pk>/', TaskList.as_view(), name="manager-task-view"),
 
-    # path('<int:pk>/add/', TaskCreate.as_view(), name='task-add'),
     path('add/', TaskCreate.as_view(), name='task-add'),
+
     path('update/<int:pk>/', Edit_Task.as_view(), name='task-update'),
 
     # path('details/<int:pk>/start/', Start_Task.as_view(), name='taskstart'),

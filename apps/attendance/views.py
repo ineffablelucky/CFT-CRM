@@ -201,14 +201,15 @@ class ShowAttendance(LoginRequiredMixin, PermissionRequiredMixin, ListView):
             #                             & Q(status='Approved')) is not None:
             #     absent.status = 'On Leave'
             absent.save()
-        date = self.request.GET.get('date', None)
+        from_date = self.request.GET.get('date', None)
+        to_date = self.request.GET.get('to_date', None)
         if datetime.date.today().weekday() == 0:
             queryset = Attendance.objects.filter(date=datetime.date.today()-datetime.timedelta(days=3))
         else:
             queryset = Attendance.objects.filter(date=datetime.date.today() - datetime.timedelta(days=1))
-        if date is not None:
-            queryset = Attendance.objects.filter(date=date)
-        return queryset.order_by('user_id')
+        if from_date is not None and to_date is not None:
+            queryset = Attendance.objects.filter(Q(date__gte=from_date) & Q(date__lte=to_date))
+        return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data()
@@ -223,13 +224,22 @@ class EmployAttendance(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     context_object_name = 'attendance'
 
     def get_queryset(self):
+        from_date = self.request.GET.get('date', None)
+        to_date = self.request.GET.get('to_date', None)
         queryset = Attendance.objects.filter(user_id=self.kwargs.get('id'))
+        if from_date is not None and to_date is not None:
+            queryset = Attendance.objects.filter(Q(user_id=self.kwargs.get('id')) & Q(date__gte=from_date) & Q(date__lte=to_date))
         return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data()
+        context['form'] = AttendanceForm()
         context['employee'] = MyUser.objects.get(id=self.kwargs.get('id'))
+        from_date = self.request.GET.get('date', None)
+        to_date = self.request.GET.get('to_date', None)
         abc = Attendance.objects.filter(user_id=self.kwargs.get('id'))
+        if from_date is not None and to_date is not None:
+            abc = Attendance.objects.filter(Q(user_id=self.kwargs.get('id')) & Q(date__gte=from_date) & Q(date__lte=to_date))
         working_hours = []
         context['ab']=[]
         tmp = []

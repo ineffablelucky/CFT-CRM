@@ -53,7 +53,7 @@ class CreateProjectForm(ModelForm):
         label='PROJECT START DATE',
         required=False,
         widget=forms.TextInput(
-            attrs={'type': 'date', 'class': 'form-control col-md-7 col-xs-12',}
+            attrs={'type': 'date', 'class': 'form-control col-md-7 col-xs-12', 'placeholder': 'Select a date'}
         )
     )
     #
@@ -72,7 +72,7 @@ class CreateProjectForm(ModelForm):
         label='PROJECT END DATE',
         required=False,
         widget=forms.TextInput(
-            attrs={'type': 'date', 'class': 'form-control col-md-7 col-xs-12',}
+            attrs={'type': 'date', 'class': 'form-control col-md-7 col-xs-12', }
         )
     )
 
@@ -132,13 +132,8 @@ class CreateProjectForm(ModelForm):
 
     def __init__(self,  *args, **kwargs):
         super(CreateProjectForm, self).__init__(*args, **kwargs)
-        # self.fields['project_name'].initial = timezone.now().date
-        # if self.instance.pk is None:
-        #     self.fields['project_start_date_time'].initial = timezone.now().date
-        #     self.fields['project_end_date_time'].initial = timezone.now().date
-        # else:
-        #     d = datetime.datetime.strptime(str(self.instance.project_start_date_time), "%Y-%m-%d %H:%M:%S")
-        #     self.fields['project_start_date_time'].initial = d.strftime('%d/%m/%Y')
+        self.fields['project_start_date_time'].initial = timezone.now().date
+
         self.fields['project_description'].widget.attrs['placeholder']= 'asfsadf'
         self.fields['project_name'].widget.attrs['placeholder']= 'write project name here'
         self.fields['project_description'].widget.attrs['placeholder']= 'write project description here'
@@ -158,22 +153,22 @@ class CreateProjectForm(ModelForm):
     #     else:
     #         pass
 
-    # def clean_project_name(self):
-    #     data = self.cleaned_data.get('project_name')
-    #     if re.match('^\w*$', data):
-    #     #if re.match(r'^[-a-zA-Z0-9_]+$',data):
-    #         return data
-    #     else:
-    #         raise forms.ValidationError("Only alphabets and numbers are allowed")
-    #
-    # def clean_project_description(self):
-    #     data = self.cleaned_data.get('project_description')
-    #     if re.match('^\w*$', data):
-    #     #if re.match(r'^[-a-zA-Z0-9_]+$',data):
-    #         return data
-    #     else:
-    #         raise forms.ValidationError("Only alphabets and numbers are allowed")
-    #
+    def clean_project_name(self):
+        data = self.cleaned_data.get('project_name')
+        if re.match('^\w*$', data):
+        #if re.match(r'^[-a-zA-Z0-9_]+$',data):
+            return data
+        else:
+            raise forms.ValidationError("Only alphabets and numbers are allowed")
+
+    def clean_project_description(self):
+        data = self.cleaned_data.get('project_description')
+        if re.match('^\w*$', data):
+        #if re.match(r'^[-a-zA-Z0-9_]+$',data):
+            return data
+        else:
+            raise forms.ValidationError("Only alphabets and numbers are allowed")
+
 
     def clean_project_price(self):
          data = self.cleaned_data.get('project_price')
