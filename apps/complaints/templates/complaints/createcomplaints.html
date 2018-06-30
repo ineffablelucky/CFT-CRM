@@ -20,11 +20,12 @@
                     <div>
                         {{ form.againstEmp.label}}
                         {{ form.againstEmp }}
-                        <select>
+                        {{ form.againstEmp.errors }}
+                        <select class="user">
 
                         </select>
 
-                        {{ form.againstEmp.errors }}
+
                     </div><br/>
 
                     <div>
@@ -48,6 +49,7 @@
     $(document).ready(function(){
     $("#id_againstEmp").click(function(){
         var selectedValue = $(this).val();
+        console.log(selectedValue);
 
         $.ajax({
         url:"complaints_ajax/",
@@ -58,15 +60,25 @@
         data:{"name" : selectedValue},
 
         success:function(data){
+
         data = JSON.parse(data['data']);
-        console.log(data[0].fields.username);
+        console.log(data);
+
+
         console.log(typeof(data));
-        for(var i=0;i<data.length;i++){
-        $('select').append('<option value="'+data[i].fields.username+'">'+data[i].fields.username);
+        console.log(data.length);
+        if(data.length>0){
+                $('select.user').html('<option value="'+data[0].fields.username+'">'+data[0].fields.username);
+
+        for(var i=1;i<data.length;i++){
+        $('select.user').append('<option value="'+data[i].fields.username+'">'+data[i].fields.username);
+
 
             };
+};
         },
     });
   });
 });
 </script>
+        <!--console.log(data[0].fields.username);-->
