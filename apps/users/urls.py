@@ -1,10 +1,6 @@
-from django.urls import path, re_path
+from django.urls import path
 from . import views
 from django.views.generic import TemplateView
-from django.contrib.auth.views import (
-    password_reset_done, password_reset, password_reset_confirm, password_reset_complete,
-)
-
 
 app_name = 'users'
 
@@ -22,6 +18,5 @@ urlpatterns = [
     path('token/', views.reset_password, name='token'),
     path('reset-link/<str:key>/', views.verify, name='verify'),
     path('reset-password/<str:token>/', views.reset_password, name='reset_password'),
-
 ]
 

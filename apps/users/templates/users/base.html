@@ -7,10 +7,10 @@
 <h3>
     Welcome {{ user.first_name }}!<br>
     You are autherized user but not has permission to access Admin page.<br>
-    So switch to your <a href="{% url 'users:welcome' %}">Employee portal </a> or <a href="{% url 'users:admin_login' %}">try again </a>login to admin page.
+    So switch to your <a href="{% url 'users:welcome' %}"><u>Employee portal</u></a> or <a href="{% url 'users:admin_login' %}"><u>try again</u></a> login to admin page.
 </h3>
 {% else %}
-<h3>You are not authorized user. Please <a href="{% url 'users:index' %}">login </a>first to acces this page!</h3>
+<h3>You are not authorized user. Please <a href="{% url 'users:index' %}"><u>login</u></a> first to acces this page!</h3>
 {% endif %}
 {% endblock else_condition %}
 

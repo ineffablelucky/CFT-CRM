@@ -10,7 +10,7 @@ from apps.task.models import Task
 
 #display list of company's created projects
 class ProjectList(LoginRequiredMixin, PermissionRequiredMixin, ListView):
-    permission_required = ('project.view_it_project', 'users.view_users',)
+    permission_required = ('project.view_it_project',)
     model = IT_Project
     template_name = 'project_manager_list.html'
 
@@ -22,7 +22,7 @@ class ProjectList(LoginRequiredMixin, PermissionRequiredMixin, ListView):
 
 #display list of opportunities converted into project
 class OppProjectList(LoginRequiredMixin, PermissionRequiredMixin, ListView):
-    permission_required = ('project.view_it_project', 'users.view_users',)
+    permission_required = ('project.view_it_project',)
     model = IT_Project
     template_name = 'projects.html'
 
