@@ -46,7 +46,7 @@
                             {% for a in o %}
                                 <tr>
                                     <td>{{ a.date }}</td>
-                                    <td>{{ a.time_in }}</td>
+                                    <td id="time_in">{{ a.time_in }}</td>
                                     <td>{{ a.time_out }}</td>
                                     <td>{{ a.working_hours }}</td>
                                     <td>{{ a.status }}</td>
@@ -77,6 +77,5 @@
     <script src="{% static 'vendors/jszip/dist/jszip.min.js' %}"></script>
     <script src="{% static 'vendors/pdfmake/build/pdfmake.min.js' %}"></script>
     <script src="{% static 'vendors/pdfmake/build/vfs_fonts.js' %}"></script>
-
 
 {% endblock %}

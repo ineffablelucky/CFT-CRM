@@ -179,15 +179,7 @@ class ShowAttendance(LoginRequiredMixin, PermissionRequiredMixin, ListView):
         p = []
         for t in temp:
             p.append(t.pk)
-        temp2 = Attendance.objects.filter(date=datetime.date.today()-delta)
-        for t in temp2:
-            if t.status == 'absent':
-                if LeaveRequest.objects.filter(Q(user_id=t.user_id) & Q(date__lte=datetime.date.today() - delta)
-                                        & Q(end_date__gte=datetime.date.today()-delta)
-                                        & Q(status='Approved')):
-                    t.status = 'On Leave'
-                    t.save()
-
+        temp2 = Attendance.objects.filter(date=datetime.date.today() - delta)
         l = []
         for t in temp2:
             tt = MyUser.objects.get(id=t.user_id)
@@ -195,13 +187,22 @@ class ShowAttendance(LoginRequiredMixin, PermissionRequiredMixin, ListView):
 
         p = [x for x in p if x not in l]
         for i in range(len(p)):
-            absent = Attendance.objects.create(user_id=p[i], date=datetime.date.today()-delta,
-                                               status='absent')
-            # if LeaveRequest.objects.get(Q(user_id=p[i]) & Q(date__gte=datetime.date.today()-delta)
-            #                             & Q(end_date__lte=datetime.date.today()-delta)
-            #                             & Q(status='Approved')) is not None:
-            #     absent.status = 'On Leave'
-            absent.save()
+            if MyUser.objects.filter(Q(id=p[i]) & Q(date_of_joining__lte=datetime.date.today()-delta)):
+                print(MyUser.objects.filter(Q(id=p[i]) & Q(date_of_joining__lte=datetime.date.today() - delta)))
+                absent = Attendance.objects.create(user_id=p[i], date=datetime.date.today()-delta, status='absent')
+                # if LeaveRequest.objects.get(Q(user_id=p[i]) & Q(date__gte=datetime.date.today()-delta)
+                #                             & Q(end_date__lte=datetime.date.today()-delta)
+                #                             & Q(status='Approved')) is not None:
+                #     absent.status = 'On Leave'
+                absent.save()
+
+        for t in temp2:
+            if t.status == 'absent':
+                if LeaveRequest.objects.filter(Q(user_id=t.user_id) & Q(date__lte=datetime.date.today() - delta)
+                                               & Q(end_date__gte=datetime.date.today() - delta)
+                                               & Q(status='Approved')):
+                    t.status = 'On Leave'
+                    t.save()
         from_date = self.request.GET.get('date', None)
         to_date = self.request.GET.get('to_date', None)
         if datetime.date.today().weekday() == 0:
