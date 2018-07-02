@@ -40,27 +40,27 @@
             {% endif %}
 
 
-<!--{% if object.task_current_state == "stopped" %}-->
+{% if object.task_current_state == "stopped" %}
 
-    <!--&lt;!&ndash;<form action="{% url 'task:taskstart' object.id %}" action="post">&ndash;&gt;-->
-        <!--&lt;!&ndash;{% csrf_token %}&ndash;&gt;-->
+    <!--<form action="{% url 'task:taskstart' object.id %}" action="post">-->
+        <!--{% csrf_token %}-->
 
-        <!--&lt;!&ndash;<input type="submit" value="START TASK"/>&ndash;&gt;-->
+        <!--<input type="submit" value="START TASK"/>-->
 
-    <!--&lt;!&ndash;</form>&ndash;&gt;-->
+    <!--</form>-->
 
-     <!--<a class="startBtn" href="{% url 'task:taskstart' object.id %}"><button type="button" >START TASK</button></a>-->
-<!--{% else %}-->
+     <a class="startBtn" href="{% url 'task:taskstart' object.id %}"><button type="button" >START TASK</button></a>
+{% else %}
 
-    <!--&lt;!&ndash;<form action="{% url 'task:taskend' object.id %}" action="post">&ndash;&gt;-->
-        <!--&lt;!&ndash;{% csrf_token %}&ndash;&gt;-->
+    <!--<form action="{% url 'task:taskend' object.id %}" action="post">-->
+        <!--{% csrf_token %}-->
 
-        <!--&lt;!&ndash;<input type="submit" value="PAUSE"/>&ndash;&gt;-->
-    <!--&lt;!&ndash;</form>&ndash;&gt;-->
-      <!--<a href="{% url 'task:taskend' object.id %}"><button>PAUSE</button></a>-->
-              <!--<a href="{% url 'task:taskend' object.id %}"><button>END TASK</button></a>-->
+        <!--<input type="submit" value="PAUSE"/>-->
+    <!--</form>-->
+      <a href="{% url 'task:taskend' object.id %}"><button>PAUSE</button></a>
+              <a href="{% url 'task:taskend' object.id %}"><button>END TASK</button></a>
 
-<!--{% endif %}-->
+{% endif %}
 
 
 </div>

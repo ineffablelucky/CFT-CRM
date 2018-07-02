@@ -10,8 +10,8 @@ from apps.project.models import IT_Project
 from django.db.models import Q
 from datetime import datetime
 
-class CreateTaskForm(ModelForm):
 
+class CreateTaskForm(ModelForm):
     task_status = (
         ('start later', 'start later'),
         ('started', 'started'),
@@ -19,23 +19,24 @@ class CreateTaskForm(ModelForm):
         ('in progress', 'in progress'),
     )
 
+    # hidden_project_id = forms.CharField(widget=forms.TextInput(attrs={'type': 'hidden'}))
 
+    # project = forms.CharField(
+    #     label='PROJECT NAME',
+    #     widget=forms.TextInput(attrs={'readonly': True}))
+
+    # required=False,
+    # queryset=IT_Project.objects.all(),
+    # widget=forms.Select(),
 
 
     project = forms.ModelChoiceField(
-        label='PROJECT NAME',
-        empty_label=None,
-        # required=False,
         queryset=IT_Project.objects.all(),
-        widget=forms.Select(),
+        widget=forms.HiddenInput(attrs={'readonly': True}), label='PROJECT NAME'
     )
 
-    # project = forms.CharField(
-    #     widget=forms.TextInput(attrs={'readonly': True}), label='PROJECT NAME'
-    # )
-
     task_name = forms.CharField(
-        label = 'TASK NAME',
+        label='TASK NAME',
 
         widget=forms.TextInput(
 
@@ -43,7 +44,7 @@ class CreateTaskForm(ModelForm):
     )
 
     task_description = forms.CharField(
-        label= 'TASK DESCRIPTION',
+        label='TASK DESCRIPTION',
         required=False,
         widget=forms.Textarea()
     )
@@ -92,6 +93,7 @@ class CreateTaskForm(ModelForm):
             'task_end_date_time',
             'status',
             'expected_time',
+
         )
 
     # def __init__(self,  *args, **kwargs):
@@ -99,30 +101,39 @@ class CreateTaskForm(ModelForm):
     #     self.project_nm = kwargs.pop('project_name')
     #     self.fields['project'].initial = self.project_nm
 
-    def clean_task_name(self):
-        data = self.cleaned_data.get('task_name')
-        if re.match('^\w*$', data):
-        #if re.match(r'^[-a-zA-Z0-9_]+$',data):
-            return data
-        else:
-            raise forms.ValidationError("Only alphabets and numbers are allowed")
+    # def clean_task_name(self):
+    #     data = self.cleaned_data.get('task_name')
+    #     if re.match('^\w*$', data):
+    #     #if re.match(r'^[-a-zA-Z0-9_]+$',data):
+    #         return data
+    #     else:
+    #         raise forms.ValidationError("Only alphabets and numbers are allowed")
+    #
+    # def clean_task_description(self):
+    #     data = self.cleaned_data.get('project_description')
+    #     if re.match('^\w*$', data):
+    #     #if re.match(r'^[-a-zA-Z0-9_]+$',data):
+    #         return data
+    #     else:
+    #         raise forms.ValidationError("Only alphabets and numbers are allowed")
 
-    def clean_task_description(self):
-        data = self.cleaned_data.get('project_description')
-        if re.match('^\w*$', data):
-        #if re.match(r'^[-a-zA-Z0-9_]+$',data):
-            return data
-        else:
-            raise forms.ValidationError("Only alphabets and numbers are allowed")
 
+    def save(self, commit=True):
+        print("save")
+        entry = super().save(commit=False)
+        return entry
 
+    def clean_project(self):
+        print(self.cleaned_data)
+        data = self.cleaned_data
+        # IT_Project.objects.get(pk)
+        print(data)
+        return data
 
     def clean_expected_time(self):
-         data = self.cleaned_data.get('expected_time')
-         data = str(data)
-         if re.match(r'^[0-9_]+$', data):
-             return data
-         else:
-             raise forms.ValidationError("Only Numbers are alllowed")
-
-
+        data = self.cleaned_data.get('expected_time')
+        data = str(data)
+        if re.match(r'^[0-9_]+$', data):
+            return data
+        else:
+            raise forms.ValidationError("Only Numbers are alllowed")
