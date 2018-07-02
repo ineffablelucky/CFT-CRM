@@ -27,7 +27,7 @@ class OppProjectList(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     template_name = 'projects.html'
 
     def get_queryset(self):
-        queryset = IT_Project.objects.all()
+        queryset = IT_Project.objects.filter(Q(opportunity__isnull=False) )
         print(queryset)
         # queryset = IT_Project.objects.filter(Q(opportunity is not None) & Q(assigned_to = self.request.user))
         return queryset
