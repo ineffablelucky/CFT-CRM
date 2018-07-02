@@ -14,7 +14,7 @@ class LEADS(models.Model):
     source_type=models.CharField(max_length=45)
     description=models.CharField(max_length=45)
     email=models.EmailField(unique=True)
-    website=models.CharField(max_length=45)
+    website=models.URLField(max_length=45,blank=True)
     assigned_boolean=models.BooleanField()
 
     def __str__(self):

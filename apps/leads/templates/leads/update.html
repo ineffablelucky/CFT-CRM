@@ -1,9 +1,9 @@
     <div class="contianer-fluid text-center" role="main">
 
-            <form method="post" action="{% url 'leads:LeadEdit' leads.id %}">
+            <form method="post" class="myform">
 
                 {% csrf_token %}
-                    <div>
+                    <div id="1">
                         {{ form.contact_number.label }}
                         {{ form.contact_number }}
                         {{ form.contact_number.errors }}
@@ -18,7 +18,7 @@
                     <div>
                         {{ form.contact_person.label }}
                         {{ form.contact_person }}
-                        {{ form.contact_person.errors }}
+                           <p id="2"> {{ form.contact_person.errors }}</p>
                     </div><br>
 
                     <div>
@@ -37,7 +37,7 @@
                     <div>
                        {{ form.description.label }}
                        {{ form.description }}
-                       {{ form.description.errors }}
+                           {{ form.description.errors }}
                     </div><br>
 
                     <div>
@@ -51,12 +51,17 @@
                         {{ form.website }}
                         {{ form.website.errors }}
                     </div><br>
-                <input type="submit" value="Submit" />
+                <input type="submit" value="Submit" class="submit"/>
                 <!--<button type="button" id="btn">Submit</button>-->
             </form>
     </div>
 
-
+ <!--if(a){-->
+        <!--$.ajax({url: "../edit/" + id , success:function(data){-->
+            <!--$('.modal-body').html(data);-->
+            <!--}});-->
+            <!--};-->
+            <!--});-->
 
 
 
