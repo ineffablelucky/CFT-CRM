@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+     <head>
+  <title>Bootstrap Example</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+      </head>
+
+    <form method="POST" id="myform">
+        {% csrf_token %}
+        <div>
+                        {{ form.fromEmp.label }}
+                        {{ form.fromEmp }}
+                        {{ form.fromEmp.errors }}
+                    </div><br/>
+
+                    <div>
+                        {{ form.againstEmp.label}}
+                        {{ form.againstEmp }}
+                        <select>
+
+                        </select>
+
+                        {{ form.againstEmp.errors }}
+                    </div><br/>
+
+                    <div>
+                        {{ form.description.label }}
+                        {{ form.description }}
+                        {{ form.description.errors }}
+
+                    </div><br/>
+
+                    <div>
+                        {{ form.date.label }}
+                        {{ form.date }}
+                        {{ form.date.errors }}
+                    </div><br/>
+
+        <input type="submit" value="submit">
+    </form>
+
+
+<script>
+    $(document).ready(function(){
+    $("#id_againstEmp").click(function(){
+        var selectedValue = $(this).val();
+
+        $.ajax({
+        url:"complaints_ajax/",
+        type:"GET",
+        beforeSend: function(xhr) {
+                xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}" );
+                },
+        data:{"name" : selectedValue},
+
+        success:function(data){
+        data = JSON.parse(data['data']);
+        console.log(data[0].fields.username);
+        console.log(typeof(data));
+        for(var i=0;i<data.length;i++){
+        $('select').append('<option value="'+data[i].fields.username+'">'+data[i].fields.username);
+
+            };
+        },
+    });
+  });
+});
+</script>

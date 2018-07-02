@@ -13,10 +13,10 @@
 
 {% block page-content %}
 <div class="right_col" role="main">
-    <!-- top tiles -->
-    <!--<div class="row">-->
-        <!--<a href="{% url 'opportunity:create_client' %}"><button type="button"> Add Client</button></a>-->
-    <!--</div>-->
+     top tiles
+    <div class="row">
+        <a href="{% url 'opportunity:create_client' %}"><button type="button"> Add Client</button></a>
+    </div>
     <div class="row tile_count">
         {% if user.is_authenticated %}
         <div height="200">Hello {{ user.username }}</div>
