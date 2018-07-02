@@ -23,9 +23,9 @@ class IT_Project(models.Model):
     employees_per_project = models.ManyToManyField(MyUser, blank=True, related_name='employees_per_project')
     status = models.CharField(max_length=30, choices=Project_status, default='active')
     project_manager = models.ForeignKey(MyUser, on_delete=models.PROTECT, blank=True, null=True, default=None)
+
     def __str__(self):
         return self.project_name
-
 
     class Meta:
         permissions = (

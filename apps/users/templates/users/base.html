@@ -2,10 +2,24 @@
 {% load users_extras %}
 
 
+{% block else_condition %}
+{% if user.is_authenticated %}
+<h3>
+    Welcome {{ user.first_name }}!<br>
+    You are autherized user but not has permission to access Admin page.<br>
+    So switch to your <a href="{% url 'users:welcome' %}"><u>Employee portal</u></a> or <a href="{% url 'users:admin_login' %}"><u>try again</u></a> login to admin page.
+</h3>
+{% else %}
+<h3>You are not authorized user. Please <a href="{% url 'users:index' %}"><u>login</u></a> first to acces this page!</h3>
+{% endif %}
+{% endblock else_condition %}
+
+
 {% block home_link %}
-    <a href="{% url 'users:tmp' %}" class="site_title"><i class="fa fa-paw"></i> <span>CFT Admin!</span></a>
+    <a href="{% url 'users:admin_welcome' %}" class="site_title"><i class="fa fa-paw"></i> <span>CFT Admin!</span></a>
 {% endblock home_link %}
 {% block username %} {{ user.first_name }} {{ user.last_name }} {% endblock %}
+{% block name %} {{ user.first_name }} {{ user.last_name }} {% endblock %}
 
 {% block account_management %}
     {% if user|has_group:"Account Manager Group" or user|has_group:"Admin Group" %}
@@ -21,15 +35,15 @@
 
 {% block project_management %}
     {% if user|has_group:"IT Manager Group" or user|has_group:"Admin Group" %}
-        <li><a href="{% url 'project:project_manager_list' %}"><i class="fa fa-edit"></i> Project Management </a>
-            <!--<ul class="nav child_menu">-->
-            <!--<li><a href="form.html">General Form</a></li>-->
-            <!--<li><a href="form_advanced.html">Advanced Components</a></li>-->
-            <!--<li><a href="form_validation.html">Form Validation</a></li>-->
-            <!--<li><a href="form_wizards.html">Form Wizard</a></li>-->
-            <!--<li><a href="form_upload.html">Form Upload</a></li>-->
-            <!--<li><a href="form_buttons.html">Form Buttons</a></li>-->
-            <!--</ul>-->
+        <li><a><i class="fa fa-edit"></i> Project Management <span class="fa fa-chevron-down"></span></a>
+            <ul class="nav child_menu">
+                <li><a href="{% url 'project:project_manager_list' %}">Company Projects</a></li>
+                <li><a href="{% url 'project:opportunity-projects' %}">Opportunity Projects</a></li>
+                <!--<li><a href="form_validation.html">Form Validation</a></li>-->
+                <!--<li><a href="form_wizards.html">Form Wizard</a></li>-->
+                <!--<li><a href="form_upload.html">Form Upload</a></li>-->
+                <!--<li><a href="form_buttons.html">Form Buttons</a></li>-->
+            </ul>
         </li>
     {% endif %}
 {% endblock project_management %}
@@ -60,7 +74,9 @@
                 <li><a href="{% url 'opportunity:assign_lead' %}">Assigned Leads</a></li>
                 <li><a href="{% url 'opportunity:closed_leads' %}">Closed Leads</a></li>
                 <li><a href="{% url 'opportunity:declined_leads' %}">Declined Leads</a></li>
+                <li><a href="{% url 'opportunity:client_list' %}">Client List</a></li>
             </ul>
         </li>
     {% endif %}
 {% endblock lead_management %}
+

@@ -1,15 +1,14 @@
-from django import forms
-from apps.opportunity.models import Opportunity
-from apps.users.models import MyUser
-from django.db.models import Q
-from apps.client.models import CLIENT
-from django.contrib.auth.forms import UserCreationForm
-import re
 import datetime
+import re
+
+from django import forms
 from django.contrib.auth.hashers import make_password
-from django.core.mail import send_mail
-from django.utils.crypto import get_random_string
+from django.db.models import Q
+
+from apps.client.models import CLIENT
+from apps.opportunity.models import Opportunity
 from apps.project.models import IT_Project
+from apps.users.models import MyUser
 
 
 class ChangeStatus(forms.ModelForm):
@@ -41,7 +40,7 @@ class AddProjManager(forms.ModelForm):
 
 class CreateClientForm(forms.ModelForm):
     opportunity = forms.ModelChoiceField(
-        queryset=Opportunity.objects.filter(status='Approved'),
+        queryset=Opportunity.objects.filter(Q(status='Approved') & Q(client__isnull='True')),
         required=True
     )
 
@@ -64,7 +63,8 @@ class CreateClientForm(forms.ModelForm):
     )
     project_name = forms.CharField(
         max_length=100,
-        label='Project Name'
+        label='Project Name',
+        required='True'
     )
     project_description = forms.CharField(
         max_length=10000,
@@ -146,6 +146,13 @@ class CreateClientForm(forms.ModelForm):
         else:
             return project_end_date
 
+    def clean(self):
+        amount = self.cleaned_data.get('amount')
+        if amount < 0:
+            raise forms.ValidationError("Amount should be greater than 0")
+        else:
+            return amount
+
     def save(self, commit=True):
         instance = super().save(commit=False)
         # creating username
@@ -190,5 +197,120 @@ class CreateClientForm(forms.ModelForm):
         opportunity_modify = Opportunity.objects.get(pk=opportunity.pk)
         opportunity_modify.price = amount
         opportunity_modify.client = client
+        opportunity_modify.project_description = project_description
+        opportunity_modify.project_start_date = project_start_date
+        opportunity_modify.project_end_date = project_end_date
+        opportunity_modify.project_total_working_hr = project_total_working_hr
         opportunity_modify.save()
+        return instance
+
+
+class AddExistingClientOpportunity(forms.ModelForm):
+
+    client = forms.ModelChoiceField(
+        queryset=CLIENT.objects.all(),
+        required=True
+    )
+    project_start_date = forms.DateField(
+        widget=forms.TextInput(attrs={'type': 'date', 'class': ''}),
+        label='Project Start Date'
+    )
+
+    project_end_date = forms.DateField(
+        widget=forms.TextInput(attrs={'type': 'date', 'class': ''}),
+        label='Project End Date'
+    )
+    project_total_working_hr = forms.IntegerField(
+        label='Project Total Working Hours'
+    )
+
+    project_name = forms.CharField(
+        max_length=100,
+        label='Project Name',
+        required='True'
+    )
+    project_description = forms.CharField(
+        max_length=10000,
+        widget=forms.Textarea(),
+        label='Project Description'
+    )
+    opportunity = forms.ModelChoiceField(
+        queryset=Opportunity.objects.filter(Q(status='Approved') & Q(client__isnull='True')),
+        required='True'
+    )
+
+    amount = forms.IntegerField(
+        required=True
+    )
+
+    def clean_project_name(self):
+        project_name = self.cleaned_data.get('project_name').strip()
+        project_name = re.findall(r'\S+', project_name)
+        # print('Print project_name')
+        # print(project_name)
+        project_name = ' '.join(project_name)
+        return project_name
+
+    def clean_project_start_date(self):
+        project_start_date = self.cleaned_data.get('project_start_date')
+        if project_start_date < datetime.date.today():
+            raise forms.ValidationError("Please select a future date or current date")
+        else:
+            return project_start_date
+
+    def clean_project_end_date(self):
+        project_end_date = self.cleaned_data.get('project_end_date')
+        if project_end_date < datetime.date.today():
+            raise forms.ValidationError("Please select a future date or current date")
+        else:
+            return project_end_date
+
+    def clean(self):
+        amount = self.cleaned_data.get('amount')
+        if amount < 0:
+            raise forms.ValidationError("Amount should be greater than 0")
+        else:
+            return amount
+
+    class Meta:
+        model = Opportunity
+        fields = (
+            'client',
+            'project_start_date',
+            'project_end_date',
+            'project_name',
+            'project_description',
+            'project_total_working_hr'
+        )
+
+    def save(self, commit=True):
+        instance = super().save(commit=False)
+        client = instance.client
+        project_start_date = instance.project_start_date
+        project_end_date = instance.project_end_date
+        project_name = instance.project_name
+        project_description = instance.project_description
+        project_total_working_hr = instance.project_total_working_hr
+        opportunity = self.cleaned_data.get('opportunity')
+        project_description = instance.project_description
+        opportunity_modify = Opportunity.objects.get(id=opportunity.pk)
+        opportunity_modify.client = client
+        opportunity_modify.project_name = project_name
+        opportunity_modify.project_description = project_description
+        opportunity_modify.project_start_date = project_start_date
+        opportunity_modify.project_end_date = project_end_date
+        opportunity_modify.project_total_working_hr = project_total_working_hr
+        opportunity_modify.amount = self.cleaned_data.get('amount')
+        opportunity_modify.save()
+
+        project = IT_Project.objects.create(
+            project_name=project_name,
+            project_description=project_description,
+            project_start_date_time=project_start_date,
+            project_end_date_time=project_end_date,
+            project_total_working_hr=project_total_working_hr,
+            opportunity=opportunity,
+        )
+        project.save()
+
         return instance
