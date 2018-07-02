@@ -49,6 +49,9 @@
                                 </div>
                             </fieldset>
                         </form><br>
+                          <form action="{% url 'attendance:show_attendance' %}" method="get">
+                              <button type="submit" name="excel">Get Excel</button>
+                          </form>
                         <table id="datatable"  class="table table-striped table-bordered">
                             <thead>
                                 <tr>
