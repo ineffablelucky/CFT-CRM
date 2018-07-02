@@ -9,7 +9,7 @@ from ..attendance.models import Attendance, LeaveRequest
 from ..attendance.models import LeaveRequest
 from django.db.models import Q
 from ..users.models import MyUser
-import xlwt
+import csv
 
 
 import datetime
@@ -188,7 +188,7 @@ class ShowAttendance(LoginRequiredMixin, PermissionRequiredMixin, ListView):
         p = [x for x in p if x not in l]
         for i in range(len(p)):
             if MyUser.objects.filter(Q(id=p[i]) & Q(date_of_joining__lte=datetime.date.today()-delta)):
-                print(MyUser.objects.filter(Q(id=p[i]) & Q(date_of_joining__lte=datetime.date.today() - delta)))
+
                 absent = Attendance.objects.create(user_id=p[i], date=datetime.date.today()-delta, status='absent')
                 # if LeaveRequest.objects.get(Q(user_id=p[i]) & Q(date__gte=datetime.date.today()-delta)
                 #                             & Q(end_date__lte=datetime.date.today()-delta)
@@ -211,58 +211,6 @@ class ShowAttendance(LoginRequiredMixin, PermissionRequiredMixin, ListView):
             queryset = Attendance.objects.filter(date=datetime.date.today() - datetime.timedelta(days=1))
         if from_date is not None and to_date is not None:
             queryset = Attendance.objects.filter(Q(date__gte=from_date) & Q(date__lte=to_date))
-
-        if self.request.GET.get('excel', None) is not None:
-            print("entered post")
-            # get get data date, other data
-            # mke queryset
-
-            print("Entered excel function")
-            # content-type of response
-            response = HttpResponse(content_type='application/vnd.ms-excel')
-
-            # decide file name
-            response['Content-Disposition'] = 'attachment; filename="ThePythonDjango.xls"'
-
-            # creating workbook
-            wb = xlwt.Workbook(encoding='utf-8')
-
-            # adding sheet
-            ws = wb.add_sheet("sheet1")
-
-            # Sheet header, first row
-            row_num = 0
-
-            font_style = xlwt.XFStyle()
-            # headers are bold
-            font_style.font.bold = True
-
-            # column header names, you can use your own headers here
-            columns = ['Employee Id', 'Department', 'Name', 'Clock-in', 'Clock-out', 'Late', 'Attendance']
-
-            # write column headers in sheet
-            for col_num in range(len(columns)):
-                ws.write(row_num, col_num, columns[col_num], font_style)
-
-            # Sheet body, remaining rows
-            font_style = xlwt.XFStyle()
-
-            # get your data, from database or from a text file...
-
-            for my_row in queryset:
-                print("entered my_row")
-                row_num = row_num + 1
-                print(my_row.user_id, row_num)
-                ws.write(row_num, 0, my_row.user_id, font_style)
-                ws.write(row_num, 1, my_row.user.department, font_style)
-                ws.write(row_num, 2, my_row.time_in, font_style)
-                ws.write(row_num, 3, my_row.time_out, font_style)
-                ws.write(row_num, 4, my_row.note, font_style)
-                ws.write(row_num, 5, my_row.status, font_style)
-
-            wb.save(response)
-
-            return response
 
         return queryset
 
@@ -342,53 +290,68 @@ class ShowAbsentEmployee(LoginRequiredMixin, PermissionRequiredMixin, ListView):
 """
 
 
-def download_excel_data(request, obj):
+def download_excel_data(request):
+    print(request.GET)
+    # date = datetime.datetime(year=kwargs['year'], month=kwargs['month'], day=kwargs['day'])
+    attendance = Attendance.objects.filter(date=date)
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="somefilename.csv"'
 
-    # get get data date, other data
-    #mke queryset
-
-    print("Entered excel function")
-    # content-type of response
-    response = HttpResponse(content_type='application/vnd.ms-excel')
-
-    # decide file name
-    response['Content-Disposition'] = 'attachment; filename="ThePythonDjango.xls"'
-
-    # creating workbook
-    wb = xlwt.Workbook(encoding='utf-8')
-
-    # adding sheet
-    ws = wb.add_sheet("sheet1")
-
-    # Sheet header, first row
-    row_num = 0
-
-    font_style = xlwt.XFStyle()
-    # headers are bold
-    font_style.font.bold = True
-
-    # column header names, you can use your own headers here
-    columns = ['Employee Id', 'Department', 'Name', 'Clock-in', 'Clock-out', 'Late', 'Attendance']
-
-    # write column headers in sheet
-    for col_num in range(len(columns)):
-        ws.write(row_num, col_num, columns[col_num], font_style)
-
-    # Sheet body, remaining rows
-    font_style = xlwt.XFStyle()
-
-    # get your data, from database or from a text file...
-
-    for my_row in obj:
-        row_num = row_num + 1
-        ws.write(row_num, 0, my_row.user_id, font_style)
-        ws.write(row_num, 1, my_row.user.department, font_style)
-        ws.write(row_num, 2, my_row.time_in, font_style)
-        ws.write(row_num, 3, my_row.time_out, font_style)
-        ws.write(row_num, 4, my_row.note, font_style)
-        ws.write(row_num, 5, my_row.status, font_style)
-
-    wb.save(response)
+    writer = csv.writer(response)
+    writer.writerow(['Date', 'Employee Id', 'Department', 'Name', 'Clock-in', 'Clock-out', 'Late', 'Attendance'])
+    for a in attendance:
+        writer.writerow([a.date, a.user_id, a.user.department, a.user.first_name, a.time_in, a.time_out, a.note, a.status])
 
     return response
 
+
+# def download_excel_data(request):
+#
+#     # get get data date, other data
+#     #mke queryset
+#
+#     print("Entered excel function")
+#     # content-type of response
+#     response = HttpResponse(content_type='application/vnd.ms-excel')
+#
+#     # decide file name
+#     response['Content-Disposition'] = 'attachment; filename="ThePythonDjango.xls"'
+#
+#     # creating workbook
+#     wb = xlwt.Workbook(encoding='utf-8')
+#
+#     # adding sheet
+#     ws = wb.add_sheet("sheet1")
+#
+#     # Sheet header, first row
+#     row_num = 0
+#
+#     font_style = xlwt.XFStyle()
+#     # headers are bold
+#     font_style.font.bold = True
+#
+#     # column header names, you can use your own headers here
+#     columns = ['Employee Id', 'Department', 'Name', 'Clock-in', 'Clock-out', 'Late', 'Attendance']
+#
+#     # write column headers in sheet
+#     for col_num in range(len(columns)):
+#         ws.write(row_num, col_num, columns[col_num], font_style)
+#
+#     # Sheet body, remaining rows
+#     font_style = xlwt.XFStyle()
+#
+#     # get your data, from database or from a text file...
+#
+#     for my_row in obj:
+#         row_num = row_num + 1
+#         ws.write(row_num, 0, my_row.user_id, font_style)
+#         ws.write(row_num, 1, my_row.user.department, font_style)
+#         ws.write(row_num, 2, my_row.time_in, font_style)
+#         ws.write(row_num, 3, my_row.time_out, font_style)
+#         ws.write(row_num, 4, my_row.note, font_style)
+#         ws.write(row_num, 5, my_row.status, font_style)
+#
+#     wb.save(response)
+#
+#     return response
+#
