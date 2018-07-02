@@ -17,7 +17,10 @@ from django.db.models import Q
 class TaskList(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     model = Task
     context_object_name = 'task_list'
-    permission_required = ('task.view_task', 'users.view_users',)
+    permission_required = (
+        'task.view_task',
+        #'users.view_users',
+    )
     template_name = 'task_manager_list.html'
 
     def get_queryset(self):
@@ -99,7 +102,10 @@ class Edit_Task(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
 
 
 class Details_Task(LoginRequiredMixin, PermissionRequiredMixin, DetailView,):
-    permission_required = ('task.view_task', 'users.view_users',)
+    permission_required = (
+        'task.view_task',
+        #'users.view_users',
+    )
     model = Task
     context_object_name = 'task_list'
     template_name = "task_details.html"
@@ -198,9 +204,6 @@ def end(request, pk):
             #     tmp.save()
 
             else:
-                print("*********************************")
-                print(tmp.id)
-
                 new1 = Time_Entry.objects.get(Q(id=(tmp.id-1)) & Q(task=tas))
                 #print(new1)
                 h=new1.time_spent.hour

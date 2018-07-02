@@ -25,17 +25,16 @@ from django.contrib.auth.decorators import permission_required, login_required
 
 class LeadDetails(LoginRequiredMixin, PermissionRequiredMixin, ListView,FormView):
     form_class = DetailForm
-    permission_required = ('leads.view_leads', 'users.view_users')
+    permission_required = (
+        'leads.view_leads',
+        #'users.view_users',
+    )
     model = LEADS
     fields='__all__'
     template_name = 'leads/details.html'
     def get_queryset(self):
         queryset=LEADS.objects.filter(assigned_boolean=False)
         return queryset
-
-
-
-
 
 
 class LeadCreate(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
