@@ -1,4 +1,4 @@
-{% extends 'static/production/index.html' %}
+{% extends 'apps/users/templates/users/base.html' %}}
 
 
 
@@ -13,13 +13,17 @@
         <div>
             {% for client in clients %}
             <div >
-                <a href=""></a>
+                <a href="{% url ''%}">
                     <p>
                         Company Name: {{ client.company_name }}
                     </p>
                     <p>
                         Email Id: {{ client.client_user.email }}
                     </p>
+                    <p>
+                        Company Address : {{ client.address }}
+                    </p>
+                </a>
             </div>
             <hr/>
             <hr/>
