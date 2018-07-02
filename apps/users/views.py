@@ -16,8 +16,8 @@ from django.urls import reverse
 def index(request):
     return render(request, 'users/index.html')
 
-# @login_required
-# @permission_required('users.add_myuser', raise_exception=True)
+@login_required
+@permission_required('users.add_myuser', raise_exception=True)
 def register(request):
 
     if request.method == 'POST':
@@ -34,7 +34,7 @@ def register(request):
 
 def auth_login(request):
     if request.user.is_authenticated:
-        return render(request, 'users/welcome.html')
+        return redirect(reverse('users:welcome'))
 
     elif request.method == 'POST':
         username = request.POST.get('email_or_username')
@@ -43,14 +43,15 @@ def auth_login(request):
         user = authenticate(username=username, password=password)
         if user:
             login(request, user)
-        return redirect('welcome/')
+        return redirect(reverse('users:welcome'))
     return render(request, 'users/registration/Login/login.html')
 
 def admin_login(request):
     if request.user.is_authenticated:
         if request.user.designation == 'Employee':
-            return HttpResponse('You are not autherized to access this page!')
-        return render(request, 'users/base.html')
+            logout(request)
+            return redirect(reverse('users:admin_login'))
+        return redirect(reverse('users:admin_welcome'))
 
     elif request.method == 'POST':
         username = request.POST.get('email_or_username')
@@ -59,9 +60,7 @@ def admin_login(request):
         user = authenticate(username=username, password=password)
         if user:
             login(request, user)
-            if request.user.designation == 'Employee':
-                return HttpResponse('You are not autherized to access this page!')
-        return redirect(reverse('users:tmp'))
+        return redirect(reverse('users:admin_welcome'))
     return render(request, 'users/registration/Login/admin_login.html')
 
 

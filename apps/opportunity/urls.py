@@ -13,4 +13,9 @@ urlpatterns = [
     path('declined_leads', views.D_Leads.as_view(), name='declined_leads'),
     path('<int:pk>/meeting/', include('apps.meeting.urls', namespace='meeting')),
     path('add_client/', views.CreateClientView.as_view(), name='create_client'),
+    path(
+        'add_opportunity_existing_client/',
+        views.UpdateClientOpportunityView.as_view(),
+        name='add_opportunity_existing_client'),
+    path('client_list/', views.ListClient.as_view(), name='client_list'),
 ]
