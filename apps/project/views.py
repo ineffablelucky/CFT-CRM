@@ -18,6 +18,8 @@ class ProjectList(LoginRequiredMixin, PermissionRequiredMixin, ListView):
         queryset = IT_Project.objects.filter(opportunity=None)
         # print(queryset)
         return queryset
+
+
 #display list of opportunities converted into project
 class OppProjectList(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     permission_required = ('project.view_it_project',)
@@ -25,10 +27,11 @@ class OppProjectList(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     template_name = 'projects.html'
 
     def get_queryset(self):
-        queryset = Opportunity.objects.filter(Q(status = 'Approved') & Q(assigned_to = self.request.user))
-        # print(queryset)
+        queryset = IT_Project.objects.filter(Q(opportunity__isnull=False) )
+        print(queryset)
         # queryset = IT_Project.objects.filter(Q(opportunity is not None) & Q(assigned_to = self.request.user))
         return queryset
+
 
 #display projects assigned to employee
 class Employee_Project_List(LoginRequiredMixin,PermissionRequiredMixin, ListView):
