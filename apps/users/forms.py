@@ -201,11 +201,9 @@ class RegistrationForm(UserCreationForm):
         if data == None:
             pass
         else:
-            data = str(data)
-            print(data)
             if re.search('[+-]', data):
                 raise forms.ValidationError("'+', '-' are not allowed")
-            elif len(data) == 10:
+            elif re.search('^[0-9]+$') & len(data) == 10:
                 return data
             else:
                 raise forms.ValidationError("Please enter a 10 digit number")
@@ -235,7 +233,7 @@ class RegistrationForm(UserCreationForm):
 
 
 
-    email = forms.CharField(
+    email = forms.EmailField(
         label='Email ',
         widget = forms.TextInput(),
     )
@@ -257,7 +255,7 @@ class RegistrationForm(UserCreationForm):
         required = False,
     )
 
-    contact = forms.IntegerField(
+    contact = forms.CharField(
         label='Contact ',
         widget=forms.NumberInput(),
         required = False,

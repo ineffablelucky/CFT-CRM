@@ -157,7 +157,7 @@ def entry(request, pk):
                                           task_start_date_time=datetime.datetime.now(),
                                           )
             a.save()
-            # print(tas)
+            # print(tas)task:task-detail
             tas.task_current_state = 'running'
             tas.save()
             return redirect(reverse('task:task-details', kwargs={'pk' : tas.id}))
