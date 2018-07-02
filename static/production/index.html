@@ -38,7 +38,10 @@
   </head>
 
   <body class="nav-md">
-  {% if user.is_authenticated %}
+
+  {% if user.is_authenticated and user.designation != 'Employee' %}
+
+
     <div class="container body">
       <div class="main_container">
 
@@ -119,6 +122,7 @@
                       <li><a href="{% url 'opportunity:assign_lead' %}">Assigned Leads</a></li>
                       <li><a href="{% url 'opportunity:closed_leads' %}">Closed Leads</a></li>
                       <li><a href="{% url 'opportunity:declined_leads' %}">Declined Leads</a></li>
+                      <li><a href="{% url 'opportunity:client_list' %}">Client List</a></li>
                     </ul>
                   </li>
                   {% endblock lead_management %}
@@ -218,7 +222,7 @@
               <ul class="nav navbar-nav navbar-right">
                 <li class="">
                   <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    <img src="images/img.jpg" alt="">John Doe
+                    <img src="images/img.jpg" alt="">{% block name %}John Doe {% endblock %}
                     <span class=" fa fa-angle-down"></span>
                   </a>
                   <ul class="dropdown-menu dropdown-usermenu pull-right">
@@ -707,7 +711,7 @@
                           <div class="block_content">
                             <h2 class="title">
                                               <a>Who Needs Sundance When You’ve Got&nbsp;Crowdfunding?</a>
-                                          </h2>
+                                          </h2>kapilarj
                             <div class="byline">
                               <span>13 hours ago</span> by <a>Jane Smith</a>
                             </div>
@@ -1061,9 +1065,12 @@
   {% block extra-script %}
   {% endblock extra-script %}
 
-    {% else %}
-    <h3>You are not authorized user. Please <a href="{% url 'users:index' %}">login </a>first to acces this page!</h3>
-    {% endif %}
+  {% else %}
+  {% block else_condition %}
+    <!--<h3>You are not authorized user. Please <a href="{% url 'users:index' %}">login </a>first to acces this page!</h3>-->
+  {% endblock else_condition %}
+  {% endif %}
+
   </body>
 
 </html>
