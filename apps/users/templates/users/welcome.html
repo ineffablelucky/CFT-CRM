@@ -61,7 +61,8 @@
     {% else %}
         <h2>Please enter correct details</h2>
         <p>Login again</p>
-        <a href="{% url 'users:login' %}"><button type="button">Login</button></a><br>
+        <a href="{% url 'users:login' %}"><button type="button">Employee</button></a>
+        <a href="{% url 'users:admin_login' %}"><button>Admin</button></a>
     {% endif %}
 
 </body>
