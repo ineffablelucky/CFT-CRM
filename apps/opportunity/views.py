@@ -8,6 +8,19 @@ from apps.opportunity.forms import ChangeStatus, AddProjManager, CreateClientFor
 from django.urls import reverse, reverse_lazy
 from django.db.models import Q
 from apps.client.models import CLIENT
+import re
+from django.core.mail import  send_mail
+
+
+def sendEmail(subject, message, sender, to):
+    send_mail(
+        subject,
+        message,
+        sender,
+        [to],
+        fail_silently=True
+    )
+
 
 class ListOppo(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     permission_required = ('opportunity.view_opportunity',)
@@ -27,7 +40,9 @@ class ListOppo(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     #     context['form'] = AddProjManager()
     #     return context
 
-#change status
+# change status
+
+
 class C_Status(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     permission_required = (
         'opportunity.change_opportunity',
@@ -38,7 +53,9 @@ class C_Status(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     form_class = ChangeStatus
     success_url = reverse_lazy('opportunity:list_oppo')
 
-#assigned leads
+# assigned leads
+
+
 class A_Leads(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     permission_required = (
         'opportunity.change_opportunity',
@@ -62,7 +79,9 @@ class A_Leads(LoginRequiredMixin, PermissionRequiredMixin, ListView):
         context['form'] = AddProjManager()
         return context
 
-#assign project manager
+# assign project manager
+
+
 class A_PManager(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     permission_required = (
         'opportunity.change_opportunity',
@@ -73,10 +92,12 @@ class A_PManager(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     )
     model = Opportunity
     form_class = AddProjManager
-    #template_name = 'opportunity/assigned_leads.html'
+    # template_name = 'opportunity/assigned_leads.html'
     success_url = reverse_lazy('opportunity:assign_lead')
 
-#closed leads
+# closed leads
+
+
 class C_Leads(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     permission_required = (
         'opportunity.change_opportunity',
@@ -97,7 +118,7 @@ class C_Leads(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     #     context = super().get_context_data(**kwargs)
     #     context['oppo_id'] =
 
-#declined leads
+# declined leads
 
 
 class D_Leads(LoginRequiredMixin, PermissionRequiredMixin, ListView):
@@ -120,5 +141,22 @@ class D_Leads(LoginRequiredMixin, PermissionRequiredMixin, ListView):
 class CreateClientView(LoginRequiredMixin, CreateView):
     form_class = CreateClientForm
     template_name = 'opportunity/create_client.html'
+    success_url = '/'
     print('Hello world')
+
+    def form_valid(self, form):
+        temp = super().form_valid(form)
+        print('Form valid')
+        print(type(temp))
+        print(temp.__dict__)
+        email = form.cleaned_data.get('email')
+        print('email')
+        sender = 'rajeshjha2097@gmail.com'
+        subject = 'This is registration confirmation email'
+        username = '_'.join(re.findall(r'\S+', form.cleaned_data.get('company_name')))
+        key = username + '1234'
+        message = "Your Login credentials are : username - " + username + " and password is - " + key + "."
+        sendEmail(subject, message, sender, email)
+        print(key)
+        return temp
 
