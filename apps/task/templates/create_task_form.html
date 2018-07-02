@@ -1,12 +1,3 @@
-<!--<!DOCTYPE html>-->
-<!--<html lang="en">-->
-<!--<head>-->
-    <!--<meta charset="UTF-8">-->
-    <!--<title>create task</title>-->
-<!--</head>-->
-<!--<body>-->
-
-
 
 {% block page-content %}
             {% if user.is_authenticated %}
@@ -15,6 +6,9 @@
                 <fieldset>
                     <legend>Create New Task</legend>
                     {% csrf_token %}
+                        <div>
+
+                        </div>
                         <div >
                             {{ form.project.label }}
                             {{ form.project }}

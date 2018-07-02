@@ -57,6 +57,11 @@ class TaskCreate(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     #     context['project_id'] = self.kwargs.get('pk')
     #     print(context)
     #     return None
+    def form_valid(self, form):
+        """If the form is valid, save the associated model."""
+        print(self.request.POST)
+        self.object = form.save()
+        return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -65,8 +70,8 @@ class TaskCreate(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
         project_id = self.request.GET.get('project_id')
 
         # print(self.request.GET)
-        form.fields['project'].queryset = IT_Project.objects.filter(pk=project_id)
-
+        form.fields['project'].queryset = IT_Project.objects.get(pk=project_id)
+        # form.fields['hidden_project_id'].initial = project_id
         return context
     #
     #     return None
