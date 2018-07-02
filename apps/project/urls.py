@@ -8,7 +8,7 @@ app_name = 'project'
 
 urlpatterns = [
 
-    path('', ProjectList.as_view(template_name="project_manager_list.html"), name="project_manager_list"),
+    path('', ProjectList.as_view(), name="project_manager_list"),
     path('opp/', OppProjectList.as_view(), name='opportunity-projects'),
 
     path('add/', ProjectCreate.as_view(), name='project-add'),

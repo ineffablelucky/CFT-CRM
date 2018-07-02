@@ -61,7 +61,7 @@ class A_Leads(LoginRequiredMixin, PermissionRequiredMixin, ListView):
         'opportunity.change_opportunity',
         'opportunity.add_opportunity',
         'opportunity.delete_opportunity',
-        'users.view_users',
+        #'users.view_users',
         'opportunity.view_opportunity',
         'meeting.view_meeting',
     )
@@ -87,7 +87,7 @@ class A_PManager(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
         'opportunity.change_opportunity',
         'opportunity.add_opportunity',
         'opportunity.delete_opportunity',
-        'users.view_users',
+        #'users.view_users',
         'opportunity.view_opportunity',
     )
     model = Opportunity
@@ -103,7 +103,7 @@ class C_Leads(LoginRequiredMixin, PermissionRequiredMixin, ListView):
         'opportunity.change_opportunity',
         'opportunity.add_opportunity',
         'opportunity.delete_opportunity',
-        'users.view_users',
+        #'users.view_users',
         'opportunity.view_opportunity',
     )
     model = Opportunity
@@ -126,7 +126,7 @@ class D_Leads(LoginRequiredMixin, PermissionRequiredMixin, ListView):
         'opportunity.change_opportunity',
         'opportunity.add_opportunity',
         'opportunity.delete_opportunity',
-        'users.view_users',
+        #'users.view_users',
         'opportunity.view_opportunity',
     )
     model = Opportunity

@@ -153,21 +153,21 @@ class CreateProjectForm(ModelForm):
     #     else:
     #         pass
 
-    def clean_project_name(self):
-        data = self.cleaned_data.get('project_name')
-        if re.match('^\w*$', data):
-        #if re.match(r'^[-a-zA-Z0-9_]+$',data):
-            return data
-        else:
-            raise forms.ValidationError("Only alphabets and numbers are allowed")
-
-    def clean_project_description(self):
-        data = self.cleaned_data.get('project_description')
-        if re.match('^\w*$', data):
-        #if re.match(r'^[-a-zA-Z0-9_]+$',data):
-            return data
-        else:
-            raise forms.ValidationError("Only alphabets and numbers are allowed")
+    # def clean_project_name(self):
+    #     data = self.cleaned_data.get('project_name')
+    #     if re.match('^\w*$', data):
+    #     #if re.match(r'^[-a-zA-Z0-9_]+$',data):
+    #         return data
+    #     else:
+    #         raise forms.ValidationError("Only alphabets and numbers are allowed")
+    #
+    # def clean_project_description(self):
+    #     data = self.cleaned_data.get('project_description')
+    #     if re.match('^\w*$', data):
+    #     #if re.match(r'^[-a-zA-Z0-9_]+$',data):
+    #         return data
+    #     else:
+    #         raise forms.ValidationError("Only alphabets and numbers are allowed")
 
 
     def clean_project_price(self):
