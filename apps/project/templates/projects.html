@@ -3,10 +3,10 @@
 <!--<head>-->
     <!--<meta charset="UTF-8">-->
 
-{% extends 'static/production/index.html' %}
+{% extends 'apps/users/templates/users/base.html' %}
 
 
-    <title>{% block title %} Company Projects{% endblock title %}</title>
+    <title>{% block title %} Opportunities to Project {% endblock title %}</title>
 
 {% block extra-stylesheets %}
 <style>
@@ -59,7 +59,7 @@
                       <div class="x_content">
                         <!--<h1>Hi, Welcome to Project Manager's Project List!</h1><hr>-->
                         {% if user.is_authenticated %}
-                        <!--{{ user.username }}-->
+
 
                             <table class="table table-striped projects">
                                 <thead>
@@ -81,8 +81,8 @@
                                                 <a href="{% url 'task:manager-task-view' p.id %}">{{ p.project_name }}</a>
                                             </td>
                                             <!--<td>{{ p.project_description}}</td>-->
-                                            <td>{{ p.project_start_date_time }}</td>
-                                            <td>{{ p.project_end_date_time }}</td>
+                                            <td>{{ p.project_start_date }}</td>
+                                            <td>{{ p.project_end_date }}</td>
                                             <td class="project_progress">
                                                 <div class="progress progress_sm">
                                                      <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="57"></div>
@@ -122,7 +122,7 @@
         $('.viewBtn').click(function(event){
             event.preventDefault();
             var id = $(this).attr('data-id');
-            $.get( 'details/1/'  , function(data){
+            $.get( 'details/' + id   , function(data){
                 $('.modal-body').html(data);
             });
         });

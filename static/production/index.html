@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="icon" href="images/favicon.ico" type="image/ico" />
 
-    <title>{% block title %} Gentelella Alela! {% endblock title %}</title>
+    <title>{% block title %} CFT Admin! {% endblock title %}</title>
 
     {% block stylesheets %}
     <!-- Bootstrap -->
@@ -38,6 +38,7 @@
   </head>
 
   <body class="nav-md">
+  {% if user.is_authenticated %}
     <div class="container body">
       <div class="main_container">
 
@@ -45,7 +46,9 @@
         <div class="col-md-3 left_col">
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
-              <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>Gentelella Alela!</span></a>
+              {% block home_link %}
+              <a href="{% url 'users:about' %}" class="site_title"><i class="fa fa-paw"></i> <span>CFT Admin!</span></a>
+              {% endblock home_link %}
             </div>
 
             <div class="clearfix"></div>
@@ -57,7 +60,7 @@
               </div>
               <div class="profile_info">
                 <span>Welcome,</span>
-                <h2>John Doe</h2>
+                <h2>{% block username %} John Doe {% endblock %}</h2>
               </div>
             </div>
             <!-- /menu profile quick info -->
@@ -69,13 +72,18 @@
               <div class="menu_section">
                 <h3>General</h3>
                 <ul class="nav side-menu">
+
+                  {% block account_management %}
                   <li><a><i class="fa fa-home"></i> Account Management <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="{% url 'salary_percentages:salary' %}">Salary Management</a></li>
-                      <li><a href="index2.html">Client Billing</a></li>
+                      <li><a href="#">Client Billing</a></li>
                       <!--<li><a href="index3.html">Dashboard3</a></li>-->
                     </ul>
                   </li>
+                  {% endblock account_management %}
+
+                 {% block project_management %}
                   <li><a href="{% url 'project:project_manager_list' %}"><i class="fa fa-edit"></i> Project Management </a>
                     <!--<ul class="nav child_menu">-->
                       <!--<li><a href="form.html">General Form</a></li>-->
@@ -86,6 +94,9 @@
                       <!--<li><a href="form_buttons.html">Form Buttons</a></li>-->
                     <!--</ul>-->
                   </li>
+                  {% endblock project_management %}
+
+                  {% block hr_management %}
                   <li><a><i class="fa fa-desktop"></i> HR Management <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="{% url 'attendance:show_attendance' %}">Attendance Management</a></li>
@@ -99,6 +110,9 @@
                       <!--<li><a href="calendar.html">Calendar</a></li>-->
                     </ul>
                   </li>
+                  {% endblock hr_management %}
+
+                  {% block lead_management %}
                   <li><a><i class="fa fa-table"></i> Lead Management <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="{% url 'leads:LeadDetails' %}">New Leads</a></li>
@@ -107,6 +121,8 @@
                       <li><a href="{% url 'opportunity:declined_leads' %}">Declined Leads</a></li>
                     </ul>
                   </li>
+                  {% endblock lead_management %}
+
                   <li><a><i class="fa fa-bar-chart-o"></i> Reporting </a>
                     <!--<ul class="nav child_menu">-->
                       <!--<li><a href="chartjs.html">Chart JS</a></li>-->
@@ -1044,6 +1060,10 @@
 
   {% block extra-script %}
   {% endblock extra-script %}
-	
+
+    {% else %}
+    <h3>You are not authorized user. Please <a href="{% url 'users:index' %}">login </a>first to acces this page!</h3>
+    {% endif %}
   </body>
+
 </html>

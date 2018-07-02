@@ -11,13 +11,13 @@ from django.utils.crypto import get_random_string
 from django.urls.exceptions import Http404
 from django.http import HttpResponse
 import re
-
+from django.urls import reverse
 
 def index(request):
     return render(request, 'users/index.html')
 
-@login_required
-@permission_required('users.add_myuser', raise_exception=True)
+# @login_required
+# @permission_required('users.add_myuser', raise_exception=True)
 def register(request):
 
     if request.method == 'POST':
@@ -33,7 +33,10 @@ def register(request):
 
 
 def auth_login(request):
-    if request.method == 'POST':
+    if request.user.is_authenticated:
+        return render(request, 'users/welcome.html')
+
+    elif request.method == 'POST':
         username = request.POST.get('email_or_username')
         password = request.POST.get('password')
 
@@ -41,8 +44,26 @@ def auth_login(request):
         if user:
             login(request, user)
         return redirect('welcome/')
-    else:
-        return render(request, 'users/registration/Login/login.html')
+    return render(request, 'users/registration/Login/login.html')
+
+def admin_login(request):
+    if request.user.is_authenticated:
+        if request.user.designation == 'Employee':
+            return HttpResponse('You are not autherized to access this page!')
+        return render(request, 'users/base.html')
+
+    elif request.method == 'POST':
+        username = request.POST.get('email_or_username')
+        password = request.POST.get('password')
+
+        user = authenticate(username=username, password=password)
+        if user:
+            login(request, user)
+            if request.user.designation == 'Employee':
+                return HttpResponse('You are not autherized to access this page!')
+        return redirect(reverse('users:tmp'))
+    return render(request, 'users/registration/Login/admin_login.html')
+
 
 def lout(request):
     logout(request)

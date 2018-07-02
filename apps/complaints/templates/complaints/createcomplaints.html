@@ -20,9 +20,8 @@
                     <div>
                         {{ form.againstEmp.label}}
                         {{ form.againstEmp }}
-                        <select>
+                        {{form.againstEmp1}}
 
-                        </select>
 
                         {{ form.againstEmp.errors }}
                     </div><br/>
@@ -59,10 +58,13 @@
 
         success:function(data){
         data = JSON.parse(data['data']);
-        console.log(data[0].fields.username);
+
         console.log(typeof(data));
-        for(var i=0;i<data.length;i++){
-        $('select').append('<option value="'+data[i].fields.username+'">'+data[i].fields.username);
+        if(data.length > 0){
+            $('#id_againstEmp1').html('<option value="'+data[0].fields.username+'">'+data[0].fields.username);
+        }
+        for(var i=1;i<data.length;i++){
+        $('#id_againstEmp1').append('<option value="'+data[i].fields.username+'">'+data[i].fields.username);
 
             };
         },
