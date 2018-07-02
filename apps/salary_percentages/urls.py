@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-app_name = 'salary_percentages'
+app_name = "salary_percentages"
 
 urlpatterns = [
     path('', views.salary, name="salary"),

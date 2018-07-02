@@ -45,29 +45,54 @@ class Employee_Task_List(LoginRequiredMixin, PermissionRequiredMixin, ListView):
         return temp
 
 
-class TaskCreate(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
 
+class TaskCreate(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     permission_required = ('task.add_task')
     form_class = CreateTaskForm
     template_name = "create_task_form.html"
     success_url = '/project'
 
+    # def get_context_data(self, **kwargs):
+    #     context=super().get_context_data()
+    #     context['project_id'] = self.kwargs.get('pk')
+    #     print(context)
+    #     return None
+    def form_valid(self, form):
+        """If the form is valid, save the associated model."""
+        print(self.request.POST)
+        self.object = form.save()
+        return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        form = context.get('form')
+        project_id = self.request.GET.get('project_id')
+
+        # print(self.request.GET)
+        form.fields['project'].queryset = IT_Project.objects.get(pk=project_id)
+        # form.fields['hidden_project_id'].initial = project_id
+        return context
+    #
+    #     return None
+    # def get_queryset(self):
+    #     queryset = Task.objects.filter(project__id=self.kwargs.get('pk'))
+    #     print(queryset)
+    #     return None
+    #
     # def get_form_kwargs(self):
     #     kwargs = super().get_form_kwargs()
-    #     print(self.kwargs)
-    #     kwargs.update({'project_id': self.kwargs.get('pk')})
-    #
+    #     print("Entered get form")
+    #     print(self.request.POST)
+    #     print("id")
+    #     print(id)
+    #     kwargs.update({'project_name': id})
     #     return kwargs
 
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     context['project_id'] = self.kwargs.get('pk')
-    #
-    #     return context
-
-
 class Edit_Task(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+
     permission_required = ('task.change_task',)
+    model = Task
     form_class = CreateTaskForm
     template_name = "create_task_form.html"
     success_url = '/task'

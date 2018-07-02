@@ -60,7 +60,9 @@ class CTC_breakdown(models.Model):
         #    return self.basic
 
 def create_profile(sender,**kwargs):
-    if kwargs['created']:
-        CTC_breakdown.objects.create(employee=kwargs['instance'])
+    if kwargs['created'] :
+        print(kwargs.get('instance').designation)
+        if kwargs.get('instance').designation != 'Client':
+            CTC_breakdown.objects.create(employee=kwargs['instance'])
 
 post_save.connect(create_profile,sender=settings.AUTH_USER_MODEL)

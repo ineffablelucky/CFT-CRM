@@ -25,5 +25,7 @@ class CTC(LoginRequiredMixin,ListView):
          context['struct'] = Salary_calculations.objects.get(financial_year=year)
          return context
 
+#class MonthlySalary(LoginRequiredMixin):
+
 
 

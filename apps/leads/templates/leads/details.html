@@ -98,7 +98,7 @@
                                     <!--<td class="a-center ">-->
                                      <!--<input type="checkbox" class="flat" name="table_records">-->
                                     <!--</td>-->
-                                    <td ><input type="checkbox" data-id="{{ leads.id }}" class="chk_selector"></input></td>
+                                    <td ><input type="checkbox" data-id="{{ leads.id }}" class="chk_selector"></td>
                                     <td>{{leads.contact_number}}</td>
                                     <td>{{leads.company_name}}</td>
                                     <td>{{leads.contact_person}}</td>
@@ -136,6 +136,7 @@
                                 <input type="submit" value="Assign" id="ram"/></a>
                         </div>
                         </form>
+                        <a href="/media/abc.csv" download><button>Download Leads</button></a>
                         <a href="{% url 'leads:upload_csv' %}"><button>Import Leads</button></a>
                     </div>
 
@@ -191,10 +192,16 @@ $(document).ready(function() {
         });
 
     $('.edit').click(function(){
-        var id = $('.chk_selector').attr('data-id');
+        <!--var id = $('.chk_selector').attr('data-id');-->
+        <!--$.ajax({url: "../edit/" + id , success:function(data){-->
+            <!--$('.modal-body').html(data);-->
+
+        <!--}});-->
+        var input = $(this).parents('tr').children().children();
+        var tr = input[0];
+        var id =($(tr).attr('data-id'));
         $.ajax({url: "../edit/" + id , success:function(data){
             $('.modal-body').html(data);
-
         }});
     });
 

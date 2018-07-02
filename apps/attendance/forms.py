@@ -163,6 +163,10 @@ class AttendanceForm(forms.ModelForm):
         widget=forms.TextInput(attrs={'type': 'date', 'class': 'form-control has-feedback-left'}),
         label='Select Date'
     )
+    to_date = forms.DateField(
+        widget=forms.TextInput(attrs={'type': 'date', 'class': 'form-control has-feedback-left'}),
+        label='To Date'
+    )
 
     class Meta:
         model = Attendance
