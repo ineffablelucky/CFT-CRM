@@ -111,9 +111,9 @@ def upload_csv(request):
 
         lines = file_data.split("\n")
         # loop over the lines and save them in db. If error , store as string and then display
-
-        for line in lines:
-            fields = line.split(",")
+        print(len(lines))
+        for l in range(1,len(lines)):
+            fields = lines[l].split(",")
 
             data_dict = {}
             print(fields)
@@ -130,6 +130,7 @@ def upload_csv(request):
             print(data_dict)
             lead=LEADS(**data_dict)
             lead.save()
+            return HttpResponseRedirect(reverse("leads:LeadDetails"))
 
 
 

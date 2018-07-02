@@ -14,6 +14,7 @@ class createComplaints(CreateView):
 
 
 
+
 def complaints_ajax(request):
     if request.method =='GET':
         key = request.GET["name"]

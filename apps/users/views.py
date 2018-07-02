@@ -16,8 +16,8 @@ import re
 def index(request):
     return render(request, 'users/index.html')
 
-@login_required
-@permission_required('users.add_myuser', raise_exception=True)
+# @login_required
+# @permission_required('users.add_myuser', raise_exception=True)
 def register(request):
 
     if request.method == 'POST':
