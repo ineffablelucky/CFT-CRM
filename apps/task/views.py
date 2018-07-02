@@ -128,18 +128,14 @@ def entry(request, pk):
 
         if not request.user.is_authenticated:
             return HttpResponseForbidden
-        # elif Time_Entry.objects.filter(task_start_date_time=datetime.today()):
-        #     return HttpResponse("Task Already started! You can start working")
+
         else:
 
             tas = Task.objects.get(pk=pk)
-
-
             a = Time_Entry.objects.create(task=tas,
                                           task_start_date_time=datetime.datetime.now(),
                                           )
             a.save()
-            # print(tas)task:task-detail
             tas.task_current_state = 'running'
             tas.save()
             return redirect(reverse('task:task-details', kwargs={'pk' : tas.id}))
@@ -153,9 +149,7 @@ def end(request, pk):
         else:
             tas = Task.objects.get(pk=pk)
             tmp = Time_Entry.objects.filter(task=tas, task_end_date_time=None).order_by('-id').first()
-            one = datetime.datetime.now()
-            # print(type(one))
-            tmp.task_end_date_time = one
+            tmp.task_end_date_time = datetime.datetime.now()
             tmp.save()
 
             #for storing the value of time_per_session
@@ -167,6 +161,7 @@ def end(request, pk):
             #print(s)
             tmp.time_per_session = var
             tmp.save()
+
 
             #for storing the value of time spent
             # using last entry of time spent + new time_per_session entry
@@ -184,7 +179,7 @@ def end(request, pk):
                 print(tmp.id)
 
                 new1 = Time_Entry.objects.get(Q(id=(tmp.id-1)) & Q(task=tas))
-                #print(new1)
+                print(new1)
                 h=new1.time_spent.hour
                 m=new1.time_spent.minute
                 time_spent_delta = tmp.time_per_session + datetime.timedelta(hours=h, minutes=m)
@@ -193,6 +188,11 @@ def end(request, pk):
                 tmp.save()
 
             tas.task_current_state = 'stopped'
+
             tas.save()
             #print(tmp.id)
             return redirect(reverse('task:task-details', kwargs= {'pk' : tas.id}))
+
+def task_progress(request, pk):
+    pass
+
