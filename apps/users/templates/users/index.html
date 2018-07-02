@@ -10,7 +10,12 @@
 
     <h1>This is the Index page!</h1>
     <i class="fa fa-user"></i>
-    <a href="{% url 'users:login' %}"><button>Log In</button></a>
+    <div>
+        <b>Login </b>
+        <a href="{% url 'users:login' %}"><button>Employee </button></a>
+        <a href="{% url 'users:admin_login' %}"><button>Admin</button></a>
+    </div><br>
+
     <a href="{% url 'users:register' %}"><button>Register</button></a><br><br>
     <a href="{% url 'users:forgot_password' %}">Forgot Password</a>
 </body>

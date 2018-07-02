@@ -19,21 +19,12 @@ class CreateTaskForm(ModelForm):
         ('in progress', 'in progress'),
     )
 
-    # hidden_project_id = forms.CharField(widget=forms.TextInput(attrs={'type': 'hidden'}))
-
-    # project = forms.CharField(
-    #     label='PROJECT NAME',
-    #     widget=forms.TextInput(attrs={'readonly': True}))
-
-    # required=False,
-    # queryset=IT_Project.objects.all(),
-    # widget=forms.Select(),
 
 
-    project = forms.ModelChoiceField(
-        queryset=IT_Project.objects.all(),
-        widget=forms.HiddenInput(attrs={'readonly': True}), label='PROJECT NAME'
-    )
+    # project = forms.ModelChoiceField(
+    #     queryset=IT_Project.objects.all(),
+    #     widget=forms.HiddenInput(attrs={'readonly': True}), label='PROJECT NAME'
+    # )
 
     task_name = forms.CharField(
         label='TASK NAME',
@@ -49,6 +40,12 @@ class CreateTaskForm(ModelForm):
         widget=forms.Textarea()
     )
 
+
+    project = forms.ModelChoiceField(
+        queryset= IT_Project.objects.all(),
+        label='PROJECT NAME',
+        widget=forms.Select()
+    )
     employee_id = forms.ModelChoiceField(
         label='ASSIGN TO',
         # required=False,
@@ -118,17 +115,17 @@ class CreateTaskForm(ModelForm):
     #         raise forms.ValidationError("Only alphabets and numbers are allowed")
 
 
-    def save(self, commit=True):
-        print("save")
-        entry = super().save(commit=False)
-        return entry
-
-    def clean_project(self):
-        print(self.cleaned_data)
-        data = self.cleaned_data
-        # IT_Project.objects.get(pk)
-        print(data)
-        return data
+    # def save(self, commit=True):
+    #     print("save")
+    #     entry = super().save(commit=False)
+    #     return entry
+    #
+    # def clean_project(self):
+    #     print(self.cleaned_data)
+    #     data = self.cleaned_data
+    #     # IT_Project.objects.get(pk)
+    #     print(data)
+    #     return data
 
     def clean_expected_time(self):
         data = self.cleaned_data.get('expected_time')

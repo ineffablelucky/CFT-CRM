@@ -3,7 +3,7 @@
 <!--<head>-->
     <!--<meta charset="UTF-8">-->
 
-{% extends 'static/production/index.html' %}
+{% extends 'apps/users/templates/users/base.html' %}
 
 
     <title>{% block title %} Opportunities to Project {% endblock title %}</title>
@@ -81,8 +81,8 @@
                                                 <a href="{% url 'task:manager-task-view' p.id %}">{{ p.project_name }}</a>
                                             </td>
                                             <!--<td>{{ p.project_description}}</td>-->
-                                            <td>{{ p.project_start_date }}</td>
-                                            <td>{{ p.project_end_date }}</td>
+                                            <td>{{ p.project_start_date_time }}</td>
+                                            <td>{{ p.project_end_date_time }}</td>
                                             <td class="project_progress">
                                                 <div class="progress progress_sm">
                                                      <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="57"></div>
