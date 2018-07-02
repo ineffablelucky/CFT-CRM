@@ -174,7 +174,7 @@ class RegistrationForm(UserCreationForm):
 
 
 
-    email = forms.CharField(
+    email = forms.EmailField(
         label='Email ',
         widget = forms.TextInput(),
     )

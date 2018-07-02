@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="icon" href="images/favicon.ico" type="image/ico" />
 
-    <title>{% block title %} Gentelella Alela! {% endblock title %}</title>
+    <title>{% block title %} CFT Admin! {% endblock title %}</title>
 
     {% block stylesheets %}
     <!-- Bootstrap -->
@@ -38,6 +38,7 @@
   </head>
 
   <body class="nav-md">
+  {% if user.is_authenticated %}
     <div class="container body">
       <div class="main_container">
 
@@ -45,7 +46,9 @@
         <div class="col-md-3 left_col">
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
-              <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>Gentelella Alela!</span></a>
+              {% block home_link %}
+              <a href="{% url 'users:about' %}" class="site_title"><i class="fa fa-paw"></i> <span>CFT Admin!</span></a>
+              {% endblock home_link %}
             </div>
 
             <div class="clearfix"></div>
@@ -57,7 +60,7 @@
               </div>
               <div class="profile_info">
                 <span>Welcome,</span>
-                <h2>John Doe</h2>
+                <h2>{% block username %} John Doe {% endblock %}</h2>
               </div>
             </div>
             <!-- /menu profile quick info -->
@@ -1057,6 +1060,10 @@
 
   {% block extra-script %}
   {% endblock extra-script %}
-	
+
+    {% else %}
+    <h3>You are not authorized user. Please <a href="{% url 'users:index' %}">login </a>first to acces this page!</h3>
+    {% endif %}
   </body>
+
 </html>

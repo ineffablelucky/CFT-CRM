@@ -34,7 +34,7 @@ class MyUser(AbstractUser):
     contact             = models.CharField(null=True, blank=True, default=None, max_length=10 )
     salary              = models.IntegerField(null=True, blank=True, default=None)
     created_on          = models.DateTimeField(auto_now_add=True)
-    date_of_joining     = models.DateField(blank=True, null=True)
+    date_of_joining     = models.DateField(blank=True, null=True, auto_now_add=True)
     department          = models.CharField(default='NA', choices=department_choices, max_length=35)
     designation         = models.CharField(default='NA', choices=designation_choices, max_length=35)
     gender              = models.CharField(default='M', choices=gender_choice, max_length=10)
