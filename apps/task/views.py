@@ -17,7 +17,10 @@ from django.db.models import Q
 class TaskList(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     model = Task
     context_object_name = 'task_list'
-    permission_required = ('task.view_task', 'users.view_users',)
+    permission_required = (
+        'task.view_task',
+        #'users.view_users',
+    )
     template_name = 'task_manager_list.html'
 
     def get_queryset(self):
@@ -52,37 +55,24 @@ class TaskCreate(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     template_name = "create_task_form.html"
     success_url = '/project'
 
-    # def get_context_data(self, **kwargs):
-    #     context=super().get_context_data()
-    #     context['project_id'] = self.kwargs.get('pk')
-    #     print(context)
-    #     return None
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-
-        form = context.get('form')
-        project_id = self.request.GET.get('project_id')
-
-        # print(self.request.GET)
-        form.fields['project'].queryset = IT_Project.objects.filter(pk=project_id)
-
-        return context
-    #
-    #     return None
-    # def get_queryset(self):
-    #     queryset = Task.objects.filter(project__id=self.kwargs.get('pk'))
-    #     print(queryset)
-    #     return None
-    #
-    # def get_form_kwargs(self):
-    #     kwargs = super().get_form_kwargs()
-    #     print("Entered get form")
+    # def form_valid(self, form):
+    #     """If the form is valid, save the associated model."""
     #     print(self.request.POST)
-    #     print("id")
-    #     print(id)
-    #     kwargs.update({'project_name': id})
-    #     return kwargs
+    #     self.object = form.save()
+    #     return super().form_valid(form)
+    #
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #
+    #     form = context.get('form')
+    #     project_id = self.request.GET.get('project_id')
+    #
+    #     # print(self.request.GET)
+    #     form.fields['project'].queryset = IT_Project.objects.get(pk=project_id)
+    #     # form.fields['hidden_project_id'].initial = project_id
+    #     return context
+
 
 class Edit_Task(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
 
@@ -94,7 +84,10 @@ class Edit_Task(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
 
 
 class Details_Task(LoginRequiredMixin, PermissionRequiredMixin, DetailView,):
-    permission_required = ('task.view_task', 'users.view_users',)
+    permission_required = (
+        'task.view_task',
+        #'users.view_users',
+    )
     model = Task
     context_object_name = 'task_list'
     template_name = "task_details.html"
@@ -152,7 +145,7 @@ def entry(request, pk):
                                           task_start_date_time=datetime.datetime.now(),
                                           )
             a.save()
-            # print(tas)
+            # print(tas)task:task-detail
             tas.task_current_state = 'running'
             tas.save()
             return redirect(reverse('task:task-details', kwargs={'pk' : tas.id}))
@@ -193,9 +186,6 @@ def end(request, pk):
             #     tmp.save()
 
             else:
-                print("*********************************")
-                print(tmp.id)
-
                 new1 = Time_Entry.objects.get(Q(id=(tmp.id-1)) & Q(task=tas))
                 #print(new1)
                 h=new1.time_spent.hour

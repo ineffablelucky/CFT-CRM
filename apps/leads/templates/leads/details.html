@@ -1,5 +1,5 @@
-{% extends 'static/production/index.html' %}
-
+{% extends 'apps/users/templates/users/base.html' %}
+{%load static %}
 {% block page-content %}
 <!--<div class="right_col" role="main">-->
           <!-- top tiles -->
@@ -52,7 +52,7 @@
                                   </div>
                                   <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary" data-dismiss="modal">Save Changes</button>
+                                    <!--<button type="button" class="btn btn-primary" data-dismiss="modal">Save Changes</button>-->
                                   </div>
                                 </div>
                               </div>
@@ -72,7 +72,7 @@
                          <thead>
                             <tr class="headings">
                                 <th>
-                                    #
+
                                 </th>
                                 <th class="column-title">contact_number</th>
                             <th class="column-title">comany_name</th>
@@ -136,6 +136,7 @@
                                 <input type="submit" value="Assign" id="ram"/></a>
                         </div>
                         </form>
+                        <a href="{% static 'media/abc.csv' %}" download="abc.csv"><button>Download Leads</button></a>
                         <a href="{% url 'leads:upload_csv' %}"><button>Import Leads</button></a>
                     </div>
 

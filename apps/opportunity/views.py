@@ -4,7 +4,7 @@ from apps.opportunity.models import Opportunity
 from apps.meeting.models import MEETING
 from apps.users.models import MyUser
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-from apps.opportunity.forms import ChangeStatus, AddProjManager, CreateClientForm
+from apps.opportunity.forms import ChangeStatus, AddProjManager, CreateClientForm, AddExistingClientOpportunity
 from django.urls import reverse, reverse_lazy
 from django.db.models import Q
 from apps.client.models import CLIENT
@@ -61,7 +61,7 @@ class A_Leads(LoginRequiredMixin, PermissionRequiredMixin, ListView):
         'opportunity.change_opportunity',
         'opportunity.add_opportunity',
         'opportunity.delete_opportunity',
-        'users.view_users',
+        #'users.view_users',
         'opportunity.view_opportunity',
         'meeting.view_meeting',
     )
@@ -87,7 +87,7 @@ class A_PManager(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
         'opportunity.change_opportunity',
         'opportunity.add_opportunity',
         'opportunity.delete_opportunity',
-        'users.view_users',
+        #'users.view_users',
         'opportunity.view_opportunity',
     )
     model = Opportunity
@@ -103,7 +103,7 @@ class C_Leads(LoginRequiredMixin, PermissionRequiredMixin, ListView):
         'opportunity.change_opportunity',
         'opportunity.add_opportunity',
         'opportunity.delete_opportunity',
-        'users.view_users',
+        #'users.view_users',
         'opportunity.view_opportunity',
     )
     model = Opportunity
@@ -126,7 +126,7 @@ class D_Leads(LoginRequiredMixin, PermissionRequiredMixin, ListView):
         'opportunity.change_opportunity',
         'opportunity.add_opportunity',
         'opportunity.delete_opportunity',
-        'users.view_users',
+        #'users.view_users',
         'opportunity.view_opportunity',
     )
     model = Opportunity
@@ -142,15 +142,11 @@ class CreateClientView(LoginRequiredMixin, CreateView):
     form_class = CreateClientForm
     template_name = 'opportunity/create_client.html'
     success_url = '/'
-    print('Hello world')
+    # print('Hello world')
 
     def form_valid(self, form):
         temp = super().form_valid(form)
-        print('Form valid')
-        print(type(temp))
-        print(temp.__dict__)
         email = form.cleaned_data.get('email')
-        print('email')
         sender = 'rajeshjha2097@gmail.com'
         subject = 'This is registration confirmation email'
         username = '_'.join(re.findall(r'\S+', form.cleaned_data.get('company_name')))
@@ -160,3 +156,19 @@ class CreateClientView(LoginRequiredMixin, CreateView):
         print(key)
         return temp
 
+
+class UpdateClientOpportunityView(LoginRequiredMixin, CreateView):
+    form_class = AddExistingClientOpportunity
+    success_url = '/'
+    template_name = 'opportunity/add_opportunity_existing_client.html'
+
+
+class ListClient(LoginRequiredMixin, ListView):
+    model = CLIENT
+    context_object_name = 'clients'
+    template_name = 'opportunity/client_list.html'
+
+    def get_queryset(self):
+        queryset = CLIENT.objects.all()
+        print(queryset)
+        return queryset

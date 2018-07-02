@@ -3,12 +3,13 @@ from .forms import LeaveForm, AttendanceForm
 from django.views.generic import CreateView, TemplateView, UpdateView, ListView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.shortcuts import redirect
-from django.http import HttpResponseForbidden, HttpResponse
+from django.http import HttpResponseForbidden, HttpResponse, StreamingHttpResponse
 from ..leave.models import Leave
 from ..attendance.models import Attendance, LeaveRequest
 from ..attendance.models import LeaveRequest
 from django.db.models import Q
 from ..users.models import MyUser
+import xlwt
 
 
 import datetime
@@ -161,7 +162,7 @@ class PastAttendance(LoginRequiredMixin, PermissionRequiredMixin, ListView):
 
 
 class ShowAttendance(LoginRequiredMixin, PermissionRequiredMixin, ListView):
-    permission_required = ('users.view_users', 'attendance.view_attendance')
+    permission_required = ('attendance.view_attendance')
     template_name = 'attendance/showattendance.html'
     model = Attendance
     context_object_name = 'attendance'
@@ -178,15 +179,7 @@ class ShowAttendance(LoginRequiredMixin, PermissionRequiredMixin, ListView):
         p = []
         for t in temp:
             p.append(t.pk)
-        temp2 = Attendance.objects.filter(date=datetime.date.today()-delta)
-        for t in temp2:
-            if t.status == 'absent':
-                if LeaveRequest.objects.filter(Q(user_id=t.user_id) & Q(date__lte=datetime.date.today() - delta)
-                                        & Q(end_date__gte=datetime.date.today()-delta)
-                                        & Q(status='Approved')):
-                    t.status = 'On Leave'
-                    t.save()
-
+        temp2 = Attendance.objects.filter(date=datetime.date.today() - delta)
         l = []
         for t in temp2:
             tt = MyUser.objects.get(id=t.user_id)
@@ -194,13 +187,22 @@ class ShowAttendance(LoginRequiredMixin, PermissionRequiredMixin, ListView):
 
         p = [x for x in p if x not in l]
         for i in range(len(p)):
-            absent = Attendance.objects.create(user_id=p[i], date=datetime.date.today()-delta,
-                                               status='absent')
-            # if LeaveRequest.objects.get(Q(user_id=p[i]) & Q(date__gte=datetime.date.today()-delta)
-            #                             & Q(end_date__lte=datetime.date.today()-delta)
-            #                             & Q(status='Approved')) is not None:
-            #     absent.status = 'On Leave'
-            absent.save()
+            if MyUser.objects.filter(Q(id=p[i]) & Q(date_of_joining__lte=datetime.date.today()-delta)):
+                print(MyUser.objects.filter(Q(id=p[i]) & Q(date_of_joining__lte=datetime.date.today() - delta)))
+                absent = Attendance.objects.create(user_id=p[i], date=datetime.date.today()-delta, status='absent')
+                # if LeaveRequest.objects.get(Q(user_id=p[i]) & Q(date__gte=datetime.date.today()-delta)
+                #                             & Q(end_date__lte=datetime.date.today()-delta)
+                #                             & Q(status='Approved')) is not None:
+                #     absent.status = 'On Leave'
+                absent.save()
+
+        for t in temp2:
+            if t.status == 'absent':
+                if LeaveRequest.objects.filter(Q(user_id=t.user_id) & Q(date__lte=datetime.date.today() - delta)
+                                               & Q(end_date__gte=datetime.date.today() - delta)
+                                               & Q(status='Approved')):
+                    t.status = 'On Leave'
+                    t.save()
         from_date = self.request.GET.get('date', None)
         to_date = self.request.GET.get('to_date', None)
         if datetime.date.today().weekday() == 0:
@@ -209,6 +211,59 @@ class ShowAttendance(LoginRequiredMixin, PermissionRequiredMixin, ListView):
             queryset = Attendance.objects.filter(date=datetime.date.today() - datetime.timedelta(days=1))
         if from_date is not None and to_date is not None:
             queryset = Attendance.objects.filter(Q(date__gte=from_date) & Q(date__lte=to_date))
+
+        if self.request.GET.get('excel', None) is not None:
+            print("entered post")
+            # get get data date, other data
+            # mke queryset
+
+            print("Entered excel function")
+            # content-type of response
+            response = HttpResponse(content_type='application/vnd.ms-excel')
+
+            # decide file name
+            response['Content-Disposition'] = 'attachment; filename="ThePythonDjango.xls"'
+
+            # creating workbook
+            wb = xlwt.Workbook(encoding='utf-8')
+
+            # adding sheet
+            ws = wb.add_sheet("sheet1")
+
+            # Sheet header, first row
+            row_num = 0
+
+            font_style = xlwt.XFStyle()
+            # headers are bold
+            font_style.font.bold = True
+
+            # column header names, you can use your own headers here
+            columns = ['Employee Id', 'Department', 'Name', 'Clock-in', 'Clock-out', 'Late', 'Attendance']
+
+            # write column headers in sheet
+            for col_num in range(len(columns)):
+                ws.write(row_num, col_num, columns[col_num], font_style)
+
+            # Sheet body, remaining rows
+            font_style = xlwt.XFStyle()
+
+            # get your data, from database or from a text file...
+
+            for my_row in queryset:
+                print("entered my_row")
+                row_num = row_num + 1
+                print(my_row.user_id, row_num)
+                ws.write(row_num, 0, my_row.user_id, font_style)
+                ws.write(row_num, 1, my_row.user.department, font_style)
+                ws.write(row_num, 2, my_row.time_in, font_style)
+                ws.write(row_num, 3, my_row.time_out, font_style)
+                ws.write(row_num, 4, my_row.note, font_style)
+                ws.write(row_num, 5, my_row.status, font_style)
+
+            wb.save(response)
+
+            return response
+
         return queryset
 
     def get_context_data(self, **kwargs):
@@ -218,7 +273,7 @@ class ShowAttendance(LoginRequiredMixin, PermissionRequiredMixin, ListView):
 
 
 class EmployAttendance(LoginRequiredMixin, PermissionRequiredMixin, ListView):
-    permission_required = ('users.view_users', 'attendance.view_attendance')
+    permission_required = ('attendance.view_attendance',)
     template_name = 'attendance/employattendance.html'
     model = Attendance
     context_object_name = 'attendance'
@@ -285,3 +340,55 @@ class ShowAbsentEmployee(LoginRequiredMixin, PermissionRequiredMixin, ListView):
         queryset = Attendance.objects.filter(date=datetime.date.today())
         queryset2 = MyUser.objects.filter(~Q())
 """
+
+
+def download_excel_data(request, obj):
+
+    # get get data date, other data
+    #mke queryset
+
+    print("Entered excel function")
+    # content-type of response
+    response = HttpResponse(content_type='application/vnd.ms-excel')
+
+    # decide file name
+    response['Content-Disposition'] = 'attachment; filename="ThePythonDjango.xls"'
+
+    # creating workbook
+    wb = xlwt.Workbook(encoding='utf-8')
+
+    # adding sheet
+    ws = wb.add_sheet("sheet1")
+
+    # Sheet header, first row
+    row_num = 0
+
+    font_style = xlwt.XFStyle()
+    # headers are bold
+    font_style.font.bold = True
+
+    # column header names, you can use your own headers here
+    columns = ['Employee Id', 'Department', 'Name', 'Clock-in', 'Clock-out', 'Late', 'Attendance']
+
+    # write column headers in sheet
+    for col_num in range(len(columns)):
+        ws.write(row_num, col_num, columns[col_num], font_style)
+
+    # Sheet body, remaining rows
+    font_style = xlwt.XFStyle()
+
+    # get your data, from database or from a text file...
+
+    for my_row in obj:
+        row_num = row_num + 1
+        ws.write(row_num, 0, my_row.user_id, font_style)
+        ws.write(row_num, 1, my_row.user.department, font_style)
+        ws.write(row_num, 2, my_row.time_in, font_style)
+        ws.write(row_num, 3, my_row.time_out, font_style)
+        ws.write(row_num, 4, my_row.note, font_style)
+        ws.write(row_num, 5, my_row.status, font_style)
+
+    wb.save(response)
+
+    return response
+

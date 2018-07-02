@@ -16,9 +16,14 @@ BASE_URL = 'http://localhost:8000/'
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 SETTINGS_DIR = os.path.dirname(__file__)
+print(SETTINGS_DIR)
 PROJECT_PATH = os.path.join(SETTINGS_DIR, os.pardir)
+print(os.pardir)
+print(PROJECT_PATH)
 PROJECT_PATH = os.path.abspath(PROJECT_PATH)
+print(PROJECT_PATH)
 TEMPLATE_PATH = os.path.join(PROJECT_PATH, '')
 
 # Quick-start development settings - unsuitable for production
@@ -143,13 +148,18 @@ DATE_INPUT_FORMATS = ('%d/%m/%Y')
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
-
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR , 'static'),
 )
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(PROJECT_PATH, 'media')
+
+MEDIA_ROOT = (
+    os.path.join(BASE_DIR, 'media'),
+)
+print(MEDIA_ROOT)
+
+
 
 STATICFILES_FINDERS = [
   'django.contrib.staticfiles.finders.FileSystemFinder',
