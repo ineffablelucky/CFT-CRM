@@ -12,7 +12,7 @@
 </head>
 <body>
     {% if user.is_authenticated %}
-        <div height="200">Hello {{ user.username }}</div>
+        <div id="username">Hello {{ user.username }}</div>
         <hr/>
         <table border="1">
             <tr>
@@ -36,23 +36,15 @@
                     <td>{{ op.lead.contact_person }}</td>
                     <td>{{ op.lead.email }}</td>
                     <td>{{ op.lead.contact_number }}</td>
-                    <td><a id="edit" href="{% url 'opportunity:change_status' op.id %}"> Edit </a></td>
+                    {% if op.assigned_to.username == user.username or user.designation == 'Manager' %}
+                        <td id="change_status"><a id="edit" href="{% url 'opportunity:change_status' op.id %}"> Edit </a></td>
+                    {% else %}
+                        <td></td>
+                    {% endif %}
                     <!--<td><button type="button" data-id = "{{ op.id }}" class ="edit" data-toggle="modal" data-target="#exampleModalLong">Edit</button></td>-->
                 </tr>
             {% endfor %}
         </table>
-        <!--<div>-->
-                <!--<fieldset>-->
-                    <!--<legend>Add Meeting Notes</legend>-->
-                    <!--<form action="" method="post" style="display:inline">-->
-                        <!--{% csrf_token %}-->
-                        <!--<p>-->
-                            <!--{{ form.proj_manager.errors }} {{ form.proj_manager.label }} {{ form.proj_manager }}-->
-                        <!--</p>-->
-                        <!--<input type = submit value="Add ">-->
-                    <!--</form>-->
-                <!--</fieldset>-->
-        <!--</div>-->
     {% else %}
         <div>You don't have permission</div>
     {% endif %}
@@ -61,15 +53,8 @@
  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <script>
-    $('.edit').click(function(){
-        var id = $(this).attr('data-id');
-
-        $.ajax({url: id +"/change_status" , success:function(data){
-            $('.modal-body').html(data);
-        },
-            data: { status: 'approved'}
-        });
-    });
+    var user = '{{ user.username }}';
+    console.log(user)
 </script>
 
 </body>
