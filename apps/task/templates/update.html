@@ -1,24 +1,14 @@
-<!--<!DOCTYPE html>-->
-<!--<html lang="en">-->
-<!--<head>-->
-    <!--<meta charset="UTF-8">-->
-    <!--<title>Create Project</title>-->
-<!--</head>-->
-<!--<body>-->
-
 {% extends 'apps/users/templates/users/base.html' %}
 
     <title>{% block title %} Create Project {% endblock title %}</title>
-
-
-
 {% block page-content %}
+
         <div class="right_col" role="main">
           <div class="">
             {% if user.is_authenticated %}
             <div class="page-title">
               <div class="title_left">
-                <h3>This is a Project Entry form!</h3>
+                <h3>This is a Task Entry form!</h3>
               </div>
             </div>
             <div class="clearfix"></div>
@@ -27,7 +17,7 @@
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                      <h2>Project Info</h2>
+                      <h2>Task Info</h2>
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                       </li>
@@ -35,72 +25,74 @@
                     <div class="clearfix"></div>
                   </div>
                   <div class="x_content">
-                      {% if object.id %}
-                        <form method="post" action="{% url 'project:project-update' object.id %}" class="form-horizontal form-label-left" novalidate>
 
-
-                      {% else %}
-                        <form method="post" action="{% url 'project:project-add' %}" class="form-horizontal form-label-left" novalidate>
-                      {% endif %}
+                      <form action="{% url 'task:task-update' object.id %}" class="form-horizontal form-label-left" novalidate method="post">
 
                       {% csrf_token %}
                         <div class="item form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Project Name</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                               <!--<input id="name" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="2" name="name" placeholder="both name(s) e.g Jon Doe" required="required" type="text">-->
-                              {{ form.project_name }}
+                              {{ form.project }}
                             </div>
-                            {{ form.project_name.errors }}
+                            {{ form.project.errors }}
                         </div>
 
-
+                        <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Task Name</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                              <!--<input id="name" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="2" name="name" placeholder="both name(s) e.g Jon Doe" required="required" type="text">-->
+                              {{ form.task_name }}
+                            </div>
+                            {{ form.task_name.errors }}
+                        </div>
                          <div class="item form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" >Project Description</label>
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" >Task Description</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                               <!--<textarea id="textarea" required="required" name="textarea" class="form-control col-md-7 col-xs-12"></textarea>-->
-                              {{ form.project_description }}
+                              {{ form.task_description }}
                             </div>
-                             {{ form.project_description.errors }}
+                             {{ form.task_description.errors }}
                          </div>
 
 
                           <div class="item form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Project Start Date</label>
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Task Start Date</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                               <!--<input id="name" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="2" name="name" placeholder="both name(s) e.g Jon Doe" required="required" type="text">-->
-                              {{ form.project_start_date_time}}
+                              {{ form.task_start_date_time}}
                             </div>
-                              {{ form.project_start_date_time.errors }}
+                              {{ form.task_start_date_time.errors }}
                           </div>
 
 
                          <div class="item form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Project End Date</label>
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Task End Date</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                               <!--<input id="name" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="2" name="name" placeholder="both name(s) e.g Jon Doe" required="required" type="text">-->
-                              {{ form.project_end_date_time }}
+                              {{ form.task_end_date_time }}
                             </div>
-                             {{ form.project_end_date_time.errors }}
+                             {{ form.task_end_date_time.errors }}
                          </div>
 
 
                          <div class="item form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Total Working Hours</label>
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Assigned To</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                               <!--<input id="name" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="2" name="name" placeholder="both name(s) e.g Jon Doe" required="required" type="text">-->
-                              {{ form.project_total_working_hr }}
+                              {{ form.employee_id }}
                             </div>
-                             {{ form.project_total_working_hr.errors }}
+                             {{ form.employee_id.errors }}
                          </div>
 
 
                          <div class="item form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Allot Employees To Project</label>
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Expected Time in Hours</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                               <!--<input id="name" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="2" name="name" placeholder="both name(s) e.g Jon Doe" required="required" type="text">-->
-                              {{ form.employees_per_project }}
+                              {{ form.expected_time }}
                             </div>
-                             {{ form.employees_per_project.errors }}
+                             {{ form.expected_time.errors }}
                          </div>
 
 
@@ -123,7 +115,7 @@
                                 </div>
                             </div>
                       </form>
-                        </form>
+
                             {% else %}
                                 <div>You don't have permission</div>
                             {% endif %}
@@ -134,20 +126,4 @@
           </div>
         </div>
 {% endblock page-content %}
-$(".datepicker").datepicker({
-        format: 'dd/mm/yyyy',
-        autoclose: true,
-        changeYear: true,
-        changeMonth: true
-      });
-{% block extra-script %}
-<script>
-    $(document).ready(function(){
-        $('#cancel').click(function(){
-            window.history.back();
-        });
-    });
 
-
-</script>
-{% endblock %}

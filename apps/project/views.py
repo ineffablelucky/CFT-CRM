@@ -1,4 +1,4 @@
-from django.shortcuts import render, HttpResponseRedirect
+from django.shortcuts import render, HttpResponseRedirect, redirect
 from .models import IT_Project
 from apps.opportunity.models import Opportunity
 from django.views.generic import ListView, CreateView, UpdateView, DetailView
@@ -6,6 +6,7 @@ from .forms import CreateProjectForm
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.db.models import Q
 from apps.task.models import Task
+
 
 
 #display list of company's created projects
@@ -59,7 +60,19 @@ class Edit_Project(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = IT_Project
     form_class = CreateProjectForm
     template_name = "create_project_form.html"
-    success_url = '/project'
+
+    def form_valid(self, form):
+
+        proj_id = self.kwargs.get('pk')
+        print(proj_id)
+        form.save()
+
+        if IT_Project.objects.filter(Q(opportunity__isnull=True) & Q(id=proj_id)):
+
+            return redirect('/project')
+        elif IT_Project.objects.filter(Q(opportunity__isnull=False) & Q(id=proj_id)):
+
+            return redirect('/project/opp')
 
 #show modules of projects
 class ListModule(LoginRequiredMixin, DetailView):

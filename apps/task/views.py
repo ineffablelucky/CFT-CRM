@@ -53,7 +53,11 @@ class TaskCreate(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     permission_required = ('task.add_task')
     form_class = CreateTaskForm
     template_name = "create_task_form.html"
-    success_url = '/project'
+
+
+
+    # success_url = reverse_lazy('task:manager-task-view')
+
 
 
     # def form_valid(self, form):
@@ -62,8 +66,6 @@ class TaskCreate(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     #     self.object = form.save()
     #     return super().form_valid(form)
     #
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
     #
     #     form = context.get('form')
     #     project_id = self.request.GET.get('project_id')
@@ -73,14 +75,31 @@ class TaskCreate(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     #     # form.fields['hidden_project_id'].initial = project_id
     #     return context
 
+    def form_valid(self, form):
+
+        proj_id = self.request.POST['project']
+        print(type(self.request.POST['project']))
+
+        form.save()
+        # return reverse_lazy('task:manager-task-view', args=[proj_id])
+        return redirect('/task/'+proj_id)
+
 
 class Edit_Task(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
 
     permission_required = ('task.change_task',)
     model = Task
     form_class = CreateTaskForm
-    template_name = "create_task_form.html"
-    success_url = '/task'
+    template_name = "update.html"
+
+    def form_valid(self, form):
+
+        proj_id = self.request.POST['project']
+        print(type(self.request.POST['project']))
+
+        form.save()
+        # return reverse_lazy('task:manager-task-view', args=[proj_id])
+        return redirect('/task/'+proj_id)
 
 
 class Details_Task(LoginRequiredMixin, PermissionRequiredMixin, DetailView,):
