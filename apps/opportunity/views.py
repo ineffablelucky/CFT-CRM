@@ -165,11 +165,10 @@ class UpdateClientOpportunityView(LoginRequiredMixin, CreateView):
 
 class ListClient(LoginRequiredMixin, ListView):
     model = CLIENT
-    context_object_name = 'client'
+    context_object_name = 'clients'
     template_name = 'opportunity/client_list.html'
 
     def get_queryset(self):
         queryset = CLIENT.objects.all()
         print(queryset)
         return queryset
-    

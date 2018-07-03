@@ -1,6 +1,8 @@
 from django.urls import path
 from django.views.generic import TemplateView,ListView
 from .import views
+from django.conf.urls.static import static
+from configs import settings
 
 app_name = 'leads'
 urlpatterns =[
@@ -12,6 +14,7 @@ urlpatterns =[
     path('details/assign/',views.LeadsAssign,name='leadsassign'),
 
     path('upload/csv/', views.upload_csv, name='upload_csv'),
+
 
 
 ]
