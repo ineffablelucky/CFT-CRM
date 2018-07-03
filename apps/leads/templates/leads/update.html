@@ -87,22 +87,47 @@
                         window.location='http://127.0.0.1:8000/leads/details/';
                     }
                     else {
-                    if (data.error.contact_number!='undefined'){
-                    $('#contact_number').html('<li>'+data.error.contact_number+ '</li>');};
+                    if (data.error.contact_number){
+                    $('#contact_number').html('<li>'+data.error.contact_number+ '</li>');}
+                    else{
+                    console.log('devesh');
+                    $('#contact_number').empty();
+                    }
 
                      if (data.error.company_name){
-                    $('#company_name').html('<li>'+data.error.company_name+ '</li>');};
-                     if (data.error.contact_person){
-                     $('#contact_person').html('<li>'+data.error.contact_person+ '</li>');};
-                      if (data.error.source){
-                     $('#source').html('<li>'+data.error.source+ '</li>');};
-                      if (data.error.source_type){
-                     $('#source_type').html('<li>'+data.error.source_type+ '</li>');};
-                      if (data.error.email){
-                     $('#email').html('<li>'+data.error.email+ '</li>');};
-                      if (data.error.website){
-                      $('#website').html('<li>'+data.error.website+ '</li>');};
+                    $('#company_name').html('<li>'+data.error.company_name+ '</li>');}
+                    else{
+                    console.log('devesh mah');
+                    $('#company_name').empty();
 
+                    }
+
+                     if (data.error.contact_person){
+                     $('#contact_person').html('<li>'+data.error.contact_person+ '</li>');}
+                     else{
+                     console.log('devesh maheshwari');
+                     $('#contact_person').empty();
+                     }
+                      if (data.error.source){
+                     $('#source').html('<li>'+data.error.source+ '</li>');}
+                     else{
+                     $('#source').empty();
+                     }
+                      if (data.error.source_type){
+                     $('#source_type').html('<li>'+data.error.source_type+ '</li>');}
+                     else{
+                     $('#source_type').empty();
+                     }
+                      if (data.error.email){
+                     $('#email').html('<li>'+data.error.email+ '</li>');}
+                     else{
+                     $('#email').empty();
+                     }
+                      if (data.error.website){
+                      $('#website').html('<li>'+data.error.website+ '</li>');}
+                      else{
+                      $('#website').empty();
+                      }
 
 
                     }

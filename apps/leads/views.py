@@ -78,15 +78,15 @@ def check(request,id):
     print("instance is:")
     print(instance)
     form = UpdateForm(request.POST, instance=instance)
-    print(form)
+    
     if request.method=='POST':
-        print('def')
+
         if form.is_valid():
             form.save()
-            print("form is valid")
+
             return JsonResponse(data={'true':'true'})
         else:
-            print(form.errors)
+
 
             return JsonResponse(data={'error': form.errors})
     return JsonResponse({"details incorrect":"details incorrect"})
