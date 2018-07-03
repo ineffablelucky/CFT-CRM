@@ -13,7 +13,7 @@
         <div>
             {% for client in clients %}
             <div >
-                <a href="">
+                <a href="{% url 'opportunity:client_list_opportunity' client.pk %}">
                     <p>
                         Company Name: {{ client.company_name }}
                     </p>

@@ -26,15 +26,19 @@
                         <p>Department : {{ employee.department }} </p>
 
                           <form action="{% url 'attendance:employ_attendance' employee.id %}"   method="get">
-
-                              <div>
+                            <fieldset>
+                              <div class="row">
+                              <div class="col-lg-3 xdisplay_inputx form-group ">
                                         <!--{{ form.date.label }}-->
                                         <p>From Date: {{ form.date }} {{ form.date.errors }}</p><br>
                                         <p>{{ form.to_date.label }} {{ form.to_date }} {{ form.to_date.errors }}</p>
                                 <button type="submit" class=" dateSbmt btn btn-success">Submit</button>
 
                               </div>
+                            </div>
+                            </fieldset>
                         </form><br>
+
                         <table id="datatable"  class="table table-striped table-bordered">
                             <tr>
                                 <th>Date</th>
@@ -52,7 +56,8 @@
                                     <td>{{ a.status }}</td>
                                 </tr>
                             {% endfor %}
-                        </table>
+                        </table><br>
+                          <button><a href="{% url 'attendance:emp_download' %}?id={{ employee.id }}&current_date={{ attendance.0.date|date:'Y-m-d' }}{{ request.GET.urlencode|yesno:'&, '}}{{ request.GET.urlencode }}">Download Excel</a></button>
                       </div>
                     </div>
                   </div>
