@@ -120,14 +120,9 @@ class UpdateForm(ModelForm):
     )
 
 
-    # def save(self,*args,**kwargs):
-    #     if not self.instance.pk:
-    #         super(CreateForm, self).save(*args, **kwargs)
-    #
-
-
-
     def clean_company_name(self):
+
+        print("clean company")
         data = self.cleaned_data.get('company_name')
         data = data.strip().title()
         if re.match(r'^[A-Za-z-&_ ]+$', data):
