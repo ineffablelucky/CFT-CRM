@@ -59,13 +59,12 @@ class LeadEdit(LoginRequiredMixin,PermissionRequiredMixin,UpdateView):
 
     form_class =UpdateForm
 
-
     template_name = 'leads/update.html'
-    # form = form_class(initial={"logged_user": request.pk})
 
     model = LEADS
-
+    print("this is not good")
     def get_success_url(self, **kwargs):
+        print(kwargs)
         return reverse_lazy('leads:LeadDetails')
 
 

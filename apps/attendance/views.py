@@ -9,7 +9,6 @@ from ..attendance.models import Attendance, LeaveRequest
 from ..attendance.models import LeaveRequest
 from django.db.models import Q
 from ..users.models import MyUser
-import xlwt
 
 
 import datetime

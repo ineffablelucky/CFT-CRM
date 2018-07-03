@@ -189,21 +189,24 @@ $(document).ready(function() {
             $cbs = $('.chk_selector').click(function() {
                 $button.toggle( $cbs.is(":checked") );
             });
-        });
+});
 
     $('.edit').click(function(){
-        <!--var id = $('.chk_selector').attr('data-id');-->
-        <!--$.ajax({url: "../edit/" + id , success:function(data){-->
-            <!--$('.modal-body').html(data);-->
 
-        <!--}});-->
         var input = $(this).parents('tr').children().children();
         var tr = input[0];
         var id =($(tr).attr('data-id'));
         $.ajax({url: "../edit/" + id , success:function(data){
             $('.modal-body').html(data);
         }});
+         $('.updateform').click(function(e){
+            e.preventDefault();
+               alert("gdhsfj dhgagjfa");
+
     });
+});
+
+
 
 
 

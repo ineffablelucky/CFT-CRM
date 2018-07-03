@@ -115,7 +115,7 @@ class UpdateForm(ModelForm):
 
         widget=forms.Textarea()
     )
-    website=forms.URLField(
+    website=forms.CharField(
         required=False
     )
 
