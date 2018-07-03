@@ -11,7 +11,7 @@ from django.utils.crypto import get_random_string
 from django.urls.exceptions import Http404
 from django.http import HttpResponse
 import re
-
+from django.urls import reverse
 
 def index(request):
     return render(request, 'users/index.html')
@@ -33,16 +33,36 @@ def register(request):
 
 
 def auth_login(request):
-    if request.method == 'POST':
+    if request.user.is_authenticated:
+        return redirect(reverse('users:welcome'))
+
+    elif request.method == 'POST':
         username = request.POST.get('email_or_username')
         password = request.POST.get('password')
 
         user = authenticate(username=username, password=password)
         if user:
             login(request, user)
-        return redirect('welcome/')
-    else:
-        return render(request, 'users/registration/Login/login.html')
+        return redirect(reverse('users:welcome'))
+    return render(request, 'users/registration/Login/login.html')
+
+def admin_login(request):
+    if request.user.is_authenticated:
+        if request.user.designation == 'Employee':
+            logout(request)
+            return redirect(reverse('users:admin_login'))
+        return redirect(reverse('users:admin_welcome'))
+
+    elif request.method == 'POST':
+        username = request.POST.get('email_or_username')
+        password = request.POST.get('password')
+
+        user = authenticate(username=username, password=password)
+        if user:
+            login(request, user)
+        return redirect(reverse('users:admin_welcome'))
+    return render(request, 'users/registration/Login/admin_login.html')
+
 
 def lout(request):
     logout(request)

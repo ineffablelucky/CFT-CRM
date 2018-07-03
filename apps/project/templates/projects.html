@@ -3,10 +3,10 @@
 <!--<head>-->
     <!--<meta charset="UTF-8">-->
 
-{% extends 'static/production/index.html' %}
+{% extends 'apps/users/templates/users/base.html' %}
 
 
-    <title>{% block title %} Company Projects{% endblock title %}</title>
+    <title>{% block title %} Opportunities to Project {% endblock title %}</title>
 
 {% block extra-stylesheets %}
 <style>
@@ -59,7 +59,7 @@
                       <div class="x_content">
                         <!--<h1>Hi, Welcome to Project Manager's Project List!</h1><hr>-->
                         {% if user.is_authenticated %}
-                        <!--{{ user.username }}-->
+
 
                             <table class="table table-striped projects">
                                 <thead>
@@ -122,7 +122,7 @@
         $('.viewBtn').click(function(event){
             event.preventDefault();
             var id = $(this).attr('data-id');
-            $.get( 'details/1/'  , function(data){
+            $.get( 'details/' + id   , function(data){
                 $('.modal-body').html(data);
             });
         });

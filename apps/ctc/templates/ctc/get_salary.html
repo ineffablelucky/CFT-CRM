@@ -6,13 +6,20 @@
 </head>
 <body>
     <a href ="{% url 'ctc:ctc' %}">Get CTC Breakdown</a><br><br>
-    <form method="GET">
-        {% csrf_token %}
-        month: {{ form.month }}
+    <form method="GET" id="salary_form">
+        Month:{{ form.month }}
+        Year:{{ form.year }}
+        <!--month: {{ form.month }}
         year: {{ form.year }}
-        <button type="submit">Download Salary Slip</button></a>
+        <button type="submit">Download Salary Slip</button>-->
     </form>
-{{ id1 }}
-{{ id2 }}
+    <a href="{% url 'ctc:download_salary' %}?{{ request.GET.urlencode|yesno:'&, '}}{{ request.GET.urlencode }}">Download Salary Slip</a>
+<script>
+    function formSubmit()
+{
+     document.getElementById("salary_form").submit();
+}
+
+</script>
 </body>
 </html>

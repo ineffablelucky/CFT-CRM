@@ -8,7 +8,7 @@
     {% if user.is_authenticated %}
         <div height="200">Hello {{ user.username }}</div>
         <hr/>
-        <form action="{% url 'opportunity:create_client' %}" method="post">
+        <form action="{% url 'opportunity:add_opportunity_existing_client' %}" method="post">
             {% csrf_token %}
             {{ form.as_p }}
             <input type="submit" value="Add Client">

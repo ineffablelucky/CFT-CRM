@@ -6,16 +6,18 @@
 <!--</head>-->
 <!--<body>-->
 
-{% extends 'static/production/index.html' %}
+{% extends 'apps/users/templates/users/base.html' %}
 
 
 
 
 {% block page-content %}
 <div class="right_col" role="main">
-     top tiles
-    <div class="row">
+    <div class="row ">
+        <div class="col-md-6 col-sm-6 col-xs-12">
         <a href="{% url 'opportunity:create_client' %}"><button type="button"> Add Client</button></a>
+        <a href="{% url 'opportunity:add_opportunity_existing_client' %}"><button type="button">Add Opportunity to Existing Client</button></a>
+        </div>
     </div>
     <div class="row tile_count">
         {% if user.is_authenticated %}

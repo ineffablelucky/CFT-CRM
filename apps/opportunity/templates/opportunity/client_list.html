@@ -1,4 +1,6 @@
-{% extends 'apps/users/templates/users/base.html' %}
+{% extends 'apps/users/templates/users/base.html' %}}
+
+
 
 {% block page-content %}
 <div class="right_col" role="main">
@@ -9,20 +11,17 @@
         <div height="200">Hello {{ user.username }}</div>
         <hr/>
         <div>
-            {% for leads in declined_leads %}
+            {% for client in clients %}
             <div >
-                <a href="{% url 'opportunity:meeting:meeting_list' leads.pk %}">
+                <a href="">
                     <p>
-                        Company Name: {{ leads.lead.company_name }}
+                        Company Name: {{ client.company_name }}
                     </p>
                     <p>
-                        Project Manager: {{ leads.proj_manager.username }}
+                        Email Id: {{ client.client_user.email }}
                     </p>
                     <p>
-                        Project Description : {{ leads.description }}
-                    </p>
-                    <p>
-                        Assigned To : {{ leads.assigned_to.username }}
+                        Company Address : {{ client.address }}
                     </p>
                 </a>
             </div>

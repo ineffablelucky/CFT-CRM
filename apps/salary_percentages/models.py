@@ -35,6 +35,10 @@ class CTC_breakdown(models.Model):
     percentage_bonus_of_max_bonus = models.IntegerField(default=0, null=True)
     fixed_monthly_salary = models.IntegerField(default=20000)
 
+    def __str__(self):
+        return "%d"%(self.basic)
+
+
     # def __init__(self):
     #    self.basic=self.basic_amt()
     #    self.hra=self.hra_amt()

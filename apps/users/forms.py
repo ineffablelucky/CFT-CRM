@@ -95,6 +95,65 @@ class RegistrationForm(UserCreationForm):
             else:
                 raise Exception("Not correct designation or department")
 
+            if designation == 'Admin':
+                group_user = Group.objects.get_by_natural_key('Admin Group')
+                group_user.user_set.add(myuser)
+
+            elif designation == 'Manager' and department == 'Marketing':
+                group_user = Group.objects.get_by_natural_key('Marketing Manager Group')
+                group_user.user_set.add(myuser)
+                group_user = Group.objects.get_by_natural_key('Marketing Employee Group')
+                group_user.user_set.add(myuser)
+                group_user = Group.objects.get_by_natural_key('Employee Group')
+                group_user.user_set.add(myuser)
+
+            elif designation == 'Manager' and department == 'HR':
+                group_user = Group.objects.get_by_natural_key('HR Manager Group')
+                group_user.user_set.add(myuser)
+                group_user = Group.objects.get_by_natural_key('HR Employee Group')
+                group_user.user_set.add(myuser)
+                group_user = Group.objects.get_by_natural_key('Employee Group')
+                group_user.user_set.add(myuser)
+
+            elif designation == 'Manager' and department == 'IT':
+                group_user = Group.objects.get_by_natural_key('IT Manager Group')
+                group_user.user_set.add(myuser)
+                group_user = Group.objects.get_by_natural_key('IT Employee Group')
+                group_user.user_set.add(myuser)
+                group_user = Group.objects.get_by_natural_key('Employee Group')
+                group_user.user_set.add(myuser)
+
+            elif department == 'Accounts' and designation == 'Manager':
+                group_user = Group.objects.get_by_natural_key('Account Manager Group')
+                group_user.user_set.add(myuser)
+                group_user = Group.objects.get_by_natural_key('Account Employee Group')
+                group_user .user_set.add(myuser)
+                group_user = Group.objects.get_by_natural_key('Employee Group')
+                group_user.user_set.add(myuser)
+
+            elif designation == 'Employee':
+                group_user = Group.objects.get_by_natural_key('Employee Group')
+                group_user.user_set.add(myuser)
+                if department == 'HR':
+                    group_user = Group.objects.get_by_natural_key('HR Employee Group')
+                    group_user.user_set.add(myuser)
+                elif department == 'IT':
+                    group_user = Group.objects.get_by_natural_key('IT Employee Group')
+                    group_user.user_set.add(myuser)
+                elif department == 'Marketing':
+                    group_user = Group.objects.get_by_natural_key('Marketing Employee Group')
+                    group_user.user_set.add(myuser)
+                elif department == 'Accounts':
+                    group_user = Group.objects.get_by_natural_key('Account Employee Group')
+                    group_user.user_set.add(myuser)
+
+            elif designation == 'Client':
+                group_user = Group.objects.get_by_natural_key('Client Group')
+                group_user.user_set.add(myuser)
+
+            else:
+                raise Exception("Not correct designation or department")
+
 
         return myuser
 
@@ -142,11 +201,9 @@ class RegistrationForm(UserCreationForm):
         if data == None:
             pass
         else:
-            data = str(data)
-            print(data)
             if re.search('[+-]', data):
                 raise forms.ValidationError("'+', '-' are not allowed")
-            elif len(data) == 10:
+            elif re.search('^[0-9]+$') & len(data) == 10:
                 return data
             else:
                 raise forms.ValidationError("Please enter a 10 digit number")
@@ -176,7 +233,7 @@ class RegistrationForm(UserCreationForm):
 
 
 
-    email = forms.CharField(
+    email = forms.EmailField(
         label='Email ',
         widget = forms.TextInput(),
     )
@@ -198,7 +255,7 @@ class RegistrationForm(UserCreationForm):
         required = False,
     )
 
-    contact = forms.IntegerField(
+    contact = forms.CharField(
         label='Contact ',
         widget=forms.NumberInput(),
         required = False,

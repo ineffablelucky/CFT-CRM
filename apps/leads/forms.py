@@ -16,7 +16,9 @@ class CreateForm(ModelForm):
 
         widget=forms.Textarea()
     )
-    website=forms.URLField()
+    website=forms.CharField(
+        required=False
+    )
     x=0;
 
     # def save(self,*args,**kwargs):
@@ -56,13 +58,7 @@ class CreateForm(ModelForm):
             raise forms.ValidationError(
                 "Input is not allowed \n Input can be alphabets and special character like:&,-,_:,comma ")
 
-    def clean_description(self):
-        data = self.cleaned_data.get('description')
-        if re.match('^[a-zA-Z-&_:, ]*$', data):
-            return data
-        else:
-            raise forms.ValidationError(
-                "Input is not allowed \n Input can be alphabets and special character like:&,-,_:,comma ")
+
 
 
     def clean_email(self):
@@ -97,10 +93,20 @@ class CreateForm(ModelForm):
                 return data
             else:
                 raise forms.ValidationError("Please enter a 10 digit number")
-
+    def clean_website(self):
+        website = self.cleaned_data.get('website')
+        website = "https://" + website
+        return website
     class Meta:
         model = LEADS
         fields = ('contact_number','company_name','description','website','contact_person','source','source_type','email','assigned_boolean')
+
+    def save(self, commit=True):
+        instance = super().save(commit=False)
+        # instance.website="https://"+self.cleaned_data.get('website')
+        if commit:
+            instance.save()
+            return instance
 
 class UpdateForm(ModelForm):
     description = forms.CharField(
@@ -109,8 +115,10 @@ class UpdateForm(ModelForm):
 
         widget=forms.Textarea()
     )
-    website=forms.URLField()
-    x=0;
+    website=forms.URLField(
+        required=False
+    )
+
 
     # def save(self,*args,**kwargs):
     #     if not self.instance.pk:
@@ -149,13 +157,6 @@ class UpdateForm(ModelForm):
             raise forms.ValidationError(
                 "Input is not allowed \n Input can be alphabets and special character like:&,-,_:,comma ")
 
-    def clean_description(self):
-        data = self.cleaned_data.get('description')
-        if re.match('^[a-zA-Z-&_:, ]*$', data):
-            return data
-        else:
-            raise forms.ValidationError(
-                "Input is not allowed \n Input can be alphabets and special character like:&,-,_:,comma ")
 
 
     def clean_email(self):

@@ -10,7 +10,7 @@ from django.db.models import Q
 
 class CMeeting(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     permission_required = (
-         'users.view_users',
+         #'users.view_users',
          'meeting.view_meeting',
          'meeting.add_meeting',
          'meeting.change_meeting',
@@ -36,7 +36,7 @@ class CMeeting(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
 
 class L_Meeting(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     permission_required = (
-        'users.view_users',
+        #'users.view_users',
         'meeting.view_meeting',
         'meeting.change_meeting',
     )
