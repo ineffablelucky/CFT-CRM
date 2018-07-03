@@ -190,11 +190,16 @@ class ShowAttendance(LoginRequiredMixin, PermissionRequiredMixin, ListView):
             if MyUser.objects.filter(Q(id=p[i]) & Q(date_of_joining__lte=datetime.date.today()-delta)):
 
                 absent = Attendance.objects.create(user_id=p[i], date=datetime.date.today()-delta, status='absent')
-                # if LeaveRequest.objects.get(Q(user_id=p[i]) & Q(date__gte=datetime.date.today()-delta)
-                #                             & Q(end_date__lte=datetime.date.today()-delta)
-                #                             & Q(status='Approved')) is not None:
-                #     absent.status = 'On Leave'
+                leave = Leave.objects.get(user_id=p[i])
                 absent.save()
+                if leave.pl > 0:
+                    leave.pl = leave.pl-1
+                    leave.save()
+                    absent.note = "PL"
+                elif leave.cl > 0:
+                    leave.cl = leave.cl-1
+                    leave.save()
+                    absent.note = "CL"
 
         for t in temp2:
             if t.status == 'absent':
@@ -296,4 +301,47 @@ def download_excel_data(request):
 
     return response
 
+
+def download_emp_excel_data(request):
+    emp_id = int(request.GET['id'])
+    current_date = datetime.datetime.strptime(request.GET['current_date'], "%Y-%m-%d")
+    if request.GET.get('date'):
+        from_date = datetime.datetime.strptime(request.GET.get('date'), "%Y-%m-%d")
+        to_date = datetime.datetime.strptime(request.GET.get('to_date'), "%Y-%m-%d")
+        if Attendance.objects.filter(Q(date__gte=from_date) & Q(date__lte=to_date) & Q(user_id=emp_id)):
+            attendance = Attendance.objects.filter(Q(date__gte=from_date) & Q(date__lte=to_date) & Q(user_id=emp_id))
+    elif Attendance.objects.filter(date=current_date):
+        attendance = Attendance.objects.filter(user_id=emp_id)
+
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="somefilename.csv"'
+    writer = csv.writer(response)
+    writer.writerow(['Name', attendance[0].user.first_name])
+    writer.writerow(['Department', attendance[0].user.department])
+    writer.writerow(['Date', 'Clock In', 'Clock Out', 'Working Hours', 'Attendance'])
+    working_hours = []
+    tmp = []
+    for a in attendance:
+        if a.time_out is None:
+            wh = 0
+            s = str(wh)
+            working_hours.append(s)
+
+        elif a.status is 'absent':
+            wh = 0
+            s = str(wh)
+            working_hours.append(s)
+
+        else:
+            delta = datetime.timedelta(hours=a.time_in.hour, minutes=a.time_in.minute)
+            wh = a.time_out - delta
+            s = str(wh.hour) + " hrs " + str(wh.minute) + " min's"
+            working_hours.append(s)
+        a.working_hours = s
+        tmp.append(a)
+    for a in tmp:
+        writer.writerow(
+            [a.date, a.time_in, a.time_out, a.working_hours, a.status])
+
+    return response
 

@@ -14,7 +14,9 @@ urlpatterns = [
     path('', ShowAttendance.as_view(), name='show_attendance'),
     path('showattendance/<int:id>', EmployAttendance.as_view(), name='employ_attendance'),
     path('calendar', CalendarView.as_view(), name='calendar'),
-    path('download/', views.download_excel_data, name='download')
+    path('download/', views.download_excel_data, name='download'),
+    path('emp_attendance_download/', views.download_emp_excel_data, name='emp_download')
+
 ]
 
 
