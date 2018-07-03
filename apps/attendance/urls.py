@@ -1,6 +1,7 @@
 from django.urls import path
 from .views import LeaveRequestView, Completed, Clockin, Clock, Clockout, PastAttendance, ShowAttendance, EmployAttendance
 from .views import CalendarView
+from . import views
 
 app_name = 'attendance'
 urlpatterns = [
@@ -12,7 +13,8 @@ urlpatterns = [
     path('userattendance/', PastAttendance.as_view(), name='pastattendance'),
     path('', ShowAttendance.as_view(), name='show_attendance'),
     path('showattendance/<int:id>', EmployAttendance.as_view(), name='employ_attendance'),
-    path('calendar', CalendarView.as_view(), name='calendar')
+    path('calendar', CalendarView.as_view(), name='calendar'),
+    path('download/', views.download_excel_data, name='download')
 ]
 
 
