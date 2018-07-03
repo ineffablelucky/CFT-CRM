@@ -1,9 +1,10 @@
 from django.urls import path
-from .views import Download_salary,CTC
+from .views import Salary,CTC,Download_Salary
+from . import views
 app_name = 'ctc'
 
 urlpatterns = [
-    path('',Download_salary.as_view(),name="download_salary"),
+    path('',Salary.as_view(),name="salary"),
     path('ctc/', CTC.as_view(), name="ctc"),
-    #path("<int:id1>/<int:id2>/",views.download,name="download"),
+    path("download_salary/<int:id1>/<int:id2>/",views.Download_Salary,name="download_salary"),
 ]

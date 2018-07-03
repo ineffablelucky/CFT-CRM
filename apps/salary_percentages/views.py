@@ -4,6 +4,7 @@ from .models import Salary_calculations,CTC_breakdown
 from .forms import SalaryForm,CtcForm
 from django.contrib.auth import get_user_model
 from django.contrib import messages
+from django.utils import timezone
 
 def salary(request):
     context=CTC_breakdown.objects.all()
@@ -48,7 +49,7 @@ def add(request):
             form.save()
             return HttpResponseRedirect(reverse("salary_percentages:salary_structure"))
         else:
-            return HttpResponse('Sorry! The salary_structure for this year has already been formed')
+            return HttpResponse('You have entered an incorrect data')
     else :
         form = SalaryForm()
         return render(request,'work/salary_struct_form.html',{'form':form})

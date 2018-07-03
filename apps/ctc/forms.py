@@ -1,10 +1,10 @@
 from django import forms
-from django.forms import Form
 from django.utils import timezone
 
-class SalaryGenerationForm(Form):
+class SalaryGenerationForm(forms.Form):
     a=timezone.now().year
     year_choices = [tuple([str(x), x]) for x in range(2010, a+1)]
+
     year = forms.ChoiceField(
         choices=year_choices
         )
@@ -27,3 +27,4 @@ class SalaryGenerationForm(Form):
     month = forms.ChoiceField(
         choices = month_choices
     )
+

@@ -8,9 +8,11 @@
     <a href ="{% url 'ctc:ctc' %}">Get CTC Breakdown</a><br><br>
     <form method="GET">
         {% csrf_token %}
-        {{  form }}
-        <input type="submit" value="Download Salary Slip"/>
+        month: {{ form.month }}
+        year: {{ form.year }}
+        <button type="submit">Download Salary Slip</button></a>
     </form>
-
+{{ id1 }}
+{{ id2 }}
 </body>
 </html>
