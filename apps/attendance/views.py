@@ -277,26 +277,18 @@ class CalendarView(LoginRequiredMixin, PermissionRequiredMixin, TemplateView):
     context_object_name = 'attendance'
 
 
-"""
-class ShowAbsentEmployee(LoginRequiredMixin, PermissionRequiredMixin, ListView):
-    permission_required = ('users.view_attendance',)
-    template_name = 'attendance/showattendance.html'
-    model = Attendance
-    context_object_name = 'absent'
-
-    def get_queryset(self):
-        queryset = Attendance.objects.filter(date=datetime.date.today())
-        queryset2 = MyUser.objects.filter(~Q())
-"""
-
-
 def download_excel_data(request):
-    print(request.GET)
-    # date = datetime.datetime(year=kwargs['year'], month=kwargs['month'], day=kwargs['day'])
-    attendance = Attendance.objects.filter(date=date)
+    current_date = datetime.datetime.strptime(request.GET['current_date'], "%Y-%m-%d")
+    if request.GET.get('date'):
+        from_date = datetime.datetime.strptime(request.GET.get('date'), "%Y-%m-%d")
+        to_date = datetime.datetime.strptime(request.GET.get('to_date'), "%Y-%m-%d")
+        if Attendance.objects.filter(Q(date__gte=from_date) & Q(date__lte=to_date)):
+            attendance = Attendance.objects.filter(Q(date__gte=from_date) & Q(date__lte=to_date))
+    elif Attendance.objects.filter(date=current_date):
+        attendance = Attendance.objects.filter(date=current_date)
+
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="somefilename.csv"'
-
     writer = csv.writer(response)
     writer.writerow(['Date', 'Employee Id', 'Department', 'Name', 'Clock-in', 'Clock-out', 'Late', 'Attendance'])
     for a in attendance:
@@ -305,53 +297,3 @@ def download_excel_data(request):
     return response
 
 
-# def download_excel_data(request):
-#
-#     # get get data date, other data
-#     #mke queryset
-#
-#     print("Entered excel function")
-#     # content-type of response
-#     response = HttpResponse(content_type='application/vnd.ms-excel')
-#
-#     # decide file name
-#     response['Content-Disposition'] = 'attachment; filename="ThePythonDjango.xls"'
-#
-#     # creating workbook
-#     wb = xlwt.Workbook(encoding='utf-8')
-#
-#     # adding sheet
-#     ws = wb.add_sheet("sheet1")
-#
-#     # Sheet header, first row
-#     row_num = 0
-#
-#     font_style = xlwt.XFStyle()
-#     # headers are bold
-#     font_style.font.bold = True
-#
-#     # column header names, you can use your own headers here
-#     columns = ['Employee Id', 'Department', 'Name', 'Clock-in', 'Clock-out', 'Late', 'Attendance']
-#
-#     # write column headers in sheet
-#     for col_num in range(len(columns)):
-#         ws.write(row_num, col_num, columns[col_num], font_style)
-#
-#     # Sheet body, remaining rows
-#     font_style = xlwt.XFStyle()
-#
-#     # get your data, from database or from a text file...
-#
-#     for my_row in obj:
-#         row_num = row_num + 1
-#         ws.write(row_num, 0, my_row.user_id, font_style)
-#         ws.write(row_num, 1, my_row.user.department, font_style)
-#         ws.write(row_num, 2, my_row.time_in, font_style)
-#         ws.write(row_num, 3, my_row.time_out, font_style)
-#         ws.write(row_num, 4, my_row.note, font_style)
-#         ws.write(row_num, 5, my_row.status, font_style)
-#
-#     wb.save(response)
-#
-#     return response
-#
