@@ -141,7 +141,7 @@ class D_Leads(LoginRequiredMixin, PermissionRequiredMixin, ListView):
 class CreateClientView(LoginRequiredMixin, CreateView):
     form_class = CreateClientForm
     template_name = 'opportunity/create_client.html'
-    success_url = '/'
+    success_url = reverse_lazy('opportunity:client_list')
     # print('Hello world')
 
     def form_valid(self, form):
@@ -159,7 +159,7 @@ class CreateClientView(LoginRequiredMixin, CreateView):
 
 class UpdateClientOpportunityView(LoginRequiredMixin, CreateView):
     form_class = AddExistingClientOpportunity
-    success_url = '/'
+    success_url = reverse_lazy('opportunity:client_list')
     template_name = 'opportunity/add_opportunity_existing_client.html'
 
 
@@ -170,5 +170,17 @@ class ListClient(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         queryset = CLIENT.objects.all()
+        print(queryset)
+        return queryset
+
+
+class ListClientOpportunity(LoginRequiredMixin, ListView):
+    model = Opportunity
+    context_object_name = 'client_opportunity'
+    template_name = 'opportunity/client_opportunity_details.html'
+
+    def get_queryset(self):
+        print(self.kwargs)
+        queryset = Opportunity.objects.filter(client__id=self.kwargs.get('pk'))
         print(queryset)
         return queryset

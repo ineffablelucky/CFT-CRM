@@ -2,6 +2,8 @@ from django import forms
 from apps.meeting.models import MEETING
 from apps.users.models import MyUser
 import datetime
+from django.db.models import Q
+from apps.opportunity.models import Opportunity as temp_model
 
 
 class CreateMeeting(forms.ModelForm):
@@ -18,8 +20,9 @@ class CreateMeeting(forms.ModelForm):
     )
     extras = forms.ModelMultipleChoiceField(
         label='Extra Personnel',
-        queryset=MyUser.objects.filter(department='Marketing'),
-        #widget=attrs={'class': 'form-control col-md-7 col-xs-12'}
+        queryset=MyUser.objects.filter(
+            Q(department='Marketing')
+        ),
     )
 
     class Meta:
@@ -33,6 +36,10 @@ class CreateMeeting(forms.ModelForm):
         self.oppo = kwargs.pop('oppo_id')
         super().__init__(*args, **kwargs)
         self.fields['Opportunity'].initial = self.oppo
+        temp = temp_model.objects.get(id=self.oppo)
+        temp = temp.assigned_to
+        self.fields['extras'].queryset = MyUser.objects.filter(Q(department='Marketing') & ~Q(user_to__assigned_to=temp))
+        # CreateMeeting.temp = self.oppo
 
     def clean_date(self):
         date = self.cleaned_data.get('date')

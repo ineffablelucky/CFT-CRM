@@ -18,5 +18,5 @@ urlpatterns = [
         views.UpdateClientOpportunityView.as_view(),
         name='add_opportunity_existing_client'),
     path('client_list/', views.ListClient.as_view(), name='client_list'),
-    # path('client_list/<int:pk>/', views.ListClientOpportunity.as_view(),)
+    path('client_list/<int:pk>/', views.ListClientOpportunity.as_view(), name='client_list_opportunity')
 ]
