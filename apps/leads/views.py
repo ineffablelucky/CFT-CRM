@@ -41,6 +41,7 @@ class LeadDetails(LoginRequiredMixin, PermissionRequiredMixin, ListView,FormView
 
 class LeadCreate(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     permission_required = ('leads.add_leads',)
+
     model=LEADS
     form_class = CreateForm
     template_name = 'leads/create.html'
@@ -50,6 +51,8 @@ class LeadCreate(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     #     return super().form_valid(form)
 
     success_url = '/leads/details/'
+
+
 
 
 
