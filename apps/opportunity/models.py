@@ -16,7 +16,9 @@ class Opportunity(models.Model):
     )
     price = models.BigIntegerField(default=0, blank=True, null=True)
     project_description = models.TextField(max_length=10000)
-    assigned_to = models.ForeignKey(MyUser, on_delete=models.PROTECT, blank=True, related_name='assigned_to')
+    assigned_to = models.ForeignKey(
+        MyUser, on_delete=models.PROTECT, blank=True, related_name='assigned_to', related_query_name='user_to'
+    )
     lead = models.OneToOneField(LEADS, on_delete=models.PROTECT, blank=True, null=True)
     client = models.ForeignKey(CLIENT, on_delete=models.PROTECT, blank=True, null=True)
     status = models.CharField(max_length=20, choices=CHOICES, default='Pending')

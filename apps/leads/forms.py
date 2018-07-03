@@ -14,12 +14,59 @@ class CreateForm(ModelForm):
 
         label='Description',
 
-        widget=forms.Textarea()
+        widget=forms.Textarea(
+            attrs={'class': 'form-control col-md-7 col-xs-12'}
+        )
     )
     website=forms.CharField(
-        required=False
+        required=False,
+        widget=forms.TextInput(
+            attrs={'class': 'form-control col-md-7 col-xs-12'}
+        )
     )
-    x=0;
+
+
+
+
+    contact_number=forms.IntegerField(
+        label='Contact Number',
+        widget=forms.NumberInput(
+            attrs={'class': 'form-control col-md-7 col-xs-12'}
+        )
+    )
+    company_name=forms.CharField(
+    label='Comapny Name',
+        widget=forms.TextInput(
+            attrs={'class':'form-control col-md-7 col-xs-12'}
+        )
+    )
+    contact_person = forms.CharField(
+        label='Contact Person',
+        widget=forms.TextInput(
+            attrs={'class': 'form-control col-md-7 col-xs-12'}
+        )
+    )
+    source=forms.CharField(
+        label='Source',
+        widget=forms.TextInput(
+            attrs={'class': 'form-control col-md-7 col-xs-12'}
+        )
+    )
+    source_type=forms.CharField(
+        label='Source Type',
+        widget=forms.TextInput(
+            attrs={'class': 'form-control col-md-7 col-xs-12'}
+        )
+    )
+    email=forms.CharField(
+        label='Email',
+        widget=forms.EmailInput(
+            attrs={'class': 'form-control col-md-7 col-xs-12'}
+        )
+    )
+
+
+
 
     # def save(self,*args,**kwargs):
     #     if not self.instance.pk:
@@ -115,19 +162,14 @@ class UpdateForm(ModelForm):
 
         widget=forms.Textarea()
     )
-    website=forms.CharField(
+    website=forms.URLField(
+        label='Website',
         required=False
     )
 
-
-    # def save(self,*args,**kwargs):
-    #     if not self.instance.pk:
-    #         super(CreateForm, self).save(*args, **kwargs)
-    #
-
-
-
     def clean_company_name(self):
+
+        print("clean company")
         data = self.cleaned_data.get('company_name')
         data = data.strip().title()
         if re.match(r'^[A-Za-z-&_ ]+$', data):
@@ -164,16 +206,6 @@ class UpdateForm(ModelForm):
         return data
 
         # user_id = self.initial.get("logged_user")
-
-
-
-
-
-
-
-
-
-
 
     def clean_contact_number(self):
         data = self.cleaned_data.get('contact_number')

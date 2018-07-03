@@ -1,59 +1,121 @@
-    <div class="contianer-fluid text-center" role="main">
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+    <body>
+<div class="contianer-fluid text-center" role="main">
 
-            <form method="post" class="myform">
+            <form method="post" action="{% url 'leads:LeadEdit' leads.id %}" id="myform" data-id="{{leads.id}}">
 
                 {% csrf_token %}
                     <div id="1">
                         {{ form.contact_number.label }}
                         {{ form.contact_number }}
-                        {{ form.contact_number.errors }}
+                        <p id="contact_number"> </p>
                     </div><br>
 
                     <div>
                         {{ form.company_name.label }}
                         {{ form.company_name }}
-                        {{ form.company_name.errors }}
+                       <p id="company_name"> </p>
                     </div><br>
 
                     <div>
                         {{ form.contact_person.label }}
                         {{ form.contact_person }}
-                           <p id="2"> {{ form.contact_person.errors }}</p>
+                           <p id="contact_person"> </p>
                     </div><br>
 
                     <div>
                         {{ form.source.label }}
                         {{ form.source }}
-                        {{ form.source.errors }}
+                        <p id="source"> </p>
                     </div><br>
 
                     <div>
                         {{ form.source_type.label }}
                         {{ form.source_type }}
-                        {{ form.source_type.errors }}
+                      <p id="source_type"> </p>
                     </div><br>
 
 
                     <div>
                        {{ form.description.label }}
                        {{ form.description }}
-                           {{ form.description.errors }}
+                      <p id="description"> </p>
                     </div><br>
 
                     <div>
                         {{ form.email.label }}
                         {{ form.email }}
-                        {{ form.email.errors }}
+                        <p id="email"> </p>
                     </div><br>
 
                     <div>
                         {{ form.website.label }}
                         {{ form.website }}
-                        {{ form.website.errors }}
+                     <p id="website"> </p>
                     </div><br>
-                <input type="submit" value="Submit" class="updatesubmit"/>
+                <input type="submit" id="submit" value="Submit" />
+                <!--<button type="button" id="btn">Submit</button>-->
             </form>
     </div>
+    </body>
+</html>
+ <!--if(a){-->
+        <!--$.ajax({url: "../edit/" + id , success:function(data){-->
+            <!--$('.modal-body').html(data);-->
+            <!--}});-->
+            <!--};-->
+            <!--});-->
+<script>
+        $('#myform').submit(function(event){
+               event.preventDefault();
+                var id = $('#myform').data('id');
+
+                console.log("hello");
+                $.ajax({
+                url:"../editajax/" + id,
+                type: 'POST',
+                data:$('#myform').serialize(),
+                beforeSend: function(xhr) {
+                xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}" );
+                },
+                success:function(data){
+                    console.log(data);
+                    if (data.true){
+                        window.location='http://127.0.0.1:8000/leads/details/';
+                    }
+                    else {
+                    if (data.error.contact_number!='undefined'){
+                    $('#contact_number').html('<li>'+data.error.contact_number+ '</li>');};
+
+                     if (data.error.company_name){
+                    $('#company_name').html('<li>'+data.error.company_name+ '</li>');};
+                     if (data.error.contact_person){
+                     $('#contact_person').html('<li>'+data.error.contact_person+ '</li>');};
+                      if (data.error.source){
+                     $('#source').html('<li>'+data.error.source+ '</li>');};
+                      if (data.error.source_type){
+                     $('#source_type').html('<li>'+data.error.source_type+ '</li>');};
+                      if (data.error.email){
+                     $('#email').html('<li>'+data.error.email+ '</li>');};
+                      if (data.error.website){
+                      $('#website').html('<li>'+data.error.website+ '</li>');};
+
+
+
+                    }
+
+               },});
+        });
+</script>
+
+
+
+
+
+
 
 
 

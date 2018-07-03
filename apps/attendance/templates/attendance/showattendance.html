@@ -49,9 +49,7 @@
                                 </div>
                             </fieldset>
                         </form><br>
-                          <form action="{% url 'attendance:show_attendance' %}" method="get">
-                              <button type="submit" name="excel">Get Excel</button>
-                          </form>
+
                         <table id="datatable"  class="table table-striped table-bordered">
                             <thead>
                                 <tr>
@@ -80,7 +78,8 @@
                                 {% endfor %}
                             </tbody>
 
-                        </table>
+                        </table><br>
+                        <button type="submit"><a href="{% url 'attendance:download' %}?current_date={{ attendance.0.date|date:'Y-m-d' }}{{ request.GET.urlencode|yesno:'&, '}}{{ request.GET.urlencode }}">Download Attendance</a></button>
                       </div>
                     </div>
                   </div>
