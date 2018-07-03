@@ -9,7 +9,7 @@ from ..attendance.models import Attendance, LeaveRequest
 from ..attendance.models import LeaveRequest
 from django.db.models import Q
 from ..users.models import MyUser
-#import xlwt
+import csv
 
 
 import datetime
@@ -188,13 +188,18 @@ class ShowAttendance(LoginRequiredMixin, PermissionRequiredMixin, ListView):
         p = [x for x in p if x not in l]
         for i in range(len(p)):
             if MyUser.objects.filter(Q(id=p[i]) & Q(date_of_joining__lte=datetime.date.today()-delta)):
-                print(MyUser.objects.filter(Q(id=p[i]) & Q(date_of_joining__lte=datetime.date.today() - delta)))
+
                 absent = Attendance.objects.create(user_id=p[i], date=datetime.date.today()-delta, status='absent')
-                # if LeaveRequest.objects.get(Q(user_id=p[i]) & Q(date__gte=datetime.date.today()-delta)
-                #                             & Q(end_date__lte=datetime.date.today()-delta)
-                #                             & Q(status='Approved')) is not None:
-                #     absent.status = 'On Leave'
+                leave = Leave.objects.get(user_id=p[i])
                 absent.save()
+                if leave.pl > 0:
+                    leave.pl = leave.pl-1
+                    leave.save()
+                    absent.note = "PL"
+                elif leave.cl > 0:
+                    leave.cl = leave.cl-1
+                    leave.save()
+                    absent.note = "CL"
 
         for t in temp2:
             if t.status == 'absent':
@@ -211,58 +216,6 @@ class ShowAttendance(LoginRequiredMixin, PermissionRequiredMixin, ListView):
             queryset = Attendance.objects.filter(date=datetime.date.today() - datetime.timedelta(days=1))
         if from_date is not None and to_date is not None:
             queryset = Attendance.objects.filter(Q(date__gte=from_date) & Q(date__lte=to_date))
-
-        if self.request.GET.get('excel', None) is not None:
-            print("entered post")
-            # get get data date, other data
-            # mke queryset
-
-            print("Entered excel function")
-            # content-type of response
-            response = HttpResponse(content_type='application/vnd.ms-excel')
-
-            # decide file name
-            response['Content-Disposition'] = 'attachment; filename="ThePythonDjango.xls"'
-
-            # creating workbook
-            wb = xlwt.Workbook(encoding='utf-8')
-
-            # adding sheet
-            ws = wb.add_sheet("sheet1")
-
-            # Sheet header, first row
-            row_num = 0
-
-            font_style = xlwt.XFStyle()
-            # headers are bold
-            font_style.font.bold = True
-
-            # column header names, you can use your own headers here
-            columns = ['Employee Id', 'Department', 'Name', 'Clock-in', 'Clock-out', 'Late', 'Attendance']
-
-            # write column headers in sheet
-            for col_num in range(len(columns)):
-                ws.write(row_num, col_num, columns[col_num], font_style)
-
-            # Sheet body, remaining rows
-            font_style = xlwt.XFStyle()
-
-            # get your data, from database or from a text file...
-
-            for my_row in queryset:
-                print("entered my_row")
-                row_num = row_num + 1
-                print(my_row.user_id, row_num)
-                ws.write(row_num, 0, my_row.user_id, font_style)
-                ws.write(row_num, 1, my_row.user.department, font_style)
-                ws.write(row_num, 2, my_row.time_in, font_style)
-                ws.write(row_num, 3, my_row.time_out, font_style)
-                ws.write(row_num, 4, my_row.note, font_style)
-                ws.write(row_num, 5, my_row.status, font_style)
-
-            wb.save(response)
-
-            return response
 
         return queryset
 
@@ -329,66 +282,66 @@ class CalendarView(LoginRequiredMixin, PermissionRequiredMixin, TemplateView):
     context_object_name = 'attendance'
 
 
-"""
-class ShowAbsentEmployee(LoginRequiredMixin, PermissionRequiredMixin, ListView):
-    permission_required = ('users.view_attendance',)
-    template_name = 'attendance/showattendance.html'
-    model = Attendance
-    context_object_name = 'absent'
+def download_excel_data(request):
+    current_date = datetime.datetime.strptime(request.GET['current_date'], "%Y-%m-%d")
+    if request.GET.get('date'):
+        from_date = datetime.datetime.strptime(request.GET.get('date'), "%Y-%m-%d")
+        to_date = datetime.datetime.strptime(request.GET.get('to_date'), "%Y-%m-%d")
+        if Attendance.objects.filter(Q(date__gte=from_date) & Q(date__lte=to_date)):
+            attendance = Attendance.objects.filter(Q(date__gte=from_date) & Q(date__lte=to_date))
+    elif Attendance.objects.filter(date=current_date):
+        attendance = Attendance.objects.filter(date=current_date)
 
-    def get_queryset(self):
-        queryset = Attendance.objects.filter(date=datetime.date.today())
-        queryset2 = MyUser.objects.filter(~Q())
-"""
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="somefilename.csv"'
+    writer = csv.writer(response)
+    writer.writerow(['Date', 'Employee Id', 'Department', 'Name', 'Clock-in', 'Clock-out', 'Late', 'Attendance'])
+    for a in attendance:
+        writer.writerow([a.date, a.user_id, a.user.department, a.user.first_name, a.time_in, a.time_out, a.note, a.status])
+
+    return response
 
 
-def download_excel_data(request, obj):
+def download_emp_excel_data(request):
+    emp_id = int(request.GET['id'])
+    current_date = datetime.datetime.strptime(request.GET['current_date'], "%Y-%m-%d")
+    if request.GET.get('date'):
+        from_date = datetime.datetime.strptime(request.GET.get('date'), "%Y-%m-%d")
+        to_date = datetime.datetime.strptime(request.GET.get('to_date'), "%Y-%m-%d")
+        if Attendance.objects.filter(Q(date__gte=from_date) & Q(date__lte=to_date) & Q(user_id=emp_id)):
+            attendance = Attendance.objects.filter(Q(date__gte=from_date) & Q(date__lte=to_date) & Q(user_id=emp_id))
+    elif Attendance.objects.filter(date=current_date):
+        attendance = Attendance.objects.filter(user_id=emp_id)
 
-    # get get data date, other data
-    #mke queryset
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="somefilename.csv"'
+    writer = csv.writer(response)
+    writer.writerow(['Name', attendance[0].user.first_name])
+    writer.writerow(['Department', attendance[0].user.department])
+    writer.writerow(['Date', 'Clock In', 'Clock Out', 'Working Hours', 'Attendance'])
+    working_hours = []
+    tmp = []
+    for a in attendance:
+        if a.time_out is None:
+            wh = 0
+            s = str(wh)
+            working_hours.append(s)
 
-    print("Entered excel function")
-    # content-type of response
-    response = HttpResponse(content_type='application/vnd.ms-excel')
+        elif a.status is 'absent':
+            wh = 0
+            s = str(wh)
+            working_hours.append(s)
 
-    # decide file name
-    response['Content-Disposition'] = 'attachment; filename="ThePythonDjango.xls"'
-
-    # creating workbook
-    wb = xlwt.Workbook(encoding='utf-8')
-
-    # adding sheet
-    ws = wb.add_sheet("sheet1")
-
-    # Sheet header, first row
-    row_num = 0
-
-    font_style = xlwt.XFStyle()
-    # headers are bold
-    font_style.font.bold = True
-
-    # column header names, you can use your own headers here
-    columns = ['Employee Id', 'Department', 'Name', 'Clock-in', 'Clock-out', 'Late', 'Attendance']
-
-    # write column headers in sheet
-    for col_num in range(len(columns)):
-        ws.write(row_num, col_num, columns[col_num], font_style)
-
-    # Sheet body, remaining rows
-    font_style = xlwt.XFStyle()
-
-    # get your data, from database or from a text file...
-
-    for my_row in obj:
-        row_num = row_num + 1
-        ws.write(row_num, 0, my_row.user_id, font_style)
-        ws.write(row_num, 1, my_row.user.department, font_style)
-        ws.write(row_num, 2, my_row.time_in, font_style)
-        ws.write(row_num, 3, my_row.time_out, font_style)
-        ws.write(row_num, 4, my_row.note, font_style)
-        ws.write(row_num, 5, my_row.status, font_style)
-
-    wb.save(response)
+        else:
+            delta = datetime.timedelta(hours=a.time_in.hour, minutes=a.time_in.minute)
+            wh = a.time_out - delta
+            s = str(wh.hour) + " hrs " + str(wh.minute) + " min's"
+            working_hours.append(s)
+        a.working_hours = s
+        tmp.append(a)
+    for a in tmp:
+        writer.writerow(
+            [a.date, a.time_in, a.time_out, a.working_hours, a.status])
 
     return response
 

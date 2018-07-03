@@ -35,6 +35,7 @@
 
                               </div>
                         </form><br>
+
                         <table id="datatable"  class="table table-striped table-bordered">
                             <tr>
                                 <th>Date</th>
@@ -52,7 +53,8 @@
                                     <td>{{ a.status }}</td>
                                 </tr>
                             {% endfor %}
-                        </table>
+                        </table><br>
+                          <button><a href="{% url 'attendance:emp_download' %}?id={{ employee.id }}&current_date={{ attendance.0.date|date:'Y-m-d' }}{{ request.GET.urlencode|yesno:'&, '}}{{ request.GET.urlencode }}">Download Excel</a></button>
                       </div>
                     </div>
                   </div>
