@@ -41,48 +41,67 @@ class AddProjManager(forms.ModelForm):
 class CreateClientForm(forms.ModelForm):
     opportunity = forms.ModelChoiceField(
         queryset=Opportunity.objects.filter(Q(status='Approved') & Q(client__isnull='True')),
-        required=True
+        required=True,
+        label='Opportunity',
+        widget=forms.Select(
+            attrs={'class': 'form-control col-md-7 col-xs-12 select2_group form-control'}
+        )
     )
 
     email = forms.EmailField(
         label='Email ',
-        widget=forms.TextInput(),
-        required=True
+        required=True,
+        widget=forms.TextInput(
+            attrs={'class': 'form-control col-md-7 col-xs-12'}
+        )
     )
 
     company_name = forms.CharField(
         max_length=100,
         label='Company Name',
-        required=True
+        required=True,
+        widget=forms.TextInput(
+            attrs={'class': 'form-control col-md-7 col-xs-12'}
+        )
     )
     client_address = forms.CharField(
         max_length=10000,
-        widget=forms.Textarea(),
         label='Client Address',
-        required=True
+        required=True,
+        widget=forms.TextInput(
+            attrs={'class': 'form-control col-md-7 col-xs-12'}
+        )
     )
     project_name = forms.CharField(
         max_length=100,
         label='Project Name',
-        required='True'
+        required='True',
+        widget=forms.TextInput(
+            attrs={'class': 'form-control col-md-7 col-xs-12'}
+        )
     )
     project_description = forms.CharField(
         max_length=10000,
-        widget=forms.Textarea(),
+        widget=forms.Textarea(
+            attrs={'class': 'form-control col-md-7 col-xs-12'}
+        ),
         label='Project Description'
     )
     project_start_date = forms.DateField(
-        widget=forms.TextInput(attrs={'type': 'date', 'class': ''}),
+        widget=forms.TextInput(attrs={'type': 'date', 'class': 'form-control col-md-7 col-xs-12'}),
         label='Project Start Date'
     )
 
     project_end_date = forms.DateField(
-        widget=forms.TextInput(attrs={'type': 'date', 'class': ''}),
+        widget=forms.TextInput(attrs={'type': 'date', 'class': 'form-control col-md-7 col-xs-12'}),
         label='Project End Date'
     )
 
     project_total_working_hr = forms.IntegerField(
-        label='Project Total Working Hours'
+        label='Project Total Working Hours',
+        widget=forms.NumberInput(
+            attrs={'class': 'form-control col-md-7 col-xs-12'}
+        )
     )
     # password = forms.CharField(
     #     widget=forms.HiddenInput(),
@@ -93,7 +112,10 @@ class CreateClientForm(forms.ModelForm):
         required=False,
     )
     amount = forms.IntegerField(
-        required=True
+        required=True,
+        widget=forms.NumberInput(
+            attrs={'class': 'form-control col-md-7 col-xs-12'}
+        )
     )
     # middle_name = forms.CharField(
     #     widget=forms.HiddenInput(),
@@ -146,7 +168,7 @@ class CreateClientForm(forms.ModelForm):
         else:
             return project_end_date
 
-    def clean(self):
+    def clean_amount(self):
         amount = self.cleaned_data.get('amount')
         if amount < 0:
             raise forms.ValidationError("Amount should be greater than 0")
@@ -209,38 +231,55 @@ class AddExistingClientOpportunity(forms.ModelForm):
 
     client = forms.ModelChoiceField(
         queryset=CLIENT.objects.all(),
-        required=True
+        required=True,
+        widget=forms.Select(
+            attrs={'class': 'form-control col-md-7 col-xs-12 select2_group form-control'}
+        )
     )
     project_start_date = forms.DateField(
-        widget=forms.TextInput(attrs={'type': 'date', 'class': ''}),
+        widget=forms.TextInput(attrs={'type': 'date', 'class': 'form-control col-md-7 col-xs-12'}),
         label='Project Start Date'
     )
 
     project_end_date = forms.DateField(
-        widget=forms.TextInput(attrs={'type': 'date', 'class': ''}),
+        widget=forms.TextInput(attrs={'type': 'date', 'class': 'form-control col-md-7 col-xs-12'}),
         label='Project End Date'
     )
     project_total_working_hr = forms.IntegerField(
-        label='Project Total Working Hours'
+        label='Project Total Working Hours',
+        widget=forms.NumberInput(
+            attrs={'class': 'form-control col-md-7 col-xs-12'}
+        )
     )
 
     project_name = forms.CharField(
         max_length=100,
         label='Project Name',
-        required='True'
+        required='True',
+        widget=forms.TextInput(
+            attrs={'class': 'form-control col-md-7 col-xs-12'}
+        )
     )
     project_description = forms.CharField(
         max_length=10000,
-        widget=forms.Textarea(),
-        label='Project Description'
+        label='Project Description',
+        widget=forms.Textarea(
+            attrs={'class': 'form-control col-md-7 col-xs-12'}
+        )
     )
     opportunity = forms.ModelChoiceField(
         queryset=Opportunity.objects.filter(Q(status='Approved') & Q(client__isnull='True')),
-        required='True'
+        required='True',
+        widget=forms.Select(
+            attrs={'class': 'form-control col-md-7 col-xs-12 select2_group form-control'}
+        )
     )
 
     amount = forms.IntegerField(
-        required=True
+        required=True,
+        widget=forms.NumberInput(
+            attrs={'class': 'form-control col-md-7 col-xs-12'}
+        )
     )
 
     def clean_project_name(self):
@@ -265,7 +304,7 @@ class AddExistingClientOpportunity(forms.ModelForm):
         else:
             return project_end_date
 
-    def clean(self):
+    def clean_amount(self):
         amount = self.cleaned_data.get('amount')
         if amount < 0:
             raise forms.ValidationError("Amount should be greater than 0")
