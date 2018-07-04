@@ -13,6 +13,7 @@ urlpatterns = [
 
     path('add/', ProjectCreate.as_view(), name='project-add'),
     path('update/<int:pk>/', Edit_Project.as_view(), name='project-update'),
+    # path('opp/update/<int:pk>/', Edit_Project_opp.as_view(), name='project-opp-update'),
     path('details/<int:pk>/', ListModule.as_view(), name="project-details"),
 
     path('employee/', Employee_Project_List.as_view(), name="employee-project"),

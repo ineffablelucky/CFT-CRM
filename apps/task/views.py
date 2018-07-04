@@ -53,7 +53,11 @@ class TaskCreate(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     permission_required = ('task.add_task')
     form_class = CreateTaskForm
     template_name = "create_task_form.html"
-    success_url = '/project'
+
+
+
+    # success_url = reverse_lazy('task:manager-task-view')
+
 
 
     # def form_valid(self, form):
@@ -62,8 +66,6 @@ class TaskCreate(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     #     self.object = form.save()
     #     return super().form_valid(form)
     #
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
     #
     #     form = context.get('form')
     #     project_id = self.request.GET.get('project_id')
@@ -73,14 +75,31 @@ class TaskCreate(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     #     # form.fields['hidden_project_id'].initial = project_id
     #     return context
 
+    def form_valid(self, form):
+
+        proj_id = self.request.POST['project']
+        print(type(self.request.POST['project']))
+
+        form.save()
+        # return reverse_lazy('task:manager-task-view', args=[proj_id])
+        return redirect('/task/'+proj_id)
+
 
 class Edit_Task(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
 
     permission_required = ('task.change_task',)
     model = Task
     form_class = CreateTaskForm
-    template_name = "create_task_form.html"
-    success_url = '/task'
+    template_name = "update.html"
+
+    def form_valid(self, form):
+
+        proj_id = self.request.POST['project']
+        print(type(self.request.POST['project']))
+
+        form.save()
+        # return reverse_lazy('task:manager-task-view', args=[proj_id])
+        return redirect('/task/'+proj_id)
 
 
 class Details_Task(LoginRequiredMixin, PermissionRequiredMixin, DetailView,):
@@ -134,18 +153,14 @@ def entry(request, pk):
 
         if not request.user.is_authenticated:
             return HttpResponseForbidden
-        # elif Time_Entry.objects.filter(task_start_date_time=datetime.today()):
-        #     return HttpResponse("Task Already started! You can start working")
+
         else:
 
             tas = Task.objects.get(pk=pk)
-
-
             a = Time_Entry.objects.create(task=tas,
                                           task_start_date_time=datetime.datetime.now(),
                                           )
             a.save()
-            # print(tas)task:task-detail
             tas.task_current_state = 'running'
             tas.save()
             return redirect(reverse('task:task-details', kwargs={'pk' : tas.id}))
@@ -159,9 +174,7 @@ def end(request, pk):
         else:
             tas = Task.objects.get(pk=pk)
             tmp = Time_Entry.objects.filter(task=tas, task_end_date_time=None).order_by('-id').first()
-            one = datetime.datetime.now()
-            # print(type(one))
-            tmp.task_end_date_time = one
+            tmp.task_end_date_time = datetime.datetime.now()
             tmp.save()
 
             #for storing the value of time_per_session
@@ -173,6 +186,7 @@ def end(request, pk):
             #print(s)
             tmp.time_per_session = var
             tmp.save()
+
 
             #for storing the value of time spent
             # using last entry of time spent + new time_per_session entry
@@ -187,7 +201,7 @@ def end(request, pk):
 
             else:
                 new1 = Time_Entry.objects.get(Q(id=(tmp.id-1)) & Q(task=tas))
-                #print(new1)
+                print(new1)
                 h=new1.time_spent.hour
                 m=new1.time_spent.minute
                 time_spent_delta = tmp.time_per_session + datetime.timedelta(hours=h, minutes=m)
@@ -196,6 +210,11 @@ def end(request, pk):
                 tmp.save()
 
             tas.task_current_state = 'stopped'
+
             tas.save()
             #print(tmp.id)
             return redirect(reverse('task:task-details', kwargs= {'pk' : tas.id}))
+
+def task_progress(request, pk):
+    pass
+

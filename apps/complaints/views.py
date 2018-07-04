@@ -20,6 +20,7 @@ def complaints_ajax(request):
         key = request.GET["name"]
         data = serializers.serialize("json", MyUser.objects.filter(department=key))
         context={'data':data}
+
         # print(type(data))
         # print(type(context))
         # print(context)
