@@ -359,17 +359,18 @@ def ajax_data(request):
     list = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
     i = data[0].date.month
+    print(i)
 
     count = 0
     for d in data:
         if d.status == "absent" and d.date.month == i:
             count = count+1
 
-        list[i-1] = count
-        i = i+1
-        count = 1
-    print(list)
-
+        elif d.status == "absent" and d.date.month != i:
+            i = i+1
+            print(i)
+            count = 1
+        list[i - 1] = count
 
 
 
