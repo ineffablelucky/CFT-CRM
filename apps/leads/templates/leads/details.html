@@ -133,6 +133,8 @@
                                         <!--</a>-->
                                         <!--<a href="{% url 'leads:LeadDelete' leads.id %}">-->
                                             <button type="button" data-toggle="modal" data-target="#exampleModal1" class="delete">Delete</button>
+                                        <a href="{% url 'leads:LeadDownloadpdf' leads.id%}"><button id="downloadpdf" type="button">Download in PDF</button></a>
+                                        <a href="{% url 'leads:LeadDownloadcsv' leads.id%}"><button id="downloadcsv" type="button">Download in CSV</button></a>
                                         <!--</a>-->
                                     </td>
                                     <!--<td class=" last">-->

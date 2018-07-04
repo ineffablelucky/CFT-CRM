@@ -9,7 +9,7 @@
 
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
-        <link rel="stylesheet" href="{% static 'users/css/login.css' %}">
+        <link rel="stylesheet" href="{% static 'users/login/css/login.css' %}">
     </head>
 
     <body>
@@ -17,10 +17,10 @@
             <div class="row main">
                 <div class="left-content col-lg-6">
                     <div class="text-left logo">
-                        <img src="{% static 'users/images/logo.svg' %}">
+                        <img src="{% static 'users/login/images/logo.svg' %}">
                     </div>
                     <div class="text-center form-elements">
-                        <img src="{% static 'users/images/avatar.png' %}">
+                        <img src="{% static 'users/login/images/avatar.png' %}">
                         <h5>A ROBUST AND SECURE WAY OF ATTENDANCE TRACKING</h5>
 
                         <form method="POST", action="{% url 'users:login' %}">
@@ -75,7 +75,7 @@
                     </ul>
 
                     <div id="shape">
-                        <img src="{% static 'users/images/shape.svg' %}">
+                        <img src="{% static 'users/login/images/shape.svg' %}">
                     </div>
                 </div>
             </div>
@@ -85,7 +85,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
-        <script src="{% static 'users/js/login.js' %}"></script>
+        <script src="{% static 'users/login/js/login.js' %}"></script>
 
     </body>
 </html>
