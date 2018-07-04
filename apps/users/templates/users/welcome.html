@@ -35,27 +35,6 @@
         </div>
         {% endif %}
 
-        {% if user|has_group:"Marketing Manager Group" %}
-        <div>
-            <a href="{% url 'leads:LeadDetails' %}"><button type="button">New Leads</button></a><br><br>
-        </div>
-        <div>
-            <a href="{% url 'opportunity:assign_lead' %}"><button type="button">Assigned Lead</button></a><br><br>
-        </div>
-        <div>
-            <a href="{% url 'opportunity:closed_leads' %}"><button type="button">Closed Lead</button></a><br><br>
-        </div>
-        <div>
-            <a href="{% url 'opportunity:declined_leads' %}"><button type="button">Declined Lead</button></a><br><br>
-        </div>
-
-
-        {% elif user|has_group:"IT Manager Group" %}
-        <div>
-            <a href="{% url 'project:project_manager_list' %}"><button type="button">Project Management</button></a><br><br>
-        </div>
-        {% endif %}
-
     <a href="{% url 'users:logout' %}"><button type="button">Log out</button></a><br><br>
 
     {% else %}

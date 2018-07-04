@@ -1,18 +1,4 @@
-<!--<!DOCTYPE html>-->
-<!--<html lang="en">-->
-<!--<head>-->
-    <!--<meta charset="UTF-8">-->
-    <!--<title>task details</title>-->
-<!--</head>-->
-<!--<body>-->
-
-{% extends 'apps/users/templates/users/base.html' %}
-
-
-    <title>{% block title %} Employee's Task View {% endblock title %}</title>
-
-
-
+<title>{% block title %} Employee's Task View {% endblock title %}</title>
 
 {% block page-content %}
 
@@ -42,23 +28,11 @@
 
 {% if object.task_current_state == "stopped" %}
 
-    <!--<form action="{% url 'task:taskstart' object.id %}" action="post">-->
-        <!--{% csrf_token %}-->
-
-        <!--<input type="submit" value="START TASK"/>-->
-
-    <!--</form>-->
-
      <a class="startBtn" href="{% url 'task:taskstart' object.id %}"><button type="button" >START TASK</button></a>
 {% else %}
 
-    <!--<form action="{% url 'task:taskend' object.id %}" action="post">-->
-        <!--{% csrf_token %}-->
-
-        <!--<input type="submit" value="PAUSE"/>-->
-    <!--</form>-->
       <a href="{% url 'task:taskend' object.id %}"><button>PAUSE</button></a>
-              <a href="{% url 'task:taskend' object.id %}"><button>END TASK</button></a>
+      <a href="{% url 'task:taskend' object.id %}"><button>END TASK</button></a>
 
 {% endif %}
 
@@ -81,16 +55,3 @@
           </div>
 </div>
 {% endblock page-content %}
-
-{% block extra-script %}
-
-
- <!--<script>-->
-     <!--$(document).ready(function(){-->
-        <!--$('.startBtn').click(function(){-->
-            <!--$(this).attr('disabled', true);-->
-            <!--&lt;!&ndash;alert("asda");&ndash;&gt;-->
-        <!--});-->
-     <!--});-->
- <!--</script>-->
-{% endblock %}

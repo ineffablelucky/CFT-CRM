@@ -1,0 +1,240 @@
+{% extends 'users/employee/emp_base.html' %}
+{% load static %}
+
+{% block stylesheet %}
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+        <link rel="stylesheet" href="{% static 'users/css/home.css' %}">
+{% endblock stylesheet %}
+
+{% block page_content %}
+
+<div class="main-content">
+                <div class="card-deck card-row-top">
+                    <div class="card-container">
+                        <div class="card card-top-first">
+                            <div class="card-header bg-white text-left">
+                                <span>Clock Yourself</span>
+                            </div>
+                            <div class="card-body date-body">
+                                <div class="row text-left display-time">
+                                    <div class="col-lg-6">
+                                        <p class="">09:28 AM</p>
+                                        <button type="button" class="clock-btn clock-in btn "><span>CLOCK IN</span></button>
+                                    </div>
+
+                                    <div class="col-lg-6">
+                                        <p class="">06:34 PM</p>
+                                        <button type="button" class="clock-btn clock-out btn"><span>CLOCK OUT</span></button>
+                                    </div>
+                                </div>
+
+                                <div class="table-wrapper">
+                                    <div class="row table-scroll">
+                                        <table class="table text-left">
+                                            <thead>
+                                                <tr class="heads">
+                                                    <th>DATE</th>
+                                                    <th>CLOCK IN</th>
+                                                    <th>CLOCK OUT</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="date">19-June-2018, Tuesday</td>
+                                                    <td class="time">09:18 AM</td>
+                                                    <td class="time">06:45 PM</td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td class="date">20-June-2018, Wednesday</td>
+                                                    <td class="time">09:18 AM</td>
+                                                    <td class="time">06:45 PM</td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td class="date">21-June-2018, Thursday</td>
+                                                    <td class="time">09:18 AM</td>
+                                                    <td class="time">06:45 PM</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-container">
+                        <div class="card card-top-second">
+                            <div class="card-header text-left bg-white">
+                                <span>Notifications</span>
+                            </div>
+                            <div>
+                                <div class="card-body notifications">
+                                    <div class="notification-container">
+                                        <div class="row timeline even">
+                                            <div class="col-lg-12 content-container ">
+                                                <div class="content">
+                                                    <span>2 min ago</span>
+                                                    <h6>Template Builder Acess(Video tutorial inside documentation)</h6>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row timeline odd">
+                                            <div class="col-lg-12 content-container ">
+                                                <div class="content">
+                                                    <span>2 min ago</span>
+                                                    <h6>Template Builder Acess(Video tutorial inside documentation)</h6>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row timeline even">
+                                            <div class="col-lg-12 content-container">
+                                                <div class="content">
+                                                    <span>2 min ago</span>
+                                                    <h6>Template Builder Acess(Video tutorial inside documentation) and asdasd lorem10  </h6>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row timeline odd">
+                                            <div class="col-lg-12 content-container">
+                                                <div class="content">
+                                                    <span>2 min ago</span>
+                                                    <h6>Template Builder Acess(Video tutorial inside documentation)</h6>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row timeline even">
+                                            <div class="col-lg-12 content-container">
+                                                <div class="content">
+                                                    <span>2 min ago</span>
+                                                    <h6>Template Builder Acess(Video tutorial inside documentation)</h6>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                    <div class="card-deck card-row-bottom">
+                        <div class="card-container">
+                            <div class="card card-bottom-first">
+                                <div class="card-header todo-header bg-white text-left">
+                                    <span>To-do List</span>
+                                    <span class="delete"><img src="{% static 'users/images/Delete.svg' %}"></span>
+                                </div>
+                                <div class="card-body text-secondary">
+                                    <div class="todo-container">
+                                        <div class="row todo">
+                                            <div class="col-lg-12 task-container">
+                                                <label for="1">Collaboratively Administrate
+                                                    <input type="checkbox" value="1" class="form-check-input" id="1">
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="row todo">
+                                            <div class="col-lg-12 task-container">
+                                                <label for="2" >Collaboratively Administrate
+                                                    <input type="checkbox" value="2" class="form-check-input" id="2">
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="row todo">
+                                            <div class="col-lg-12 task-container">
+                                                <label for="3" >Collaboratively Administrate
+                                                    <input type="checkbox" value="3" class="form-check-input" id="3">
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="row todo">
+                                            <div class="col-lg-12 task-container">
+                                                <label for="4">Collaboratively Administrate
+                                                    <input type="checkbox" value="4" class="form-check-input" id="4">
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="row todo">
+                                            <div class="col-lg-12 task-container">
+                                                <label for="5">Collaboratively Administrate
+                                                    <input type="checkbox" value="5" class="form-check-input" id="5">
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                    <input type="text" id="add-task" class="card-footer task-add" placeholder="Add your task here">
+
+                                <div class="card-footer task-btn-container">
+                                    <button class="btn add-btn" type="button" onclick="addTask()"><span>Add New Task</span></button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="clearfix"></div>
+
+                        <div class="card-container">
+                            <div class="card card-bottom-second">
+                                <div class="card-header text-left bg-white">
+                                    <span>FAQ's</span>
+                                </div>
+                                <div class="card-body">
+                                    <div class="question-container">
+                                        <div class="row faq">
+                                            <div class="col-lg-12 content-container">
+                                                <div class="content">
+                                                    <span class="questions">Q1. What is Lorem Ipsum?</span>
+                                                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. At quaerat nulla et doloribus nam possimus sed voluptatum adipisci eius maiores?</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row faq">
+                                            <div class="col-lg-12 content-container">
+                                                <div class="content">
+                                                    <span class="questions">Q2. What is Lorem Ipsum?</span>
+                                                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. At quaerat nulla et doloribus nam possimus sed voluptatum adipisci eius maiores?</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row faq">
+                                            <div class="col-lg-12 content-container">
+                                                <div class="content">
+                                                    <span class="questions">Q2. What is Lorem Ipsum?</span>
+                                                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. At quaerat nulla et doloribus nam possimus sed voluptatum adipisci eius maiores?</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row faq">
+                                            <div class="col-lg-12 content-container">
+                                                <div class="content">
+                                                    <span class="questions">Q2. What is Lorem Ipsum?</span>
+                                                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. At quaerat nulla et doloribus nam possimus sed voluptatum adipisci eius maiores?</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+{% endblock page_content %}
+
+{% block scripts %}
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+        <script src="{% static 'users/js/home.js' %}"></script>
+{% endblock scripts %}
