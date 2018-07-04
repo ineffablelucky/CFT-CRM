@@ -142,8 +142,11 @@ class CreateForm(ModelForm):
                 raise forms.ValidationError("Please enter a 10 digit number")
     def clean_website(self):
         website = self.cleaned_data.get('website')
-        website = "https://" + website
-        return website
+        if website=='':
+            pass
+        else:
+            website = "https://" + website
+            return website
     class Meta:
         model = LEADS
         fields = ('contact_number','company_name','description','website','contact_person','source','source_type','email','assigned_boolean')
