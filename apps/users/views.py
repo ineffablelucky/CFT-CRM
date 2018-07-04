@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm, PasswordResetForm, PasswordChangeForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import permission_required, login_required
-from .forms import RegistrationForm, ResetPasswordForm
+from .forms import RegistrationForm, ResetPasswordForm, EditProfile
 from .models import MyUser, user_token
 from django.core.mail import  send_mail
 from django.contrib.auth.hashers import make_password
@@ -10,8 +10,11 @@ from configs.settings import BASE_URL
 from django.utils.crypto import get_random_string
 from django.urls.exceptions import Http404
 from django.http import HttpResponse
-import re
 from django.urls import reverse
+from django.views.generic import ListView, UpdateView
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+import re
+
 
 def index(request):
     return render(request, 'users/index.html')
@@ -24,12 +27,15 @@ def register(request):
         form = RegistrationForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('/')
+            return redirect('/login/profile-all/')
     else:
         form = RegistrationForm()
 
     context = {'form' : form}
     return render(request,'users/registration/register.html',context)
+
+def welcome(request):
+    return render(request, 'users/employee/tmp.html')
 
 
 def auth_login(request):
@@ -74,8 +80,32 @@ def profile(request, id):
     print(user)
     return render(request, 'users/profile.html', {'user':user})
 
-def welcome(request):
-    return render(request, 'users/welcome.html')
+
+class EmployeeProfile(LoginRequiredMixin, PermissionRequiredMixin, ListView):
+    template_name = 'users/profile.html'
+    model = MyUser
+    context_object_name = 'myuser'
+
+    def get_queryset(self):
+        queryset = MyUser.objects.all()
+        return queryset
+
+class EditEmployeeProfile(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+    template_name = 'users/edit_emp.html'
+    form_class = EditProfile
+    success_url = '/login/profile-all/'
+    model = MyUser
+
+    # def form_invalid(self, form):
+    #     print("form is invalid")
+    #     print(form.errors)
+    #     return HttpResponse("form is invalid.. this is just an HttpResponse object")
+
+    # def get_queryset(self):
+    #     queryset = MyUser.objects.filter(id=self.kwargs.get('pk'))
+    #     return queryset
+
+
 
 
 def sendEmail(request, subject, message, sender, to):
@@ -86,6 +116,7 @@ def sendEmail(request, subject, message, sender, to):
         [to],
         fail_silently=True
     )
+
 
 def forgot_password(request):
     if request.method == 'POST':
@@ -129,7 +160,6 @@ def reset_password(request, token):
     else:
         form = ResetPasswordForm()
     return render(request, 'users/registration/Login/change-password.html', {'token':token,'form':form,})
-
 
 
 def verify(request, key):

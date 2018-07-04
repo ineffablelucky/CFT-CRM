@@ -215,7 +215,7 @@
   }
 
   .form-elements button span{
-    position:relative;
+    position: relative;
     left:18px;
     transition: all 0.2s ease-in-out;
   }
@@ -230,7 +230,7 @@
 
   .form-elements button:hover span{
     position: relative;
-    left:-125px;
+    left:-126px;
     transition: all 0.2s ease-in-out;
   }
 
@@ -242,7 +242,7 @@
 
   .form-elements button:focus span{
     position: relative;
-    left:-125px;
+    left:-126px;
     transition: all 0.2s ease-in-out;
   }
 
