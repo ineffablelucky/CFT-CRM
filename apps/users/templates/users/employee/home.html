@@ -1,68 +1,15 @@
-<!DOCTYPE html>
+{% extends 'users/employee/emp_base.html' %}
 {% load static %}
-<html>
-    <head>
-        <title>Home</title>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+{% block stylesheet %}
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
         <link rel="stylesheet" href="{% static 'users/css/home.css' %}">
-    </head>
+{% endblock stylesheet %}
 
-    <body>
-        <!--Sidebar-->
-        <div class="sidebar">
-            <img class="logo" src="{% static 'users/images/Logo-1.png' %}">
-            <ul class="list-unstyled">
-                <li><img src="{% static 'users/images/Dashboard icon.svg' %}"><span>Dashboard</span></li>
-                <a href="#"><li class="active"><img src="{% static 'users/images/Home icon.svg' %}"><span>Home</span></li></a>
-                <a href="#"><li><img src="{% static 'users/images/Projects icon.svg' %}"><span>Projects</span></li></a>
-                <a href="#"><li><img src="{% static 'users/images/Attendance icon.svg' %}"><span>Attendance</span></li></a>
-                <a href="#"><li><img src="{% static 'users/images/Salary Icon.svg' %}"><span>Salary</span></li></a>
-                <a href="#"><li><img src="{% static 'users/images/Leave Req.. Icon.svg' %}"><span>Leave Request</span></li></a>
-            </ul>
-        </div>
-        <!--Sidebar-->
+{% block page_content %}
 
-        <div class="main">
-            <nav class="navbar navbar-expand-md bg-white ">
-                <div class="bar-icon">
-                    <div class="bar-1"></div>
-                    <div class="bar-2"></div>
-                    <div class="bar-3"></div>
-                </div>
-                <!-- <div> -->
-                    <ul class="navbar-nav ml-auto right-header">
-                        <form class="search">
-                            <input type="search" placeholder="Search" class="form-control search-bar">
-                        </form>
-                        <li class="nav-item nav-icon">
-                            <a class="nav-link" href="#"><img src="{% static 'users/images/Message.svg' %}"></a>
-                        </li>
-                        <li class="nav-item nav-icon">
-                            <a class="nav-link" href="#"><img src="{% static 'users/images/Notification.png' %}"></a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <img src="{% static 'users/images/line.svg' %}" class="dropdown-line">
-                              <div class="profile-bg">
-                                <img src="{% static 'users/images/profile.png' %}">
-                              </div>
-                              <img src="{% static 'users/images/dropdown-icon.svg' %}" class="dropdown-icon">
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                              <a class="dropdown-item" href="#"><img id="my-img" src="{% static 'users/images/profile.png' %}"> My Profile</a>
-                              <a class="dropdown-item" href="#"><img id="edit-profile" src="{% static 'users/images/Settings.svg' %}"><span>Edit Profile</span></a>
-                              <a class="dropdown-item" href="#"><i class="fas fa-power-off"></i><span>Logout</span></a>
-                            </div>
-                        </li>
-                    </ul>
-                <!-- </div> -->
-            </nav>
-
-            
-            <div class="main-content">
+<div class="main-content">
                 <div class="card-deck card-row-top">
                     <div class="card-container">
                         <div class="card card-top-first">
@@ -81,7 +28,7 @@
                                         <button type="button" class="clock-btn clock-out btn"><span>CLOCK OUT</span></button>
                                     </div>
                                 </div>
-                                
+
                                 <div class="table-wrapper">
                                     <div class="row table-scroll">
                                         <table class="table text-left">
@@ -173,7 +120,7 @@
                     </div>
                 </div>
 
-                
+
 
                     <div class="card-deck card-row-bottom">
                         <div class="card-container">
@@ -226,9 +173,9 @@
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                     <input type="text" id="add-task" class="card-footer task-add" placeholder="Add your task here">
-                                
+
                                 <div class="card-footer task-btn-container">
                                     <button class="btn add-btn" type="button" onclick="addTask()"><span>Add New Task</span></button>
                                 </div>
@@ -282,16 +229,12 @@
                         </div>
                     </div>
                 </div>
-        </div>
 
+{% endblock page_content %}
 
-        
-
-
-
+{% block scripts %}
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
         <script src="{% static 'users/js/home.js' %}"></script>
-    </body>
-</html>
+{% endblock scripts %}
