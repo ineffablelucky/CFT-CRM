@@ -1,29 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Clock IN page</title>
-</head>
-<body>
+{% load static %}
+<html>
+    <body>
 
- <p>Username:{{ request.user.username }}</p>
- <div>
-<form action="{% url 'attendance:clockin' %}" style="display:inline" method="post">
-    {% csrf_token %}
 
-    <input type="submit" value="clock in"></form>&nbsp;
+            <p>Username:{{ request.user.username }}</p>
+            <div>
+            <form action="{% url 'attendance:clockin' %}" style="display:inline" method="post">
+                {% csrf_token %}
+
+            <input type="submit" value="clock in"></form>&nbsp;
 
 
 
-<form action="{% url 'attendance:clockout' %}" style="display:inline" method="post">
-    {% csrf_token %}
+            <form action="{% url 'attendance:clockout' %}" style="display:inline" method="post">
+                {% csrf_token %}
 
-        <input type="submit" value="clock out">
+                <input type="submit" value="clock out">
 
-</form>
-</div><br>
+            </form>
+            </div><br>
 
-<table border="1">
+            <table border="1">
     <tr>
         <th>Date</th>
         <th>Clock In</th>
@@ -38,6 +36,5 @@
         </tr>
     {% endfor %}
 </table>
+    </body>
 
-</body>
-</html>

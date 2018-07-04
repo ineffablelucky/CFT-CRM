@@ -1,11 +1,9 @@
 {% extends 'users/employee/emp_base.html' %}
 {% load static %}
 
-{% block stylesheet %}
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
-        <link rel="stylesheet" href="{% static 'users/css/home.css' %}">
-{% endblock stylesheet %}
+{% block extra-stylesheet %}
+        <link rel="stylesheet" href="{% static 'users/employee/css/home.css' %}">
+{% endblock extra-stylesheet %}
 
 {% block page_content %}
 
@@ -19,13 +17,19 @@
                             <div class="card-body date-body">
                                 <div class="row text-left display-time">
                                     <div class="col-lg-6">
-                                        <p class="">09:28 AM</p>
-                                        <button type="button" class="clock-btn clock-in btn "><span>CLOCK IN</span></button>
+                                        <p id="clock_in"></p>
+                                        <form method="post" action="{% url 'attendance:clockin' %}">
+                                            {% csrf_token %}
+                                          <button type="submit" class="clock-btn clock-in btn " ><span>CLOCK IN</span></button>
+                                        </form>
                                     </div>
 
                                     <div class="col-lg-6">
-                                        <p class="">06:34 PM</p>
-                                        <button type="button" class="clock-btn clock-out btn"><span>CLOCK OUT</span></button>
+                                        <p class=""></p>
+                                        <form method="post" action="{% url 'attendance:clockout' %}">
+                                            {% csrf_token %}
+                                            <button type="submit" class="clock-btn clock-out btn"><span>CLOCK OUT</span></button>
+                                        </form>
                                     </div>
                                 </div>
 
@@ -40,23 +44,13 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                {% for attend in attendance %}
                                                 <tr>
-                                                    <td class="date">19-June-2018, Tuesday</td>
-                                                    <td class="time">09:18 AM</td>
-                                                    <td class="time">06:45 PM</td>
+                                                    <td class="date">{{ attend.date }}</td>
+                                                    <td class="time">{{ attend.time_in.time }}</td>
+                                                    <td class="time">{{ attend.time_out.time }}</td>
                                                 </tr>
-
-                                                <tr>
-                                                    <td class="date">20-June-2018, Wednesday</td>
-                                                    <td class="time">09:18 AM</td>
-                                                    <td class="time">06:45 PM</td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td class="date">21-June-2018, Thursday</td>
-                                                    <td class="time">09:18 AM</td>
-                                                    <td class="time">06:45 PM</td>
-                                                </tr>
+                                                {% endfor %}
                                             </tbody>
                                         </table>
                                     </div>
@@ -127,7 +121,7 @@
                             <div class="card card-bottom-first">
                                 <div class="card-header todo-header bg-white text-left">
                                     <span>To-do List</span>
-                                    <span class="delete"><img src="{% static 'users/images/Delete.svg' %}"></span>
+                                    <span class="delete"><img src="{% static 'users/employee/images/Delete.svg' %}"></span>
                                 </div>
                                 <div class="card-body text-secondary">
                                     <div class="todo-container">
@@ -232,9 +226,6 @@
 
 {% endblock page_content %}
 
-{% block scripts %}
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
-        <script src="{% static 'users/js/home.js' %}"></script>
-{% endblock scripts %}
+{% block extra-scripts %}
+        <script src="{% static 'users/employee/js/home.js' %}"></script>
+{% endblock extra-scripts %}

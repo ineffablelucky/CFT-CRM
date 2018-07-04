@@ -5,11 +5,16 @@
         <title>My Profile</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+
         {% block stylesheet %}
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
-        <link rel="stylesheet" href="{% static 'users/css/profile.css' %}">
+
         {% endblock stylesheet %}
+
+        {% block extra-stylesheet %}
+        <link rel="stylesheet" href="{% static 'users/employee/css/profile.css' %}">
+        {% endblock extra-stylesheet %}
 
     </head>
 
@@ -18,20 +23,25 @@
         {% if user.is_authenticated %}
         {% block sidebar %}
         <div class="sidebar">
-            <img class="logo" src="{% static 'users/images/Logo-1.png' %}">
+            <div class="bar-icon">
+                <div class="bar-1-active"></div>
+                <div class="bar-2-active"></div>
+                <div class="bar-3-active"></div>
+            </div>
+            <img class="logo" src="{% static 'users/employee/images/Logo-1.png' %}">
             <ul class="list-unstyled">
-                <li><img src="{% static 'users/images/Dashboard icon.svg' %}"><span>Dashboard</span></li>
-                <a href="#"><li style="top:58px" class="active"><img src="{% static 'users/images/Home icon.svg' %}"><span>Home</span></li></a>
+                <li><img src="{% static 'users/employee/images/Dashboard icon.svg' %}"><span>Dashboard</span></li>
+                <a href="#"><li style="top:58px" class="active"><img src="{% static 'users/employee/images/Home icon.svg' %}"><span>Home</span></li></a>
 
                 {% if user.department == 'IT' %}
-                <a href="#"><li style="top:117px"><img src="{% static 'users/images/Projects icon.svg' %}"><span>Projects</span></li></a>
+                <a href="{% url 'project:employee-project' %}"><li style="top:117px"><img src="{% static 'users/employee/images/Projects icon.svg' %}"><span>Projects</span></li></a>
                 {% elif user.department == 'Marketing' %}
-                <a href="#"><li style="top:117px"><img src="{% static 'users/images/Projects icon.svg' %}"><span>Leads</span></li></a>
+                <a href="#"><li style="top:117px"><img src="{% static 'users/employee/images/Projects icon.svg' %}"><span>Leads</span></li></a>
                 {% endif %}
 
-                <a href="#"><li style="top:175px"><img src="{% static 'users/images/Attendance icon.svg' %}"><span>Attendance</span></li></a>
-                <a href="#"><li style="top:234px"><img src="{% static 'users/images/Salary Icon.svg' %}"><span>Salary</span></li></a>
-                <a href="#"><li style="top:293px"><img src="{% static 'users/images/Leave Req.. Icon.svg' %}"><span>Leave Request</span></li></a>
+                <a href="#"><li style="top:175px"><img src="{% static 'users/employee/images/Attendance icon.svg' %}"><span>Attendance</span></li></a>
+                <a href="#"><li style="top:234px"><img src="{% static 'users/employee/images/Salary Icon.svg' %}"><span>Salary</span></li></a>
+                <a href="#"><li style="top:293px"><img src="{% static 'users/employee/images/Leave Req.. Icon.svg' %}"><span>Leave Request</span></li></a>
             </ul>
         </div>
         {% endblock sidebar %}
@@ -41,11 +51,7 @@
         <!--Navigation-->
             {% block topnav %}
             <nav class="navbar navbar-expand-lg bg-light ">
-                <div class="bar-icon">
-                    <div class="bar-1"></div>
-                    <div class="bar-2"></div>
-                    <div class="bar-3"></div>
-                </div>
+
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon">
                     </span>
@@ -57,22 +63,22 @@
                             <input type="search" placeholder="Search" class="form-control search-bar">
                         </form>
                         <li class="nav-item nav-icon">
-                            <a class="nav-link" href="#"><img src="{% static 'users/images/Message.svg' %}"></a>
+                            <a class="nav-link" href="#"><img src="{% static 'users/employee/images/Message.svg' %}"></a>
                         </li>
                         <li class="nav-item nav-icon">
-                            <a class="nav-link" href="#"><img src="{% static 'users/images/Notification.png' %}"></a>
+                            <a class="nav-link" href="#"><img src="{% static 'users/employee/images/Notification.png' %}"></a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <img src="{% static 'users/images/line.svg' %}" class="dropdown-line">
+                                <img src="{% static 'users/employee/images/line.svg' %}" class="dropdown-line">
                               <div class="profile-bg">
-                                <img src="{% static 'users/images/profile.png' %}">
+                                <img src="{% static 'users/employee/images/profile.png' %}">
                               </div>
-                              <img src="{% static 'users/images/dropdown-icon.svg' %}" class="dropdown-icon">
+                              <img src="{% static 'users/employee/images/dropdown-icon.svg' %}" class="dropdown-icon">
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                              <a class="dropdown-item" href="#"><img id="my-img" src="{% static 'users/images/profile.png' %}"> My Profile</a>
-                              <a class="dropdown-item" href="#"><img id="edit-profile" src="{% static 'users/images/Settings.svg' %}"><span>Edit Profile</span></a>
+                              <a class="dropdown-item" href="#"><img id="my-img" src="{% static 'users/employee/images/profile.png' %}"> My Profile</a>
+                              <a class="dropdown-item" href="#"><img id="edit-profile" src="{% static 'users/employee/images/Settings.svg' %}"><span>Edit Profile</span></a>
                               <a class="dropdown-item" href="{% url 'users:logout' %}"><i class="fas fa-power-off"></i><span>Logout</span></a>
                             </div>
                         </li>
@@ -96,7 +102,7 @@
                                 <span>
                                     <div class="row">
                                         <div class="profile-bg profile-bg-border">
-                                            <img src="{% static 'users/images/profile.png' %}">
+                                            <img src="{% static 'users/employee/images/profile.png' %}">
                                         </div>
                                         <div class="main-info">
                                             <div class="row">
@@ -202,8 +208,13 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
-        <script src="{% static 'users/js/profile.js' %}"></script>
+
         {% endblock scripts %}
+
+        {% block extra-scripts %}
+        <script src="{% static 'users/employee/js/profile.js' %}"></script>
+        {% endblock extra-scripts %}
+
     {% else %}
     <h2>Please enter correct details</h2>
         <p>Login again</p>

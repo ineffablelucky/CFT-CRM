@@ -15,6 +15,8 @@ urlpatterns =[
     path('editajax/<int:id>',views.check),
 
     path('upload/csv/', views.upload_csv, name='upload_csv'),
+    path('downloadpdf/<int:id>',views.DownloadPdf,name='LeadDownloadpdf'),
+    path('downloadcsv/<int:id>',views.DownloadCsv,name='LeadDownloadcsv'),
 
 
 

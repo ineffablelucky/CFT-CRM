@@ -92,7 +92,7 @@ class EmployeeProfile(LoginRequiredMixin, PermissionRequiredMixin, ListView):
         return queryset
 
 class EditEmployeeProfile(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
-
+    permission_required = ('users.view_users', 'users.add_myuser',)
     template_name = 'users/edit_emp.html'
     form_class = EditProfile
     success_url = '/login/profile-all/'

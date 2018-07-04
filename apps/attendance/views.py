@@ -106,7 +106,7 @@ class Clockin(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
         if not request.user.is_authenticated:
             return HttpResponseForbidden
         elif Attendance.objects.filter(user_id=self.request.user.id, date=datetime.date.today()):
-            return HttpResponse("Already Clocked In")
+            return HttpResponse("Already clocked in")
 
         else:
             a = Attendance.objects.create(user_id=self.request.user.id,
@@ -150,7 +150,7 @@ class Clockout(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
 
 class PastAttendance(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     permission_required = ('attendance.view_attendance',)
-    template_name = 'clock_in.html'
+    template_name = 'users/employee/home.html'
     model = Attendance
     context_object_name = 'attendance'
 
