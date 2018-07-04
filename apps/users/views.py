@@ -35,7 +35,7 @@ def register(request):
     return render(request,'users/registration/register.html',context)
 
 def welcome(request):
-    return render(request, 'users/employee/home.html')
+    return render(request, 'users/employee/profile.html')
 
 
 def auth_login(request):
@@ -92,7 +92,7 @@ class EmployeeProfile(LoginRequiredMixin, PermissionRequiredMixin, ListView):
         return queryset
 
 class EditEmployeeProfile(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
-
+    permission_required = ('users.view_users', 'users.add_myuser',)
     template_name = 'users/edit_emp.html'
     form_class = EditProfile
     success_url = '/login/profile-all/'

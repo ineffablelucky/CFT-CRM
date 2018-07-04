@@ -1,0 +1,126 @@
+{% extends 'apps/users/templates/users/employee/emp_base.html' %}
+{% load static %}
+
+{% block extra-stylesheet %}
+<link rel="stylesheet" href="{% static 'users/css/project-list.css' %}">
+{% endblock extra-stylesheet %}
+
+{% block page_content %}
+<div class="main-content ">
+                <div class="row head">
+                    <h4>Projects</h4>
+                </div>
+
+                <div class="row">
+                    <div class="table-responsive major-container">
+                        <div class=" bg-white">
+                            <div class="row">
+                                <span>
+                                    <div class="row">
+                                        <div class="main-info">
+                                            <div class="row">
+                                                <h5 class="heading">MY PROJECTS</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="table-container">
+                            <div class="table-responsive project-details">
+                                <table class="table table-lg text-center table-borderless">
+                                    <thead class="thead-light">
+                                        <tr>
+                                        <th scope="col">S.NO</th>
+                                        <th scope="col">PROJECT NAME</th>
+                                        <th scope="col">PROJECT HEAD</th>
+                                        <th scope="col">STATUS</th>
+                                        <th scope="col">ACTION</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                        <th scope="row">01</th>
+                                        <td>MENTYOR</td>
+                                        <td>VED PRAKASH</td>
+                                        <td>Pending</td>
+                                        <td><img src="assets/images/View.svg"></td>
+                                        </tr>
+                                        <tr>
+                                        <th scope="row">02</th>
+                                        <td>PETU KI BIRYANI</td>
+                                        <td>NAVEEN KATIYAR</td>
+                                        <td>Completed</td>
+                                        <td><img src="assets/images/View.svg"></td>
+                                        </tr>
+                                        <tr>
+                                        <th scope="row">03</th>
+                                        <td>UM BIKES</td>
+                                        <td>VED PRAKASH</td>
+                                        <td>Inactive</td>
+                                        <td><img src="assets/images/View.svg"></td>
+                                        </tr>
+                                        <tr>
+                                        <th scope="row">04</th>
+                                        <td>UM BIKES</td>
+                                        <td>Naveen Katiyar</td>
+                                        <td>Completed</td>
+                                        <td><img src="assets/images/View.svg"></td>
+                                        </tr>
+                                        <tr>
+                                        <th scope="row">05</th>
+                                        <td>EMS</td>
+                                        <td>Naveen Katiyar</td>
+                                        <td>Completed</td>
+                                        <td><img src="assets/images/View.svg"></td>
+                                        </tr>
+                                        <tr>
+                                        <th scope="row">06</th>
+                                        <td>Code Flow Tech</td>
+                                        <td>VED PRAKASH</td>
+                                        <td>Inactive</td>
+                                        <td><img src="assets/images/View.svg"></td>
+                                        </tr>
+                                        <tr>
+                                        <th scope="row">07</th>
+                                        <td>Students & Tutors</td>
+                                        <td>VED PRAKASH</td>
+                                        <td>Inactive</td>
+                                        <td><img src="assets/images/View.svg"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="pagination-container">
+                                <ul class="pagination">
+                                    <li class="page-item">
+                                        <a class="page-link" href="#" aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span>
+                                            <span class="sr-only">Previous</span>
+                                        </a>
+                                        </li>
+                                        <li class="page-item active-link"><a class="page-link " href="#">1</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                        <li class="page-item">
+                                        <a class="page-link" href="#" aria-label="Next">
+                                            <span aria-hidden="true">&raquo;</span>
+                                            <span class="sr-only">Next</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+{% endblock page_content %}
+
+{% block extra-scripts %}
+<script src="{% static 'users/js/project-list.j' %}"></script>
+{% endblock extra-scripts %}
+
+

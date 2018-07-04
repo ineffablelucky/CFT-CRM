@@ -187,53 +187,92 @@ class RegistrationForm(UserCreationForm):
         ('IT', 'IT'),
     )
 
+    gender_choice = (
+        ('M', 'M'),
+        ('F', 'F'),
+        ('Other', 'Other'),
+    )
+
     department = forms.ChoiceField(
         label='Department',
         choices=department_choices,
-        widget=forms.Select()
+        widget=forms.Select(
+            attrs={'class': 'form-control col-md-7 col-xs-12', 'placeholder': ''}
+        )
     )
 
     designation = forms.ChoiceField(
         label='Designation',
         choices=designation_choices,
-        widget=forms.Select()
+        widget=forms.Select(
+            attrs={'class': 'form-control col-md-7 col-xs-12', 'placeholder': ''}
+        )
+    )
+
+    gender = forms.ChoiceField(
+        label='Gender',
+        choices=gender_choice,
+        widget=forms.Select(
+            attrs={'class': 'form-control col-md-7 col-xs-12', 'placeholder': ''}
+        )
     )
 
     email = forms.EmailField(
         label='Email ',
-        widget = forms.TextInput(),
+        widget = forms.TextInput(
+            attrs={'class': 'form-control col-md-7 col-xs-12', 'placeholder': 'Write email here'}
+        ),
     )
 
     first_name = forms.CharField(
         label='First name ',
-        widget=forms.TextInput(),
+        widget=forms.TextInput(
+            attrs={'class': 'form-control col-md-7 col-xs-12', 'placeholder': ''}
+        ),
     )
 
     middle_name = forms.CharField(
         label='Middle Name ',
-        widget=forms.TextInput(),
+        widget=forms.TextInput(
+            attrs={'class': 'form-control col-md-7 col-xs-12', 'placeholder': ''}
+        ),
         required = False,
     )
 
     last_name = forms.CharField(
         label='Last Name ',
-        widget=forms.TextInput(),
+        widget=forms.TextInput(
+            attrs={'class': 'form-control col-md-7 col-xs-12', 'placeholder': ''}
+        ),
         required = False,
     )
 
     contact = forms.CharField(
         label='Contact ',
-        widget=forms.NumberInput(),
+        widget=forms.NumberInput(
+            attrs={'class': 'form-control col-md-7 col-xs-12', 'placeholder': ''}
+        ),
         required = False,
     )
 
     salary = forms.IntegerField(
         label='Salary ',
-        widget=forms.NumberInput(),
+        widget=forms.NumberInput(
+            attrs={'class': 'form-control col-md-7 col-xs-12', 'placeholder': ''}
+        ),
         required=False,
     )
+    password1 = forms.CharField(
+        widget=forms.PasswordInput(
+            attrs={'class': 'form-control col-md-7 col-xs-12',}
+        )
+    )
 
-
+    password2 = forms.CharField(
+        widget=forms.PasswordInput(
+            attrs={'class': 'form-control col-md-7 col-xs-12',}
+        )
+    )
 
 class ResetPasswordForm(UserCreationForm):
     class Meta:
@@ -405,44 +444,72 @@ class EditProfile(forms.ModelForm):
         ('IT', 'IT'),
     )
 
+    gender_choice = (
+        ('M', 'M'),
+        ('F', 'F'),
+        ('Other', 'Other'),
+    )
+
     department = forms.ChoiceField(
         label='Department',
         choices=department_choices,
-        widget=forms.Select()
+        widget=forms.Select(
+            attrs={'class': 'form-control col-md-7 col-xs-12', 'placeholder': ''}
+        )
     )
 
     designation = forms.ChoiceField(
         label='Designation',
         choices=designation_choices,
-        widget=forms.Select()
+        widget=forms.Select(
+            attrs={'class': 'form-control col-md-7 col-xs-12', 'placeholder': ''}
+        )
+    )
+
+    gender = forms.ChoiceField(
+        label='Gender',
+        choices=gender_choice,
+        widget=forms.Select(
+            attrs={'class': 'form-control col-md-7 col-xs-12', 'placeholder': ''}
+        )
     )
 
     first_name = forms.CharField(
         label='First name ',
-        widget=forms.TextInput(),
+        widget=forms.TextInput(
+            attrs={'class': 'form-control col-md-7 col-xs-12', 'placeholder': ''}
+        ),
     )
 
     middle_name = forms.CharField(
         label='Middle Name ',
-        widget=forms.TextInput(),
+        widget=forms.TextInput(
+            attrs={'class': 'form-control col-md-7 col-xs-12', 'placeholder': ''}
+        ),
         required = False,
     )
 
     last_name = forms.CharField(
         label='Last Name ',
-        widget=forms.TextInput(),
+        widget=forms.TextInput(
+            attrs={'class': 'form-control col-md-7 col-xs-12', 'placeholder': ''}
+        ),
         required = False,
     )
 
     contact = forms.CharField(
         label='Contact ',
-        widget=forms.NumberInput(),
+        widget=forms.NumberInput(
+            attrs={'class': 'form-control col-md-7 col-xs-12', 'placeholder': ''}
+        ),
         required = False,
     )
 
     salary = forms.IntegerField(
         label='Salary ',
-        widget=forms.NumberInput(),
+        widget=forms.NumberInput(
+            attrs={'class': 'form-control col-md-7 col-xs-12', 'placeholder': ''}
+        ),
         required=False,
     )
 

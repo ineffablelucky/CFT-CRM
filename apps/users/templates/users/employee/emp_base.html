@@ -5,11 +5,16 @@
         <title>My Profile</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+
         {% block stylesheet %}
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
         <link rel="stylesheet" href="{% static 'users/css/profile.css' %}">
         {% endblock stylesheet %}
+
+        {% block extra-stylesheet %}
+
+        {% endblock extra-stylesheet %}
 
     </head>
 
@@ -202,8 +207,13 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
-        <script src="{% static 'users/js/profile.js' %}"></script>
+        <link rel="stylesheet" href="{% static 'users/js/profile.js' %}">
         {% endblock scripts %}
+
+        {% block extra-scripts %}
+
+        {% endblock extra-scripts %}
+
     {% else %}
     <h2>Please enter correct details</h2>
         <p>Login again</p>
