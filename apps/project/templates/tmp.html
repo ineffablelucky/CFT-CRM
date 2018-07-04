@@ -43,14 +43,14 @@
                                     <tbody>
                                         {% for p in object_list %}
 
-                                        <tr>
-                                        <th scope="row">{{ p.id }}</th>
-                                        <td>{{ p.project_name }}</td>
-                                        <td>{{ p.project_manager }}</td>
-                                        <td>{{ p.status }}</td>
-                                        <td><a href="{% url 'project:project-details' p.id %}"><button>View Details</button></a></td>
-                                        </tr>
-                                     {% endfor %}
+                                            <tr>
+                                            <th scope="row">{{ p.id }}</th>
+                                            <td>{{ p.project_name }}</td>
+                                            <td>{{ p.project_manager }}</td>
+                                            <td>{{ p.status }}</td>
+                                            <td><a href="{% url 'project:project-details' p.id %}"></a></td>
+                                            </tr>
+                                        {% endfor %}
                                     </tbody>
                                 </table>
                             </div>

@@ -43,6 +43,7 @@ class Employee_Task_List(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     template_name = "my tasks.html"
 
     def get_queryset(self):
+        print(self.kwargs.get('pk'), "************")
         temp = Task.objects.filter(employee_id=self.request.user)
 
         return temp
