@@ -34,7 +34,7 @@
                 <a href="#"><li style="top:58px" class="active"><img src="{% static 'users/employee/images/Home icon.svg' %}"><span>Home</span></li></a>
 
                 {% if user.department == 'IT' %}
-                <a href="#"><li style="top:117px"><img src="{% static 'users/employee/images/Projects icon.svg' %}"><span>Projects</span></li></a>
+                <a href="{% url 'project:employee-project' %}"><li style="top:117px"><img src="{% static 'users/employee/images/Projects icon.svg' %}"><span>Projects</span></li></a>
                 {% elif user.department == 'Marketing' %}
                 <a href="#"><li style="top:117px"><img src="{% static 'users/employee/images/Projects icon.svg' %}"><span>Leads</span></li></a>
                 {% endif %}
