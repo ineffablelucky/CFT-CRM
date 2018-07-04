@@ -349,18 +349,13 @@ def download_emp_excel_data(request):
 
 
 def attendance_graph(request):
-    print("devesh")
-    return render(request,'attendance/attendancebar.html')
+    return render(request, 'attendance/attendancebar.html')
 
 
 def ajax_data(request):
-    data=Attendance.objects.all()
-    t=datetime.datetime.now()
-    list = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-
+    data = Attendance.objects.all()
+    list1 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     i = data[0].date.month
-    print(i)
-
     count = 0
     for d in data:
         if d.status == "absent" and d.date.month == i:
@@ -368,13 +363,10 @@ def ajax_data(request):
 
         elif d.status == "absent" and d.date.month != i:
             i = i+1
-            print(i)
             count = 1
-        list[i - 1] = count
+        list1[i - 1] = count
 
-
-
-    return JsonResponse(data={'list':list})
+    return JsonResponse(data={'list': list1})
 
 
 
