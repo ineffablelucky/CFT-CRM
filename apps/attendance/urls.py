@@ -15,7 +15,9 @@ urlpatterns = [
     path('showattendance/<int:id>', EmployAttendance.as_view(), name='employ_attendance'),
     path('calendar', CalendarView.as_view(), name='calendar'),
     path('download/', views.download_excel_data, name='download'),
-    path('emp_attendance_download/', views.download_emp_excel_data, name='emp_download')
+    path('emp_attendance_download/', views.download_emp_excel_data, name='emp_download'),
+    path('attendancegraph/', views.attendance_graph, name='attendancegraph'),
+    path('ajax/', views.ajax_data, name='ajaxdata'),
 
 ]
 
