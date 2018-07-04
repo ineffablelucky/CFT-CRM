@@ -64,13 +64,12 @@ class LeadEdit(LoginRequiredMixin,PermissionRequiredMixin,UpdateView):
 
     form_class =UpdateForm
 
-
     template_name = 'leads/update.html'
-    # form = form_class(initial={"logged_user": request.pk})
 
     model = LEADS
-
+    print("this is not good")
     def get_success_url(self, **kwargs):
+        print(kwargs)
         return reverse_lazy('leads:LeadDetails')
 
 
@@ -79,15 +78,15 @@ def check(request,id):
     print("instance is:")
     print(instance)
     form = UpdateForm(request.POST, instance=instance)
-    print(form)
+    
     if request.method=='POST':
-        print('def')
+
         if form.is_valid():
             form.save()
-            print("form is valid")
+
             return JsonResponse(data={'true':'true'})
         else:
-            print(form.errors)
+
 
             return JsonResponse(data={'error': form.errors})
     return JsonResponse({"details incorrect":"details incorrect"})
