@@ -1,5 +1,6 @@
 import logging
 
+
 from django.contrib import messages
 from django.http import request, HttpResponse
 from django.shortcuts import render, HttpResponseRedirect, get_object_or_404, redirect
@@ -196,9 +197,11 @@ def DownloadPdf(request,id):
     lead=[leads.company_name,leads.contact_number,leads.contact_person,leads.description,leads.website,leads.email,leads.source,leads.source_type,leads.assigned_boolean]
 
     detail_string = u"  ".join(unicode(obj) for obj in lead)
-    p = canvas.Canvas(response)
-    p.drawString(10,800,detail_string)
 
+    p = canvas.Canvas(response)
+
+
+    p.drawString(10,800,detail_string)
     # Close the PDF object cleanly, and we're done.
     p.showPage()
     p.save()
@@ -210,11 +213,8 @@ def DownloadCsv(request,id):
     print(leads)
     print(type(leads))
     lead=[leads.company_name,leads.contact_number,leads.contact_person,leads.description,leads.website,leads.email,leads.source,leads.source_type,leads.assigned_boolean]
-
     writer = csv.writer(response)
     writer.writerow(lead)
-
-
     return response
 
 
