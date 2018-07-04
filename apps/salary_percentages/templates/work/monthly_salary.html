@@ -14,7 +14,7 @@
         Employee ID: {{ i.employee.id }}<br>
         Username: {{ i.employee.username }}<br>
         Fixed Monthly Salary:{{ i.fixed_monthly_salary}}<br>
-        <a href="{% url 'salary_percentages:view_monthly_salary' i.employee_id %}?{{ request.GET.urlencode|yesno:'&, '}}{{ request.GET.urlencode }}">View Salary</a>
+        <a href="{% url 'salary_percentages:view_monthly_salary' i.employee.id %}?{{ request.GET.urlencode|yesno:'&, '}}{{ request.GET.urlencode }}">View Salary</a>
     </div><br>
     {% endfor %}
     <script>
