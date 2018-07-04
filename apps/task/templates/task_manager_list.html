@@ -80,7 +80,6 @@
                                   <th>Assigned To</th>
                                   <th>Start Date</th>
                                   <th>Expected Time</th>
-                                  <th>Progress</th>
                                   <th>Time Taken</th>
                                   <th>Status</th>
                                   <th>Action</th>
@@ -95,7 +94,6 @@
                                 <td>{{ i.employee_id }}</td>
                                 <td>{{ i.task_start_date_time }}</td>
                                 <td>{{ i.expected_time }}</td>
-                                <td>--</td>
                                 <td>--</td>
                                 <td>{{ i.status }}</td>
                                 <td><a href="{% url 'task:task-update' i.id %}" class="btn editBtn btn-info btn-xs"><i class="fa fa-pencil"></i> Edit </a></td>

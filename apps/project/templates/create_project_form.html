@@ -37,6 +37,8 @@
                   <div class="x_content">
                       {% if object.id %}
                         <form method="post" action="{% url 'project:project-update' object.id %}" class="form-horizontal form-label-left" novalidate>
+
+
                       {% else %}
                         <form method="post" action="{% url 'project:project-add' %}" class="form-horizontal form-label-left" novalidate>
                       {% endif %}

@@ -1,154 +1,163 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Register</title>
-</head>
-<body>
-    <form method="post" action="{% url 'users:register' %}">
-        {% csrf_token %}
+{% extends 'apps/users/templates/users/base.html' %}
 
-        {% if form.errors %}
-        <p>There are erors in the form!</p>
-        {% endif %}
+<title>{% block title %} Register Employee! {% endblock title %}</title>
 
-        <h2>Register Here</h2>
-        <h4>Fields with * mark are necessary for successful registration! </h4>
+{% block page-content %}
+        <div class="right_col" role="main">
+          <div class="">
 
-        {{ form.non_fields.errors }}
+            <div class="page-title">
+              <div class="title_left">
+                <h3>This is a Employee creation form!</h3>
+              </div>
+            </div>
+            <div class="clearfix"></div>
 
-<!--
-        {{ form.email.errors }}
-        <div>
-            <label for="id_email">*Email </label>
-            <input type="text" id="id_email" name="email" value="{{ form.email.value | default:'' }}" />
+            <div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                      <h2>User Info</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+
+                        <form method="post" action="{% url 'users:register' %}" class="form-horizontal form-label-left" novalidate>
+
+                      {% csrf_token %}
+                        <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Email</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                              <!--<input id="name" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="2" name="name" placeholder="both name(s) e.g Jon Doe" required="required" type="text">-->
+                              {{ form.email }}
+                            </div>
+                            {{ form.email.errors }}
+                        </div>
+
+                        <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Password</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                              <!--<input id="name" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="2" name="name" placeholder="both name(s) e.g Jon Doe" required="required" type="text">-->
+                              {{ form.password1 }}
+                            </div>
+                            {{ form.password1.errors }}
+                        </div>
+                        <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Confirm Password</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                              <!--<input id="name" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="2" name="name" placeholder="both name(s) e.g Jon Doe" required="required" type="text">-->
+                              {{ form.password2 }}
+                            </div>
+                            {{ form.password2.errors }}
+                        </div>
+                        <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">First Name</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                              <!--<input id="name" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="2" name="name" placeholder="both name(s) e.g Jon Doe" required="required" type="text">-->
+                              {{ form.first_name }}
+                            </div>
+                            {{ form.first_name.errors }}
+                        </div>
+
+                        <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Middle Name</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                              <!--<input id="name" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="2" name="name" placeholder="both name(s) e.g Jon Doe" required="required" type="text">-->
+                              {{ form.middle_name }}
+                            </div>
+                            {{ form.middle_name.errors }}
+                        </div>
+
+                        <div class="item form-group">
+
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Last Name</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                              <!--<input id="name" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="2" name="name" placeholder="both name(s) e.g Jon Doe" required="required" type="text">-->
+                              {{ form.last_name }}
+                            </div>
+                            {{ form.last_name.errors }}
+                        </div>
+                         <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" >Contact</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                              <!--<textarea id="textarea" required="required" name="textarea" class="form-control col-md-7 col-xs-12"></textarea>-->
+                              {{ form.contact }}
+                            </div>
+                             {{ form.contact.errors }}
+                         </div>
+
+
+                          <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Gender</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                              <!--<input id="name" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="2" name="name" placeholder="both name(s) e.g Jon Doe" required="required" type="text">-->
+                              {{ form.gender}}
+                            </div>
+                              {{ form.gender.errors }}
+                          </div>
+
+
+                         <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Department</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                              <!--<input id="name" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="2" name="name" placeholder="both name(s) e.g Jon Doe" required="required" type="text">-->
+                              {{ form.department }}
+                            </div>
+                             {{ form.department.errors }}
+                         </div>
+
+
+                         <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Designation</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                              <!--<input id="name" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="2" name="name" placeholder="both name(s) e.g Jon Doe" required="required" type="text">-->
+                              {{ form.designation }}
+                            </div>
+                             {{ form.designation.errors }}
+                         </div>
+                         <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Salary</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                              <!--<input id="name" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="2" name="name" placeholder="both name(s) e.g Jon Doe" required="required" type="text">-->
+                              {{ form.salary }}
+                            </div>
+                             {{ form.salary.errors }}
+                         </div>
+
+                         <div class="ln_solid"></div>
+
+                            <div class="form-group">
+                                <div class="col-md-6 col-md-offset-3">
+                                    <a href="">
+                                    <button type="button" id="cancel" class="btn btn-primary">Cancel</button>
+                                    </a>
+                                    <button id="send" type="submit" class="btn btn-success">Submit</button>
+                                </div>
+                            </div>
+                      </form>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <br>
+{% endblock page-content %}
 
-        {{ form.password1.errors }}
-        <div>
-            <label for="id_password1">*Password1 </label>
-
-            <input type="text" id="id_password1" name="password1" value="{{ form.password1.value | default:'' }}" />
-        </div>
-        <br>
-
-        {{ form.password2.errors }}
-        <div>
-            <label for="id_password2">*Password2 </label>
-            <input type="text" id="id_password2" name="password2" value="{{ form.password2.value | default:'' }}" />
-        </div>
-        <br>
-
-        {{ form.first_name.errors }}
-        <div>
-            <label for="id_first_name">*First Name </label>
-            <input type="text" id="id_first_name" name="first_name" value="{{ form.first_name.value | default:'' }}" />
-        </div>
-        <br>
-
-        {{ form.middle_name.errors }}
-        <div>
-            <label for="id_middle_name">Middle Name </label>
-            <input type="text" id="id_middle_name" name="middle_name" value="{{ form.middle_name.value | default:'' }}" />
-        </div>
-        <br>
-
-        {{ form.last_name.errors }}
-        <div>
-            <label for="id_last_name">Last Name </label>
-            <input type="text" id="id_last_name" name="last_name" value="{{ form.last_name.value | default:'' }}" />
-        </div>
-        <br>
-
-        {{ form.contact.errors }}
-        <div>
-            <label for="id_contact">Contact </label>
-            <input type="number" id="id_contact" name="contact" value="{{ form.contact.value | default:'' }}" />
-        </div>
-        <br>
+{% block extra-script %}
+<script>
+    $(document).ready(function(){
+        $('#cancel').click(function(){
+            window.history.back();
+        });
+    });
 
 
-        <div>
-            <label for="id_department">Department </label>
-            <select  id="id_department" name="department">
-                <option value="HR">HR</option>
-                <option value="Marketing">Marketing</option>
-                <option value="Accounts">Accounts</option>
-                <option value="IT">IT</option>
-            </select>
-        </div>
-        <br>
-
-        <div>
-            <label for="id_designation">Designation </label>
-            <select  id="id_designation" name="designation">
-                <option value="Employee">Employee</option>
-                <option value="Manager">Manager</option>
-                <option value="Client">Client</option>
-                <option value="Admin">Admin</option>
-            </select>
-        </div>
-        <br>
-
-        {{ form.salary.errors }}
-        <div>
-            <label for="id_salary">Salary </label>
-            <input type="number" id="id_salary" name="salary" value="{% if form.salary.value %}{{ form.salary.value }}{% endif %}" />
-        </div>
--->
-
-        <p>
-            {{ form.email.errors }} {{ form.email.label }} {{ form.email }}
-        </p>
-
-        <p>
-            {{ form.password1.errors }} {{ form.password1.label }} {{ form.password1 }}
-        </p>
-
-        <p>
-             {{ form.password2.errors }} {{ form.password2.label }} {{ form.password2 }}
-        </p>
-
-        <p>
-             {{ form.first_name.errors }} {{ form.first_name.label }} {{ form.first_name }}
-        </p>
-
-        <p>
-            {{ form.middle_name.errors }} {{ form.middle_name.label }} {{ form.middle_name }}
-        </p>
-
-        <p>
-            {{ form.last_name.errors }} {{ form.last_name.label }} {{ form.last_name }}
-        </p>
-
-        <p>
-             {{ form.contact.errors }} {{ form.contact.label }} {{ form.contact }}
-        </p>
-
-        <p>
-             {{ form.gender.errors }} {{ form.gender.label }} {{ form.gender }}
-        </p>
-
-        <p>
-            {{ form.department.errors }} {{ form.department.label }} {{ form.department }}
-        </p>
-
-        <p>
-            {{ form.designation.errors }} {{ form.designation.label }} {{ form.designation }}
-        </p>
-
-        <p>
-            {{ form.salary.errors }} {{ form.salary.label }} {{ form.salary }}
-        </p>
-
-        <p>Staff? {{ form.is_staff }}</p>
-        <p>Superuser? {{ form.is_superuser }}</p>
-
-        <input type="submit" value="Register" />
-    </form>
-</body>
-</html>
-
+</script>
+{% endblock %}
 
 

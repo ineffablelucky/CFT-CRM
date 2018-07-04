@@ -162,7 +162,7 @@ class PastAttendance(LoginRequiredMixin, PermissionRequiredMixin, ListView):
 
 
 class ShowAttendance(LoginRequiredMixin, PermissionRequiredMixin, ListView):
-    permission_required = ('attendance.view_attendance')
+    permission_required = ('attendance.view_attendance', 'attendance.change_attendance')
     template_name = 'attendance/showattendance.html'
     model = Attendance
     context_object_name = 'attendance'
@@ -226,7 +226,7 @@ class ShowAttendance(LoginRequiredMixin, PermissionRequiredMixin, ListView):
 
 
 class EmployAttendance(LoginRequiredMixin, PermissionRequiredMixin, ListView):
-    permission_required = ('attendance.view_attendance',)
+    permission_required = ('attendance.view_attendance', 'attendance.change_attendance')
     template_name = 'attendance/employattendance.html'
     model = Attendance
     context_object_name = 'attendance'
