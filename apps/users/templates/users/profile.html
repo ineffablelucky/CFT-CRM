@@ -1,12 +1,97 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Profile</title>
-</head>
-<body>
-    <p><b>Name:</b> {{ user.first_name }}  {{user.last_name }} </p>
-    <p><b>Contact:</b> {{ user.contact }}</p>
-    <p><b>Email:</b> {{ user.email }}</p>
-</body>
-</html>
+{% extends 'apps/users/templates/users/base.html' %}
+
+{% block page-content %}
+<div class="container body">
+      <div class="main_container">
+
+
+        <!-- page content -->
+        <div class="right_col" role="main">
+          <div class="">
+            <div class="page-title">
+              <div class="title_left">
+                <h3>Employees</h3>
+              </div>
+
+              <div class="title_right">
+                <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search for...">
+                    <span class="input-group-btn">
+                      <button class="btn btn-default" type="button">Go!</button>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="clearfix"></div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="x_panel">
+                  <div class="x_content">
+                    <div class="row">
+                      <div class="col-md-12 col-sm-12 col-xs-12 text-center">
+                        <ul class="pagination pagination-split">
+                          <li><a href="#">A</a></li>
+                          <li><a href="#">B</a></li>
+                          <li><a href="#">C</a></li>
+                          <li><a href="#">D</a></li>
+                          <li><a href="#">E</a></li>
+                          <li>...</li>
+                          <li><a href="#">W</a></li>
+                          <li><a href="#">X</a></li>
+                          <li><a href="#">Y</a></li>
+                          <li><a href="#">Z</a></li>
+                        </ul>
+                      </div>
+
+                      <div class="clearfix"></div>
+
+
+                        {% for user in myuser %}
+                        <div class="col-md-4 col-sm-4 col-xs-12 profile_details">
+                        <div class="well profile_view">
+                          <div class="col-sm-12">
+                            <!--<h4 class="brief"><i>Digital Strategist</i></h4>-->
+                            <div class="left col-xs-7">
+                              <h2>{{ user.first_name }}  {{user.last_name }}</h2>
+                              <p><strong>Department: </strong> {{ user.department }} </p>
+                              <p><strong>Designation: </strong> {{ user.designation }} </p>
+                              <ul class="list-unstyled">
+                                <li><i class="fa fa-building"></i> Address: </li>
+                                <li><i class="fa fa-phone"></i> {{ user.contact }} </li>
+                                <li><i class=""></i> {{ user.email }} </li>
+                              </ul>
+                            </div>
+                            <div class="right col-xs-5 text-center">
+                              <img src="images/img.jpg" alt="" class="img-circle img-responsive">
+                            </div>
+                          </div>
+                          <div class="col-xs-12 bottom text-center">
+                            <div class="col-xs-12 col-sm-6 emphasis">
+                              <a href="{% url 'users:edit_emp' user.pk %}">
+                              <button type="button" class="btn btn-primary btn-xs">
+                                <i class="fa fa-user"> </i>  Edit Profile
+                              </button>
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      {% endfor %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /page content -->
+
+      </div>
+    </div>
+
+
+{% endblock page-content %}
