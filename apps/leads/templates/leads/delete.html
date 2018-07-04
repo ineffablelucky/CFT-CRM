@@ -1,7 +1,6 @@
-<!--<form method="POST" action="{% url 'leads:LeadDelete' leads.id %}">-->
-   <!--{% csrf_token %}<input type="submit" value="DELETE">-->
-<!--</form>-->
-<form method="post">{% csrf_token %}
-    <p>Are you sure you want to delete "{{ object }}"?</p>
-    <input type="submit" value="Confirm" />
-</form>
+
+<form method="post" action="{% url 'leads:LeadDelete' leads.id %}">{% csrf_token %}
+    <h3>Are you sure you want to delete "{{ object }}"?</h3>
+    <center><input type="submit" value="Confirm" class='btn btn-danger btn-xs' style="width:130px;height:50px;"/>
+
+    </center>></form>

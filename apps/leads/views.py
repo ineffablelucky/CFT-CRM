@@ -2,7 +2,7 @@ import logging
 
 from django.contrib import messages
 from django.http import request, HttpResponse
-from django.shortcuts import render,HttpResponseRedirect
+from django.shortcuts import render, HttpResponseRedirect, get_object_or_404, redirect
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, UpdateView, DeleteView,ListView,DetailView,FormView
 from .models import LEADS
@@ -11,6 +11,8 @@ from .forms import CreateForm,DetailForm,UpdateForm
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from apps.opportunity.models import Opportunity
 from django.contrib.auth.decorators import permission_required, login_required
+import json
+from django.http import JsonResponse
 
 
 
@@ -39,6 +41,7 @@ class LeadDetails(LoginRequiredMixin, PermissionRequiredMixin, ListView,FormView
 
 class LeadCreate(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     permission_required = ('leads.add_leads',)
+
     model=LEADS
     form_class = CreateForm
     template_name = 'leads/create.html'
@@ -54,20 +57,39 @@ class LeadCreate(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
 
 
 
+
+
 class LeadEdit(LoginRequiredMixin,PermissionRequiredMixin,UpdateView):
     permission_required = ('leads.change_leads',)
 
     form_class =UpdateForm
 
-
     template_name = 'leads/update.html'
-    # form = form_class(initial={"logged_user": request.pk})
 
     model = LEADS
-
+    print("this is not good")
     def get_success_url(self, **kwargs):
+        print(kwargs)
         return reverse_lazy('leads:LeadDetails')
 
+
+def check(request,id):
+    instance = get_object_or_404(LEADS, id=id)
+    print("instance is:")
+    print(instance)
+    form = UpdateForm(request.POST, instance=instance)
+    
+    if request.method=='POST':
+
+        if form.is_valid():
+            form.save()
+
+            return JsonResponse(data={'true':'true'})
+        else:
+
+
+            return JsonResponse(data={'error': form.errors})
+    return JsonResponse({"details incorrect":"details incorrect"})
 
 	# success_url = reverse_lazy('clients:projectdetails')
 

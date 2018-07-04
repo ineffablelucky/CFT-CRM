@@ -1,5 +1,5 @@
 {% extends 'apps/users/templates/users/base.html' %}
-
+{%load static %}
 {% block page-content %}
 <!--<div class="right_col" role="main">-->
           <!-- top tiles -->
@@ -49,6 +49,25 @@
                                     </button>
                                   </div>
                                   <div class="modal-body">
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <!--<button type="button" class="btn btn-primary" data-dismiss="modal">Save Changes</button>-->
+                                  </div>
+                                </div>
+                              </div>
+                        </div>
+                        <div class="x_content">
+                        <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                              <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title text-center" id="exampleModalLabel1">Project Details</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body-1">
                                   </div>
                                   <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -112,9 +131,9 @@
                                         <!--<a href="{% url 'leads:LeadEdit' leads.id %}">-->
                                             <button type="button" data-toggle="modal" data-target="#exampleModal" class="edit" >Edit</button>
                                         <!--</a>-->
-                                        <a href="{% url 'leads:LeadDelete' leads.id %}">
-                                            <button type="button">Delete</button>
-                                        </a>
+                                        <!--<a href="{% url 'leads:LeadDelete' leads.id %}">-->
+                                            <button type="button" data-toggle="modal" data-target="#exampleModal1" class="delete">Delete</button>
+                                        <!--</a>-->
                                     </td>
                                     <!--<td class=" last">-->
                                     <!--</td>-->
@@ -136,7 +155,7 @@
                                 <input type="submit" value="Assign" id="ram"/></a>
                         </div>
                         </form>
-                        <a href="/media/abc.csv" download><button>Download Leads</button></a>
+                        <a href="{% static 'media/abc.csv' %}" download="abc.csv"><button>Download Leads</button></a>
                         <a href="{% url 'leads:upload_csv' %}"><button>Import Leads</button></a>
                     </div>
 
@@ -189,14 +208,10 @@ $(document).ready(function() {
             $cbs = $('.chk_selector').click(function() {
                 $button.toggle( $cbs.is(":checked") );
             });
-        });
+
 
     $('.edit').click(function(){
-        <!--var id = $('.chk_selector').attr('data-id');-->
-        <!--$.ajax({url: "../edit/" + id , success:function(data){-->
-            <!--$('.modal-body').html(data);-->
 
-        <!--}});-->
         var input = $(this).parents('tr').children().children();
         var tr = input[0];
         var id =($(tr).attr('data-id'));
@@ -204,7 +219,20 @@ $(document).ready(function() {
             $('.modal-body').html(data);
         }});
     });
+    $('.delete').click(function(){
 
+         var input = $(this).parents('tr').children().children();
+        var tr = input[0];
+        var id =($(tr).attr('data-id'));
+
+
+
+        $.ajax({url: "../delete/" + id , success:function(data){
+            $('.modal-body-1').html(data);
+        }});
+    });
+
+});
 
 
 </script>

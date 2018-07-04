@@ -1,7 +1,4 @@
-<!--<!DOCTYPE html>-->
-<!--<html lang="en">-->
-<!--<head>-->
-    <!--<meta charset="UTF-8">-->
+
 
 {% extends 'apps/users/templates/users/base.html' %}
 
@@ -111,7 +108,7 @@
                 </div>
             </div>
         </div>
-</div>
+
 
 
 {% endblock page-content %}
@@ -122,9 +119,16 @@
         $('.viewBtn').click(function(event){
             event.preventDefault();
             var id = $(this).attr('data-id');
-            $.get( 'details/' + id   , function(data){
-                $('.modal-body').html(data);
+            $.ajax({
+                url: '../details/' + id,
+                success: function(data){
+                           $('.modal-body').html(data);
+                },
+                error: function(){
+                        $('.modal-body').html("Error");
+                },
             });
+
         });
 
 
