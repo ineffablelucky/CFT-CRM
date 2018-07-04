@@ -6,10 +6,10 @@ from django.utils import timezone
 
 class Salary_calculations(models.Model):
 
-    financial_year = models.IntegerField(default=2018, null=False)
-    allowances = models.IntegerField(default=6, null=False)
-    hra_percentage = models.IntegerField(default=12, null=False)
-    ppf_percentage =  models.IntegerField(default=20, null=False)
+    financial_year = models.IntegerField(default=2018)
+    allowances = models.IntegerField(default=6)
+    hra_percentage = models.IntegerField(default=12)
+    ppf_percentage =  models.IntegerField(default=20)
 
     def __str__(self):
         return "%d" % (self.financial_year)
@@ -34,8 +34,10 @@ class CTC_breakdown(models.Model):
     given_bonus = models.IntegerField(default=0, null=True)
     percentage_bonus_of_max_bonus = models.IntegerField(default=0, null=True)
     fixed_monthly_salary = models.IntegerField(default=20000)
-    #deduction_due_to_leaves_monthly=models.FloatField(default=0)
-    #final_monthly_salary=models.FloatField(default=20000)
+
+    def __str__(self):
+        return "%d"%(self.basic)
+
 
     # def __init__(self):
     #    self.basic=self.basic_amt()
@@ -57,12 +59,10 @@ class CTC_breakdown(models.Model):
 
         # def basic_amt(self):
         #    self.basic = int(self.ctc_amt().get('ctc') * 0.5)
-        #    return self.basic
 
-# def create_profile(sender,**kwargs):
-#     if kwargs['created'] :
-#         print(kwargs.get('instance').designation)
-#         if kwargs.get('instance').designation != 'Client':
-#             CTC_breakdown.objects.create(employee=kwargs['instance'])
-#
-# post_save.connect(create_profile,sender=settings.AUTH_USER_MODEL)
+def create_profile(sender,**kwargs):
+    if kwargs['created'] :
+        if kwargs.get('instance').designation != 'Client':
+            CTC_breakdown.objects.create(employee=kwargs['instance'])
+
+post_save.connect(create_profile,sender=settings.AUTH_USER_MODEL)

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <form method="GET" id="salary_form">
+        Month:{{ form.month }}
+        Year:{{ form.year }}
+    </form>
+    {% for i in context %}
+    <div>
+        Employee ID: {{ i.employee.id }}<br>
+        Username: {{ i.employee.username }}<br>
+        Fixed Monthly Salary:{{ i.fixed_monthly_salary}}<br>
+        <a href="{% url 'salary_percentages:view_monthly_salary' i.employee.id %}?{{ request.GET.urlencode|yesno:'&, '}}{{ request.GET.urlencode }}">View Salary</a>
+    </div><br>
+    {% endfor %}
+    <script>
+    function formSubmit()
+{
+     document.getElementById("salary_form").submit();
+}
+
+</script>
+</body>
+</html>
