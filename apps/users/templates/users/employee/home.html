@@ -19,13 +19,19 @@
                             <div class="card-body date-body">
                                 <div class="row text-left display-time">
                                     <div class="col-lg-6">
-                                        <p class="">09:28 AM</p>
-                                        <button type="button" class="clock-btn clock-in btn "><span>CLOCK IN</span></button>
+                                        <p id="clock_in"></p>
+                                        <form method="post" action="{% url 'attendance:clockin' %}">
+                                            {% csrf_token %}
+                                          <button type="submit" class="clock-btn clock-in btn " ><span>CLOCK IN</span></button>
+                                        </form>
                                     </div>
 
                                     <div class="col-lg-6">
-                                        <p class="">06:34 PM</p>
-                                        <button type="button" class="clock-btn clock-out btn"><span>CLOCK OUT</span></button>
+                                        <p class=""></p>
+                                        <form method="post" action="{% url 'attendance:clockout' %}">
+                                            {% csrf_token %}
+                                            <button type="submit" class="clock-btn clock-out btn"><span>CLOCK OUT</span></button>
+                                        </form>
                                     </div>
                                 </div>
 
@@ -40,23 +46,13 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                {% for attend in attendance %}
                                                 <tr>
-                                                    <td class="date">19-June-2018, Tuesday</td>
-                                                    <td class="time">09:18 AM</td>
-                                                    <td class="time">06:45 PM</td>
+                                                    <td class="date">{{ attend.date }}</td>
+                                                    <td class="time">{{ attend.time_in.time }}</td>
+                                                    <td class="time">{{ attend.time_out.time }}</td>
                                                 </tr>
-
-                                                <tr>
-                                                    <td class="date">20-June-2018, Wednesday</td>
-                                                    <td class="time">09:18 AM</td>
-                                                    <td class="time">06:45 PM</td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td class="date">21-June-2018, Thursday</td>
-                                                    <td class="time">09:18 AM</td>
-                                                    <td class="time">06:45 PM</td>
-                                                </tr>
+                                                {% endfor %}
                                             </tbody>
                                         </table>
                                     </div>
@@ -237,4 +233,5 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
         <script src="{% static 'users/js/home.js' %}"></script>
+
 {% endblock scripts %}

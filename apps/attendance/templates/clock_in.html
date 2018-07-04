@@ -1,40 +1,9 @@
 <!DOCTYPE html>
 {% load static %}
 <html>
-    <head>
-        <title>My Profile</title>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        {% block stylesheet %}
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
-        <link rel="stylesheet" href="{% static 'users/css/profile.css' %}">
-        {% endblock stylesheet %}
-    </head>
-
     <body>
-        <!--Sidebar-->
-        {% if user.is_authenticated %}
-        {% block sidebar %}
-        <div class="sidebar">
-            <img class="logo" src="{% static 'users/images/Logo-1.png' %}">
-            <ul class="list-unstyled">
-                <li><img src="{% static 'users/images/Dashboard icon.svg' %}"><span>Dashboard</span></li>
-                <a href="#"><li style="top:58px" class="active"><img src="{% static 'users/images/Home icon.svg' %}"><span>Home</span></li></a>
 
-                {% if user.department == 'IT' %}
-                <a href="#"><li style="top:117px"><img src="{% static 'users/images/Projects icon.svg' %}"><span>Projects</span></li></a>
-                {% elif user.department == 'Marketing' %}
-                <a href="#"><li style="top:117px"><img src="{% static 'users/images/Projects icon.svg' %}"><span>Leads</span></li></a>
-                {% endif %}
 
-                <a href="#"><li style="top:175px"><img src="{% static 'users/images/Attendance icon.svg' %}"><span>Attendance</span></li></a>
-                <a href="#"><li style="top:234px"><img src="{% static 'users/images/Salary Icon.svg' %}"><span>Salary</span></li></a>
-                <a href="#"><li style="top:293px"><img src="{% static 'users/images/Leave Req.. Icon.svg' %}"><span>Leave Request</span></li></a>
-            </ul>
-        </div>
-        {% endblock sidebar %}
-        <!--Sidebar-->
             <p>Username:{{ request.user.username }}</p>
             <div>
             <form action="{% url 'attendance:clockin' %}" style="display:inline" method="post">
@@ -67,6 +36,5 @@
         </tr>
     {% endfor %}
 </table>
-    {% endif %}
     </body>
 
