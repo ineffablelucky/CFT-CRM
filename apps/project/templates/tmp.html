@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block extra-stylesheet %}
-<link rel="stylesheet" href="{% static 'users/css/project-list.css' %}">
+<link rel="stylesheet" href="{% static 'users/employee/css/project-list.css' %}">
 {% endblock extra-stylesheet %}
 
 {% block page_content %}
@@ -39,56 +39,18 @@
                                         <th scope="col">ACTION</th>
                                         </tr>
                                     </thead>
+
                                     <tbody>
+                                        {% for p in object_list %}
+
                                         <tr>
-                                        <th scope="row">01</th>
-                                        <td>MENTYOR</td>
-                                        <td>VED PRAKASH</td>
-                                        <td>Pending</td>
-                                        <td><img src="assets/images/View.svg"></td>
+                                        <th scope="row">{{ p.id }}</th>
+                                        <td>{{ p.project_name }}</td>
+                                        <td>{{ p.project_manager }}</td>
+                                        <td>{{ p.status }}</td>
+                                        <td><a href="{% url 'project:project-details' p.id %}"><button>View Details</button></a></td>
                                         </tr>
-                                        <tr>
-                                        <th scope="row">02</th>
-                                        <td>PETU KI BIRYANI</td>
-                                        <td>NAVEEN KATIYAR</td>
-                                        <td>Completed</td>
-                                        <td><img src="assets/images/View.svg"></td>
-                                        </tr>
-                                        <tr>
-                                        <th scope="row">03</th>
-                                        <td>UM BIKES</td>
-                                        <td>VED PRAKASH</td>
-                                        <td>Inactive</td>
-                                        <td><img src="assets/images/View.svg"></td>
-                                        </tr>
-                                        <tr>
-                                        <th scope="row">04</th>
-                                        <td>UM BIKES</td>
-                                        <td>Naveen Katiyar</td>
-                                        <td>Completed</td>
-                                        <td><img src="assets/images/View.svg"></td>
-                                        </tr>
-                                        <tr>
-                                        <th scope="row">05</th>
-                                        <td>EMS</td>
-                                        <td>Naveen Katiyar</td>
-                                        <td>Completed</td>
-                                        <td><img src="assets/images/View.svg"></td>
-                                        </tr>
-                                        <tr>
-                                        <th scope="row">06</th>
-                                        <td>Code Flow Tech</td>
-                                        <td>VED PRAKASH</td>
-                                        <td>Inactive</td>
-                                        <td><img src="assets/images/View.svg"></td>
-                                        </tr>
-                                        <tr>
-                                        <th scope="row">07</th>
-                                        <td>Students & Tutors</td>
-                                        <td>VED PRAKASH</td>
-                                        <td>Inactive</td>
-                                        <td><img src="assets/images/View.svg"></td>
-                                        </tr>
+                                     {% endfor %}
                                     </tbody>
                                 </table>
                             </div>
@@ -120,7 +82,20 @@
 {% endblock page_content %}
 
 {% block extra-scripts %}
-<script src="{% static 'users/js/project-list.j' %}"></script>
+<script src="{% static 'users/employee/js/project-list.j' %}"></script>
 {% endblock extra-scripts %}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
