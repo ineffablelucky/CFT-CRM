@@ -35,7 +35,7 @@ def register(request):
     return render(request,'users/registration/register.html',context)
 
 def welcome(request):
-    return render(request, 'users/employee/tmp.html')
+    return render(request, 'users/employee/home.html')
 
 
 def auth_login(request):
