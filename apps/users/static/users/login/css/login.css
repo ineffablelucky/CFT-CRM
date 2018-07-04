@@ -1,0 +1,373 @@
+@font-face {
+  font-family: ('MyriadPro-Regular');
+  src: url(fonts/MyriadPro-Regular.ttf ) format("truetype");
+  } 
+
+.social li{
+    display: inline-block;
+}
+
+.social li:nth-child(1){
+  font-size: 19px;
+  font-family: "Lato";
+  text-align: center;
+}
+
+.form-elements{
+  margin-top: 120px;
+}
+
+.form-elements h5{
+  font-size: 17px;
+  color: rgb(0,0,0);
+  font-family: "Lato";
+  text-align: center;
+  margin:45px 0;
+}
+
+  .form-elements form{
+    width:55%;
+    margin: 0 auto;
+  }
+
+  #username , #password{
+    border-radius: 7px;
+    text-align: center;
+    border: 1px solid #218fd5;
+    padding: 20px 0;
+    transition: all 0.2s linear;
+  }
+
+  .bar-1:after{
+    content: "";
+    position: absolute;
+    width:0px;
+    left:49%;
+    bottom:0;
+    height:2px;
+    transition: all 0.3s linear;
+  }
+
+  #username:focus ~ .bar-1:after{
+    content: "";
+    position: absolute;
+    left:1%;
+    bottom:0;
+    background-color: #42b6ff; 
+    width:50%;
+    height:2px;
+    transition: all 0.3s linear;
+  }
+
+  .bar-1:before{
+    content: "";
+    position: absolute;
+    width:0px;
+    right:50%;
+    bottom:0;
+    height:2px;
+    transition: all 0.3s linear;
+  }
+
+  #username:focus ~ .bar-1:before{
+    content: "";
+    position: absolute;
+    right:1%;
+    bottom:0;
+    background-color: #42b6ff; 
+    width:49%;
+    height:2px;
+    transition: all 0.3s linear;
+  }
+
+
+
+  .bar-2:after{
+    content: "";
+    position: absolute;
+    width:0px;
+    left:49%;
+    bottom:0;
+    height:2px;
+    transition: all 0.3s linear;
+  }
+
+  .bar-2:before{
+    content: "";
+    position: absolute;
+    width:0px;
+    right:50%;
+    bottom:0;
+    height:2px;
+    transition: all 0.3s linear;
+  }
+
+  #password:focus ~ .bar-2:before{
+    content: "";
+    position: absolute;
+    right:50%;
+    bottom:0;
+    background-color: #42b6ff; 
+    width:49%;
+    height:2px;
+    transition: all 0.3s linear;
+  }
+
+  #password:focus ~ .bar-2:after{
+    content: "";
+    position: absolute;
+    left:50%;
+    bottom:0;
+    background-color: #42b6ff; 
+    width:49%;
+    height:2px;
+    transition: all 0.3s linear;
+  }
+
+  #username:focus , #password:focus{
+    /* box-shadow: 1px 1px 5px 1px #218fd5; */
+    box-shadow: 0 6px 10px 2px rgba(0,69,164,0.17);
+    border:1px solid white;
+    transition: all 0.2s linear;
+  }
+
+  .remember{
+    position: relative;
+    padding-left:35px;
+  }
+
+  .remember input{
+    opacity:0;
+  }
+
+  .checkmark{
+    content:"";
+    position:absolute;
+    left:0;
+    top:5px;
+    width:16px;
+    height:16px;
+    background-color: #fff;
+    border-radius: 3px;
+    border: 1px solid #218fd5;
+  }
+
+  .checkmark:after{
+    content: "";
+    position: absolute;
+    left: 4px;
+    top: -1px;
+    width: 6px;
+    height: 12px;
+    border: solid #42b6ff;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+    display:none;
+    transition: all 0.2s ease-in-out;
+  }
+
+  .remember input:focus ~ .checkmark{
+    box-shadow: 0 6px 10px 2px rgba(0,69,164,0.17);
+    border-bottom:1px solid #42b6ff;
+    transition: all 0.2s linear;
+  }
+
+  .remember input:checked ~ .checkmark:after{
+    display:block;
+  }
+
+  .form-elements a{
+    text-decoration-color: #42b6ff;
+    font-size: 18px;
+    color: rgb(0,0,0);
+    font-family: "Lato";  
+  }
+
+  .form-elements a:hover{
+    color:#42b6ff;
+  }
+
+
+  .form-elements button{
+    /* transform:translateY(20px); */
+    padding: 15px 65px;
+    color:white;
+    font-weight:bold;
+    border-radius: 7px;
+    box-shadow: 0px 21px 30px rgba(0,69,164,0.17);
+    background-color: #42b6ff;
+    position: relative;
+    overflow:hidden;
+  }
+
+  .form-elements button:hover{
+    background-color: white;
+    color: #42b6ff;
+    box-shadow: 0 6px 10px 2px rgba(0,69,164,0.17);
+    transition: all 0.2s ease-in-out;
+  }
+
+  .form-elements button:focus{
+    background-color: white;
+    color: #42b6ff;
+    box-shadow: 0 6px 10px 2px rgba(0,69,164,0.17);
+    transition: all 0.2s ease-in-out;
+  }
+
+  .form-elements button span{
+    position: relative;
+    left:18px;
+    transition: all 0.2s ease-in-out;
+  }
+
+  .form-elements button i{
+    font-size:30px;
+    position: relative;
+    top:3.5px;
+    left:125px;
+    transition: all 0.2s ease-in-out;
+  }
+
+  .form-elements button:hover span{
+    position: relative;
+    left:-126px;
+    transition: all 0.2s ease-in-out;
+  }
+
+  .form-elements button:hover i{
+    position: relative;
+    left:-35px;
+    transition: all 0.2s ease-in-out;
+  }
+
+  .form-elements button:focus span{
+    position: relative;
+    left:-126px;
+    transition: all 0.2s ease-in-out;
+  }
+
+  .form-elements button:focus i{
+    position: relative;
+    left:-35px;
+    transition: all 0.2s ease-in-out;
+  }
+
+
+  
+
+  .pointers{
+    list-style-image: url('../images/pointers.svg');
+    width:80%;
+    margin: 0 auto;
+    transform:translateY(320px);
+  }
+
+  .pointers li{
+    font-size: 24px;
+    letter-spacing: 1px;
+    line-height: 36px;
+    color: rgb(255,255,255);
+    font-family: "Lato";
+    padding-top:25px;
+  }
+
+  .pointers li span{
+    position: relative;
+    left:1px;
+    top:-2px;
+  }
+
+  .logo{
+    margin-top:25px;
+  }
+
+  .links{
+    margin-top:30px;
+  }
+
+  .links li{
+    display: inline-block;
+    padding: 0 20px;
+    font-size: 24px;
+    letter-spacing: 1px;
+    color: rgb(255,255,255);
+    font-family: "Lato";
+    position:relative;
+    z-index:1;
+  }
+
+  .links li a{
+    color:white;
+    position:relative;
+    z-index:1;
+  }
+
+  .links li a:hover{
+    color:black;
+  }
+
+  .right-content{
+    position:relative;
+    background-image: linear-gradient(45deg, #1c2166 0%, #4a79f2 100%);
+    background-position: center center;
+    background-size: 100%;
+    overflow: hidden;
+  }
+  
+
+  #shape{
+    position:absolute;
+    bottom:-250px;
+    left:-200px;
+  }
+
+  /* .footer{ background: #000; color:#fff;  text-align: center; font-size:16px; padding:20px 0px;} */
+
+
+  @media only screen and (max-width:972px){
+    .remember {
+      text-align:center !important;
+    }
+
+    #shape{
+      display: none;
+    }
+
+    .forgot{
+      text-align:center !important;
+    }
+
+    .links li{
+      display: inline-block;
+      padding: 0 10px;
+      font-size: 20px;
+      letter-spacing: 1px;
+      color: rgb(255,255,255);
+      font-family: "Lato";
+    }
+    
+    .form-elements button{
+      padding:5px 25px;
+    }
+    .pointers{
+      display:none;
+    }
+
+    .right-content{
+      /* position:relative;
+      top:120px; */
+      margin-top:30px;
+      height:20%;
+    }
+
+    .right-content ul{
+      text-align: center !important;
+    }
+  }
+
+  @media only screen and (min-width:1600px){
+    .main{
+      height:100vh;
+      overflow: hidden;
+    }
+  }
