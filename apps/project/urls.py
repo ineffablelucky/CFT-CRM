@@ -17,7 +17,7 @@ urlpatterns = [
     path('details/<int:pk>/', ListModule.as_view(), name="project-details"),
 
     path('employee/', Employee_Project_List.as_view(), name="employee-project"),
-    path('tmp/', TemplateView.as_view(template_name="tmp.html")),
+
 
     path('', include('apps.task.urls')),
 ]
