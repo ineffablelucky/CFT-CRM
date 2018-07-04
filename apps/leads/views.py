@@ -15,7 +15,6 @@ from django.contrib.auth.decorators import permission_required, login_required
 import json
 from django.http import JsonResponse
 from django.http import HttpResponse
-from reportlab.pdfgen import canvas
 from pytz import unicode
 import csv
 
