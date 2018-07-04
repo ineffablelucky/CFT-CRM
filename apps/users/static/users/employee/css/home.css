@@ -64,7 +64,7 @@
 .sidebar li{
     right:0;
     left:0;
-    position:absolute;
+    /*position:absolute;*/
     z-index:1;
     font-size: 14px;
     font-family: "Lato";

@@ -5,6 +5,25 @@
 <link rel="stylesheet" href="{% static 'users/employee/css/project-list.css' %}">
 {% endblock extra-stylesheet %}
 
+{% block sidebar %}
+        <div class="sidebar">
+            <div class="bar-icon">
+                <div class="bar-1-active"></div>
+                <div class="bar-2-active"></div>
+                <div class="bar-3-active"></div>
+            </div>
+            <img class="logo" src="{% static 'users/employee/images/Logo-1.png' %}">
+            <ul class="list-unstyled">
+                <li><img src="{% static 'users/employee/images/Dashboard icon.svg' %}"><span>Dashboard</span></li>
+                <a href="#"><li style="top:58px" ><img src="{% static 'users/employee/images/Home icon.svg' %}"><span>Home</span></li></a>
+                <a href="{% url 'project:employee-project' %}"><li style="top:117px" class="active"><img src="{% static 'users/employee/images/Projects icon.svg' %}"><span>Projects</span></li></a>
+                <a href="#"><li style="top:175px"><img src="{% static 'users/employee/images/Attendance icon.svg' %}"><span>Attendance</span></li></a>
+                <a href="#"><li style="top:234px"><img src="{% static 'users/employee/images/Salary Icon.svg' %}"><span>Salary</span></li></a>
+                <a href="#"><li style="top:293px"><img src="{% static 'users/employee/images/Leave Req.. Icon.svg' %}"><span>Leave Request</span></li></a>
+            </ul>
+        </div>
+{% endblock sidebar %}
+
 {% block page_content %}
 <div class="main-content ">
                 <div class="row head">
