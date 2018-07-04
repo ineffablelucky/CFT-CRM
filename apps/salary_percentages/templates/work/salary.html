@@ -5,12 +5,9 @@
     <title>Title</title>
 </head>
 <body>
-    <!--
-    {% for i in context %}
-        {{ i.id }}{{ i.username }}{{ i.department }}{{ i.email }}<a href="{% url 'salary_percentages:edit_salary' i.id %}">Edit Salary</a><br>
-    {% endfor %}-->
     <a href="{% url 'salary_percentages:salary_structure' %}"><button>View Salary Structure</button></a>
     <a href ="{% url 'salary_percentages:salary' %}"><button>Edit Salary</button></a>
+    <a href ="{% url 'salary_percentages:monthly_salary' %}">Monthly Salary</a>
     {% for i in context %}
         <div><p>
             Employee ID: {{ i.employee.id }}  <a href="{% url 'salary_percentages:edit_salary' i.employee_id %}">Edit Salary</a><br>

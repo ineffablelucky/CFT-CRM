@@ -44,34 +44,34 @@ def Download_Salary(request):
     print(filename)
     response['Content-Disposition'] = 'attachment; filename={0}.pdf'.format(filename)
     buffer = BytesIO()
-    ctc_objects=CTC_breakdown.objects.get(employee_id=request.user.id)
-    leave_objects = Leave.objects.get(user_id=request.user.id)
-    attendance_objects = Attendance.objects.filter(user_id=request.user.id)
-
-    deduction_due_to_leaves=0
-    allowed_leaves = leave_objects.pl + leave_objects.cl
-    if month == 1 or month==3 or month==5 or month==7 or month==8 or month==10 or month==12:
-        fixed_daily_salary = float(ctc_objects.fixed_monthly_salary / 31)
-    else:
-        fixed_daily_salary = float(ctc_objects.fixed_monthly_salary / 30)
-    list_of_absent_dates=[]
-    for a in attendance_objects:
-        if a.status=='absent':
-            list_of_absent_dates.append(a.date)
-            absent_days = len(list_of_absent_dates)
-            if absent_days < allowed_leaves:
-                deduction_due_to_leaves = 0
-            else:
-                deduction_due_to_leaves = (absent_days - allowed_leaves) * fixed_daily_salary
-        elif a.status=='On Leave':
-            deduction_due_to_leaves=deduction_due_to_leaves+0
-        #elif a.status
-    print(allowed_leaves)
-    print(deduction_due_to_leaves)
-    final_salary=ctc_objects.fixed_monthly_salary-deduction_due_to_leaves
-    salary_slip = ' User ID: ' + str(ctc_objects.employee.id) + ' Fixed Monthly Salary: ' + str(ctc_objects.fixed_monthly_salary)+" Deduction Amount: "+ str(deduction_due_to_leaves)+" Net monthly salary"+str(final_salary)+"HRA:"+str(ctc_objects.hra/12)
+    # ctc_objects=CTC_breakdown.objects.get(employee_id=request.user.id)
+    # leave_objects = Leave.objects.get(user_id=request.user.id)
+    # attendance_objects = Attendance.objects.filter(user_id=request.user.id)
+    #
+    # deduction_due_to_leaves=0
+    # allowed_leaves = leave_objects.pl + leave_objects.cl
+    # if month == 1 or month==3 or month==5 or month==7 or month==8 or month==10 or month==12:
+    #     fixed_daily_salary = float(ctc_objects.fixed_monthly_salary / 31)
+    # else:
+    #     fixed_daily_salary = float(ctc_objects.fixed_monthly_salary / 30)
+    # list_of_absent_dates=[]
+    # for a in attendance_objects:
+    #     if a.status=='absent':
+    #         list_of_absent_dates.append(a.date)
+    #         absent_days = len(list_of_absent_dates)
+    #         if absent_days < allowed_leaves:
+    #             deduction_due_to_leaves = 0
+    #         else:
+    #             deduction_due_to_leaves = (absent_days - allowed_leaves) * fixed_daily_salary
+    #     elif a.status=='On Leave':
+    #         deduction_due_to_leaves=deduction_due_to_leaves+0
+    #     #elif a.status
+    # print(allowed_leaves)
+    # print(deduction_due_to_leaves)
+    # final_salary=ctc_objects.fixed_monthly_salary-deduction_due_to_leaves
+    # salary_slip = ' User ID: ' + str(ctc_objects.employee.id) + ' Fixed Monthly Salary: ' + str(ctc_objects.fixed_monthly_salary)+" Deduction Amount: "+ str(deduction_due_to_leaves)+" Net monthly salary"+str(final_salary)+"HRA:"+str(ctc_objects.hra/12)
     p = canvas.Canvas(buffer)
-    p.drawString(0,400,salary_slip)
+    p.drawString(0,400,"Hello")
     p.save()
     pdf=buffer.getvalue()
     buffer.close()

@@ -1,10 +1,11 @@
 import logging
 from django.shortcuts import render,HttpResponseRedirect,HttpResponse,reverse
 from .models import Salary_calculations,CTC_breakdown
-from .forms import SalaryForm,CtcForm
+from .forms import SalaryForm,CtcForm,SalaryGenerationForm
 from django.contrib.auth import get_user_model
 from django.contrib import messages
-from django.utils import timezone
+from apps.leave.models import Leave
+from apps.attendance.models import Attendance
 
 def salary(request):
     context=CTC_breakdown.objects.all()
@@ -92,5 +93,39 @@ def upload_csv(request):
         logging.getLogger("error_logger").error("Unable to upload file. " + repr(e))
     return HttpResponseRedirect(reverse("salary_percentages:upload_csv"))
 
+def monthly_salary(request):
+    context=CTC_breakdown.objects.all()
+    form=SalaryGenerationForm()
+    return render(request,'work/monthly_salary.html',{'context':context,'form':form})
+
+def view_monthly_salary(request,id):
+    year = int(request.GET['year'])
+    month = int(request.GET['month'])
+    ctc_objects = CTC_breakdown.objects.get(employee_id=id)
+    leave_objects = Leave.objects.get(user_id=id)
+    attendance_objects = Attendance.objects.filter(user_id=id)
+
+    deduction_due_to_leaves = 0
+    allowed_leaves = leave_objects.pl + leave_objects.cl
+    if month == 1 or month == 3 or month == 5 or month == 7 or month == 8 or month == 10 or month == 12:
+        fixed_daily_salary = float(ctc_objects.fixed_monthly_salary / 31)
+    else:
+        fixed_daily_salary = float(ctc_objects.fixed_monthly_salary / 30)
+    list_of_absent_dates = []
+    for a in attendance_objects:
+        if a.status == 'absent':
+            list_of_absent_dates.append(a.date)
+            absent_days = len(list_of_absent_dates)
+            if absent_days < allowed_leaves:
+                deduction_due_to_leaves = 0
+            else:
+                deduction_due_to_leaves = (absent_days - allowed_leaves) * fixed_daily_salary
+        elif a.status == 'On Leave':
+            deduction_due_to_leaves = deduction_due_to_leaves + 0
+        #elif a.status=='present':
+    print(allowed_leaves)
+    print(deduction_due_to_leaves)
+    final_salary = ctc_objects.fixed_monthly_salary - deduction_due_to_leaves
+    return render(request,'view_final_salary.html',{'ctc_objects':ctc_objects,'deduction_due_to_leaves':deduction_due_to_leaves,'final_salary':final_salary})
 
 
