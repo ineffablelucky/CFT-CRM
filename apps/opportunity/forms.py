@@ -4,7 +4,6 @@ from django.contrib.auth.models import Group
 from django import forms
 from django.contrib.auth.hashers import make_password
 from django.db.models import Q
-
 from apps.client.models import CLIENT
 from apps.opportunity.models import Opportunity
 from apps.project.models import IT_Project
