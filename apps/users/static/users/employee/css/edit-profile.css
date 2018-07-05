@@ -69,7 +69,7 @@
 .sidebar li{
     right:0;
     left:0;
-    position:absolute;
+    /*position:absolute;*/
     z-index:1;
     font-size: 14px;
     font-family: "Lato";
@@ -389,7 +389,7 @@ input[type='search']{
     border-top:none;
     border-left:none;
     border-right:none;
-    border-bottom:1px solid #e0e6e9;
+    border-bottom:1px solid transparent;
     padding-bottom:5px;
     width:80%; 
     transition: all 0.2s ease-in-out;
@@ -463,7 +463,7 @@ input[type='search']{
     line-height: 1.5;
     text-align: left;
     margin-bottom: 50px;
-    border-bottom: 1px solid #e0e6e9;
+    border-bottom: 1px solid transparent;
     padding-bottom:5px;
     color:black;
     position:relative;
@@ -473,12 +473,11 @@ input[type='search']{
 
 
 .about-me p:hover{
-    border-bottom: 1px solid #719cca;
     transition: all 0.2s ease-in-out;
 }
 
 .about-me p:focus{
-    border-bottom: 1px solid #719cca;
+    
     transition: all 0.2s ease-in-out;
 }
 
@@ -565,6 +564,46 @@ i:nth-child(1){
     color:#0077b5;
 }
 
+.footer{
+    
+    background-color: #171612;
+    color:white;
+    position:fixed;
+    bottom:0;
+    left:0;
+    right:0;
+    z-index:1;
+}
+
+.footer-elements{
+    margin-left: auto;
+    margin-right: auto;
+    margin-top:15px;
+    margin-bottom:0px;
+}
+
+.footer ul li{
+    /* float: left;    */
+    display:inline-block;
+    font-size: 14px;
+    font-family: "Lato";
+    color: rgb(187, 187, 187);
+    line-height: 1.2;
+    text-align: left;
+    padding-left:12px;
+}
+
+
+.footer ul li:nth-child(4){
+    margin-left:50px;
+    font-size: 17px;
+    font-family: "Lato";
+    color: rgb(255, 255, 255);
+    line-height: 1.2;
+    text-align: left;
+    
+}
+
 @media only screen and (max-width:992px){
     h5{
         font-size: 10px !important;
@@ -605,4 +644,25 @@ i:nth-child(1){
         float:right;
     }
 
+}
+
+
+@media only screen and (max-width:576px){
+    .footer-elements{
+        margin: 0 auto;
+        width:fit-content;
+    }
+
+    .footer ul{
+        margin-bottom:0;
+    }
+
+    .footer ul li{
+        font-size:8px;
+    }
+
+    .footer ul li:nth-child(4){
+        font-size:12px;
+        margin-left:0px;
+    }
 }

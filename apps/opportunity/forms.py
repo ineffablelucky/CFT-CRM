@@ -1,6 +1,6 @@
 import datetime
 import re
-
+from django.contrib.auth.models import Group
 from django import forms
 from django.contrib.auth.hashers import make_password
 from django.db.models import Q
@@ -213,6 +213,9 @@ class CreateClientForm(forms.ModelForm):
             client_user=instance
         )
         client.save()
+        group_user = Group.objects.get_by_natural_key('Client Group')
+        group_user.user_set.add(client)
+
         project = IT_Project.objects.get(opportunity=opportunity)
         project.client_id = client
         project.save()

@@ -93,6 +93,7 @@
     margin-left:230px;
     position:relative;
     transition: all 0.1s ease-in-out;
+    margin-bottom:100px;
 }
 
 nav{
@@ -249,6 +250,11 @@ input[type='search']{
   margin: 0 auto;
 }
 
+.main-content{
+    width: fit-content;
+    margin: 0 auto;
+}
+
 
 
 tbody{
@@ -303,12 +309,12 @@ thead, tr{
 
 .card-top-first , .card-bottom-first{
     width:500px;
-    margin-left:200px !important;
+    /* margin-left:200px !important; */
 }
 
 .card-top-second, .card-bottom-second{
     width:700px;
-    margin-left:100px !important;
+    /* margin-left:100px !important; */
 }
 
 .card-header{
@@ -407,7 +413,8 @@ thead, tr{
 }
 
 .notification-container , .question-container{
-    overflow-y: scroll;
+    overflow-y: auto;
+    overflow-x:auto;
     height: 270px;
     padding-left:15px;
     padding-right:15px;
@@ -420,7 +427,7 @@ thead, tr{
 }
 
 .todo-container{
-    overflow-x:hidden;
+    overflow-x:auto;
     overflow-y: scroll;
     padding-left:15px;
     height:170px;
@@ -565,7 +572,48 @@ transition: all 0.2s linear;
 display:block;
 }
 
-@media only screen and (max-width:1800px){
+.footer{
+    
+    background-color: #171612;
+    color:white;
+    position:fixed;
+    bottom:0;
+    left:0;
+    right:0;
+    z-index:1;
+}
+
+.footer-elements{
+    margin-left: auto;
+    margin-right: auto;
+    margin-top:15px;
+    margin-bottom:0px;
+}
+
+.footer ul li{
+    /* float: left;    */
+    display:inline-block;
+    font-size: 14px;
+    font-family: "Lato";
+    color: rgb(187, 187, 187);
+    line-height: 1.2;
+    text-align: left;
+    padding-left:12px;
+}
+
+
+.footer ul li:nth-child(4){
+    margin-left:50px;
+    font-size: 17px;
+    font-family: "Lato";
+    color: rgb(255, 255, 255);
+    line-height: 1.2;
+    text-align: left;
+    
+}
+
+
+@media only screen and (max-width:1475px){
     .card-deck{
         width:50%;
         margin: 0 auto;
@@ -601,5 +649,25 @@ display:block;
 
     .right-header li:nth-child(4){
         float:right;
+    }
+}
+
+@media only screen and (max-width:576px){
+    .footer-elements{
+        margin: 0 auto;
+        width:fit-content;
+    }
+
+    .footer ul{
+        margin-bottom:0;
+    }
+
+    .footer ul li{
+        font-size:8px;
+    }
+
+    .footer ul li:nth-child(4){
+        font-size:12px;
+        margin-left:0px;
     }
 }

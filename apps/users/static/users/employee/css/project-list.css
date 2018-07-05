@@ -67,7 +67,7 @@
 .sidebar li{
     right:0;
     left:0;
-    position:absolute;
+    /*position:absolute;*/
     z-index:1;
     font-size: 14px;
     font-family: "Lato";
@@ -269,7 +269,10 @@ input[type='search']{
 
 
 .head{
-    margin:60px 0;
+    margin-left: 0;
+    margin-right: 0;
+    margin-top:60px;
+    margin-bottom:20px;
 }
 
 .head h4{
@@ -316,6 +319,18 @@ input[type='search']{
     background-color: #ffffff;
 }
 
+thead tr{
+    background-color:#ebebeb;
+}
+
+thead th{
+    font-weight:bolder;
+}
+
+.table-borderless tbody+tbody, .table-borderless td, .table-borderless th, .table-borderless thead th{
+    padding-left:30px ;
+}
+
 .table-container{
     padding:0;
 }
@@ -327,13 +342,11 @@ input[type='search']{
 }
 
 
-td{
-    font-weight: bolder;
-}
-
-tr:hover{
+tbody tr:hover{
     background-color: #f2f5fa;
 }
+
+
 
 .nav-links{
     width:100%;
@@ -372,15 +385,22 @@ td img:hover{
 .page-item a{
     color: black;
     text-decoration: none;
-    border-radius:2px;
+    border-radius:3px;
     border-width:1px;
     border-color:#e1e1e1;
+    font-weight: bold;
 }
 
 .active-link a{
     background-color: #ffffff;
     border:2px solid #42b7ff;
+    font-weight: bolder;
     transition: all 0.2s ease-in-out;
+}
+
+.page-link{
+    padding-right: 15px;
+    padding-left: 15px;
 }
 
 
@@ -404,6 +424,46 @@ td img:hover{
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 200px;
+}
+
+.footer{
+    
+    background-color: #171612;
+    color:white;
+    position:fixed;
+    bottom:0;
+    left:0;
+    right:0;
+    z-index:1;
+}
+
+.footer-elements{
+    margin-left: auto;
+    margin-right: auto;
+    margin-top:15px;
+    margin-bottom:0px;
+}
+
+.footer ul li{
+    /* float: left;    */
+    display:inline-block;
+    font-size: 14px;
+    font-family: "Lato";
+    color: rgb(187, 187, 187);
+    line-height: 1.2;
+    text-align: left;
+    padding-left:12px;
+}
+
+
+.footer ul li:nth-child(4){
+    margin-left:50px;
+    font-size: 17px;
+    font-family: "Lato";
+    color: rgb(255, 255, 255);
+    line-height: 1.2;
+    text-align: left;
+    
 }
 
 
@@ -456,4 +516,24 @@ td img:hover{
         float:right;
     }
 
+}
+
+@media only screen and (max-width:576px){
+    .footer-elements{
+        margin: 0 auto;
+        width:fit-content;
+    }
+
+    .footer ul{
+        margin-bottom:0;
+    }
+
+    .footer ul li{
+        font-size:8px;
+    }
+
+    .footer ul li:nth-child(4){
+        font-size:12px;
+        margin-left:0px;
+    }
 }
