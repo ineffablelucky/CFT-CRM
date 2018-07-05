@@ -42,11 +42,10 @@ def Download_Salary(request):
     month=request.GET['month']
     response = HttpResponse(content_type='application/pdf')
     filename='Salary-%s-%s'%(year,month)
-    print(filename)
     response['Content-Disposition'] = 'attachment; filename={0}.pdf'.format(filename)
     buffer = BytesIO()
     temp=procedure(request.user.id,year,month)
-    salary_slip = ' User ID: ' + str(temp.ctc_objects.employee.id) + ' Fixed Monthly Salary: ' + str(temp.ctc_objects.fixed_monthly_salary)+" Deduction Amount: "+ str(temp.deduction_due_to_leaves)+" Net monthly salary"+str(temp.final_monthly_salary)+"HRA:"+str(temp.ctc_objects.hra/12)
+    salary_slip = ' User ID: ' + str((temp['ctc_objects']).employee.id) + ' Fixed Monthly Salary: ' + str((temp['ctc_objects']).fixed_monthly_salary)+" Deduction Amount: "+ str(temp['deduction_due_to_leaves'])+" Net monthly salary"+str(temp['final_monthly_salary'])+"HRA:"+str((temp['ctc_objects']).hra/12)
     p = canvas.Canvas(buffer)
     p.drawString(0,400,salary_slip)
     p.save()

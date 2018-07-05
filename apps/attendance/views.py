@@ -10,6 +10,8 @@ from ..attendance.models import LeaveRequest
 from django.db.models import Q
 from ..users.models import MyUser
 import csv
+import json
+from django.http import JsonResponse
 
 
 import datetime
@@ -344,4 +346,27 @@ def download_emp_excel_data(request):
             [a.date, a.time_in, a.time_out, a.working_hours, a.status])
 
     return response
+
+
+def attendance_graph(request):
+    return render(request, 'attendance/attendancebar.html')
+
+
+def ajax_data(request):
+    data = Attendance.objects.all()
+    list1 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    i = data[0].date.month
+    count = 0
+    for d in data:
+        if d.status == "absent" and d.date.month == i:
+            count = count+1
+
+        elif d.status == "absent" and d.date.month != i:
+            i = d.date.month
+            count = 1
+        list1[i - 1] = count
+
+    return JsonResponse(data={'list': list1})
+
+
 

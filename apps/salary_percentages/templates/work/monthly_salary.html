@@ -5,10 +5,12 @@
     <title>Title</title>
 </head>
 <body>
+<a href="{% url 'salary_percentages:salary_structure' %}"><button>View Salary Structure</button></a>
+<a href="{% url 'salary_percentages:salary' %}"><button>Edit Salary</button></a><br><br>
     <form method="GET" id="salary_form">
-        Month:{{ form.month }}
-        Year:{{ form.year }}
-    </form>
+        Month:{{ form.month }}<br>
+        Year:{{ form.year }}<br>
+    </form><br>
     {% for i in context %}
     <div>
         Employee ID: {{ i.employee.id }}<br>

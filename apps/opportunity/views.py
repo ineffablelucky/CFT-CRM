@@ -152,7 +152,8 @@ class CreateClientView(LoginRequiredMixin, CreateView):
         username = '_'.join(re.findall(r'\S+', form.cleaned_data.get('company_name')))
         key = username + '1234'
         message = "Your Login credentials are : username - " + username + " and password is - " + key + "."
-        sendEmail(subject, message, sender, email)
+        print(email, sender, message)
+        # sendEmail(subject, message, sender, email)
         print(key)
         return temp
 
