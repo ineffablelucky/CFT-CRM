@@ -48,7 +48,7 @@
                                             <td>{{ p.project_name }}</td>
                                             <td>{{ p.project_manager }}</td>
                                             <td>{{ p.status }}</td>
-                                            <td><a href="{% url 'project:project-details' p.id %}"><button>View Details</button></a></td>
+                                            <td><a href="{% url 'project:project-details' p.id %}"><img src="{% static 'users/employee/images/View.svg' %}"></a></td>
                                             </tr>
                                         {% endfor %}
                                     </tbody>
