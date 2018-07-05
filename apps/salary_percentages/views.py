@@ -92,7 +92,7 @@ def upload_csv(request):
     except Exception as e:
 
         logging.getLogger("error_logger").error("Unable to upload file. " + repr(e))
-    return HttpResponseRedirect(reverse("salary_percentages:upload_csv"))
+    return HttpResponseRedirect(reverse("salary_percentages:salary_structure"))
 
 def monthly_salary(request):
     context=CTC_breakdown.objects.all()

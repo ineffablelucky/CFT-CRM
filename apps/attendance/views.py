@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .forms import LeaveForm, AttendanceForm
+from .forms import LeaveForm, AttendanceForm, GraphForm
 from django.views.generic import CreateView, TemplateView, UpdateView, ListView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.shortcuts import redirect
@@ -349,24 +349,47 @@ def download_emp_excel_data(request):
 
 
 def attendance_graph(request):
-    return render(request, 'attendance/attendancebar.html')
+    form =GraphForm(request.GET)
+
+
+    return render(request, 'attendance/attendancebar.html',{'form':form})
 
 
 def ajax_data(request):
-    data = Attendance.objects.all()
+    data = Attendance.objects.filter(date__year=datetime.datetime.now().year)
+
     list1 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-    i = data[0].date.month
+    i = 0
     count = 0
     for d in data:
         if d.status == "absent" and d.date.month == i:
             count = count+1
-
         elif d.status == "absent" and d.date.month != i:
-            i = i+1
+            i = d.date.month
             count = 1
         list1[i - 1] = count
 
     return JsonResponse(data={'list': list1})
+
+
+def ajax_data_change(request):
+    if request.method=='GET':
+        year = request.GET['year2']
+        data = Attendance.objects.filter(date__year=year)
+        list2 = [0,0,0,0,0,0,0,0,0,0,0,0]
+        i = 0
+        count = 0
+        for d in data:
+            if d.status == "absent" and d.date.month == i:
+                count = count + 1
+            elif d.status == "absent" and d.date.month != i:
+                i = d.date.month
+                count = 1
+            list2[i - 1] = count
+        return JsonResponse(data={'list': list2})
+
+
+
 
 
 

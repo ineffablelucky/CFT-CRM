@@ -5,8 +5,26 @@
         <link rel="stylesheet" href="{% static 'users/employee/css/home.css' %}">
 {% endblock extra-stylesheet %}
 
-{% block page_content %}
+{% block sidetab %}
+            <ul class="list-unstyled">
+                <a href="{% url 'attendance:pastattendance' %}"><li style="top:58px" class="active"><img src="{% static 'users/employee/images/Home icon.svg' %}"><span>Home</span></li></a>
 
+                {% if user.department == 'IT' %}
+                <a href="{% url 'project:employee-project' %}"><li style="top:117px"><img src="{% static 'users/employee/images/Projects icon.svg' %}"><span>Projects</span></li></a>
+                {% elif user.department == 'Marketing' %}
+                <a href="{% url 'opportunity:list_oppo' %}"><li style="top:117px"><img src="{% static 'users/employee/images/Projects icon.svg' %}"><span>Leads</span></li></a>
+                {% endif %}
+
+                <a href="#"><li style="top:175px"><img src="{% static 'users/employee/images/Attendance icon.svg' %}"><span>Attendance</span></li></a>
+                <a href="{% url 'ctc:salary' %}"><li style="top:234px"><img src="{% static 'users/employee/images/Salary Icon.svg' %}"><span>Salary</span></li></a>
+                <a href="{% url 'attendance:leave_request' %}"><li style="top:293px"><img src="{% static 'users/employee/images/Leave Req.. Icon.svg' %}"><span>Leave Request</span></li></a>
+            </ul>
+{% endblock sidetab %}
+
+
+
+
+{% block page_content %}
 <div class="main-content">
                 <div class="card-deck card-row-top">
                     <div class="card-container">
@@ -223,9 +241,24 @@
                         </div>
                     </div>
                 </div>
-
 {% endblock page_content %}
+
+{% block footer %}
+            <div class="footer">
+                    <div class="row">
+                        <div class="footer-elements">
+                            <ul class="list-unstyled">
+                                <li>Terms of Use</li>
+                                <li>|</li>
+                                <li>Privacy Policy</li>
+                                <li>Code Flow Tech &copy 2018</li>
+                            </ul>
+                        </div>
+                    </div>
+            </div>
+{% endblock footer %}
 
 {% block extra-scripts %}
         <script src="{% static 'users/employee/js/home.js' %}"></script>
 {% endblock extra-scripts %}
+
