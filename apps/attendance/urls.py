@@ -18,6 +18,7 @@ urlpatterns = [
     path('emp_attendance_download/', views.download_emp_excel_data, name='emp_download'),
     path('attendancegraph/', views.attendance_graph, name='attendancegraph'),
     path('ajax/', views.ajax_data, name='ajaxdata'),
+    path('ajaxchange/', views.ajax_data_change, name='ajaxdatachange'),
 
 ]
 
