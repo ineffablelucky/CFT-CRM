@@ -356,7 +356,7 @@ def attendance_graph(request):
 
 
 def ajax_data(request):
-    data = Attendance.objects.all()
+    data = Attendance.objects.filter(date__year=datetime.datetime.now().year)
 
     list1 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     i = 0
@@ -368,6 +368,7 @@ def ajax_data(request):
             i = d.date.month
             count = 1
         list1[i - 1] = count
+
     return JsonResponse(data={'list': list1})
 
 
