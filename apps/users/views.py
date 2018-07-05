@@ -35,7 +35,7 @@ def register(request):
     return render(request,'users/registration/register.html',context)
 
 def welcome(request):
-    return render(request, 'users/employee/home.html')
+    return redirect(reverse('attendance:pastattendance'))
 
 
 def auth_login(request):
