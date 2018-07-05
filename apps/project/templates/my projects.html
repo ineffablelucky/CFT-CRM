@@ -5,6 +5,21 @@
 <link rel="stylesheet" href="{% static 'users/employee/css/project-list.css' %}">
 {% endblock extra-stylesheet %}
 
+{% block sidetab %}
+            <ul class="list-unstyled">
+                <a href="{% url 'attendance:pastattendance' %}"><li style="top:58px"><img src="{% static 'users/employee/images/Home icon.svg' %}"><span>Home</span></li></a>
+
+                {% if user.department == 'IT' %}
+                <a href="{% url 'project:employee-project' %}"><li style="top:117px" class="active"><img src="{% static 'users/employee/images/Projects icon.svg' %}"><span>Projects</span></li></a>
+                {% elif user.department == 'Marketing' %}
+                <a href="{% url 'opportunity:list_oppo' %}"><li style="top:117px"><img src="{% static 'users/employee/images/Projects icon.svg' %}"><span>Leads</span></li></a>
+                {% endif %}
+
+                <a href="#"><li style="top:175px"><img src="{% static 'users/employee/images/Attendance icon.svg' %}"><span>Attendance</span></li></a>
+                <a href="{% url 'ctc:salary' %}"><li style="top:234px"><img src="{% static 'users/employee/images/Salary Icon.svg' %}"><span>Salary</span></li></a>
+                <a href="{% url 'attendance:leave_request' %}"><li style="top:293px"><img src="{% static 'users/employee/images/Leave Req.. Icon.svg' %}"><span>Leave Request</span></li></a>
+            </ul>
+            {% endblock sidetab %}
 {% block page_content %}
 <div class="main-content ">
                 <div class="row head">
