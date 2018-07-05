@@ -35,11 +35,19 @@ def register(request):
     return render(request,'users/registration/register.html',context)
 
 def welcome(request):
-    return render(request, 'users/employee/home.html')
+    if request.user.is_authenticated:
+        if request.user.designation == 'Client':
+            logout(request)
+            return render(request, 'users/welcome.html')
+        return redirect(reverse('attendance:pastattendance'))
+    return render(request, 'users/welcome.html')
 
 
 def auth_login(request):
     if request.user.is_authenticated:
+        if request.user.designation == 'Client':
+            logout(request)
+            return HttpResponse("You are autherized as client! Not as Employee of the organization.")
         return redirect(reverse('users:welcome'))
 
     elif request.method == 'POST':
@@ -54,7 +62,7 @@ def auth_login(request):
 
 def admin_login(request):
     if request.user.is_authenticated:
-        if request.user.designation == 'Employee':
+        if request.user.designation == 'Employee' or request.user.designation == 'Client':
             logout(request)
             return redirect(reverse('users:admin_login'))
         return redirect(reverse('users:admin_welcome'))
