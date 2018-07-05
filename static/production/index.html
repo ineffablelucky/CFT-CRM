@@ -39,7 +39,7 @@
 
   <body class="nav-md">
 
-  {% if user.is_authenticated and user.designation != 'Employee' %}
+  {% if user.is_authenticated and user.designation != 'Employee' and user.designation != 'Client' %}
 
 
     <div class="container body">

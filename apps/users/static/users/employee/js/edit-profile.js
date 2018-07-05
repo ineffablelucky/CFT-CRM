@@ -9,3 +9,21 @@ $(document).ready(function () {
        $('.bar-3').toggleClass('bar-3-active');
    });    
 });
+
+function edit(){
+    $('.contact-details h5').css('border-bottom-color', '#e0e6e9');
+    $('.about-me p').css('border-bottom-color' , '#e0e6e9');
+    $('.contact-details h5').hover(function(){
+        $(this).css('border-bottom-color' , '#719cca');
+    });
+    $('.contact-details h5').mouseout(function(){
+        $(this).css('border-bottom-color', '#e0e6e9');
+    });
+
+    $('.about-me p').hover(function(){
+        $(this).css('border-bottom-color' , '#719cca');
+    });
+    $('.about-me p').mouseout(function(){
+        $(this).css('border-bottom-color', '#e0e6e9');
+    });
+}

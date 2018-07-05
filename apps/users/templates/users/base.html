@@ -5,9 +5,17 @@
 {% block else_condition %}
 {% if user.is_authenticated %}
 <h3>
+    {% if user.designation == 'Client' %}
+    Welcome {{ user.first_name }}!<br>
+    You are autherized as our client but not has permission to access Admin page.<br>
+    And we have not created login for our Clients yet!<br>
+    Sorry.
+
+    {% else %}
     Welcome {{ user.first_name }}!<br>
     You are autherized user but not has permission to access Admin page.<br>
     So switch to your <a href="{% url 'users:welcome' %}"><u>Employee portal</u></a> or <a href="{% url 'users:admin_login' %}"><u>try again</u></a> login to admin page.
+    {% endif %}
 </h3>
 {% else %}
 <h3>You are not authorized user. Please <a href="{% url 'users:index' %}"><u>login</u></a> first to acces this page!</h3>
