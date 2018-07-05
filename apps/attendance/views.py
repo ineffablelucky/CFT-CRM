@@ -8,7 +8,7 @@ from ..leave.models import Leave
 from ..attendance.models import Attendance, LeaveRequest
 from ..attendance.models import LeaveRequest
 from django.db.models import Q
-from ..users.models import MyUser
+from ..users.models import MyUser   
 import csv
 import json
 from django.http import JsonResponse
