@@ -227,3 +227,21 @@ class ClockoutForm(forms.ModelForm):
 """
 
 
+class GraphForm(forms.ModelForm):
+    year=[]
+    for i in range(1990,2050):
+        a = (str(i),str(i))
+        year.append(a)
+
+    Year_Choice=tuple(year)
+    year2= forms.ChoiceField(
+        choices=Year_Choice,
+        widget=forms.Select(attrs={'class': ''}),
+        label='Select Year'
+
+    )
+
+    class Meta:
+        model=Attendance
+        fields=('year2',)
+
