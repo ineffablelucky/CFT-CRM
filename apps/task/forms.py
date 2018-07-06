@@ -50,7 +50,8 @@ class CreateTaskForm(ModelForm):
         label='ASSIGN TO',
         # required=False,
 
-        queryset=MyUser.objects.filter(Q(department='IT') & Q(designation='Employee')),
+        queryset=MyUser.objects.filter(Q(department='IT') & Q(designation='Employee') & Q()),
+
         widget=forms.Select(),
     )
 

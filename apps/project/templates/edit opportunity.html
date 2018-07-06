@@ -1,0 +1,99 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+    <!--<meta charset="UTF-8">-->
+    <!--<title>Create Project</title>-->
+<!--</head>-->
+<!--<body>-->
+
+{% extends 'apps/users/templates/users/base.html' %}
+
+    <title>{% block title %} Create Project {% endblock title %}</title>
+
+
+{% block page-content %}
+        <div class="right_col" role="main">
+          <div class="">
+            {% if user.is_authenticated %}
+            <div class="page-title">
+              <div class="title_left">
+                <h3>This is a Project-Opportunity Entry form!</h3>
+              </div>
+            </div>
+            <div class="clearfix"></div>
+
+            <div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                      <h2>Project Info</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+
+                        <form method="post" action="{% url 'project:project-opp-update' object.id %}" class="form-horizontal form-label-left" novalidate>
+
+                      {% csrf_token %}
+
+
+                         <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Allot Employees To Project</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                              <!--<input id="name" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="2" name="name" placeholder="both name(s) e.g Jon Doe" required="required" type="text">-->
+                              {{ form.employees_per_project }}
+                            </div>
+                             {{ form.employees_per_project.errors }}
+                         </div>
+
+
+                         <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Status</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                              <!--<input id="name" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="2" name="name" placeholder="both name(s) e.g Jon Doe" required="required" type="text">-->
+                              {{ form.status }}
+                            </div>
+                             {{ form.status.errors }}
+                         </div>
+
+
+                         <div class="ln_solid"></div>
+
+                            <div class="form-group">
+                                <div class="col-md-6 col-md-offset-3">
+                                    <button type="button" id="cancel" class="btn btn-primary">Cancel</button>
+                                    <button id="send" type="submit" class="btn btn-success">Submit</button>
+                                </div>
+                            </div>
+                      </form>
+                        </form>
+                            {% else %}
+                                <div>You don't have permission</div>
+                            {% endif %}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+{% endblock page-content %}
+$(".datepicker").datepicker({
+        format: 'dd/mm/yyyy',
+        autoclose: true,
+        changeYear: true,
+        changeMonth: true
+      });
+{% block extra-script %}
+<script>
+    $(document).ready(function(){
+        $('#cancel').click(function(){
+            window.history.back();
+        });
+    });
+
+
+</script>
+{% endblock %}
