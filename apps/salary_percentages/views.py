@@ -1,12 +1,14 @@
 import logging
 from django.shortcuts import render,HttpResponseRedirect,HttpResponse,reverse
+from django.utils import timezone
+from apps.users.models import MyUser
 from .models import Salary_calculations,CTC_breakdown
 from .forms import SalaryForm,CtcForm,SalaryGenerationForm
 from django.contrib.auth import get_user_model
 from django.contrib import messages
 from apps.leave.models import Leave
 from apps.attendance.models import Attendance
-from datetime import datetime
+import datetime
 
 def salary(request):
     context=CTC_breakdown.objects.all()
@@ -100,50 +102,67 @@ def monthly_salary(request):
     return render(request,'work/monthly_salary.html',{'context':context,'form':form})
 
 def procedure(id,year,month):
-    ctc_objects = CTC_breakdown.objects.get(employee_id=id)
+
     start_date = datetime.strptime(year + '-' + month + '-' + '01', '%Y-%m-%d')
 
     if month == "1" or month == "3" or month == "5" or month == "7" or month == "8" or month == "10" or month == "12":
         end_date = datetime.strptime(year + '-' + month + '-' + '31', '%Y-%m-%d')
-        fixed_daily_salary = float(ctc_objects.fixed_monthly_salary / 31)
+
     else:
         end_date = datetime.strptime(year + '-' + month + '-' + '30', '%Y-%m-%d')
-        fixed_daily_salary = float(ctc_objects.fixed_monthly_salary / 30)
 
-    attendance_objects = Attendance.objects.filter(user_id=id, date__gte = start_date, date__lte= end_date).order_by('date')
+    if MyUser.objects.filter(id=id,created_on__lte=start_date):
+        ctc_objects = CTC_breakdown.objects.get(employee_id=id)
+        attendance_objects = Attendance.objects.filter(user_id=id, date__gte = start_date, date__lte= end_date).order_by('date')
 
-    final_daily_sal_list=[]
-    for a in attendance_objects:
-        if a.status=="On Leave":
-            daily_deduction=0
-        elif a.status=="present":
-            if a.note.find("Late")!=-1:
-                    daily_deduction=float(fixed_daily_salary/3)
-            else:
+        print(ctc_objects)
+        print(attendance_objects)
+
+        if month == "1" or month == "3" or month == "5" or month == "7" or month == "8" or month == "10" or month == "12":
+            fixed_daily_salary = float(ctc_objects.fixed_monthly_salary / 31)
+        else:
+            fixed_daily_salary = float(ctc_objects.fixed_monthly_salary / 30)
+
+        print(fixed_daily_salary)
+
+        final_daily_sal_list=[]
+        for a in attendance_objects:
+            if a.status=="On Leave":
                 daily_deduction=0
-        elif a.status=="absent":
-            if a.note=="PL" or a.note=="CL":
-                daily_deduction=0
-            else:
-                daily_deduction=fixed_daily_salary
-        final_daily_salary=fixed_daily_salary-daily_deduction
-        final_daily_sal_list.append(final_daily_salary)
+            elif a.status=="present":
+                if a.note.find("Late")!=-1:
+                        daily_deduction=float(fixed_daily_salary/3)
+                else:
+                    daily_deduction=0
+            elif a.status=="absent":
+                if a.note=="PL" or a.note=="CL":
+                    daily_deduction=0
+                else:
+                    daily_deduction=fixed_daily_salary
+            final_daily_salary=fixed_daily_salary-daily_deduction
+            final_daily_sal_list.append(final_daily_salary)
 
-    if month == '1' or month == '3' or month == '5' or month == '7' or month == '8' or month == '10' or month == '12':
-        free_sal=(31-len(final_daily_sal_list))*fixed_daily_salary
+        if month == '1' or month == '3' or month == '5' or month == '7' or month == '8' or month == '10' or month == '12':
+            free_sal=(31-len(final_daily_sal_list))*fixed_daily_salary
+        else:
+            free_sal = (30-len(final_daily_sal_list))*fixed_daily_salary
+        working_sal = sum(final_daily_sal_list)
+        final_monthly_salary=int(working_sal+free_sal)
+        deduction_due_to_leaves=int(ctc_objects.fixed_monthly_salary-final_monthly_salary)
+        temp = {'deduction_due_to_leaves':deduction_due_to_leaves,'final_monthly_salary':final_monthly_salary,'ctc_objects':ctc_objects}
+        return temp
     else:
-        free_sal = (30-len(final_daily_sal_list))*fixed_daily_salary
-    working_sal = sum(final_daily_sal_list)
-    final_monthly_salary=int(working_sal+free_sal)
-    deduction_due_to_leaves=int(ctc_objects.fixed_monthly_salary-final_monthly_salary)
-    temp = {'deduction_due_to_leaves':deduction_due_to_leaves,'final_monthly_salary':final_monthly_salary,'ctc_objects':ctc_objects}
-    return temp
+        return None
+
 
 def view_monthly_salary(request,id):
 
     year = request.GET['year']
     month = request.GET['month']
     temp=procedure(id,year,month)
-    return render(request,'work/view_final_salary.html',temp)
+    if temp==None:
+        return HttpResponse("The user is not registered")
+    else:
+        return render(request,'work/view_final_salary.html',temp)
 
 

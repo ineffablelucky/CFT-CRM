@@ -9,6 +9,7 @@
     <form method="GET" id="salary_form">
         Month:{{ form.month }}
         Year:{{ form.year }}
+        <button type="submit">Submit</button>
     </form>
     <a href="{% url 'ctc:download_salary' %}?{{ request.GET.urlencode|yesno:'&, '}}{{ request.GET.urlencode }}">Download Salary Slip</a>
 <script>
