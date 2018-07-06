@@ -6,6 +6,8 @@ from django.http import request, HttpResponse
 from django.shortcuts import render, HttpResponseRedirect, get_object_or_404, redirect
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, UpdateView, DeleteView,ListView,DetailView,FormView
+from reportlab.pdfgen import canvas
+
 from .models import LEADS
 from django.contrib.messages.views import SuccessMessageMixin
 from .forms import CreateForm,DetailForm,UpdateForm

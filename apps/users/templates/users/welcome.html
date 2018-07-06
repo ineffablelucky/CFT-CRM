@@ -7,7 +7,7 @@
 <body>
 
 
-    {% if user.is_authenticated %}
+    {% if user.is_authenticated and user.designation != 'Client' %}
     {% load users_extras %}
 
     <h3>Hello {{ user.first_name }} {{user.last_name}}</h3>
@@ -38,7 +38,16 @@
     <a href="{% url 'users:logout' %}"><button type="button">Log out</button></a><br><br>
 
     {% else %}
+
+        {% if user.designation == 'Client' %}
+        <h2>
+            Welcome {{ user.username }}.<br>
+            You are our Client. But we have not created login portal for our client.<br>
+            Sorry!
+        </h2>
+        {% else %}
         <h2>Please enter correct details</h2>
+        {% endif %}
         <p>Login again</p>
         <a href="{% url 'users:login' %}"><button type="button">Employee</button></a>
         <a href="{% url 'users:admin_login' %}"><button>Admin</button></a>
