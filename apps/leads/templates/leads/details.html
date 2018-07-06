@@ -76,6 +76,10 @@
                                 </div>
                               </div>
                         </div>
+                            <div class="x_content">
+
+
+
 
                     <!--<p>Add class <code>bulk_action</code> to table for bulk actions options on row select</p>-->
                     <a href="{% url 'leads:LeadCreate' %}"><button>Create Lead</button></a>
@@ -158,18 +162,36 @@
                         </div>
                         </form>
                         <a href="{% static 'media/abc.csv' %}" download="abc.csv"><button>Download Leads</button></a>
-                        <a href="{% url 'leads:upload_csv' %}"><button>Import Leads</button></a>
+                        <!--<a href="{% url 'leads:upload_csv' %}">-->
+                            <button type="button" data-toggle="modal" data-target="#exampleModal2" class="upload1" >Import Leads</button>
+                        <!--</a>-->
                     </div>
-
-
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
+
           </div>
         </div>
 
-
+<div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-center" id="exampleModalLabel2">Project Details</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body-2">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <!--<button type="button" class="btn btn-primary" data-dismiss="modal">Save Changes</button>-->
+      </div>
+    </div>
+  </div>
+</div>
 
 
 {% endblock page-content %}
@@ -220,6 +242,30 @@ $(document).ready(function() {
         $.ajax({url: "../edit/" + id , success:function(data){
             $('.modal-body').html(data);
         }});
+    });
+    $('.upload1').click(function(e){
+        e.preventDefault();
+         $.ajax({url:'../upload/csv/',success:function(data){
+
+            $('.modal-body-2').html(data);
+
+         }});
+
+    });
+       $('.form-horizontal').submit(function(e){
+    e.preventDefault();
+    $.ajax({
+    type:$(this).attr('method'),
+    url:$(this).attr('action'),
+    data:$(this).serialize(),
+    success:function(data){
+    console.log(data);
+    $('#errors').html(data);
+
+    },
+
+
+        });
     });
     $('.delete').click(function(){
 
