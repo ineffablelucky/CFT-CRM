@@ -19,7 +19,10 @@ class ChangeStatus(forms.ModelForm):
         ('Rejected', 'Rejected')
     )
 
-    status = forms.ChoiceField(choices=Opportunity_status, widget=forms.Select(), label='Change Status')
+    status = forms.ChoiceField(
+        choices=Opportunity_status,
+        widget=forms.Select(attrs={'class': 'custom-select my-1 mr-sm-2'}),
+        label='Change Status')
 
     class Meta:
         model = Opportunity

@@ -6,12 +6,12 @@ BASE_URL = 'http://localhost:8000/'
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 SETTINGS_DIR = os.path.dirname(__file__)
-print(SETTINGS_DIR)
+# print(SETTINGS_DIR)
 PROJECT_PATH = os.path.join(SETTINGS_DIR, os.pardir)
-print(os.pardir)
-print(PROJECT_PATH)
+# print(os.pardir)
+# print(PROJECT_PATH)
 PROJECT_PATH = os.path.abspath(PROJECT_PATH)
-print(PROJECT_PATH)
+# print(PROJECT_PATH)
 TEMPLATE_PATH = os.path.join(PROJECT_PATH, '')
 
 # Quick-start development settings - unsuitable for production
