@@ -53,6 +53,9 @@
 
                                 <div class="table-wrapper">
                                     <div class="row table-scroll">
+                                        <div class="clock">
+
+                                        </div>
                                         <table class="table text-left">
                                             <thead>
                                                 <tr class="heads">
@@ -260,5 +263,36 @@
 
 {% block extra-scripts %}
         <script src="{% static 'users/employee/js/home.js' %}"></script>
+    <script>
+        $(document).ready(function(){
+            $('form').submit(function(event){
+                console.log(event);
+                event.preventDefault();
+                $.ajax({
+                    url:'/attendance/clock/in/',
+                    method:'post',
+                    data:$(this).serialize(),
+
+                    success:function(response){
+                        console.log(response);
+                        var b = response.a;
+                        if (response.a != 'Already Clocked In')
+                            $('#clock_in').html(response.a);
+                        else
+                            $('#clock_in').html(response.a);
+                            $('.clock-in').click(function(){
+                            $(this).attr('disabled', 'disabled');
+                            });
+
+                    }
+
+                });
+            });
+
+
+
+        });
+
+    </script>
 {% endblock extra-scripts %}
 

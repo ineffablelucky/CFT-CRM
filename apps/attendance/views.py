@@ -12,6 +12,7 @@ from ..users.models import MyUser
 import csv
 import json
 from django.http import JsonResponse
+from django.forms.models import model_to_dict
 
 
 import datetime
@@ -108,7 +109,8 @@ class Clockin(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
         if not request.user.is_authenticated:
             return HttpResponseForbidden
         elif Attendance.objects.filter(user_id=self.request.user.id, date=datetime.date.today()):
-            return HttpResponse("Already clocked in")
+            a = "Already Clocked In"
+            return JsonResponse({'a': a})
 
         else:
             a = Attendance.objects.create(user_id=self.request.user.id,
@@ -126,7 +128,10 @@ class Clockin(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
                 a.note = str(late.hour)+" hrs" + str(late.minute) + " min's Late"
 
             a.save()
-            return redirect('/attendance/userattendance')
+            time_in = str(a.time_in.hour)+":"+str(a.time_in.minute)
+            print(time_in)
+
+            return JsonResponse({'a': time_in})
 
 
 class Clockout(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
@@ -354,7 +359,6 @@ def download_emp_excel_data(request):
 
 def attendance_graph(request):
     form =GraphForm(request.GET)
-
 
     return render(request, 'attendance/attendancebar.html',{'form':form})
 
