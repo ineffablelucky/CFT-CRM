@@ -2,7 +2,7 @@ from django.shortcuts import render, HttpResponseRedirect, redirect
 from .models import IT_Project
 from apps.opportunity.models import Opportunity
 from django.views.generic import ListView, CreateView, UpdateView, DetailView
-from .forms import CreateProjectForm
+from .forms import CreateProjectForm, EditOppForm
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.db.models import Q
 from apps.task.models import Task
@@ -58,6 +58,7 @@ class Edit_Project(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
 
     permission_required = ('project.change_it_project',)
     model = IT_Project
+
     form_class = CreateProjectForm
     template_name = "create_project_form.html"
 
@@ -74,6 +75,9 @@ class Edit_Project(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
 
             return redirect('/project/opp')
 
+
+
+
 #show modules of projects
 class ListModule(LoginRequiredMixin, DetailView):
     model = IT_Project
@@ -83,4 +87,25 @@ class ListModule(LoginRequiredMixin, DetailView):
 def proj_progress(request, pk):
     pass
     a = Task.objects.filter(project_id = pk)
+
+
+class Edit_Project_opp(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+
+    permission_required = ('project.change_it_project',)
+    model = IT_Project
+    form_class = EditOppForm
+    template_name = "edit opportunity.html"
+
+    def form_valid(self, form):
+
+        proj_id = self.kwargs.get('pk')
+        print(proj_id)
+        form.save()
+
+        if IT_Project.objects.filter(Q(opportunity__isnull=True) & Q(id=proj_id)):
+
+            return redirect('/project')
+        elif IT_Project.objects.filter(Q(opportunity__isnull=False) & Q(id=proj_id)):
+
+            return redirect('/project/opp')
 
