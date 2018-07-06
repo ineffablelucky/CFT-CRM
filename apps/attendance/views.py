@@ -139,15 +139,16 @@ class Clockout(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
             return HttpResponseForbidden
 
         else:
-            a = Attendance.objects.get(user_id = self.request.user, date=datetime.date.today())
-            if a is None:
-                return HttpResponse("first CLock In")
-            elif a.time_out is not None:
-                return HttpResponse("Clockout Done")
+            if Attendance.objects.filter(user_id = self.request.user, date=datetime.date.today()):
+                a = Attendance.objects.get(user_id=self.request.user, date=datetime.date.today())
+                if a.time_out is not None:
+                    return HttpResponse("Clockout Done")
+                else:
+                    a.time_out = datetime.datetime.today()
+                    a.save()
+                    return redirect('/attendance/userattendance')
             else:
-                a.time_out = datetime.datetime.today()
-                a.save()
-            return redirect('/attendance/userattendance')
+                return HttpResponse("First Clock In")
 
 
 class PastAttendance(LoginRequiredMixin, PermissionRequiredMixin, ListView):
@@ -254,21 +255,24 @@ class EmployAttendance(LoginRequiredMixin, PermissionRequiredMixin, ListView):
         context['ab']=[]
         tmp = []
         for a in abc:
-            if a.time_out is None:
-                wh = 0
-                s = str(wh)
-                working_hours.append(s)
+            if a.time_out:
 
-            elif a.status is 'absent':
-                wh = 0
-                s = str(wh)
-                working_hours.append(s)
+                if a.status is 'absent':
+                    wh = 0
+                    s = str(wh)
+                    working_hours.append(s)
+
+                else:
+                    delta = datetime.timedelta(hours=a.time_in.hour, minutes=a.time_in.minute)
+                    wh = a.time_out-delta
+                    s = str(wh.hour)+" hrs " + str(wh.minute) + " min's"
+                    working_hours.append(s)
 
             else:
-                delta = datetime.timedelta(hours=a.time_in.hour, minutes=a.time_in.minute)
-                wh = a.time_out-delta
-                s = str(wh.hour)+" hrs " + str(wh.minute) + " min's"
+                wh = 0
+                s = str(wh)
                 working_hours.append(s)
+
             a.working_hours = s
             tmp.append(a)
 
