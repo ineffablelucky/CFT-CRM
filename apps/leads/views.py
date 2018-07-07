@@ -92,8 +92,6 @@ def check(request,id):
 
             return JsonResponse(data={'true':'true'})
         else:
-
-
             return JsonResponse(data={'error': form.errors})
     return JsonResponse({"details incorrect":"details incorrect"})
 
@@ -116,8 +114,9 @@ class LeadDelete(LoginRequiredMixin,PermissionRequiredMixin,DeleteView):
 @login_required
 @permission_required('leads.view_leads', raise_exception=True)
 def upload_csv(request):
+
     data = {}
-    if "GET" == request.method:
+    if request.method == 'GET':
         return render(request, "leads/upload_csv.html", data)
     # if not GET, then proceed
 
@@ -126,13 +125,13 @@ def upload_csv(request):
 
         if not csv_file.name.endswith('.csv'):
             messages.error(request, 'File is not CSV type')
-
-            return HttpResponseRedirect(reverse("leads:upload_csv"))
+            print('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
+            return JsonResponse(data={'error': 'Uploaded file is not CSV'})
         # if file is too large, return
         if csv_file.multiple_chunks():
             messages.error(request, "Uploaded file is too big (%.2f MB)." % (csv_file.size / (1000 * 1000),))
 
-            return HttpResponseRedirect(reverse("leads:upload_csv"))
+            return JsonResponse(data={'error':'Uploaded file is too big'})
 
         file_data = csv_file.read().decode("utf-8")
 
@@ -157,7 +156,7 @@ def upload_csv(request):
             print(data_dict)
             lead=LEADS(**data_dict)
             lead.save()
-            return HttpResponseRedirect(reverse("leads:LeadDetails"))
+            return JsonResponse(data={'saved':'success'})
 
 
 
@@ -169,7 +168,7 @@ def upload_csv(request):
         logging.getLogger("error_logger").error("Unable to upload file. " + repr(e))
         # messages.error(request, "Unable to upload file. " + repr(e))
 
-    return HttpResponseRedirect(reverse("leads:upload_csv"))
+    return JsonResponse(data={'error':'Cannot Upload the file'})
 
 @login_required
 @permission_required('leads.view_leads', raise_exception=True)

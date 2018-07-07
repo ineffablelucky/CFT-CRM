@@ -1,15 +1,253 @@
-<!DOCTYPE html>
+{% extends 'users/employee/emp_base.html' %}
 {% load static %}
 
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title> Employee Leads</title>
-    <link rel="stylesheet" href="{% static 'opportunity/style.css' %}">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+{% block extra-stylesheet %}
+        <link rel="stylesheet" href="{% static 'opportunity/css/leads.css' %}">
+{% endblock extra-stylesheet %}
+
+{% block sidetab %}
+            <ul class="list-unstyled">
+                <a href="{% url 'attendance:pastattendance' %}"><li style="top:58px" ><img src="{% static 'users/employee/images/Home icon.svg' %}"><span>Home</span></li></a>
+
+                {% if user.department == 'IT' %}
+                <a href="{% url 'project:employee-project' %}"><li style="top:117px"><img src="{% static 'users/employee/images/Projects icon.svg' %}"><span>Projects</span></li></a>
+                {% elif user.department == 'Marketing' %}
+                <a href="{% url 'opportunity:list_oppo' %}"><li style="top:117px" class="active"><img src="{% static 'users/employee/images/Projects icon.svg' %}"><span>Leads</span></li></a>
+                {% endif %}
+
+                <a href="#"><li style="top:175px"><img src="{% static 'users/employee/images/Attendance icon.svg' %}"><span>Attendance</span></li></a>
+                <a href="{% url 'ctc:salary' %}"><li style="top:234px"><img src="{% static 'users/employee/images/Salary Icon.svg' %}"><span>Salary</span></li></a>
+                <a href="{% url 'attendance:leave_request' %}"><li style="top:293px"><img src="{% static 'users/employee/images/Leave Req.. Icon.svg' %}"><span>Leave Request</span></li></a>
+            </ul>
+{% endblock sidetab %}
 
 
-</head>
+{% block page_content %}
+    <div class="main-content ">
+            <!--&lt;!&ndash;pop-up&ndash;&gt;-->
+                <!--<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">-->
+                    <!--<div class="modal-dialog modal-dialog-centered" role="document">-->
+                        <!--<div class="modal-content">-->
+                            <!--<div class="modal-header">-->
+                                <!--<h5 class="modal-title" id="exampleModalLongTitle">Edit Status</h5>-->
+                            <!--</div>-->
+                            <!--<div class="modal-body">-->
+                                <!--<div class="dropdown">-->
+                                    <!--<form class="form-inline" method="post" action="{">-->
+                                        <!--{% csrf_token %}-->
+                                        <!--<label class="my-1 mr-2" >{{ form.status.label }}</label>-->
+                                        <!--{{ form.status }}-->
+                                        <!--{{ form.status.errors }}-->
+                                        <!--&lt;!&ndash;<select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref">&ndash;&gt;-->
+                                            <!--&lt;!&ndash;<option selected>Choose...</option>&ndash;&gt;-->
+                                            <!--&lt;!&ndash;<option value="1">One</option>&ndash;&gt;-->
+                                            <!--&lt;!&ndash;<option value="2">Two</option>&ndash;&gt;-->
+                                            <!--&lt;!&ndash;<option value="3">Three</option>&ndash;&gt;-->
+                                        <!--&lt;!&ndash;</select>&ndash;&gt;-->
+                                        <!--<button type="submit" class="btn btn-primary my-1">Submit</button>-->
+                                    <!--</form>-->
+                                    <!--&lt;!&ndash;<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">&ndash;&gt;-->
+                                        <!--&lt;!&ndash;Dropdown button&ndash;&gt;-->
+                                    <!--&lt;!&ndash;</button>&ndash;&gt;-->
+                                    <!--&lt;!&ndash;<div class="dropdown-menu">&ndash;&gt;-->
+                                        <!--&lt;!&ndash;<a class="dropdown-item" href="#">In-Touch</a>&ndash;&gt;-->
+                                        <!--&lt;!&ndash;<a class="dropdown-item" href="#">Dismissed</a>&ndash;&gt;-->
+                                        <!--&lt;!&ndash;<a class="dropdown-item" href="#">Link 3</a>&ndash;&gt;-->
+                                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--<div class="modal-footer">-->
+                                <!--<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--&lt;!&ndash;pop-up&ndash;&gt;-->
+
+                <div class="row head">
+                    <h4>Leads</h4>
+                </div>
+
+                <div class="row">
+                    <ul class="list-unstyled leads-btn-container">
+                        <li><button type="button" class="new-leads-btn leads-btn-active">New Leads</button></li>
+                        <li><button type="button" class="assigned-leads-btn">Assigned Leads</button></li>
+                        <li><button type="button" class="closed-leads-btn">Closed Leads</button></li>
+                        <li><button type="button" class="declined-leads-btn">Declined Leads</button></li>
+                    </ul>
+                </div>
+
+                <div class="row ">
+                    <div class="table-responsive major-container">
+                        <div class=" bg-white">
+                            <div class="row">
+                                <span>
+                                    <div class="row">
+                                        <div class="main-info">
+                                            <div class="row">
+                                                <h5 class="heading">New Leads</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="table-container">
+                            <div class="table-responsive project-details">
+                                <table class="table table-lg text-center table-borderless">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">COMPANY NAME</th>
+                                            <th scope="col">CONTACT PERSON</th>
+                                            <th scope="col">CONTACT NUMBER</th>
+                                            <th scope="col">EMAIL</th>
+                                            <th scope="col">STATUS</th>
+                                            <th scope="col">ACTION</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for op in opportunity %}
+
+                                                <tr>
+                                                    <td>{{ op.lead.company_name }}</td>
+                                                    <td>{{ op.lead.contact_person }}</td>
+                                                    <td>{{ op.lead.contact_number }}</td>
+                                                    <!--<td>{{ op.client.username}}</td>-->
+                                                    <!--<td>{{ op.price }}</td>-->
+                                                    <td>{{ op.lead.email }}</td>
+                                                    <!--<td>{{ op.status }}</td>-->
+                                                    <td><p data-toggle="modal" data-target="#exampleModalCenter" class="status">{{ op.status }}</p></td>
+                                                    <td><a href="{% url 'opportunity:meeting:emp_meeting' op.id %}"><img src="{% static 'opportunity/images/View.svg' %}"></a></td>
+                                                    <!--{% if op.assigned_to.username == user.username or user.designation == 'Manager' %}-->
+                                                    <!--<td id="change_status"><a id="edit" href="{% url 'opportunity:change_status' op.id %}"> Edit </a></td>-->
+                                                    <!--{% else %}-->
+                                                    <!--<td></td>-->
+                                                    <!--{% endif %}-->
+                                                    <!--pop-up-->
+                                                    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" id="exampleModalLongTitle">Edit Status</h5>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <div>
+                                                                        <form class="form-inline" method="post" action="{% url 'opportunity:change_status' op.pk %}" id="post-form">
+                                                                            {% csrf_token %}
+                                                                            <label class="my-1 mr-2" >{{ form.status.label }}</label>
+                                                                            {{ form.status }}
+                                                                            {{ form.status.errors }}
+                                                                            <p id="error"></p>
+                                                                            <button type="submit" class="btn btn-primary my-1">Submit</button>
+                                                                        </form>
+                                                                        <!--<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">-->
+                                                                        <!--Dropdown button-->
+                                                                        <!--</button>-->
+                                                                        <!--<div class="dropdown-menu">-->
+                                                                        <!--<a class="dropdown-item" href="#">In-Touch</a>-->
+                                                                        <!--<a class="dropdown-item" href="#">Dismissed</a>-->
+                                                                        <!--<a class="dropdown-item" href="#">Link 3</a>-->
+                                                                        <!--</div>-->
+                                                                    </div>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="close">Close</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!--pop-up-->
+                                                </tr>
+
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row major-pagination-container">
+                            <div class="pagination-container">
+                                <ul class="pagination">
+                                    <li class="page-item">
+                                        <a class="page-link" href="#" aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span>
+                                            <span class="sr-only">Previous</span>
+                                        </a>
+                                        </li>
+                                        <li class="page-item active-link"><a class="page-link " href="#">1</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                        <li class="page-item">
+                                        <a class="page-link" href="#" aria-label="Next">
+                                            <span aria-hidden="true">&raquo;</span>
+                                            <span class="sr-only">Next</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+{% endblock page_content %}
+
+{% block footer %}
+            <div class="footer">
+                    <div class="row">
+                        <div class="footer-elements">
+                            <ul class="list-unstyled">
+                                <li>Terms of Use</li>
+                                <li>|</li>
+                                <li>Privacy Policy</li>
+                                <li>Code Flow Tech &copy 2018</li>
+                            </ul>
+                        </div>
+                    </div>
+            </div>
+{% endblock footer %}
+
+{% block extra-scripts %}
+        <script src="{% static 'opportunity/js/leads.js' %}"></script>
+        <script>
+            $(function(){
+                $("#post-form").submit(function(event){
+                    alert('helo');
+                    event.preventDefault();
+                    url =$('#post-form').prop('action');
+                    console.log(url);
+                    console.log($(this).serialize())
+                     //data = {
+                     //       'status':$( "#id_status option:selected" ).text(),
+                    //         'csrfmiddlewaretoken':$("name['csrfmiddlewaretoken']").val()
+                    // }
+                     //console.log(data)
+
+                    $.ajax({
+                        url : url, // the endpoint
+                        type : "POST", // http method
+                        data : $(this).serialize(), // data sent with the post request
+
+                        // handle a successful response
+                        success : function(response) {
+                            $('#close').click();
+
+                            console.log(response);
+                        },
+
+                        // handle a non-successful response
+                        error : function(response) {
+                            $('#error').text(response.error);
+                            console.log("Error");
+                        }
+                    });
+
+                });
+            });
+        </script>
+{% endblock extra-scripts %}
+
+
 <body>
     {% if user.is_authenticated %}
         <div id="username">Hello {{ user.username }}</div>
@@ -49,13 +287,7 @@
         <div>You don't have permission</div>
     {% endif %}
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-<script>
-    var user = '{{ user.username }}';
-    console.log(user)
-</script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 </body>
-</html>

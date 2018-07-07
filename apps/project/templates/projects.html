@@ -92,7 +92,7 @@
                                             <td>
                                                 {% csrf_token %}
                                                 <button type="button" data-id ="{{ p.id }}" data-toggle="modal" data-target="#exampleModal" class="btn viewBtn btn-primary btn-xs"><i class="fa fa-folder"></i> View </button>
-                                                <a href="{% url 'project:project-update' p.id %}" class="btn editBtn btn-info btn-xs"><i class="fa fa-pencil"></i> Edit </a>
+                                                <a href="{% url 'project:project-opp-update' p.id %}" class="btn editBtn btn-info btn-xs"><i class="fa fa-pencil"></i> Edit </a>
                                             </td>
                                         </tr>
                                     {% endfor %}
