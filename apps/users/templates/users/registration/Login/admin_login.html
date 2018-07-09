@@ -35,10 +35,10 @@
               {% csrf_token %}
               <h1>Login Form</h1>
               <div>
-                <input type="text" class="form-control" name="email_or_username" id="username" placeholder="Email-Id/Username" autofocus />
+                <input type="text" class="form-control" name="email_or_username" id="username" placeholder="Email-Id/Username" autofocus required/>
               </div>
               <div>
-                <input type="password" class="form-control" type="password" name="password" id="password" placeholder="***************" />
+                <input type="password" class="form-control" type="password" name="password" id="password" placeholder="***************" required/>
               </div>
               <div>
                 <button type="submit" class="btn btn-default submit">Log in</button>

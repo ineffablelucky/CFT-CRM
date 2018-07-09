@@ -1,0 +1,23 @@
+@charset "utf-8";
+/* CSS Document */
+
+.view_lead{width:100%;border-radius:3px;box-shadow:0.5px 0.866px 6px rgba(0,0,0,0.1);background-color: #ffffff; display: inline-block; padding: 20px; margin-bottom: 50px;}
+.lead_left{width: 90%;float: left;  padding: 25px 10px;}
+.lead_right{width:100%;float: right; border: 1px solid #eee; padding: 25px 10px;position: relative;}
+.add_btn {transition: .5s ease;opacity: 0;position:absolute;top: 50%;left: 50%;transform: translate(-50%, -50%);-ms-transform: translate(-50%, -50%);text-align: center;}
+.lead_right:hover {background: rgba(0,0,0,0.7);color: #000; }
+.lead_right:hover .add_btn {opacity: 1;}
+a.add_btn_txt { background-color: #ffffff;color: #136db4;font-size: 16px;padding:8px 30px;cursor: pointer;border-radius: 5px;}
+a.add_btn_txt:hover{text-decoration: none; color: #136db4;border: none; background-color: #ffffff;}
+
+.view_lead h5{font-size: 20px;font-weight: 500;color: #136db4;}
+.notes_list{width: 100%;display: inline-block; padding: 0px;}
+.notes_list li{background: url(../images/star_icon.png) no-repeat left; list-style: none;padding-left: 17px;line-height: 24px;background-position: 0px 10px;}
+
+/** popup css ***/
+
+.lead_popup h4{text-align: center;display:inline-block;padding:12px 0px 10px;border-bottom: 1px solid #e2e7ea;}
+.lead_popup .modal-footer{border:none;text-align: center;display: inline-block;padding: 0px;margin-bottom:40px;}
+.save_cncl_btn{padding: 10px 50px;color: #3a99fc;border: 1px solid #3a99fc; background: none;border-radius: 3px; font-size: 18px; font-weight: 500; cursor: pointer;}
+.save_cncl_btn:hover{color:#fff;background:#3a99fc;}
+.lead_popup .notes_list{border:1px solid #3a99fc; padding:15px 16px;}

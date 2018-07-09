@@ -45,3 +45,25 @@ typewriter3.typeString('Get access to employees\' corner, 24X7')
 
 typewriter4.typeString('Time sheets saved for whenever you need them')
 .start();
+
+$(document).on('submit', '#login-form', function(e){
+    e.preventDefault();
+
+    $.ajax({
+        type:'POST',
+        url:'/',
+        data:$(this).serialize(),
+        success:function(data){
+            if(data.success == 'success'){
+                window.location = '/attendance/userattendance/';
+            }
+            else
+                alert("Username or password not matching.");
+        }
+     });
+});
+
+
+
+
+
