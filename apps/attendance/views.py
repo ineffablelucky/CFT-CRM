@@ -67,6 +67,11 @@ class LeaveRequestView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
         # for i in ins:
         #     print(i.id)
         return JsonResponse({'a': 'True'})
+        # return redirect('/attendance/leave/')
+
+    def form_invalid(self, form):
+        print(form.errors)
+        return JsonResponse({'error': form.errors})
 
 
 

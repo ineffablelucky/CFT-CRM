@@ -41,11 +41,13 @@
                                         <label for="name">Username</label>
                                         {{ form.name }}
                                         {{ form.name.errors }}
+
                                     </div>
                                     <div class="form-group">
                                         <label for="type-of-leave">Type Of Leave</label>
                                         {{ form.leave_type }}
                                         {{ form.leave_type.errors }}
+
                                         <!--<select id="type-of-leave" class="form-control">-->
                                         <!--<option value="1">Planned Leave</option>-->
                                         <!--<option value="2">Casual Leave</option>-->
@@ -63,11 +65,13 @@
                                                 {{ form.end_date }}
                                                 {{ form.end_date.errors }}
                                             </div>
+                                            <p class="form_error"></p>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="reason">Reason</label>
                                         {{ form.note }}{{ form.note.errors }}
+
                                     </div>
                                     <div class="form-group">
                                         <button type="submit" class="form-control ">Submit Request</button>
@@ -170,11 +174,13 @@
 
                     success:function(response){
                         console.log(response);
-                        if(response.a == 'True){
-                            alert("request send");
+                        if(response.a == 'True'){
+                            alert("Request Sent Successfully");
+                            window.location = '/attendance/leave/';
                             }
                         else{
-                            
+                            $('.form_error').html(response.error.end_date);
+                            <!--window.location = '/attendance/leave/';-->
                         }
 
                     }
