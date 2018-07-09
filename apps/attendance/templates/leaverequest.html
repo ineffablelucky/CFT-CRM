@@ -35,34 +35,39 @@
                             </div>
 
                             <div class="card-body">
-                                <form action="#">
+                                <form action="{% url 'attendance:leave_request'%}" method="post">
+                                    {% csrf_token %}
                                     <div class="form-group">
-                                        <label for="name">Name</label>
-                                        <input type="text" id="name" class="form-control" placeholder="Enter your Name">
+                                        <label for="name">Username</label>
+                                        {{ form.name }}
+                                        {{ form.name.errors }}
                                     </div>
                                     <div class="form-group">
                                         <label for="type-of-leave">Type Of Leave</label>
-                                        <select id="type-of-leave" class="form-control">
-                                        <option value="1">Planned Leave</option>
-                                        <option value="2">Casual Leave</option>
-                                        <option value="3">Sick Leave</option>
-                                        </select>
+                                        {{ form.leave_type }}
+                                        {{ form.leave_type.errors }}
+                                        <!--<select id="type-of-leave" class="form-control">-->
+                                        <!--<option value="1">Planned Leave</option>-->
+                                        <!--<option value="2">Casual Leave</option>-->
+                                        <!--</select>-->
                                     </div>
                                     <div class="form-group">
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <label for="from-date">From</label>
-                                                <input  class="form-control" placeholder="From" id="from-date">
+                                                {{ form.date }}
+                                                {{ form.date.errors }}
                                             </div>
                                             <div class="col-md-6">
                                                 <label for="to-date">To</label>
-                                                <input  class="form-control" placeholder="To" id="to-date">
+                                                {{ form.end_date }}
+                                                {{ form.end_date.errors }}
                                             </div>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="reason">Reason</label>
-                                        <textarea  class="form-control" ></textarea>
+                                        {{ form.note }}{{ form.note.errors }}
                                     </div>
                                     <div class="form-group">
                                         <button type="submit" class="form-control ">Submit Request</button>
@@ -83,14 +88,14 @@
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <ul class="list-unstyled">
-                                                    <li>Planned Leave:</li>
-                                                    <li>8</li>
+                                                    <li>Privilege Leave:</li>
+                                                    <li>{{ leave.pl }}</li>
                                                 </ul>
                                             </div>
                                             <div class="col-md-6">
                                                 <ul class="list-unstyled">
-                                                    <li>Earned Leave:</li>
-                                                    <li>5</li>
+                                                    <li>Half Day:</li>
+                                                    <li>{{ leave.half_day }}</li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -98,13 +103,7 @@
                                             <div class="col-md-6">
                                                 <ul class="list-unstyled">
                                                     <li>Casual Leave:</li>
-                                                    <li>2</li>
-                                                </ul>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <ul class="list-unstyled">
-                                                    <li>Sick Leave:</li>
-                                                    <li>12</li>
+                                                    <li>{{ leave.cl }}</li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -157,6 +156,37 @@
         <script src="{% static 'attendance/js/leave-request.js' %}"></script>
         <script src="https://cdn.jsdelivr.net/npm/gijgo@1.9.6/js/gijgo.min.js" type="text/javascript"></script>
         <script src="{% static 'attendance/dyCalendarJS-1.2.1/js/dycalendar.js' %}"></script>
+        <script>
+        $(document).ready(function(){
+            $('form').submit(function(event){
+                console.log(event);
+                event.preventDefault();
+                that = $(this);
+
+                $.ajax({
+                    url:'/attendance/leave/',
+                    method:'post',
+                    data:$(this).serialize(),
+
+                    success:function(response){
+                        console.log(response);
+                        if(response.a == 'True){
+                            alert("request send");
+                            }
+                        else{
+                            
+                        }
+
+                    }
+
+                });
+            });
+
+
+
+        });
+
+    </script>
 {% endblock extra-scripts %}
 <!DOCTYPE html>
 <html lang="en">

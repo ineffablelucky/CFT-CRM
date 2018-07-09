@@ -66,7 +66,7 @@ class LeaveRequestView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
         ins = form.save()
         # for i in ins:
         #     print(i.id)
-        return redirect('/attendance/leave')
+        return JsonResponse({'a': 'True'})
 
 
 
@@ -109,7 +109,7 @@ class Clockin(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
         if not request.user.is_authenticated:
             return HttpResponseForbidden
         elif Attendance.objects.filter(user_id=self.request.user.id, date=datetime.date.today()):
-            a = "Already Clocked In"
+            a = "Clocked In"
             return JsonResponse({'a': a})
 
         else:

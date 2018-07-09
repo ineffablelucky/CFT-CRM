@@ -12,13 +12,14 @@ $(document).ready(function () {
    $('#from-date').datepicker();
    $('#to-date').datepicker();
    $('.gj-icon').html('<img src="{% static \'attendance/static/images/calendar.png\' %}">')
-});
-
-dycalendar.draw({
+   dycalendar.draw({
      target: '#dycalendar-prev-next-button-with-skin-shadow',
      type: 'month',
      prevnextbutton : "show",
      dayformat: "ddd",
      highlighttoday: true
 });
+});
+
+
 
