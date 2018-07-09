@@ -65,10 +65,8 @@
 
                 <div class="row">
                     <ul class="list-unstyled leads-btn-container">
-                        <li><button type="button" class="new-leads-btn leads-btn-active">New Leads</button></li>
-                        <li><button type="button" class="assigned-leads-btn">Assigned Leads</button></li>
-                        <li><button type="button" class="closed-leads-btn">Closed Leads</button></li>
-                        <li><button type="button" class="declined-leads-btn">Declined Leads</button></li>
+                        <li><button type="button" class="new-leads-btn leads-btn-active">My Leads</button></li>
+                        <li><button type="button" class="declined-leads-btn">Other Leads</button></li>
                     </ul>
                 </div>
 
@@ -103,7 +101,6 @@
                                     </thead>
                                     <tbody>
                                         {% for op in opportunity %}
-
                                                 <tr>
                                                     <td>{{ op.lead.company_name }}</td>
                                                     <td>{{ op.lead.contact_person }}</td>
@@ -112,17 +109,14 @@
                                                     <!--<td>{{ op.price }}</td>-->
                                                     <td>{{ op.lead.email }}</td>
                                                     <!--<td>{{ op.status }}</td>-->
+                                                    {% if op.assigned_to.username == user.username or user.designation == 'Manager' %}
                                                     <td><a href="#" data-some = "{{ op.pk }}"   data-target="#exampleModalCenter" class="status form_link">{{ op.status }}</a></td>
+                                                    {% else %}
+                                                    <td>{{ op.status }}</td>
+                                                    {% endif %}
                                                     <td><a href="{% url 'opportunity:meeting:emp_meeting' op.id %}" id="post_form_url"><img src="{% static 'opportunity/images/View.svg' %}"></a></td>
-                                                    <!--{% if op.assigned_to.username == user.username or user.designation == 'Manager' %}-->
-                                                    <!--<td id="change_status"><a id="edit" href="{% url 'opportunity:change_status' op.id %}"> Edit </a></td>-->
-                                                    <!--{% else %}-->
-                                                    <!--<td></td>-->
-                                                    <!--{% endif %}-->
-                                                    <!--pop-up-->
 
                                                 </tr>
-
                                         {% endfor %}
                                     </tbody>
                                 </table>
@@ -130,25 +124,31 @@
                         </div>
                         <div class="row major-pagination-container">
                             <div class="pagination-container">
-                                {% if_paginated %}
                                 <ul class="pagination">
+                                    {% if page_obj.has_previous %}
                                     <li class="page-item">
-                                        <a class="page-link" href="#" aria-label="Previous">
+                                        <a class="page-link" href="?page={{ contacts.previous_page_number }}" aria-label="Previous">
                                             <span aria-hidden="true">&laquo;</span>
                                             <span class="sr-only">Previous</span>
                                         </a>
-                                        </li>
-                                        <li class="page-item active-link"><a class="page-link " href="#">1</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                        <li class="page-item">
-                                        <a class="page-link" href="#" aria-label="Next">
+                                    </li>
+                                    {% endif %}
+                                    <li class="page-item active-link">
+                                        <a class="page-link " href="#">{{ page_obj.number }}</a>
+                                    </li>
+                                    {% if page_obj.has_next %}
+                                    <li class="page-item">
+                                        <a class="page-link " href="?page={{ page_obj.next_page_number }}">{{ page_obj.next_page_number }}</a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
                                             <span aria-hidden="true">&raquo;</span>
                                             <span class="sr-only">Next</span>
                                         </a>
                                     </li>
+                                    {% endif %}
+
                                 </ul>
-                                {% endif %}
                             </div>
                         </div>
                     </div>
@@ -189,6 +189,9 @@
 
                         });
 
+
+        </script>
+        <script>
 
         </script>
 {% endblock extra-scripts %}
