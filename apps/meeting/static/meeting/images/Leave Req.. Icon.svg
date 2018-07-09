@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 18" width="25" height="18">
+	<defs>
+		<image width="25" height="18" id="img1" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAASCAMAAACZ8IWSAAABdFBMVEUAAAD////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////wdlxEAAAAfHRSTlMAav+sMUCgtSB50D4F/vL4ivvw/UqAF303YMBQKbBYjA6/78otXAq97ETPA836Lyf8nsjWjyIEh7rkkOtkpd0VwdunsmwoobcjBrnqRoG8x/ElSBl6AUH1T4j0c/Y47Z++dnhpQhImbzxb+U1HVFNJK06J3kwhX+6tjvPlVvqOjAAAARVJREFUeJxjYGBgZEIAZgYEYGFlY+eAAU4uVm4emAwvHz8XXJmAoJCwCIzDxCHKJiYuCgYSklIMXNLIMjKyECCHQ0aegQEqo6CopKyCZJoqTEZNXUOTTQssA3cBWEZbR1ePQd+AgcnQyNjEFCxuZm5haWVtY2tnYWzv4AiUcXK2cwHLuAq6uVtZS1l6eHp5K/kATWNg8PUDy3D6AwnrgECggG4QA1gmWCgklIEhLDyCgSEyyoeBITomlgEiw8AaZxyfIJjIwJAUIMHAkByewgCTYUhlNAlJY2BIj8lgYMjMymZAyECAAm8OA0Oubh6EJ5SPkCnIYmAo5M+E8oqKS0phkVBW7lsRngxT51lZhRRzvNWSMAkAqfAqykt/kZsAAAAASUVORK5CYII="/>
+	</defs>
+	<style>
+		tspan { white-space:pre }
+	</style>
+	<use id="Leave Req.. Icon" href="#img1" transform="matrix(1,0,0,1,0,0)"/>
+</svg>

@@ -28,6 +28,23 @@ class ChangeStatus(forms.ModelForm):
         model = Opportunity
         fields = ('status',)
 
+    def __init__(self, *args, **kwargs):
+        # if self.instance is not None:
+        #     print('printing args', self.__dict__)
+        #     self.oppo = kwargs.pop('oppo_id')
+        #print(kwargs)
+        self.oppo = kwargs.get('oppo_id')
+        super().__init__(*args, **kwargs)
+
+    # def clean(self):
+    #     super().clean()
+    #     id = self.instance.id
+    #     if self.instance.proj_manager is None:
+    #         self.add_error(None, "Project Manager Not Assigned")
+        #print(id)
+        # temp = Opportunity.objects.get(id=self.oppo)
+        # print(temp)
+
 
 class AddProjManager(forms.ModelForm):
     proj_manager = forms.ModelChoiceField(
