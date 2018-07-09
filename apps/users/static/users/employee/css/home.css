@@ -206,6 +206,12 @@ input[type='search']{
     margin-right:20px;
 }
 
+.dropdown-menu{
+    box-shadow: 0px 2px 27px rgba(0,0,0,0.12);
+    background-color: #ffffff;
+    border: 1px solid #dfe5e9;
+}
+
 .dropdown-menu a{
     padding:10px 20px;
 }
@@ -220,6 +226,10 @@ input[type='search']{
 }
 
 #edit-profile ~ span{
+    margin-left:10px;
+}
+
+#admin ~ span{
     margin-left:10px;
 }
 

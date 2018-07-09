@@ -6,8 +6,7 @@ from .views import EmployeeProfile
 app_name = 'users'
 
 urlpatterns = [
-    path('', views.index, name='index'),
-    path('login/', views.auth_login, name='login'),
+    path('', views.auth_login, name='login'),
     path('login/welcome/', views.welcome, name='welcome'),
     path('admin-login/', views.admin_login, name='admin_login'),
     path('admin-welcome/', TemplateView.as_view(template_name="apps/users/templates/users/base.html"), name='admin_welcome'),
@@ -23,4 +22,3 @@ urlpatterns = [
     path('reset-password/<str:token>/', views.reset_password, name='reset_password'),
 
 ]
-

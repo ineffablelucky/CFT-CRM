@@ -56,5 +56,34 @@ $(document).ready(function(){
             $(this).prev().attr("type" , "password");
             $(this).toggleClass("animation");
         }   
-    });        
+    });
+
+    $('.token').hide();
+    var token = $('.token');
+    $('#change-password').submit(function(e){
+        e.preventDefault();
+        console.log(token.html());
+        $.ajax({
+            type:'POST',
+            url:'/reset-password/'+token.html()+'/',
+
+            data:$(this).serialize(),
+            success:function(data){
+                if(data.success == 'true'){
+                    alert("Password has been changed successfully!");
+                    window.location = '/';
+                }
+                else{
+                    $('.error').empty();
+                    for(var i=0;i<data.error.password2.length;i++){
+                        $('.error').append('<li>'+data.error.password2[i]+ '</li>');
+                    }
+                }
+            },
+        });
+    });
 });
+
+
+
+
