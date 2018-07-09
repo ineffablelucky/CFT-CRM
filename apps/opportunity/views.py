@@ -27,6 +27,7 @@ class ListOppo(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     model = Opportunity
     template_name = 'opportunity/employee_leads.html'
     context_object_name = 'opportunity'
+    paginate_by = 2
     #print("Hello!!")
 
     def get_queryset(self):
