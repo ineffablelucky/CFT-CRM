@@ -81,7 +81,7 @@
                                     {% for p in object_list %}
                                         <tr>
                                             <td>
-                                                <a href="{% url 'task:manager-task-view' p.id %}">{{ p.project_name }}</a>
+                                                <button type="button" data-id ="{{ p.id }}" data-toggle="modal" data-target="#exampleModal" class="btn viewBtn btn-primary btn-xs"> {{ p.project_name }}</button>
                                             </td>
                                             <!--<td>{{ p.project_description}}</td>-->
                                             <td>{{ p.project_start_date_time }}</td>
@@ -97,7 +97,7 @@
                                             </td>
                                             <td>
                                                 {% csrf_token %}
-                                                <button type="button" data-id ="{{ p.id }}" data-toggle="modal" data-target="#exampleModal" class="btn viewBtn btn-primary btn-xs"><i class="fa fa-folder"></i> View </button>
+                                                <a href="{% url 'task:manager-task-view' p.id %}"><i class="fa fa-folder"></i> View </a>
                                                 <a href="{% url 'project:project-update' p.id %}" class="btn editBtn btn-info btn-xs"><i class="fa fa-pencil"></i> Edit </a>
 
                                             </td>

@@ -50,7 +50,8 @@ INSTALLED_APPS = [
     'apps.time_entry.apps.TimeEntryConfig',
     'apps.users.apps.UsersConfig',
     'apps.project.apps.ProjectConfig',
-    'apps.complaints.apps.ComplaintsConfig'
+    'apps.complaints.apps.ComplaintsConfig',
+    'rest_framework',
     #'apps.salary_percentages.apps.SalaryPercentagesConfig',
 
 ]

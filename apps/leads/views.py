@@ -9,6 +9,9 @@ from django.views.generic import CreateView, UpdateView, DeleteView,ListView,Det
 from reportlab.pdfgen import canvas
 
 from .models import LEADS
+from ..users.models import MyUser
+from rest_framework import viewsets
+from ..leads.serializer import MyUserSerializer
 from django.contrib.messages.views import SuccessMessageMixin
 from .forms import CreateForm,DetailForm,UpdateForm
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
@@ -19,6 +22,16 @@ from django.http import JsonResponse
 from django.http import HttpResponse
 from pytz import unicode
 import csv
+from rest_framework import generics
+
+
+def MyUserViewSet(request):
+    """
+    API endpoint that allows users to be viewed or edited.
+    """
+    queryset = MyUser.objects.all()
+    data = MyUserSerializer(queryset, many=True)
+    return JsonResponse(data={'data':data.data})
 
 
 
