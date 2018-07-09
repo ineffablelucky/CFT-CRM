@@ -71,7 +71,7 @@ $(document).ready(function(){
             success:function(data){
                 if(data.success == 'true'){
                     alert("Password has been changed successfully!");
-                    window.location = '/login/';
+                    window.location = '/';
                 }
                 else{
                     $('.error').empty();

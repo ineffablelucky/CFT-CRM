@@ -7,7 +7,7 @@ $(document).on('submit', '#reset-form', function(e){
         success:function(data){
             if(data.success == 'true'){
                 alert("Password reset instructions have been mailed to you");
-                window.location = '/login/';
+                window.location = '/';
             }
             else{
 

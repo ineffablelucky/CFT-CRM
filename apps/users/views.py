@@ -15,11 +15,6 @@ from django.views.generic import ListView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 import re
 
-
-def index(request):
-    return render(request, 'users/index.html')
-
-
 @login_required
 @permission_required('users.add_myuser', raise_exception=True)
 def register(request):
@@ -176,6 +171,7 @@ def reset_password(request, token):
         print(password2)
         form = ResetPasswordForm(request.POST)
         if form.is_valid():
+            user.password = make_password(request.POST.get('password2'))
             user.save()
             user_token.objects.get(user_id=user.id).delete()
             return JsonResponse(data = {'success':'true',})
