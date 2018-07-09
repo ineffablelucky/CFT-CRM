@@ -42,6 +42,7 @@
 
                                     <div class="col-lg-6">
                                         <p class=""></p>
+                                        <p id="clock_out"></p>
                                         <form method="post" action="{% url 'attendance:clockout' %}">
                                             {% csrf_token %}
                                             <button type="submit" class="clock-btn clock-out btn"><span>CLOCK OUT</span></button>
@@ -51,6 +52,9 @@
 
                                 <div class="table-wrapper">
                                     <div class="row table-scroll">
+                                        <div class="clock">
+
+                                        </div>
                                         <table class="table text-left">
                                             <thead>
                                                 <tr class="heads">
@@ -258,5 +262,71 @@
 
 {% block extra-scripts %}
         <script src="{% static 'users/employee/js/home.js' %}"></script>
+    <script>
+        $(document).ready(function(){
+            $('form').submit(function(event){
+                console.log(event);
+                event.preventDefault();
+                that = $(this);
+
+                $.ajax({
+                    url:'/attendance/clock/in/',
+                    method:'post',
+                    data:$(this).serialize(),
+
+                    success:function(response){
+                        console.log(response);
+                        var b = response.a;
+                        if (response.a != 'Already Clocked In')
+                            $('#clock_in').html(response.a);
+                        else
+                            $('#clock_in').html(response.a);
+                            $('.clock-in').click(function(){
+                            that.find('button').attr('disabled', true);
+                            });
+
+                    }
+
+                });
+            });
+
+
+
+        });
+
+    </script>
+    <script>
+        $(document).ready(function(){
+            $('form').submit(function(event){
+                console.log(event);
+                event.preventDefault();
+                that = $(this);
+
+                $.ajax({
+                    url:'/attendance/clock/out/',
+                    method:'post',
+                    data:$(this).serialize(),
+
+                    success:function(response){
+                        console.log(response);
+                        var b = response.b;
+                        if (response.b != 'Already Clocked In')
+                            $('#clock_out').html(response.b);
+                        else
+                            $('#clock_out').html(response.a);
+                            $('.clock-out').click(function(){
+                            that.find('button').attr('disabled', true);
+                            });
+
+                    }
+
+                });
+            });
+
+
+
+        });
+
+    </script>
 {% endblock extra-scripts %}
 
