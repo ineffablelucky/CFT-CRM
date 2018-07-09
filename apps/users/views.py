@@ -9,7 +9,7 @@ from django.contrib.auth.hashers import make_password
 from configs.settings import BASE_URL
 from django.utils.crypto import get_random_string
 from django.urls.exceptions import Http404
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.urls import reverse
 from django.views.generic import ListView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
@@ -18,6 +18,7 @@ import re
 
 def index(request):
     return render(request, 'users/index.html')
+
 
 @login_required
 @permission_required('users.add_myuser', raise_exception=True)
@@ -33,6 +34,7 @@ def register(request):
 
     context = {'form' : form}
     return render(request,'users/registration/register.html',context)
+
 
 def welcome(request):
     if request.user.is_authenticated:
@@ -55,10 +57,13 @@ def auth_login(request):
         password = request.POST.get('password')
 
         user = authenticate(username=username, password=password)
+
         if user:
             login(request, user)
-        return redirect(reverse('users:welcome'))
+            return JsonResponse(data={'success':'success'})
+         #return redirect(reverse('users:welcome'))
     return render(request, 'users/registration/Login/login.html')
+
 
 def admin_login(request):
     if request.user.is_authenticated:
@@ -70,6 +75,8 @@ def admin_login(request):
     elif request.method == 'POST':
         username = request.POST.get('email_or_username')
         password = request.POST.get('password')
+
+
 
         user = authenticate(username=username, password=password)
         if user:
@@ -99,6 +106,7 @@ class EmployeeProfile(LoginRequiredMixin, PermissionRequiredMixin, ListView):
         queryset = MyUser.objects.all()
         return queryset
 
+
 class EditEmployeeProfile(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     permission_required = ('users.view_users', 'users.add_myuser',)
     template_name = 'users/edit_emp.html'
@@ -116,8 +124,6 @@ class EditEmployeeProfile(LoginRequiredMixin, PermissionRequiredMixin, UpdateVie
     #     return queryset
 
 
-
-
 def sendEmail(request, subject, message, sender, to):
     send_mail(
         subject,
@@ -130,6 +136,7 @@ def sendEmail(request, subject, message, sender, to):
 
 def forgot_password(request):
     if request.method == 'POST':
+
         subject = 'Change Password for CFT-CRM Account!'
         key = get_random_string(length=30)
         email = request.POST.get('email')
@@ -147,29 +154,38 @@ def forgot_password(request):
             sendEmail(request, subject, key, sender, email)
             token = user_token.objects.create(token=key, user=user)
             token.save()
-            return render(request, 'users/registration/password_reset_done.html')
+            return JsonResponse(data={'success': 'true'})
+            # return render(request, 'users/registration/password_reset_done.html')
 
         except MyUser.DoesNotExist:
-            return  render(request, 'users/registration/wrong_reset_email.html')
+            return JsonResponse(data={'success': 'false'})
+            # return  render(request, 'users/registration/wrong_reset_email.html')
 
     else:
         form = PasswordResetForm
         return render(request, 'users/registration/Login/reset-password.html', {'form':form,})
 
+
 def reset_password(request, token):
     username = re.split('!!!', token)[0]
     user = MyUser.objects.get(username=username)
     if request.method == 'POST':
+        password1 = request.POST.get('password1')
+        password2 = request.POST.get('password2')
+        print(password1)
+        print(password2)
         form = ResetPasswordForm(request.POST)
         if form.is_valid():
-            user.password = make_password(request.POST.get('password2'))
             user.save()
             user_token.objects.get(user_id=user.id).delete()
-            return render(request, 'users/registration/password_reset_complete.html')
-
+            return JsonResponse(data = {'success':'true',})
+            #return render(request, 'users/registration/password_reset_complete.html')
+        else:
+            print(form.errors)
+            return JsonResponse(data={'error':form.errors})
     else:
         form = ResetPasswordForm()
-    return render(request, 'users/registration/Login/change-password.html', {'token':token,'form':form,})
+    return render(request, 'users/registration/Login/change-password.html', {'token':token, 'form':form,})
 
 
 def verify(request, key):
@@ -178,8 +194,8 @@ def verify(request, key):
     print(key)
     try:
         user_token.objects.get(token=key)
-        return reset_password(request, token)
-
+        # return reset_password(request, token)
+        return redirect(reverse('users:reset_password', args=[token,]))
     except user_token.DoesNotExist:
         return render(request, 'users/registration/wrong_token.html')
 

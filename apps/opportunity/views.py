@@ -53,6 +53,7 @@ class C_Status(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     form_class = ChangeStatus
     success_url = reverse_lazy('opportunity:list_oppo')
 
+
 # assigned leads
 
 

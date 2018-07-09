@@ -27,6 +27,7 @@ class ChangeStatus(forms.ModelForm):
         fields = ('status',)
 
 
+
 class AddProjManager(forms.ModelForm):
     proj_manager = forms.ModelChoiceField(
         label='Select Project Manager',
@@ -194,6 +195,7 @@ class CreateClientForm(forms.ModelForm):
         company_name = self.cleaned_data.get('company_name')
         project_end_date = self.cleaned_data.get('project_end_date')
         project_total_working_hr = self.cleaned_data.get('project_total_working_hr')
+
         if commit:
             instance.save()
         project = IT_Project.objects.create(
@@ -212,14 +214,17 @@ class CreateClientForm(forms.ModelForm):
             address=client_address,
             client_user=instance
         )
+
         client.save()
         group_user = Group.objects.get_by_natural_key('Client Group')
-        group_user.user_set.add(client)
+        group_user.user_set.add(instance)
 
         project = IT_Project.objects.get(opportunity=opportunity)
         project.client_id = client
         project.save()
+
         opportunity_modify = Opportunity.objects.get(pk=opportunity.pk)
+
         opportunity_modify.price = amount
         opportunity_modify.client = client
         opportunity_modify.project_description = project_description
