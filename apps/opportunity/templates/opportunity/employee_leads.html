@@ -25,45 +25,39 @@
 
 {% block page_content %}
     <div class="main-content ">
-            <!--&lt;!&ndash;pop-up&ndash;&gt;-->
-                <!--<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">-->
-                    <!--<div class="modal-dialog modal-dialog-centered" role="document">-->
-                        <!--<div class="modal-content">-->
-                            <!--<div class="modal-header">-->
-                                <!--<h5 class="modal-title" id="exampleModalLongTitle">Edit Status</h5>-->
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Edit Status</h5>
+                    </div>
+                    <div class="modal-body">
+                        <div>
+                            <form class="form-inline" method="post" action="" id="post-form">
+                                {% csrf_token %}
+                                <label class="my-1 mr-2" >{{ form.status.label }}</label>
+                                {{ form.status }}
+                                {{ form.status.errors }}
+                                <p id="error"></p>
+                                <button type="submit" class="btn btn-primary my-1">Submit</button>
+                            </form>
+                            <!--<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">-->
+                            <!--Dropdown button-->
+                            <!--</button>-->
+                            <!--<div class="dropdown-menu">-->
+                            <!--<a class="dropdown-item" href="#">In-Touch</a>-->
+                            <!--<a class="dropdown-item" href="#">Dismissed</a>-->
+                            <!--<a class="dropdown-item" href="#">Link 3</a>-->
                             <!--</div>-->
-                            <!--<div class="modal-body">-->
-                                <!--<div class="dropdown">-->
-                                    <!--<form class="form-inline" method="post" action="{">-->
-                                        <!--{% csrf_token %}-->
-                                        <!--<label class="my-1 mr-2" >{{ form.status.label }}</label>-->
-                                        <!--{{ form.status }}-->
-                                        <!--{{ form.status.errors }}-->
-                                        <!--&lt;!&ndash;<select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref">&ndash;&gt;-->
-                                            <!--&lt;!&ndash;<option selected>Choose...</option>&ndash;&gt;-->
-                                            <!--&lt;!&ndash;<option value="1">One</option>&ndash;&gt;-->
-                                            <!--&lt;!&ndash;<option value="2">Two</option>&ndash;&gt;-->
-                                            <!--&lt;!&ndash;<option value="3">Three</option>&ndash;&gt;-->
-                                        <!--&lt;!&ndash;</select>&ndash;&gt;-->
-                                        <!--<button type="submit" class="btn btn-primary my-1">Submit</button>-->
-                                    <!--</form>-->
-                                    <!--&lt;!&ndash;<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">&ndash;&gt;-->
-                                        <!--&lt;!&ndash;Dropdown button&ndash;&gt;-->
-                                    <!--&lt;!&ndash;</button>&ndash;&gt;-->
-                                    <!--&lt;!&ndash;<div class="dropdown-menu">&ndash;&gt;-->
-                                        <!--&lt;!&ndash;<a class="dropdown-item" href="#">In-Touch</a>&ndash;&gt;-->
-                                        <!--&lt;!&ndash;<a class="dropdown-item" href="#">Dismissed</a>&ndash;&gt;-->
-                                        <!--&lt;!&ndash;<a class="dropdown-item" href="#">Link 3</a>&ndash;&gt;-->
-                                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
-                                <!--</div>-->
-                            <!--</div>-->
-                            <!--<div class="modal-footer">-->
-                                <!--<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--&lt;!&ndash;pop-up&ndash;&gt;-->
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="close">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--pop-up-->
 
                 <div class="row head">
                     <h4>Leads</h4>
@@ -118,47 +112,15 @@
                                                     <!--<td>{{ op.price }}</td>-->
                                                     <td>{{ op.lead.email }}</td>
                                                     <!--<td>{{ op.status }}</td>-->
-                                                    <td><p data-toggle="modal" data-target="#exampleModalCenter" class="status">{{ op.status }}</p></td>
-                                                    <td><a href="{% url 'opportunity:meeting:emp_meeting' op.id %}"><img src="{% static 'opportunity/images/View.svg' %}"></a></td>
+                                                    <td><a href="#" data-some = "{{ op.pk }}"   data-target="#exampleModalCenter" class="status form_link">{{ op.status }}</a></td>
+                                                    <td><a href="{% url 'opportunity:meeting:emp_meeting' op.id %}" id="post_form_url"><img src="{% static 'opportunity/images/View.svg' %}"></a></td>
                                                     <!--{% if op.assigned_to.username == user.username or user.designation == 'Manager' %}-->
                                                     <!--<td id="change_status"><a id="edit" href="{% url 'opportunity:change_status' op.id %}"> Edit </a></td>-->
                                                     <!--{% else %}-->
                                                     <!--<td></td>-->
                                                     <!--{% endif %}-->
                                                     <!--pop-up-->
-                                                    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                                        <div class="modal-dialog modal-dialog-centered" role="document">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <h5 class="modal-title" id="exampleModalLongTitle">Edit Status</h5>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                    <div>
-                                                                        <form class="form-inline" method="post" action="{% url 'opportunity:change_status' op.pk %}" id="post-form">
-                                                                            {% csrf_token %}
-                                                                            <label class="my-1 mr-2" >{{ form.status.label }}</label>
-                                                                            {{ form.status }}
-                                                                            {{ form.status.errors }}
-                                                                            <p id="error"></p>
-                                                                            <button type="submit" class="btn btn-primary my-1">Submit</button>
-                                                                        </form>
-                                                                        <!--<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">-->
-                                                                        <!--Dropdown button-->
-                                                                        <!--</button>-->
-                                                                        <!--<div class="dropdown-menu">-->
-                                                                        <!--<a class="dropdown-item" href="#">In-Touch</a>-->
-                                                                        <!--<a class="dropdown-item" href="#">Dismissed</a>-->
-                                                                        <!--<a class="dropdown-item" href="#">Link 3</a>-->
-                                                                        <!--</div>-->
-                                                                    </div>
-                                                                </div>
-                                                                <div class="modal-footer">
-                                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="close">Close</button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <!--pop-up-->
+
                                                 </tr>
 
                                         {% endfor %}
@@ -168,6 +130,7 @@
                         </div>
                         <div class="row major-pagination-container">
                             <div class="pagination-container">
+                                {% if_paginated %}
                                 <ul class="pagination">
                                     <li class="page-item">
                                         <a class="page-link" href="#" aria-label="Previous">
@@ -185,6 +148,7 @@
                                         </a>
                                     </li>
                                 </ul>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
@@ -211,39 +175,21 @@
         <script src="{% static 'opportunity/js/leads.js' %}"></script>
         <script>
             $(function(){
-                $("#post-form").submit(function(event){
-                    alert('helo');
-                    event.preventDefault();
-                    url =$('#post-form').prop('action');
-                    console.log(url);
-                    console.log($(this).serialize())
-                     //data = {
-                     //       'status':$( "#id_status option:selected" ).text(),
-                    //         'csrfmiddlewaretoken':$("name['csrfmiddlewaretoken']").val()
-                    // }
-                     //console.log(data)
+            id="dd";
+            $('.form_link').click(function(e){
+                            e.preventDefault();
+                            that = $(this);
+                            id = $(this).attr('href');
+                            var myData = $(this).data('some');
+                            console.log("myData: " + myData);
+                            $('body').data('someData',  myData);
+                            $('.modal').modal();
+                        });
+                        console.log();
 
-                    $.ajax({
-                        url : url, // the endpoint
-                        type : "POST", // http method
-                        data : $(this).serialize(), // data sent with the post request
+                        });
 
-                        // handle a successful response
-                        success : function(response) {
-                            $('#close').click();
 
-                            console.log(response);
-                        },
-
-                        // handle a non-successful response
-                        error : function(response) {
-                            $('#error').text(response.error);
-                            console.log("Error");
-                        }
-                    });
-
-                });
-            });
         </script>
 {% endblock extra-scripts %}
 
@@ -291,3 +237,32 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 </body>
+
+
+  $("#post-form").submit(function(event){
+                    alert('helo');
+                    event.preventDefault();
+                    url =$(this).attr('action');
+                    console.log(url);
+                    console.log($(this).serialize());
+
+                    $.ajax({
+                        url : url, // the endpoint
+                        type : "POST", // http method
+                        data : $(this).serialize(), // data sent with the post request
+
+                        // handle a successful response
+                        success : function(response) {
+                            $('#close').click();
+
+                            console.log(response);
+                        },
+
+                        // handle a non-successful response
+                        error : function(response) {
+                            $('#error').text(response.error);
+                            console.log("Error");
+                        }
+                    });
+
+                });
