@@ -1,3 +1,163 @@
+{% extends 'users/employee/emp_base.html' %}
+{% load static %}
+
+
+{% block extra-stylesheet %}
+        <link href="https://cdn.jsdelivr.net/npm/gijgo@1.9.6/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+        <link href="{% static 'attendance/dyCalendarJS-1.2.1/css/dycalendar.css' %}" rel="stylesheet">
+        <link rel="stylesheet" href="{% static 'attendance/css/leave-request.css' %}">
+{% endblock extra-stylesheet %}
+
+{% block sidetab %}
+            <ul class="list-unstyled">
+                <a href="{% url 'attendance:pastattendance' %}"><li style="top:58px" ><img src="{% static 'users/employee/images/Home icon.svg' %}"><span>Home</span></li></a>
+
+                {% if user.department == 'IT' %}
+                <a href="{% url 'project:employee-project' %}"><li style="top:117px"><img src="{% static 'users/employee/images/Projects icon.svg' %}"><span>Projects</span></li></a>
+                {% elif user.department == 'Marketing' %}
+                <a href="{% url 'opportunity:list_oppo' %}"><li style="top:117px" ><img src="{% static 'users/employee/images/Projects icon.svg' %}"><span>Leads</span></li></a>
+                {% endif %}
+
+                <a href="#"><li style="top:175px"><img src="{% static 'users/employee/images/Attendance icon.svg' %}"><span>Attendance</span></li></a>
+                <a href="{% url 'ctc:salary' %}"><li style="top:234px"><img src="{% static 'users/employee/images/Salary Icon.svg' %}"><span>Salary</span></li></a>
+                <a href="{% url 'attendance:leave_request' %}" ><li style="top:293px" class="active"><img src="{% static 'users/employee/images/Leave Req.. Icon.svg' %}"><span>Leave Request</span></li></a>
+            </ul>
+{% endblock sidetab %}
+
+
+{% block page_content %}
+    <div class="main-content">
+                <div class="row">
+                    <div class="col" style="margin-right:-85px;">
+                        <div class="card request-form">
+                            <div class="card-header">
+                                <h5>Leave Request Form</h5>
+                            </div>
+
+                            <div class="card-body">
+                                <form action="#">
+                                    <div class="form-group">
+                                        <label for="name">Name</label>
+                                        <input type="text" id="name" class="form-control" placeholder="Enter your Name">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="type-of-leave">Type Of Leave</label>
+                                        <select id="type-of-leave" class="form-control">
+                                        <option value="1">Planned Leave</option>
+                                        <option value="2">Casual Leave</option>
+                                        <option value="3">Sick Leave</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label for="from-date">From</label>
+                                                <input  class="form-control" placeholder="From" id="from-date">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="to-date">To</label>
+                                                <input  class="form-control" placeholder="To" id="to-date">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="reason">Reason</label>
+                                        <textarea  class="form-control" ></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="submit" class="form-control ">Submit Request</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="row">
+                            <div class="col-md-12 leave-display-container">
+                                <div class="card leave-display">
+                                    <div class="card-header">
+                                        <h5>Leaves Remaining</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <ul class="list-unstyled">
+                                                    <li>Planned Leave:</li>
+                                                    <li>8</li>
+                                                </ul>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <ul class="list-unstyled">
+                                                    <li>Earned Leave:</li>
+                                                    <li>5</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <ul class="list-unstyled">
+                                                    <li>Casual Leave:</li>
+                                                    <li>2</li>
+                                                </ul>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <ul class="list-unstyled">
+                                                    <li>Sick Leave:</li>
+                                                    <li>12</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row calendar-major-container">
+                            <div class="col-md-6 holiday-container">
+                                <div class="card holidays">
+                                    <div class="card-body">
+                                        <h6>HOLIDAYS</h6>
+                                        <ul>
+                                            <li>Independence Day: 15 Aug 2018</li>
+                                            <li>Id-Ul-Fitr: 21 Aug 2018</li>
+                                            <li>Raksha Bandhan: 26 Aug 2018</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 date-container">
+                                <div class="card calendar">
+                                    <div class="calendar-container">
+                                        <div id="dycalendar-prev-next-button-with-skin-shadow" class="dycalendar-container"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+{% endblock page_content %}
+
+{% block footer %}
+            <div class="footer">
+                    <div class="row">
+                        <div class="footer-elements">
+                            <ul class="list-unstyled">
+                                <li>Terms of Use</li>
+                                <li>|</li>
+                                <li>Privacy Policy</li>
+                                <li>Code Flow Tech &copy 2018</li>
+                            </ul>
+                        </div>
+                    </div>
+            </div>
+{% endblock footer %}
+
+{% block extra-scripts %}
+        <script src="{% static 'attendance/js/leave-request.js' %}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/gijgo@1.9.6/js/gijgo.min.js" type="text/javascript"></script>
+        <script src="{% static 'attendance/dyCalendarJS-1.2.1/js/dycalendar.js' %}"></script>
+{% endblock extra-scripts %}
 <!DOCTYPE html>
 <html lang="en">
 <head>

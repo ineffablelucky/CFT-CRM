@@ -144,16 +144,17 @@ class Clockout(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
             return HttpResponseForbidden
 
         else:
-            if Attendance.objects.filter(user_id = self.request.user, date=datetime.date.today()):
+            if Attendance.objects.filter(user_id=self.request.user, date=datetime.date.today()):
                 a = Attendance.objects.get(user_id=self.request.user, date=datetime.date.today())
                 if a.time_out is not None:
-                    return HttpResponse("Clockout Done")
+                    return JsonResponse({'b': "Clockout Done"})
                 else:
                     a.time_out = datetime.datetime.today()
                     a.save()
-                    return redirect('/attendance/userattendance')
+                    time_out = str(a.time_out.hour)+":"+str(a.time_out.minute)
+                    return JsonResponse({'b': time_out})
             else:
-                return HttpResponse("First Clock In")
+                return JsonResponse({'b': "First Clock In"})
 
 
 class PastAttendance(LoginRequiredMixin, PermissionRequiredMixin, ListView):
@@ -358,7 +359,7 @@ def download_emp_excel_data(request):
 
 
 def attendance_graph(request):
-    form =GraphForm(request.GET)
+    form = GraphForm(request.GET)
 
     return render(request, 'attendance/attendancebar.html',{'form':form})
 
@@ -381,7 +382,7 @@ def ajax_data(request):
 
 
 def ajax_data_change(request):
-    if request.method=='GET':
+    if request.method == 'GET':
         year = request.GET['year2']
         data = Attendance.objects.filter(date__year=year)
         list2 = [0,0,0,0,0,0,0,0,0,0,0,0]
