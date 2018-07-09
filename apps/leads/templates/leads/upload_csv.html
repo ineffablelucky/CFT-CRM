@@ -1,12 +1,3 @@
-<head>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-</head>
-
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-
-
 
 
 
@@ -14,7 +5,7 @@
 <form action="{% url 'leads:upload_csv' %}" method="POST" enctype="multipart/form-data" class="form-horizontal">
 {% csrf_token %}
 <div class="form-group">
-    <label for="name" class="col-md-3 col-sm-3 col-xs-12 control-label">File: </label>
+    <label class="col-md-3 col-sm-3 col-xs-12 control-label">File: </label>
     <div class="col-md-8">
         <input type="file" name="csv_file" id="csv_file" required="True" class="form-control">
     </div>
@@ -22,76 +13,49 @@
 <div class="form-group">
     <div class="col-md-3 col-sm-3 col-xs-12 col-md-offset-3" style="margin-bottom:10px;">
          <button class="btn btn-primary"> <span class="glyphicon glyphicon-upload" style="margin-right:5px;"></span>Upload </button>
-
+<h1 id ='errors'></h1>
     </div>
 </div>
 </form>
-{% if messages %}
-<ul class="messages">
-    {% for message in messages %}
-    <li>{{ message }}</li>
-    {% endfor %}
-</ul>
-{% endif %}
 
 
+<!--{% if messages %}-->
+<!--<ul class="messages">-->
+    <!--{% for message in messages %}-->
+    <!--<li>{{ message }}</li>-->
+    <!--{% endfor %}-->
+<!--</ul>-->
+<!--{% endif %}-->
+<script>
+  $('.form-horizontal').submit(function(e){
+    e.preventDefault();
+    var formdata = new FormData($(this));
+
+    formdata.append( 'file', $( '#csv_file' )[0].files[0] );
+
+    console.log(formdata);
+
+    $.ajax({
+    type:$(this).attr('method'),
+    url:$(this).attr('action'),
+    processData: false,
+    contentType: false,
+    data:formdata,
+     beforeSend: function(xhr) {
+       xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}" );
+                },
+
+    success:function(data){
+    console.log(data);
+    $('#errors').html(data.error);
+
+    },
 
 
+        });
+    });
+</script>
 
-<form method="post">
-                {% csrf_token %}
-       <div>
-                        {{ form.contact_number.label }}
-                        {{ form.contact_number }}
-                        {{ form.contact_number.errors }}
-                    </div><br>
-
-                    <div>
-                        {{ form.company_name.label }}
-                        {{ form.company_name }}
-                        {{ form.company_name.errors }}
-                    </div><br>
-
-                    <div>
-                        {{ form.contact_person.label }}
-                        {{ form.contact_person }}
-                        {{ form.contact_person.errors }}
-
-                    </div><br>
-
-                    <div>
-                        {{ form.source.label }}
-                        {{ form.source }}
-                        {{ form.source.errors }}
-                    </div><br>
-
-                    <div>
-                        {{ form.source_type.label }}
-                        {{ form.source_type }}
-                        {{ form.source_type.errors }}
-                    </div><br>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 
-                    <div>
-
-                       {{ form.description.label }}
-                       {{ form.description }}
-                       {{ form.description.errors }}
-                    </div><br>
-
-                    <div>
-                        {{ form.email.label }}
-                        {{ form.email }}
-                        {{ form.email.errors }}
-                    </div>
-                <br>
-
-                    <div>
-                        {{ form.website.label }}
-                        {{ form.website }}
-                        {{ form.website.errors }}
-                    </div><br>
-
-                    <input type="submit" value="Submit" />
-            </form>
-          </div>

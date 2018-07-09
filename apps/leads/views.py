@@ -6,6 +6,8 @@ from django.http import request, HttpResponse
 from django.shortcuts import render, HttpResponseRedirect, get_object_or_404, redirect
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, UpdateView, DeleteView,ListView,DetailView,FormView
+from reportlab.pdfgen import canvas
+
 from .models import LEADS
 from django.contrib.messages.views import SuccessMessageMixin
 from .forms import CreateForm,DetailForm,UpdateForm
@@ -90,8 +92,6 @@ def check(request,id):
 
             return JsonResponse(data={'true':'true'})
         else:
-
-
             return JsonResponse(data={'error': form.errors})
     return JsonResponse({"details incorrect":"details incorrect"})
 
@@ -115,22 +115,25 @@ class LeadDelete(LoginRequiredMixin,PermissionRequiredMixin,DeleteView):
 @permission_required('leads.view_leads', raise_exception=True)
 def upload_csv(request):
     data = {}
-    if "GET" == request.method:
+    if request.method == 'GET':
         return render(request, "leads/upload_csv.html", data)
     # if not GET, then proceed
 
     try:
-        csv_file = request.FILES["csv_file"]
+        print('^^^^^^^^^^^^^^^^^^6')
+        print(request.FILES)
+        csv_file = request.FILES["file"]
+        print('%%%%%%%%%%%%%%%%%%%%', csv_file)
 
         if not csv_file.name.endswith('.csv'):
             messages.error(request, 'File is not CSV type')
-
-            return HttpResponseRedirect(reverse("leads:upload_csv"))
+            print('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
+            return JsonResponse(data={'error': 'Uploaded file is not CSV'})
         # if file is too large, return
         if csv_file.multiple_chunks():
             messages.error(request, "Uploaded file is too big (%.2f MB)." % (csv_file.size / (1000 * 1000),))
 
-            return HttpResponseRedirect(reverse("leads:upload_csv"))
+            return JsonResponse(data={'error':'Uploaded file is too big'})
 
         file_data = csv_file.read().decode("utf-8")
 
@@ -155,7 +158,7 @@ def upload_csv(request):
             print(data_dict)
             lead=LEADS(**data_dict)
             lead.save()
-            return HttpResponseRedirect(reverse("leads:LeadDetails"))
+            return JsonResponse(data={'error':'success'})
 
 
 
@@ -166,8 +169,10 @@ def upload_csv(request):
 
         logging.getLogger("error_logger").error("Unable to upload file. " + repr(e))
         # messages.error(request, "Unable to upload file. " + repr(e))
+        return JsonResponse(data={'error': 'cannot Upload this file'})
 
-    return HttpResponseRedirect(reverse("leads:upload_csv"))
+
+
 
 @login_required
 @permission_required('leads.view_leads', raise_exception=True)

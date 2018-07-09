@@ -95,7 +95,8 @@ class CreateProjectForm(ModelForm):
 
     employees_per_project = forms.ModelMultipleChoiceField(
         label='ALOT EMPLOYEES TO PROJECT',
-        queryset=MyUser.objects.filter(Q(department='IT') & Q(designation='Employee')),
+        queryset=MyUser.objects.filter(Q(department='IT') & Q(designation='Employee') ),
+
         widget=forms.SelectMultiple(
             attrs={'class': 'form-control col-md-7 col-xs-12', }
         )
@@ -194,3 +195,36 @@ class CreateProjectForm(ModelForm):
     #         return data
     #     else:
     #         raise forms.ValidationError("Project end date should be either same or more than start date!")
+
+class EditOppForm(ModelForm):
+    Project_status = (
+        ('active', 'ACTIVE'),
+        ('inactive', 'INACTIVE'),
+        ('completed', 'completed'),
+        ('cancelled', 'cancelled'),
+    )
+
+    employees_per_project = forms.ModelMultipleChoiceField(
+        label='ALOT EMPLOYEES TO PROJECT',
+        queryset=MyUser.objects.filter(Q(department='IT') & Q(designation='Employee')),
+
+        widget=forms.SelectMultiple(
+            attrs={'class': 'form-control col-md-7 col-xs-12', }
+        )
+    )
+
+    status = forms.ChoiceField(
+        label='STATUS',
+        choices=Project_status,
+        widget=forms.Select(
+            attrs={'class': 'form-control col-md-7 col-xs-12', }
+        )
+    )
+
+    class Meta:
+        model = IT_Project
+        fields = (
+
+            'employees_per_project',
+            'status',
+        )
