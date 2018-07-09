@@ -9,8 +9,8 @@ from django.urls import reverse, reverse_lazy
 from django.db.models import Q
 from apps.client.models import CLIENT
 import re
-from django.core.mail import  send_mail
-
+from django.core.mail import send_mail
+from django.http import HttpResponse, JsonResponse
 
 def sendEmail(subject, message, sender, to):
     send_mail(
@@ -35,10 +35,10 @@ class ListOppo(LoginRequiredMixin, PermissionRequiredMixin, ListView):
         queryset = Opportunity.objects.filter(Q(assigned_to=self.request.user) | Q(meeting__in=queryset2)).distinct()
         return queryset
 
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     context['form'] = AddProjManager()
-    #     return context
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = ChangeStatus()
+        return context
 
 # change status
 
@@ -53,7 +53,21 @@ class C_Status(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     form_class = ChangeStatus
     success_url = reverse_lazy('opportunity:list_oppo')
 
+
 # assigned leads
+def change_status(request, pk):
+    print(request.POST.get('status'))
+    print("Hello World")
+    choices = ['Approved', 'RQ_stage', 'Negotiation', 'Pending', 'Rejected']
+    if request.method == 'POST':
+        status = request.POST.get('status')
+        if status in choices:
+            opportunity = Opportunity.objects.get(pk=pk)
+            opportunity.status = status
+            opportunity.save()
+            return JsonResponse({'success': 'success'})
+
+    return JsonResponse({'error': 'Please select a valid choice'})
 
 
 class A_Leads(LoginRequiredMixin, PermissionRequiredMixin, ListView):
