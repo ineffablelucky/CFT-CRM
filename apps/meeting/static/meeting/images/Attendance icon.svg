@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 23 16" width="23" height="16">
+	<defs>
+		<image width="23" height="16" id="img1" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABcAAAAQCAMAAADK8RQqAAABWVBMVEUAAAD///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////8l0s7tAAAAc3RSTlMAEI/l/+uZFxPY114xV87jHQFFgoRJ1g8GxrENu/i4tvXCEfBdR/0LodsgHNSvPST7SDwa4HfxBSsZDDdzMCPmjQ5OQv4YA6L6mvQHKdqnSqC/plUCCvzEuYvfljJQdnpMEuhmQN6k7/P5WkOYQSoU5y7yq3F4tAAAAO9JREFUeJxjYGBgYGRiZmFlY2dAAxycXNw8vHz8AkC2oJCwiKggRJxNTBxISkhKMTBIy8jKySsoKoHFlVXAlKqaOoOGphYDg7aOLogvwaIHFtdnERA3MASxjFiMQZSJKVic28zcgsUSxLJisQZRNsq2QNLO3oHB0cAJJODs4gqi3Nw93E09veS9gU4w8QGq8PWDutQ/IDAoOATICNUNC1f0iHAEWRsZpQwB/NHSMbFxGu7xsQmJQK1JySkQwJ0qlWYCBukZqgyZWXCPZ7MkQhghOVEMLClwcS0WLSgrlwW7eApuceY8uHh+QT6UVVgEAH+PJsoratd9AAAAAElFTkSuQmCC"/>
+	</defs>
+	<style>
+		tspan { white-space:pre }
+	</style>
+	<use id="Attendance icon" href="#img1" transform="matrix(1,0,0,1,0,0)"/>
+</svg>

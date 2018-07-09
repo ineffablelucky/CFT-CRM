@@ -61,7 +61,7 @@ class AddMeetingNotes(forms.ModelForm):
     description = forms.CharField(
         max_length=1000,
         label='Add Notes',
-        widget=forms.TextInput,
+        widget=forms.Textarea(attrs={'class': 'form-control', 'rows': '3'}),
         required=False
     )
 
