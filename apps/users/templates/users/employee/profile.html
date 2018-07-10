@@ -23,7 +23,7 @@
                 {% endif %}
 
                 <a href="#"><li style="top:175px"><img src="{% static 'users/employee/images/Attendance icon.svg' %}"><span>Attendance</span></li></a>
-                <a href="{% url 'ctc:salary' %}"><li style="top:234px"><img src="{% static 'users/employee/images/Salary Icon.svg' %}"><span>Salary</span></li></a>
+                <!--<a href="{% url 'ctc:salary' %}"><li style="top:234px"><img src="{% static 'users/employee/images/Salary Icon.svg' %}"><span>Salary</span></li></a>-->
                 <a href="{% url 'attendance:leave_request' %}"><li style="top:293px"><img src="{% static 'users/employee/images/Leave Req.. Icon.svg' %}"><span>Leave Request</span></li></a>
             </ul>
         </div>
@@ -46,7 +46,7 @@
                                         </div>
                                         <div class="main-info">
                                             <div class="row">
-                                                <h5 class="name">{{ user.first_name }}{{ user.last_name }}</h5>
+                                                <h5 class="name">{{ user.first_name }}{{ user.last_name }}{{ user.first_name }}{{ user.last_name }}</h5>
                                             </div>
                                             <div class="row">
                                                 <h6 class="designation-head">{{ user.designation }}</h6>
