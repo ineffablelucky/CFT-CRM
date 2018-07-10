@@ -34,7 +34,7 @@
                                 <div class="row text-left display-time">
                                     <div class="col-lg-6">
                                         <p id="clock_in"></p>
-                                        <form method="post" action="{% url 'attendance:clockin' %}">
+                                        <form method="post" action="{% url 'attendance:clockin' %}" id="in">
                                             {% csrf_token %}
                                           <button type="submit" class="clock-btn clock-in btn " ><span>CLOCK IN</span></button>
                                         </form>
@@ -43,7 +43,7 @@
                                     <div class="col-lg-6">
                                         <p class=""></p>
                                         <p id="clock_out"></p>
-                                        <form method="post" action="{% url 'attendance:clockout' %}">
+                                        <form method="post" action="{% url 'attendance:clockout' %}" id="out">
                                             {% csrf_token %}
                                             <button type="submit" class="clock-btn clock-out btn"><span>CLOCK OUT</span></button>
                                         </form>
@@ -264,7 +264,7 @@
         <script src="{% static 'users/employee/js/home.js' %}"></script>
     <script>
         $(document).ready(function(){
-            $('form').submit(function(event){
+            $('#in').submit(function(event){
                 console.log(event);
                 event.preventDefault();
                 that = $(this);
@@ -297,7 +297,7 @@
     </script>
     <script>
         $(document).ready(function(){
-            $('form').submit(function(event){
+            $('#out').submit(function(event){
                 console.log(event);
                 event.preventDefault();
                 that = $(this);
