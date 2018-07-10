@@ -44,7 +44,7 @@ class ListOppo(LoginRequiredMixin, PermissionRequiredMixin, ListView):
 # change status
 
 
-class C_Status(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+class Change_Status(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     permission_required = (
         'opportunity.change_opportunity',
         'opportunity.view_opportunity',
@@ -91,7 +91,7 @@ class C_Status(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
 #     return JsonResponse({'error': 'Please select a valid choice'})
 
 
-class A_Leads(LoginRequiredMixin, PermissionRequiredMixin, ListView):
+class Assigned_Leads(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     permission_required = (
         'opportunity.change_opportunity',
         'opportunity.add_opportunity',
@@ -117,7 +117,7 @@ class A_Leads(LoginRequiredMixin, PermissionRequiredMixin, ListView):
 # assign project manager
 
 
-class A_PManager(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+class Assign_ProjectManager(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     permission_required = (
         'opportunity.change_opportunity',
         'opportunity.add_opportunity',
@@ -133,7 +133,7 @@ class A_PManager(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
 # closed leads
 
 
-class C_Leads(LoginRequiredMixin, PermissionRequiredMixin, ListView):
+class Closed_Leads(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     permission_required = (
         'opportunity.change_opportunity',
         'opportunity.add_opportunity',
@@ -156,7 +156,7 @@ class C_Leads(LoginRequiredMixin, PermissionRequiredMixin, ListView):
 # declined leads
 
 
-class D_Leads(LoginRequiredMixin, PermissionRequiredMixin, ListView):
+class Declined_Leads(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     permission_required = (
         'opportunity.change_opportunity',
         'opportunity.add_opportunity',

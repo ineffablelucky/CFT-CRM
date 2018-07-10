@@ -14,6 +14,7 @@ from django.urls import reverse
 from django.views.generic import ListView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 import re
+from  django.db.models import Q
 
 @login_required
 @permission_required('users.add_myuser', raise_exception=True)
@@ -92,7 +93,7 @@ class EmployeeProfile(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     context_object_name = 'myuser'
 
     def get_queryset(self):
-        queryset = MyUser.objects.all()
+        queryset = MyUser.objects.filter(~Q(designation='Client'))
         return queryset
 
 

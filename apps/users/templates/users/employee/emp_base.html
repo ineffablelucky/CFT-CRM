@@ -81,7 +81,7 @@
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                               <a class="dropdown-item" href="{% url 'users:profile' %}"><img id="my-img" src="{% static 'users/employee/images/profile.png' %}"> My Profile</a>
-                              <a class="dropdown-item" href="#"><img id="edit-profile" src="{% static 'users/employee/images/Settings.svg' %}"><span>Edit Profile</span></a>
+                              <a class="dropdown-item" href="{% url 'users:edit_profile' %}"><img id="edit-profile" src="{% static 'users/employee/images/Settings.svg' %}"><span>Edit Profile</span></a>
                               <a class="dropdown-item" href="{% url 'users:logout' %}"><i class="fas fa-power-off"></i><span>Logout</span></a>
 
                               {% if user.designation == 'Admin' or user.designation == 'Manager' %}
