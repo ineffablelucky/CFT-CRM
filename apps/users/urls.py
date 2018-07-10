@@ -12,6 +12,7 @@ urlpatterns = [
     path('admin-welcome/', TemplateView.as_view(template_name="apps/users/templates/users/base.html"), name='admin_welcome'),
     path('register/', views.register, name='register'),
     path('profile/', views.my_profile, name='profile'),
+    path('edit-profile/', views.edit_self, name='edit_profile'),
     path('login/profile-all/', EmployeeProfile.as_view(), name='profile_all'),
     path('edit-emp/<int:pk>', views.EditEmployeeProfile.as_view(), name='edit_emp'),
     path('logout/', views.lout, name='logout'),

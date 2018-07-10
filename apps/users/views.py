@@ -193,5 +193,13 @@ def verify(request, key):
 def my_profile(request):
     if request.user.is_authenticated:
         return render(request, 'users/employee/profile.html')
+    else:
+        return HttpResponse("Permission Denined!")
 
+def edit_self(request):
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            pass
+        else:
+            return render(request, 'users/employee/edit_profile.html')
 

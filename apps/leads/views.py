@@ -11,7 +11,7 @@ from reportlab.pdfgen import canvas
 from .models import LEADS
 from ..users.models import MyUser
 from rest_framework import viewsets
-from ..leads.serializer import MyUserSerializer
+
 from django.contrib.messages.views import SuccessMessageMixin
 from .forms import CreateForm,DetailForm,UpdateForm
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin

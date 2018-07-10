@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block extra-stylesheet %}
-        <link rel="stylesheet" href="{% static 'users/employee/css/home.css' %}">
+        <link rel="stylesheet" href="{% static 'users/employee/css/profile.css' %}">
 {% endblock extra-stylesheet %}
 
 {% block sidebar %}
@@ -14,7 +14,7 @@
             </div>
             <img class="logo" src="{% static 'users/employee/images/Logo-1.png' %}">
             <ul class="list-unstyled">
-                <a href="{% url 'attendance:pastattendance' %}"><li style="top:58px" class="active"><img src="{% static 'users/employee/images/Home icon.svg' %}"><span>Home</span></li></a>
+                <a href="{% url 'attendance:pastattendance' %}"><li style="top:58px"><img src="{% static 'users/employee/images/Home icon.svg' %}"><span>Home</span></li></a>
 
                 {% if user.department == 'IT' %}
                 <a href="{% url 'project:employee-project' %}"><li style="top:117px"><img src="{% static 'users/employee/images/Projects icon.svg' %}"><span>Projects</span></li></a>
@@ -42,21 +42,21 @@
                                 <span>
                                     <div class="row">
                                         <div class="profile-bg profile-bg-border">
-                                            <img src="assets/images/profile.png">
+                                            <img src="{% static 'users/employee/images/profile.png' %}">
                                         </div>
                                         <div class="main-info">
                                             <div class="row">
-                                                <h5 class="name">Ved Prakash Singh</h5>
+                                                <h5 class="name">{{ user.first_name }}{{ user.last_name }}</h5>
                                             </div>
                                             <div class="row">
-                                                <h6 class="designation-head">Associate Director and Creative Head</h6>
+                                                <h6 class="designation-head">{{ user.designation }}</h6>
                                             </div>
                                         </div>
                                     </div>
                                 </span>
 
                                 <span class="edit-btn ml-auto">
-                                    <a href="edit-profile.html"><button type="button" class="btn edit">Edit</button></a>
+                                    <a href="{% url 'users:edit_profile' %}"><button type="button" class="btn edit">Edit</button></a>
                                 </span>
                             </div>
                         </div>
@@ -72,7 +72,7 @@
                                             <h6>Name</h6>
                                         </div>
                                         <div class="row">
-                                            <h5>Ved Prakash Singh</h5>
+                                            <h5>{{ user.first_name }}{{ usre.middle_name}}{{ user.last_name }}</h5>
                                         </div>
                                     </div>
 
@@ -81,7 +81,7 @@
                                             <h6>Designation</h6>
                                         </div>
                                         <div class="row">
-                                            <h5>Associate Director and Creative Head</h5>
+                                            <h5>{{ user.designation }}</h5>
                                         </div>
                                     </div>
                                 </div>
@@ -91,7 +91,7 @@
                                             <h6>Email</h6>
                                         </div>
                                         <div class="row">
-                                            <h5>ved@codeflowtech.com</h5>
+                                            <h5>{{ user.email }}</h5>
                                         </div>
                                     </div>
 
@@ -100,7 +100,7 @@
                                             <h6>Contact Number</h6>
                                         </div>
                                         <div class="row">
-                                            <h5>(+91)-8473664829</h5>
+                                            <h5>{% if user.contact %}(+91)-{{ user.contact }}{% endif %}----</h5>
                                         </div>
                                     </div>
                                 </div>
@@ -110,7 +110,7 @@
                                             <h6>Department</h6>
                                         </div>
                                         <div class="row">
-                                            <h5>Designing</h5>
+                                            <h5>{{ user.department }}</h5>
                                         </div>
                                     </div>
 
@@ -158,6 +158,6 @@
 {% endblock footer %}
 
 {% block extra-scripts %}
-        <script src="{% static 'users/employee/js/home.js' %}"></script>
+        <script src="{% static 'users/employee/js/profile.js' %}"></script>
 {% endblock extra-scripts %}
 
