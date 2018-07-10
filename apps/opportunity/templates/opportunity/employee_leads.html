@@ -9,7 +9,6 @@
 {% block sidetab %}
             <ul class="list-unstyled">
                 <a href="{% url 'attendance:pastattendance' %}"><li style="top:58px" ><img src="{% static 'users/employee/images/Home icon.svg' %}"><span>Home</span></li></a>
-
                 {% if user.department == 'IT' %}
                 <a href="{% url 'project:employee-project' %}"><li style="top:117px"><img src="{% static 'users/employee/images/Projects icon.svg' %}"><span>Projects</span></li></a>
                 {% elif user.department == 'Marketing' %}
