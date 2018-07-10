@@ -42,14 +42,14 @@
                                 <span>
                                     <div class="row">
                                         <div class="profile-bg profile-bg-border">
-                                            <img src="{% static 'users/employee/images/profile.png">
+                                            <img src="{% static 'users/employee/images/profile.png' %}">
                                         </div>
                                         <div class="main-info">
                                             <div class="row">
-                                                <h5 class="name">Ved Prakash Singh</h5>
+                                                <h5 class="name">{{ user.first_name }}{{ user.last_name }}</h5>
                                             </div>
                                             <div class="row">
-                                                <h6 class="designation-head">Associate Director and Creative Head</h6>
+                                                <h6 class="designation-head">{{ user.designation }}</h6>
                                             </div>
                                         </div>
                                     </div>
@@ -70,11 +70,20 @@
                                 </div>
                                 <div class="row profile-elements">
                                     <div class="col-lg-6 information">
+
                                         <div class="row">
                                             <h6>Name</h6>
                                         </div>
                                         <div class="row">
-                                            <h5 contenteditable="true">Ved Prakash Singh</h5>
+                                            <h5 contenteditable="true">{{ user.first_name }}</h5>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 information">
+                                        <div class="row">
+                                            <h6>Name</h6>
+                                        </div>
+                                        <div class="row">
+                                            <h5 contenteditable="true">{{ user.first_name }}</h5>
                                         </div>
                                     </div>
 

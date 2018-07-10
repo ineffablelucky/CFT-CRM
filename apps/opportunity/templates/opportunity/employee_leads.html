@@ -9,7 +9,6 @@
 {% block sidetab %}
             <ul class="list-unstyled">
                 <a href="{% url 'attendance:pastattendance' %}"><li style="top:58px" ><img src="{% static 'users/employee/images/Home icon.svg' %}"><span>Home</span></li></a>
-
                 {% if user.department == 'IT' %}
                 <a href="{% url 'project:employee-project' %}"><li style="top:117px"><img src="{% static 'users/employee/images/Projects icon.svg' %}"><span>Projects</span></li></a>
                 {% elif user.department == 'Marketing' %}
@@ -182,49 +181,49 @@
 {% endblock extra-scripts %}
 
 
-<body>
-    {% if user.is_authenticated %}
-        <div id="username">Hello {{ user.username }}</div>
-        <hr/>
-        <table border="1">
-            <tr>
-                <th>Company Name</th>
-                <th>Description</th>
-                <th>status</th>
-                <th>Client</th>
-                <th>Price</th>
-                <th>Contact Person</th>
-                <th>Email</th>
-                <th>Contact Number</th>
-                <th>Change Status</th>
-            </tr>
-            {% for op in opportunity %}
-                <tr>
-                    <td><a id="data"  href="{% url 'opportunity:meeting:emp_meeting' op.id %}">{{ op.lead.company_name }}</a></td>
-                    <td>{{ op.lead.description }}</td>
-                    <td>{{ op.status }}</td>
-                    <td>{{ op.client.username}}</td>
-                    <td>{{ op.price }}</td>
-                    <td>{{ op.lead.contact_person }}</td>
-                    <td>{{ op.lead.email }}</td>
-                    <td>{{ op.lead.contact_number }}</td>
-                    {% if op.assigned_to.username == user.username or user.designation == 'Manager' %}
-                        <td id="change_status"><a id="edit" href="{% url 'opportunity:change_status' op.id %}"> Edit </a></td>
-                    {% else %}
-                        <td></td>
-                    {% endif %}
-                    <!--<td><button type="button" data-id = "{{ op.id }}" class ="edit" data-toggle="modal" data-target="#exampleModalLong">Edit</button></td>-->
-                </tr>
-            {% endfor %}
-        </table>
-    {% else %}
-        <div>You don't have permission</div>
-    {% endif %}
+<!--<body>-->
+    <!--{% if user.is_authenticated %}-->
+        <!--<div id="username">Hello {{ user.username }}</div>-->
+        <!--<hr/>-->
+        <!--<table border="1">-->
+            <!--<tr>-->
+                <!--<th>Company Name</th>-->
+                <!--<th>Description</th>-->
+                <!--<th>status</th>-->
+                <!--<th>Client</th>-->
+                <!--<th>Price</th>-->
+                <!--<th>Contact Person</th>-->
+                <!--<th>Email</th>-->
+                <!--<th>Contact Number</th>-->
+                <!--<th>Change Status</th>-->
+            <!--</tr>-->
+            <!--{% for op in opportunity %}-->
+                <!--<tr>-->
+                    <!--<td><a id="data"  href="{% url 'opportunity:meeting:emp_meeting' op.id %}">{{ op.lead.company_name }}</a></td>-->
+                    <!--<td>{{ op.lead.description }}</td>-->
+                    <!--<td>{{ op.status }}</td>-->
+                    <!--<td>{{ op.client.username}}</td>-->
+                    <!--<td>{{ op.price }}</td>-->
+                    <!--<td>{{ op.lead.contact_person }}</td>-->
+                    <!--<td>{{ op.lead.email }}</td>-->
+                    <!--<td>{{ op.lead.contact_number }}</td>-->
+                    <!--{% if op.assigned_to.username == user.username or user.designation == 'Manager' %}-->
+                        <!--<td id="change_status"><a id="edit" href="{% url 'opportunity:change_status' op.id %}"> Edit </a></td>-->
+                    <!--{% else %}-->
+                        <!--<td></td>-->
+                    <!--{% endif %}-->
+                    <!--&lt;!&ndash;<td><button type="button" data-id = "{{ op.id }}" class ="edit" data-toggle="modal" data-target="#exampleModalLong">Edit</button></td>&ndash;&gt;-->
+                <!--</tr>-->
+            <!--{% endfor %}-->
+        <!--</table>-->
+    <!--{% else %}-->
+        <!--<div>You don't have permission</div>-->
+    <!--{% endif %}-->
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>-->
+    <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
 
-</body>
+<!--</body>-->
 
 <script>
             $(function(){
