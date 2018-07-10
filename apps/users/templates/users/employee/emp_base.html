@@ -86,7 +86,7 @@
 
                               {% if user.designation == 'Admin' or user.designation == 'Manager' %}
                               <div class="dropdown-divider"></div>
-                              <a class="dropdown-item" href="{% url 'users:admin_login' %}"><img id="admin" src="{% static 'users/employee/images/admin.svg' %}"><span>Login as Admin</span></a>
+                              <a class="dropdown-item" href="{% url 'users:admin_login' %}"><img id="admin" src="{% static 'users/employee/images/admin.svg' %}"><span>Switch to Admin</span></a>
                               {% endif %}
                             </div>
                         </li>

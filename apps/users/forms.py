@@ -101,15 +101,12 @@ class RegistrationForm(UserCreationForm):
 
 
     def clean_email(self):
-        if self.instance.email:
-            return self.instance.email
-        else:
-            data = self.cleaned_data.get('email').lower()
-            try:
-                MyUser.objects.get(email=data)
-                raise forms.ValidationError("Email already exists")
-            except MyUser.DoesNotExist:
-                return data
+        data = self.cleaned_data.get('email').lower()
+        try:
+            MyUser.objects.get(email=data)
+            raise forms.ValidationError("Email already exists")
+        except MyUser.DoesNotExist:
+            return data
 
 
     def clean_first_name(self):
