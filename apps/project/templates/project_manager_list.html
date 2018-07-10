@@ -127,6 +127,7 @@
             event.preventDefault();
             var id = $(this).attr('data-id');
             $.get( 'details/' + id   , function(data){
+                //console.log(data);
                 $('.modal-body').html(data);
             });
         });
