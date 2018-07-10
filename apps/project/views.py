@@ -39,7 +39,7 @@ class Employee_Project_List(LoginRequiredMixin,PermissionRequiredMixin, ListView
     permission_required = ('project.view_it_project',)
     model = IT_Project
     template_name = "my projects.html"
-
+    paginate_by = 2
     def get_queryset(self):
         temp = IT_Project.objects.filter(employees_per_project=self.request.user)
         #print(temp)

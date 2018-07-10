@@ -85,12 +85,6 @@ def lout(request):
     return redirect('/')
 
 
-def profile(request, id):
-    user = MyUser.objects.get(pk = id)
-    print(user)
-    return render(request, 'users/profile.html', {'user':user})
-
-
 class EmployeeProfile(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     permission_required = ('users.view_users', 'users.add_myuser',)
     template_name = 'users/profile.html'
@@ -196,5 +190,16 @@ def verify(request, key):
         return render(request, 'users/registration/wrong_token.html')
 
 
+def my_profile(request):
+    if request.user.is_authenticated:
+        return render(request, 'users/employee/profile.html')
+    else:
+        return HttpResponse("Permission Denined!")
 
+def edit_self(request):
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            pass
+        else:
+            return render(request, 'users/employee/edit_profile.html')
 
