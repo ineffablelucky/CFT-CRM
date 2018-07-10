@@ -1,27 +1,11 @@
-<!DOCTYPE html>
+{% extends 'users/employee/emp_base.html' %}
 {% load static %}
-<html>
-    <head>
-        <title>My Profile</title>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        {% block stylesheet %}
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+{% block extra-stylesheet %}
+        <link rel="stylesheet" href="{% static 'users/employee/css/edit-profile.css' %}">
+{% endblock extra-stylesheet %}
 
-        {% endblock stylesheet %}
-
-        {% block extra-stylesheet %}
-        <link rel="stylesheet" href="{% static 'users/employee/css/profile.css' %}">
-        {% endblock extra-stylesheet %}
-
-    </head>
-
-    <body>
-        <!--Sidebar-->
-        {% if user.is_authenticated %}
-        {% block sidebar %}
+{% block sidebar %}
         <div class="sidebar">
             <div class="bar-icon">
                 <div class="bar-1-active"></div>
@@ -29,10 +13,8 @@
                 <div class="bar-3-active"></div>
             </div>
             <img class="logo" src="{% static 'users/employee/images/Logo-1.png' %}">
-
-            {% block sidetab %}
             <ul class="list-unstyled">
-                <a href="{% url 'attendance:pastattendance' %}"><li style="top:58px" class="active"><img src="{% static 'users/employee/images/Home icon.svg' %}"><span>Home</span></li></a>
+                <a href="{% url 'attendance:pastattendance' %}"><li style="top:58px"><img src="{% static 'users/employee/images/Home icon.svg' %}"><span>Home</span></li></a>
 
                 {% if user.department == 'IT' %}
                 <a href="{% url 'project:employee-project' %}"><li style="top:117px"><img src="{% static 'users/employee/images/Projects icon.svg' %}"><span>Projects</span></li></a>
@@ -44,60 +26,10 @@
                 <a href="{% url 'ctc:salary' %}"><li style="top:234px"><img src="{% static 'users/employee/images/Salary Icon.svg' %}"><span>Salary</span></li></a>
                 <a href="{% url 'attendance:leave_request' %}"><li style="top:293px"><img src="{% static 'users/employee/images/Leave Req.. Icon.svg' %}"><span>Leave Request</span></li></a>
             </ul>
-            {% endblock sidetab %}
-
         </div>
-        {% endblock sidebar %}
-        <!--Sidebar-->
+{% endblock sidebar %}
 
-        <div class="main">
-        <!--Navigation-->
-            {% block topnav %}
-            <nav class="navbar navbar-expand-lg bg-light ">
-
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon">
-                    </span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNavDropdown">
-
-                    <ul class="navbar-nav ml-auto right-header">
-                        <form class="search">
-                            <input type="search" placeholder="Search" class="form-control search-bar">
-                        </form>
-                        <li class="nav-item nav-icon">
-                            <a class="nav-link" href="#"><img src="{% static 'users/employee/images/Message.svg' %}"></a>
-                        </li>
-                        <li class="nav-item nav-icon">
-                            <a class="nav-link" href="#"><img src="{% static 'users/employee/images/Notification.png' %}"></a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <img src="{% static 'users/employee/images/line.svg' %}" class="dropdown-line">
-                              <div class="profile-bg">
-                                <img src="{% static 'users/employee/images/profile.png' %}">
-                              </div>
-                              <img src="{% static 'users/employee/images/dropdown-icon.svg' %}" class="dropdown-icon">
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                              <a class="dropdown-item" href="{% url 'users:profile' %}"><img id="my-img" src="{% static 'users/employee/images/profile.png' %}"> My Profile</a>
-                              <a class="dropdown-item" href="#"><img id="edit-profile" src="{% static 'users/employee/images/Settings.svg' %}"><span>Edit Profile</span></a>
-                              <a class="dropdown-item" href="{% url 'users:logout' %}"><i class="fas fa-power-off"></i><span>Logout</span></a>
-
-                              {% if user.designation == 'Admin' or user.designation == 'Manager' %}
-                              <div class="dropdown-divider"></div>
-                              <a class="dropdown-item" href="{% url 'users:admin_login' %}"><img id="admin" src="{% static 'users/employee/images/admin.svg' %}"><span>Login as Admin</span></a>
-                              {% endif %}
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-            {% endblock %}
-            <!--Navigation-->
-
-            <!--Page-content-->
-            {% block page_content %}
+{% block page_content %}
             <div class="main-content ">
                 <div class="row head">
                     <h4>User Information</h4>
@@ -110,7 +42,7 @@
                                 <span>
                                     <div class="row">
                                         <div class="profile-bg profile-bg-border">
-                                            <img src="{% static 'users/employee/images/profile.png' %}">
+                                            <img src="{% static 'users/employee/images/profile.png">
                                         </div>
                                         <div class="main-info">
                                             <div class="row">
@@ -123,9 +55,11 @@
                                     </div>
                                 </span>
 
-                                <span class="edit-btn ml-auto">
-                                    <button type="button" class="btn edit">Edit</button>
+                                <span class="btn-grp ml-auto">
+                                    <button type="button" class="btn edit">Save</button>
+                                    <button type="button" class="btn cancel">Cancel</button>
                                 </span>
+
                             </div>
                         </div>
 
@@ -140,7 +74,7 @@
                                             <h6>Name</h6>
                                         </div>
                                         <div class="row">
-                                            <h5>Ved Prakash Singh</h5>
+                                            <h5 contenteditable="true">Ved Prakash Singh</h5>
                                         </div>
                                     </div>
 
@@ -149,7 +83,7 @@
                                             <h6>Designation</h6>
                                         </div>
                                         <div class="row">
-                                            <h5>Associate Director and Creative Head</h5>
+                                            <h5 contenteditable="true">Associate Director and Creative Head</h5>
                                         </div>
                                     </div>
                                 </div>
@@ -159,7 +93,7 @@
                                             <h6>Email</h6>
                                         </div>
                                         <div class="row">
-                                            <h5>ved@codeflowtech.com</h5>
+                                            <h5 contenteditable="true">ved@codeflowtech.com</h5>
                                         </div>
                                     </div>
 
@@ -168,7 +102,7 @@
                                             <h6>Contact Number</h6>
                                         </div>
                                         <div class="row">
-                                            <h5>(+91)-8473664829</h5>
+                                            <h5 contenteditable="true">(+91)-8473664829</h5>
                                         </div>
                                     </div>
                                 </div>
@@ -178,7 +112,7 @@
                                             <h6>Department</h6>
                                         </div>
                                         <div class="row">
-                                            <h5>Designing</h5>
+                                            <h5 contenteditable="true">Designing</h5>
                                         </div>
                                     </div>
 
@@ -200,21 +134,17 @@
                                     <h4>About Me</h4>
                                 </div>
 
-                                <div class="row">
-                                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                                <div class="row text">
+                                    <p contenteditable="true">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+{% endblock page_content %}
 
-            {% endblock page_content %}
-
-            <!--Page-content-->
-        </div>
-
-        {% block footer %}
+{% block footer %}
             <div class="footer">
                     <div class="row">
                         <div class="footer-elements">
@@ -227,25 +157,10 @@
                         </div>
                     </div>
             </div>
-        {% endblock footer %}
+{% endblock footer %}
 
-        {% block scripts %}
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
-
-        {% endblock scripts %}
-
-        {% block extra-scripts %}
-        <script src="{% static 'users/employee/js/profile.js' %}"></script>
-        {% endblock extra-scripts %}
-
-    {% else %}
-    <h2>Please enter correct details</h2>
-        <p>Login again</p>
-        <a href="{% url 'users:login' %}"><button type="button">Login</button></a>
-    {% endif %}
+{% block extra-scripts %}
+        <script src="{% static 'users/employee/js/edit-profile.js' %}"></script>
+{% endblock extra-scripts %}
 
 
-    </body>
-</html>
