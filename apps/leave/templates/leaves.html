@@ -43,14 +43,14 @@
                                     <p>Name:{{ m.user.first_name }}</p>
                                     <p>Department:{{ m.user.department }}</p>
                                     <p>Status: {{ m.status }}</p>
-                                    <a href="showrequest/{{ m.id }}"><button>View Request</button></a>
+                                    <a href="{% url 'leave:show_request' m.id %}"><button>View Request</button></a>
                                     <hr/>
                                 {% endfor %}
                               </div>
                               <div class="col-lg-2" style="border-left:2px solid grey">
                                   <h3>Absentee</h3>
                                   <!--<p>Date : <input type="text" id="calendar" /></p>-->
-                                  <form action="{% url 'leave:leave_request'%}" method="get">
+                                  <form action="{% url 'leave:leave_request' %}" method="get">
                                        <div>{{ form.date.label }} {{ form.date }} {{ form.date.errors }}
                                         <button type="submit">Submit</button>
                                        </div>
@@ -80,8 +80,8 @@
 {% endblock page-content %}
 
 {% block extra-script %}
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
+<!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>-->
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>-->
 
     <script>
 

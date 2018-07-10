@@ -2,7 +2,7 @@ from django.shortcuts import render, HttpResponseRedirect, redirect
 from .models import IT_Project
 from apps.opportunity.models import Opportunity
 from django.views.generic import ListView, CreateView, UpdateView, DetailView
-from .forms import CreateProjectForm, EditOppForm
+from .forms import CreateProjectForm, EditOppForm, EditProjectForm
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.db.models import Q
 from apps.task.models import Task
@@ -59,7 +59,7 @@ class Edit_Project(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     permission_required = ('project.change_it_project',)
     model = IT_Project
 
-    form_class = CreateProjectForm
+    form_class = EditProjectForm
     template_name = "create_project_form.html"
 
     def form_valid(self, form):
