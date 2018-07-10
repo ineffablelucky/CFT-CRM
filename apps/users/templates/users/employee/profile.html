@@ -56,7 +56,7 @@
                                 </span>
 
                                 <span class="edit-btn ml-auto">
-                                    <a href="{% url 'users:edit_profile' %}"><button type="button" class="btn edit">Edit</button></a>
+                                    <!--<a href="{% url 'users:edit_profile' %}"><button type="button" class="btn edit">Edit</button></a>-->
                                 </span>
                             </div>
                         </div>
@@ -100,7 +100,7 @@
                                             <h6>Contact Number</h6>
                                         </div>
                                         <div class="row">
-                                            <h5>{% if user.contact %}(+91)-{{ user.contact }}{% endif %}----</h5>
+                                            <h5>{% if user.contact %}(+91)-{{ user.contact }}{% else %}----{% endif %}</h5>
                                         </div>
                                     </div>
                                 </div>
