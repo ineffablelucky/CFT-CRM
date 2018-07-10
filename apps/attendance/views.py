@@ -134,7 +134,6 @@ class Clockin(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
 
             a.save()
             time_in = str(a.time_in.hour)+":"+str(a.time_in.minute)
-            print(time_in)
 
             return JsonResponse({'a': time_in})
 
