@@ -3,8 +3,6 @@
 
 
 {% block extra-stylesheet %}
-        <link href="https://cdn.jsdelivr.net/npm/gijgo@1.9.6/css/gijgo.min.css" rel="stylesheet" type="text/css" />
-        <link href="{% static 'attendance/dyCalendarJS-1.2.1/css/dycalendar.css' %}" rel="stylesheet">
         <link rel="stylesheet" href="{% static 'attendance/css/leave-request.css' %}">
 {% endblock extra-stylesheet %}
 
@@ -194,92 +192,95 @@
 
     </script>
 {% endblock extra-scripts %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Leave Attendance Form</title>
-</head>
-<body>
-<h1> Leave Request form</h1>
-<div style="float:left; margin-right:20px" >
-<form action="{% url 'attendance:leave_request'%}" method="post">
-    {% csrf_token %}
-        <div>
-            {{ form.name.label }}
-            {{ form.name }}{{ form.name.errors }}
-        </div><br>
-
-        <div>
-            {{ form.leave_type.label }}
-            {{ form.leave_type }}{{ form.leave_type.errors }}
-        </div><br>
-        <div>
-            {{ form.date.label }}
-            {{ form.date }}{{ form.date.errors }}
-            {{ form.end_date.label }}
-            {{ form.end_date }}{{ form.end_date.errors }}
-        </div><br>
-        Reason:
-        <div>
-            &emsp;&emsp;&emsp;&emsp;{{ form.note }}{{ form.note.errors }}
-        </div>
-    <button type="submit">Submit</button>
-    <!--
-    {{form.name.errors}}
-    <p>Username :{{ form.name }}</p>
-    <p>Type of Leave:{{ form.leave_type }}</p>
-    <p>Date:&emsp;From:{{ form.date }}&emsp;&emsp;&emsp;&emsp;To:{{ form.end_date }}</p>
-    <p>Reason:</p>
-    <p>&emsp;&emsp;&emsp;&emsp;{{ form.note }}</p>-->
-
-</form></div>
-<br>
-<br>
-<table border="1">
-    <tr>
-        <th>Type of Leave</th>
-        <th>Leaves left</th>
-    </tr>
-
-        <tr>
-            <td>PL</td>
-            <td>{{ leave.pl }}</td>
-        </tr>
-        <tr>
-            <td>CL</td>
-            <td>{{ leave.cl }}</td>
-        </tr>
-        <tr>
-            <td>Half Day</td>
-            <td>{{ leave.half_day }}</td>
-        </tr>
-        <tr>
-            <td>Company Off</td>
-            <td>{{ leave.comp_off }}</td>
-        </tr>
 
 
-</table>
-<br>
-<br>
-<div>
-    <table border="1">
-        <tr>
-            <th>From Date</th>
-            <th>End Date</th>
-            <th>Status</th>
-        </tr>
-        {% for i in list_leave_request %}
-        <tr>
-            <td>{{ i.date }}</td>
-            <td>{{ i.end_date }}</td>
-            <td>{{ i.status }}</td>
-        </tr>
-        {% endfor %}
-    </table>
 
-</div>
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+    <!--<meta charset="UTF-8">-->
+    <!--<title>Leave Attendance Form</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<h1> Leave Request form</h1>-->
+<!--<div style="float:left; margin-right:20px" >-->
+<!--<form action="{% url 'attendance:leave_request'%}" method="post">-->
+    <!--{% csrf_token %}-->
+        <!--<div>-->
+            <!--{{ form.name.label }}-->
+            <!--{{ form.name }}{{ form.name.errors }}-->
+        <!--</div><br>-->
 
-</body>
-</html>
+        <!--<div>-->
+            <!--{{ form.leave_type.label }}-->
+            <!--{{ form.leave_type }}{{ form.leave_type.errors }}-->
+        <!--</div><br>-->
+        <!--<div>-->
+            <!--{{ form.date.label }}-->
+            <!--{{ form.date }}{{ form.date.errors }}-->
+            <!--{{ form.end_date.label }}-->
+            <!--{{ form.end_date }}{{ form.end_date.errors }}-->
+        <!--</div><br>-->
+        <!--Reason:-->
+        <!--<div>-->
+            <!--&emsp;&emsp;&emsp;&emsp;{{ form.note }}{{ form.note.errors }}-->
+        <!--</div>-->
+    <!--<button type="submit">Submit</button>-->
+    <!--&lt;!&ndash;-->
+    <!--{{form.name.errors}}-->
+    <!--<p>Username :{{ form.name }}</p>-->
+    <!--<p>Type of Leave:{{ form.leave_type }}</p>-->
+    <!--<p>Date:&emsp;From:{{ form.date }}&emsp;&emsp;&emsp;&emsp;To:{{ form.end_date }}</p>-->
+    <!--<p>Reason:</p>-->
+    <!--<p>&emsp;&emsp;&emsp;&emsp;{{ form.note }}</p>&ndash;&gt;-->
+
+<!--</form></div>-->
+<!--<br>-->
+<!--<br>-->
+<!--<table border="1">-->
+    <!--<tr>-->
+        <!--<th>Type of Leave</th>-->
+        <!--<th>Leaves left</th>-->
+    <!--</tr>-->
+
+        <!--<tr>-->
+            <!--<td>PL</td>-->
+            <!--<td>{{ leave.pl }}</td>-->
+        <!--</tr>-->
+        <!--<tr>-->
+            <!--<td>CL</td>-->
+            <!--<td>{{ leave.cl }}</td>-->
+        <!--</tr>-->
+        <!--<tr>-->
+            <!--<td>Half Day</td>-->
+            <!--<td>{{ leave.half_day }}</td>-->
+        <!--</tr>-->
+        <!--<tr>-->
+            <!--<td>Company Off</td>-->
+            <!--<td>{{ leave.comp_off }}</td>-->
+        <!--</tr>-->
+
+
+<!--</table>-->
+<!--<br>-->
+<!--<br>-->
+<!--<div>-->
+    <!--<table border="1">-->
+        <!--<tr>-->
+            <!--<th>From Date</th>-->
+            <!--<th>End Date</th>-->
+            <!--<th>Status</th>-->
+        <!--</tr>-->
+        <!--{% for i in list_leave_request %}-->
+        <!--<tr>-->
+            <!--<td>{{ i.date }}</td>-->
+            <!--<td>{{ i.end_date }}</td>-->
+            <!--<td>{{ i.status }}</td>-->
+        <!--</tr>-->
+        <!--{% endfor %}-->
+    <!--</table>-->
+
+<!--</div>-->
+
+<!--</body>-->
+<!--</html>-->
