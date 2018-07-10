@@ -19,6 +19,7 @@ urlpatterns =[
 
     path('downloadpdf/<int:id>',views.DownloadPdf,name='LeadDownloadpdf'),
     path('downloadcsv/<int:id>',views.DownloadCsv,name='LeadDownloadcsv'),
+    path('api/hello/',views.hello),
     path('api',views.MyUserViewSet)
 
 

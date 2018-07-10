@@ -24,53 +24,33 @@
 
 
 {% block page_content %}
-    <div class="main-content ">
-        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Edit Status</h5>
-                    </div>
-                    <div class="modal-body">
-                        <div>
-                            <form class="form-inline" method="post" action="" id="post-form">
-                                {% csrf_token %}
-                                <label class="my-1 mr-2" >{{ form.status.label }}</label>
-                                {{ form.status }}
-                                {{ form.status.errors }}
-                                <p id="error"></p>
-                                <button type="submit" class="btn btn-primary my-1">Submit</button>
-                            </form>
-                            <!--<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">-->
-                            <!--Dropdown button-->
-                            <!--</button>-->
-                            <!--<div class="dropdown-menu">-->
-                            <!--<a class="dropdown-item" href="#">In-Touch</a>-->
-                            <!--<a class="dropdown-item" href="#">Dismissed</a>-->
-                            <!--<a class="dropdown-item" href="#">Link 3</a>-->
-                            <!--</div>-->
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="close">Close</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!--pop-up-->
-
                 <div class="row head">
                     <h4>Leads</h4>
                 </div>
 
-                <div class="row">
-                    <ul class="list-unstyled leads-btn-container">
-                        <li><button type="button" class="new-leads-btn leads-btn-active">My Leads</button></li>
-                        <li><button type="button" class="declined-leads-btn">Other Leads</button></li>
-                    </ul>
-                </div>
+                <!--<div class="row">-->
+                    <!--<ul class="list-unstyled leads-btn-container">-->
+                        <!--<li><button type="button" class="new-leads-btn leads-btn-active">My Leads</button></li>-->
+                        <!--&lt;!&ndash;<li><button type="button" class="declined-leads-btn">Other Leads</button></li>&ndash;&gt;-->
+                    <!--</ul>-->
+                <!--</div>-->
 
                 <div class="row ">
+                    <div class="modal fade" id="exampleModalerror" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle1">Edit Status</h5>
+                                </div>
+                                <div class="modal-body">
+                                    Please Ask Your Manager to add Project Manager First
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="close">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="table-responsive major-container">
                         <div class=" bg-white">
                             <div class="row">
@@ -85,7 +65,6 @@
                                 </span>
                             </div>
                         </div>
-
                         <div class="table-container">
                             <div class="table-responsive project-details">
                                 <table class="table table-lg text-center table-borderless">
@@ -110,12 +89,35 @@
                                                     <td>{{ op.lead.email }}</td>
                                                     <!--<td>{{ op.status }}</td>-->
                                                     {% if op.assigned_to.username == user.username or user.designation == 'Manager' %}
-                                                    <td><a href="#" data-some = "{{ op.pk }}"   data-target="#exampleModalCenter" class="status form_link">{{ op.status }}</a></td>
+                                                    <td><a href="javascript:void(0)" data-some = "{{ op.pk }}"  data-toggle="modal"  data-target="#exampleModalCenter{{ op.id }}" class="status form_link">{{ op.status }}</a></td>
+                                                    <div class="modal fade" id="exampleModalCenter{{op.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" id="exampleModalLongTitle">Edit Status</h5>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <div>
+                                                                        <form class="form-inline" method="post" action="{% url 'opportunity:change_status' op.pk %}" id="post-form">
+                                                                            {% csrf_token %}
+                                                                            <label class="my-1 mr-2" >{{ form.status.label }}</label>
+                                                                            {{ form.status }}
+                                                                            {{ form.status.errors }}
+                                                                            <p id="error"></p>
+                                                                            <button type="submit" class="btn btn-primary my-1">Submit</button>
+                                                                        </form>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="close">Close</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                     {% else %}
                                                     <td>{{ op.status }}</td>
                                                     {% endif %}
                                                     <td><a href="{% url 'opportunity:meeting:emp_meeting' op.id %}" id="post_form_url"><img src="{% static 'opportunity/images/View.svg' %}"></a></td>
-
                                                 </tr>
                                         {% endfor %}
                                     </tbody>
@@ -173,26 +175,9 @@
 
 {% block extra-scripts %}
         <script src="{% static 'opportunity/js/leads.js' %}"></script>
+
         <script>
-            $(function(){
-            id="dd";
-            $('.form_link').click(function(e){
-                            e.preventDefault();
-                            that = $(this);
-                            id = $(this).attr('href');
-                            var myData = $(this).data('some');
-                            console.log("myData: " + myData);
-                            $('body').data('someData',  myData);
-                            $('.modal').modal();
-                        });
-                        console.log();
-
-                        });
-
-
-        </script>
-        <script>
-
+            
         </script>
 {% endblock extra-scripts %}
 
@@ -241,7 +226,24 @@
 
 </body>
 
+<script>
+            $(function(){
+            id="dd";
+            $('.form_link').click(function(e){
+                            e.preventDefault();
+                            that = $(this);
+                            id = $(this).attr('href');
+                            var myData = $(this).data('some');
+                            console.log("myData: " + myData);
+                            $('body').data('someData',  myData);
+                            $('.modal').modal();
+                        });
+                        console.log();
 
+                        });
+
+
+        </script>
   $("#post-form").submit(function(event){
                     alert('helo');
                     event.preventDefault();

@@ -54,21 +54,41 @@ class C_Status(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     form_class = ChangeStatus
     success_url = reverse_lazy('opportunity:list_oppo')
 
+    # def get_queryset(self):
+    #     print(self.kwargs.get('pk'))
+    #     return None
+
+    # def get_form_kwargs(self):
+    #     kwargs = super().get_form_kwargs()
+    #     kwargs.update({'oppo_id': self.kwargs.get('pk')})
+    #     return kwargs
+    # def form_valid(self, form):
+    #     temp = super().form_valid(form)
+    #     print(self.kwargs.get('pk'))
+    #     oppo = Opportunity.objects.get(pk=self.kwargs.get('pk'))
+    #     if(oppo.proj_manager is )
+    #     print(oppo.proj_manager)
+    #     return temp
+    # def form_invalid(self, form):
+    #     temp = super().form_valid(form)
+    #     print('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$s')
+    #     print(temp.errors)
+
 
 # assigned leads
-def change_status(request, pk):
-    print(request.POST.get('status'))
-    print("Hello World")
-    choices = ['Approved', 'RQ_stage', 'Negotiation', 'Pending', 'Rejected']
-    if request.method == 'POST':
-        status = request.POST.get('status')
-        if status in choices:
-            opportunity = Opportunity.objects.get(pk=pk)
-            opportunity.status = status
-            opportunity.save()
-            return JsonResponse({'success': 'success'})
-
-    return JsonResponse({'error': 'Please select a valid choice'})
+# def change_status(request, pk):
+#     print(request.POST.get('status'))
+#     print("Hello World")
+#     choices = ['Approved', 'RQ_stage', 'Negotiation', 'Pending', 'Rejected']
+#     if request.method == 'POST':
+#         status = request.POST.get('status')
+#         if status in choices:
+#             opportunity = Opportunity.objects.get(pk=pk)
+#             opportunity.status = status
+#             opportunity.save()
+#             return JsonResponse({'success': 'success'})
+#
+#     return JsonResponse({'error': 'Please select a valid choice'})
 
 
 class A_Leads(LoginRequiredMixin, PermissionRequiredMixin, ListView):

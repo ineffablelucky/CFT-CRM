@@ -11,7 +11,7 @@ from reportlab.pdfgen import canvas
 from .models import LEADS
 from ..users.models import MyUser
 from rest_framework import viewsets
-
+# from ..leads.serializer import MyUserSerializer
 from django.contrib.messages.views import SuccessMessageMixin
 from .forms import CreateForm,DetailForm,UpdateForm
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
@@ -23,7 +23,12 @@ from django.http import HttpResponse
 from pytz import unicode
 import csv
 from rest_framework import generics
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 
+@api_view(['POST', 'GET'])
+def hello(request):
+    return Response({'hi': 'hello'}, status=200)
 
 def MyUserViewSet(request):
     """
