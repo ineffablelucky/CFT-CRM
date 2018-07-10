@@ -29,6 +29,7 @@
         <div class="row head">
             <h4>Leads</h4>
         </div>
+        {% if emp_meeting %}
         {% for meeting in emp_meeting %}
             <div class="view_lead">
             <div class="row">
@@ -86,6 +87,9 @@
 
         </div>
         {% endfor %}
+        {% else %}
+            <div> Please ask you Project Manager to add meeting!</div>
+        {% endif %}
     </div>
         <!-- The Modal -->
 {% endblock page_content %}

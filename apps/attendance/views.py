@@ -134,7 +134,6 @@ class Clockin(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
 
             a.save()
             time_in = str(a.time_in.hour)+":"+str(a.time_in.minute)
-            print(time_in)
 
             return JsonResponse({'a': time_in})
 
@@ -390,7 +389,7 @@ def ajax_data_change(request):
     if request.method == 'GET':
         year = request.GET['year2']
         data = Attendance.objects.filter(date__year=year)
-        list2 = [0,0,0,0,0,0,0,0,0,0,0,0]
+        list2 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         i = 0
         count = 0
         for d in data:
