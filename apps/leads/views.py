@@ -115,60 +115,55 @@ class LeadDelete(LoginRequiredMixin,PermissionRequiredMixin,DeleteView):
 @permission_required('leads.view_leads', raise_exception=True)
 def upload_csv(request):
 
-    data = {}
     if request.method == 'GET':
-        return render(request, "leads/upload_csv.html", data)
+        return render(request, "leads/upload_csv.html")
     # if not GET, then proceed
 
     try:
+
         csv_file = request.FILES["csv_file"]
 
         if not csv_file.name.endswith('.csv'):
-            messages.error(request, 'File is not CSV type')
-            print('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
-            return JsonResponse(data={'error': 'Uploaded file is not CSV'})
+            # messages.error(request, 'File is not CSV type')
+            # cde=messages.error(request, 'File is not CSV type')
+            return JsonResponse(data={'error': 'File is not CSV type'})
+
         # if file is too large, return
         if csv_file.multiple_chunks():
-            messages.error(request, "Uploaded file is too big (%.2f MB)." % (csv_file.size / (1000 * 1000),))
+            # messages.error(request, "Uploaded file is too big (%.2f MB)." % (csv_file.size / (1000 * 1000),))
 
-            return JsonResponse(data={'error':'Uploaded file is too big'})
+
+            return JsonResponse(data={'error':'Uploaded file is too big (%.2f MB).'})
 
         file_data = csv_file.read().decode("utf-8")
+        print(file_data)
 
         lines = file_data.split("\n")
         # loop over the lines and save them in db. If error , store as string and then display
+        print(lines)
+        print('$$$$$$$$$$$$$$$$s')
         print(len(lines))
-        for l in range(1,len(lines)):
+        for l in range(0,len(lines)):
             fields = lines[l].split(",")
-
-            data_dict = {}
             print(fields)
-            data_dict["contact_number"] = fields[0]
-            data_dict["company_name"] = fields[1]
-            data_dict["contact_person"] = fields[2]
-            data_dict["source"] = fields[3]
-            data_dict["source_type"] = fields[4]
-            data_dict["description"] = fields[5]
+            print('!!!!!!!!!!!!!!!!!')
 
-            data_dict["email"] = fields[6]
-            data_dict["website"] = fields[7]
-            data_dict["assigned_boolean"] = fields[8]
+            data_dict = {"contact_number": fields[0], "company_name": fields[1], "contact_person": fields[2],
+                         "source": fields[3], "source_type": fields[4],"assigned_boolean":fields[6], "description": fields[5], "website": fields[8],
+                         "email": fields[7]}
+
             print(data_dict)
             lead=LEADS(**data_dict)
             lead.save()
-            return JsonResponse(data={'saved':'success'})
-
-
-
-
-
+            return JsonResponse(data={'error':'Uploaded Successfully'})
 
     except Exception as e:
-
         logging.getLogger("error_logger").error("Unable to upload file. " + repr(e))
-        # messages.error(request, "Unable to upload file. " + repr(e))
+        # ghi=messages.error(request, "Unable to upload file. " + repr(e))
+        return JsonResponse(data={'error': 'Unable to upload file'})
 
-    return JsonResponse(data={'error':'Cannot Upload the file'})
+
+
 
 @login_required
 @permission_required('leads.view_leads', raise_exception=True)
