@@ -89,11 +89,7 @@
                                                     <td>{{ op.lead.email }}</td>
                                                     <!--<td>{{ op.status }}</td>-->
                                                     {% if op.assigned_to.username == user.username or user.designation == 'Manager' %}
-                                                    {% if op.proj_manager is None %}
-                                                    <td><a href="javascript:void(0)" data-toggle="modal"  data-target="#exampleModalerror" class="status form_link">{{ op.status }}</a></td>
-                                                    {% else %}
                                                     <td><a href="javascript:void(0)" data-some = "{{ op.pk }}"  data-toggle="modal"  data-target="#exampleModalCenter{{ op.id }}" class="status form_link">{{ op.status }}</a></td>
-                                                    {% endif %}
                                                     <div class="modal fade" id="exampleModalCenter{{op.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                                         <div class="modal-dialog modal-dialog-centered" role="document">
                                                             <div class="modal-content">
@@ -181,7 +177,7 @@
         <script src="{% static 'opportunity/js/leads.js' %}"></script>
 
         <script>
-
+            
         </script>
 {% endblock extra-scripts %}
 
