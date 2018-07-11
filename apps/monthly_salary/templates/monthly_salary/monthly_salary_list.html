@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <h1>Monthly Salary</h1>
+</head>
+<body>
+<a href="{% url 'salary_percentages:salary_structure' %}"><button>View Salary Structure</button></a>
+<a href="{% url 'monthly_salary:edit_salary_list' %}"><button>Edit Salary</button></a>
+<a href="{% url 'monthly_salary:monthly_salary_list' %}"><button>Monthly Salary</button></a><br>
+<form method="GET">
+    Select Month: {{ form.month }}
+    Select Year: {{ form.year }}
+    <button type="submit">GO!</button><br><br>
+</form>
+
+    <div>
+    {% for i in context %}
+        {{ i.staff.id }}<br>
+        {{ i.staff.username }}<br>
+        {{ i.email }}
+        <a href="{% url 'monthly_salary:monthly_salary' i.staff.id %}?{{ request.GET.urlencode|yesno:'&, '}}{{ request.GET.urlencode }}">View Monthly Salary</a><br><br>
+    {% endfor %}
+    </div>
+
+</body>
+</html>

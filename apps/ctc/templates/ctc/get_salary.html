@@ -5,19 +5,17 @@
     <title>Title</title>
 </head>
 <body>
-    <a href ="{% url 'ctc:ctc' %}">Get CTC Breakdown</a><br><br>
-    <form method="GET" id="salary_form">
+    <form action="{%url 'ctc:ctc' %}" method="POST">
+        {% csrf_token %}
+        Select Year: {{ form.year }}
+        <button type="submit">Get CTC breakdown</button>
+    </form>>
+    <form action="{% url 'ctc:download_salary' %}" method="POST" id="salary_form">
+        {% csrf_token %}
         Month:{{ form.month }}
         Year:{{ form.year }}
-        <button type="submit">Submit</button>
+        <button type="submit">Download Salary Slip</button>
     </form>
-    <a href="{% url 'ctc:download_salary' %}?{{ request.GET.urlencode|yesno:'&, '}}{{ request.GET.urlencode }}">Download Salary Slip</a>
-<script>
-    function formSubmit()
-{
-     document.getElementById("salary_form").submit();
-}
-
-</script>
 </body>
 </html>
+

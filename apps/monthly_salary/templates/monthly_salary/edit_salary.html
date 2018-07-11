@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <form action="{% url 'monthly_salary:edit_salary' id=id %}" method="POST">
+        {% csrf_token %}
+        Year: {{ form.year }}<br>
+        Month: {{ form.month }}<br>
+        Enter Basic Monthly Salary: {{ form.basic_monthly_salary }}<br>
+        Enter Bonus: {{ form.given_bonus }}<br>
+        <button type="submit">SAVE</button>
+    </form>
+
+</body>
+</html>

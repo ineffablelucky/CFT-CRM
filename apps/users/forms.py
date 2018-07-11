@@ -24,6 +24,8 @@ class RegistrationForm(UserCreationForm):
             'department',
             'designation',
             'gender',
+            'is_superuser',
+            'is_staff',
         )
 
     def save(self, commit=True):

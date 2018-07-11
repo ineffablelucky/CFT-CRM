@@ -14,6 +14,7 @@ urlpatterns = [
 
     path('admin-login/', views.admin_login, name='admin_login'),
     path('admin-welcome/', TemplateView.as_view(template_name="apps/users/templates/users/base.html"), name='admin_welcome'),
+    path('admin-welcome/', TemplateView.as_view(template_name="apps/users/templates/users/base.html"), name='admin_welcome'),
     path('register/', views.register, name='register'),
     path('login/profile/<int:id>/', views.profile, name='profile'),
     path('login/profile-all/', EmployeeProfile.as_view(), name='profile_all'),

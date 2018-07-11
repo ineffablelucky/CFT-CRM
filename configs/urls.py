@@ -24,9 +24,10 @@ urlpatterns = [
     path('task/', include('apps.task.urls')),
     path('module/', include('apps.module.urls')),
     path('opportunity/', include('apps.opportunity.urls')),
-    path('salary/', include('apps.salary_percentages.urls')),
+    path('salary_structure/', include('apps.salary_percentages.urls')),
     path('leads/', include('apps.leads.urls')),
     path('leave/', include('apps.leave.urls')),
-    path('employee_salary/', include('apps.ctc.urls')),
+    path('salary/', include('apps.ctc.urls')),
     path('complaints/',include('apps.complaints.urls')),
+    path('',include('apps.monthly_salary.urls')),
 ]

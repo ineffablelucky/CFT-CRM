@@ -8,10 +8,15 @@
     <form action="{% url 'salary_percentages:add' %}" method="POST">
         {% csrf_token %}
         Financial Year: {{ form.financial_year }}<br><br>
-        Allowances: {{ form.allowances }}<br><br>
-        HRA percentage: {{ form.hra_percentage }}<br><br>
-        PPF percentage: {{ form.ppf_percentage }}<br><br>
-        <input type="submit" value="submit"/>
+        HRA (% of monthly basic): {{ form.hra_percentage }}<br><br>
+        Dearness Allowance (% of monthly basic): {{ form.dearness_percentage }}<br><br>
+        PF (% of monthly basic): {{ form.pf_percentage }}<br><br>
+        Medical Allowance (INR/month): {{ form.medical_allowance }}<br><br>
+        Conveyance Allowance (INR/month): {{ form.conveyance_allowance }}<br><br>
+        Washing Allowance (INR/month): {{ form.washing_allowance }}<br><br>
+        Other Allowance (% of monthly basic): {{ form.other_allowance_percentage }}<br><br>
+        Max Bonus (% of yearly basic):{{ form.max_bonus_percentage }}<br><br>
+        <input type="submit" value="Submit"/>
     </form>
 
 </body>
