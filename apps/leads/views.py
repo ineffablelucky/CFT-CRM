@@ -168,8 +168,8 @@ def upload_csv(request):
             data_dict["contact_person"] = fields[2]
             data_dict["source"] = fields[3]
             data_dict["source_type"] = fields[4]
-            data_dict["description"] = fields[5]
-            data_dict["assigned_boolean"] = fields[6]
+            data_dict["description"] = fields[6]
+            data_dict["assigned_boolean"] = fields[5]
             data_dict["email"] = fields[7]
             data_dict["website"] = fields[8]
 
@@ -177,11 +177,6 @@ def upload_csv(request):
             lead=LEADS(**data_dict)
             lead.save()
             return JsonResponse(data={'error':'success'})
-
-
-
-
-
 
     except Exception as e:
 
