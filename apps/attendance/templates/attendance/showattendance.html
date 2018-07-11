@@ -35,15 +35,13 @@
                         <form action="{% url 'attendance:show_attendance' %}"   method="get">
                             <fieldset>
                                 <div class="row">
-                                    <div class="col-lg-3 xdisplay_inputx form-group ">
+                                    <div class="col-lg-3 xdisplay_inputx form-group " >
                                         <!--{{ form.date.label }}-->
-                                        <p>From Date: {{ form.date }}</p><br>
-                                        <p>{{ form.to_date.label }} {{ form.to_date }}</p>
+                                        <span>From Date: {{ form.date }}</span>
+                                        <span>To Date: {{ form.to_date }}</span><br>
 
-                                        <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
+                                        <span class="#" aria-hidden="true"></span>
                                         {{ form.date.errors }}
-                                    </div>
-                                    <div class="col-lg-9">
                                         <button type="submit" class=" dateSbmt btn btn-success">Submit</button>
                                     </div>
                                 </div>

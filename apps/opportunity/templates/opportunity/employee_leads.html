@@ -16,7 +16,7 @@
                 {% endif %}
 
                 <a href="#"><li style="top:175px"><img src="{% static 'users/employee/images/Attendance icon.svg' %}"><span>Attendance</span></li></a>
-                <a href="{% url 'ctc:salary' %}"><li style="top:234px"><img src="{% static 'users/employee/images/Salary Icon.svg' %}"><span>Salary</span></li></a>
+                <!--<a href="{% url 'ctc:salary' %}"><li style="top:234px"><img src="{% static 'users/employee/images/Salary Icon.svg' %}"><span>Salary</span></li></a>-->
                 <a href="{% url 'attendance:leave_request' %}"><li style="top:293px"><img src="{% static 'users/employee/images/Leave Req.. Icon.svg' %}"><span>Leave Request</span></li></a>
             </ul>
 {% endblock sidetab %}
@@ -74,7 +74,7 @@
                                             <th scope="col">CONTACT NUMBER</th>
                                             <th scope="col">EMAIL</th>
                                             <th scope="col">STATUS</th>
-                                            <th scope="col">ACTION</th>
+                                            <th scope="col">VIEW</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -135,7 +135,7 @@
                                     </li>
                                     {% endif %}
                                     <li class="page-item active-link">
-                                        <a class="page-link " href="#">{{ page_obj.number }}</a>
+                                        <a class="page-link " href="javascript:void(0)">{{ page_obj.number }}</a>
                                     </li>
                                     {% if page_obj.has_next %}
                                     <li class="page-item">

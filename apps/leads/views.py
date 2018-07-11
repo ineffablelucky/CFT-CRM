@@ -8,6 +8,7 @@ from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, UpdateView, DeleteView,ListView,DetailView,FormView
 from reportlab.pdfgen import canvas
 
+from apps.leads.serializer import MyUserSerializer
 from .models import LEADS
 from ..users.models import MyUser
 from rest_framework import viewsets
@@ -169,10 +170,10 @@ def upload_csv(request):
             data_dict["source"] = fields[3]
             data_dict["source_type"] = fields[4]
             data_dict["description"] = fields[5]
+            data_dict["assigned_boolean"] = fields[6]
+            data_dict["email"] = fields[7]
+            data_dict["website"] = fields[8]
 
-            data_dict["email"] = fields[6]
-            data_dict["website"] = fields[7]
-            data_dict["assigned_boolean"] = fields[8]
             print(data_dict)
             lead=LEADS(**data_dict)
             lead.save()

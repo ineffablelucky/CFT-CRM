@@ -10,7 +10,6 @@
 
     <title>{% block title %} Leave Requests {% endblock title %}</title>
 
-
 {% block page-content %}
 
 <div class="right_col" role="main">
@@ -53,7 +52,7 @@
 
                             <button type="submit">Approve</button>
                         </form>
-                        <form action="reject/{{ leave.id }}" style="display:inline" method="post" id="reject">
+                        <form action="{% url 'leave:reject' leave.id %}" style="display:inline" method="post" id="reject">
                             {% csrf_token %}
 
                             <button type="submit">Reject</button>

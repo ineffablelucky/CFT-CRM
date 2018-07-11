@@ -2,6 +2,11 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm, PasswordResetForm, PasswordChangeForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import permission_required, login_required
+from rest_framework import status
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+
+from apps.users.serializer import MyUserSerializer
 from .forms import RegistrationForm, ResetPasswordForm, EditProfile
 from .models import MyUser, user_token
 from django.core.mail import  send_mail
@@ -15,6 +20,19 @@ from django.views.generic import ListView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 import re
 from  django.db.models import Q
+
+
+@api_view(['POST'])
+def create_auth(request):
+    serialized = MyUserSerializer(data=request.data)
+    if serialized.is_valid():
+        print('devesh@@@@@@@@@@@@@@')
+
+
+        return Response(serialized.data, status=status.HTTP_201_CREATED)
+    else:
+        return Response(serialized._errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 @login_required
 @permission_required('users.add_myuser', raise_exception=True)
