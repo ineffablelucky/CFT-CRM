@@ -169,8 +169,8 @@ def upload_csv(request):
             data_dict["contact_person"] = fields[2]
             data_dict["source"] = fields[3]
             data_dict["source_type"] = fields[4]
-            data_dict["description"] = fields[5]
-            data_dict["assigned_boolean"] = fields[6]
+            data_dict["description"] = fields[6]
+            data_dict["assigned_boolean"] = fields[5]
             data_dict["email"] = fields[7]
             data_dict["website"] = fields[8]
 
@@ -178,11 +178,6 @@ def upload_csv(request):
             lead=LEADS(**data_dict)
             lead.save()
             return JsonResponse(data={'error':'success'})
-
-
-
-
-
 
     except Exception as e:
 
@@ -210,35 +205,50 @@ def LeadsAssign(request):
     return HttpResponseRedirect(reverse_lazy("leads:LeadDetails"))
 
 
-def DownloadPdf(request,id):
+def DownloadPdf(request):
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = 'attachment; filename="somefilename.pdf"'
     # data=['Date', 'Employee Id', 'Department', 'Name', 'Clock-in', 'Clock-out', 'Late', 'Attendance']
     # data.encode('utf-8')
-    leads=get_object_or_404(LEADS,id=id)
-    print(leads)
-    print(type(leads))
-    lead=[leads.company_name,leads.contact_number,leads.contact_person,leads.description,leads.website,leads.email,leads.source,leads.source_type,leads.assigned_boolean]
 
-    detail_string = u"  ".join(unicode(obj) for obj in lead)
+    leads=LEADS.objects.filter(assigned_boolean=False)
+    list=[]
+    for lead in leads:
+        a1=[lead.contact_number,lead.company_name,lead.contact_person,lead.source,lead.source_type,lead.description,lead.email,lead.website,lead.assigned_boolean]
 
+        list.append(a1)
+    i = 10
     p = canvas.Canvas(response)
+    for l in list:
+        string = str(l)
+        string = string.replace('[', '')
+        string = string.replace(']','')
+
+        length = len(string)
+        if length > 103 :
+            p.drawString(10, 800 - i, string[0:103])
+            string = string[104:length]
+            i = i + 12
+
+        p.drawString(10, 800 - i, string)
+        i = i + 15
 
 
-    p.drawString(10,800,detail_string)
-    # Close the PDF object cleanly, and we're done.
+
     p.showPage()
     p.save()
     return response
-def DownloadCsv(request,id):
+
+
+def DownloadCsv(request):
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="somefilename.csv"'
-    leads=get_object_or_404(LEADS,id=id)
-    print(leads)
-    print(type(leads))
-    lead=[leads.company_name,leads.contact_number,leads.contact_person,leads.description,leads.website,leads.email,leads.source,leads.source_type,leads.assigned_boolean]
-    writer = csv.writer(response)
-    writer.writerow(lead)
+
+    list=[]
+    lead=LEADS.objects.filter(assigned_boolean=False)
+    for lead in lead:
+        writer = csv.writer(response)
+        writer.writerow([lead.contact_number,lead.company_name,lead.contact_person,lead.source,lead.source_type,lead.description,lead.email,lead.website,lead.assigned_boolean])
     return response
 
 
