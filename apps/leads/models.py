@@ -17,8 +17,7 @@ class LEADS(models.Model):
     website=models.URLField(max_length=45,blank=True,null=True)
     assigned_boolean=models.BooleanField()
 
-    def __str__(self):
-        return self.email
+
 
     class Meta:
         permissions = (

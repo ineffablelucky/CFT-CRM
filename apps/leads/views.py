@@ -210,35 +210,58 @@ def LeadsAssign(request):
     return HttpResponseRedirect(reverse_lazy("leads:LeadDetails"))
 
 
-def DownloadPdf(request,id):
+def DownloadPdf(request):
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = 'attachment; filename="somefilename.pdf"'
     # data=['Date', 'Employee Id', 'Department', 'Name', 'Clock-in', 'Clock-out', 'Late', 'Attendance']
     # data.encode('utf-8')
-    leads=get_object_or_404(LEADS,id=id)
-    print(leads)
-    print(type(leads))
-    lead=[leads.company_name,leads.contact_number,leads.contact_person,leads.description,leads.website,leads.email,leads.source,leads.source_type,leads.assigned_boolean]
 
-    detail_string = u"  ".join(unicode(obj) for obj in lead)
+    leads=LEADS.objects.filter(assigned_boolean=False)
+    list=[]
+
+    for lead in leads:
+        a1=[lead.contact_number,lead.company_name,lead.contact_person,lead.source,lead.source_type,lead.description,lead.email,lead.website,lead.assigned_boolean]
+
+        list.append(a1)
+
+    print(list)
+
+    string=''
+    i = 10
 
     p = canvas.Canvas(response)
 
 
-    p.drawString(10,800,detail_string)
-    # Close the PDF object cleanly, and we're done.
+    for l in list:
+        string = str(l)
+        string = string.replace('[', '')
+        string = string.replace(']','')
+
+        length = len(string)
+        if length > 103 :
+            p.drawString(10, 800 - i, string[0:103])
+            string = string[104:length]
+            i = i + 12
+
+        p.drawString(10, 800 - i, string)
+        i = i + 15
+        print(string)
+
+
     p.showPage()
     p.save()
     return response
-def DownloadCsv(request,id):
+
+
+def DownloadCsv(request):
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="somefilename.csv"'
-    leads=get_object_or_404(LEADS,id=id)
-    print(leads)
-    print(type(leads))
-    lead=[leads.company_name,leads.contact_number,leads.contact_person,leads.description,leads.website,leads.email,leads.source,leads.source_type,leads.assigned_boolean]
-    writer = csv.writer(response)
-    writer.writerow(lead)
+
+    list=[]
+    lead=LEADS.objects.filter(assigned_boolean=False)
+    for lead in lead:
+        writer = csv.writer(response)
+        writer.writerow([lead.contact_number,lead.company_name,lead.contact_person,lead.source,lead.source_type,lead.description,lead.email,lead.website,lead.assigned_boolean])
     return response
 
 
