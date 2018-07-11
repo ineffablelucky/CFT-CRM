@@ -89,6 +89,7 @@ class TaskCreate(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
 class Edit_Task(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
 
     permission_required = ('task.change_task',)
+
     model = Task
     form_class = CreateTaskForm
     template_name = "update.html"

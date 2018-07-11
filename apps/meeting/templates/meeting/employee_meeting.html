@@ -1,50 +1,119 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Employee Meetings</title>
-</head>
-<body>
-    {% if user.is_authenticated %}
-        <div height="200">Hello {{ user.username }}</div>
-        <hr/>
+{% extends 'users/employee/emp_base.html' %}
+{% load static %}
+
+{% block extra-stylesheet %}
+        <!--<link rel="stylesheet" href="{% static 'meeting/css/leads.css' %}">-->
+        <link rel="stylesheet" href="{% static 'meeting/css/project-list.css' %}">
+        <link rel="stylesheet" href="{% static 'meeting/css/style.css' %}">
+{% endblock extra-stylesheet %}
+
+{% block sidetab %}
+            <ul class="list-unstyled">
+                <a href="{% url 'attendance:pastattendance' %}"><li style="top:58px" ><img src="{% static 'users/employee/images/Home icon.svg' %}"><span>Home</span></li></a>
+
+                {% if user.department == 'IT' %}
+                <a href="{% url 'project:employee-project' %}"><li style="top:117px"><img src="{% static 'users/employee/images/Projects icon.svg' %}"><span>Projects</span></li></a>
+                {% elif user.department == 'Marketing' %}
+                <a href="{% url 'opportunity:list_oppo' %}"><li style="top:117px" class="active"><img src="{% static 'users/employee/images/Projects icon.svg' %}"><span>Leads</span></li></a>
+                {% endif %}
+
+                <a href="#"><li style="top:175px"><img src="{% static 'users/employee/images/Attendance icon.svg' %}"><span>Attendance</span></li></a>
+                <!--<a href="{% url 'ctc:salary' %}"><li style="top:234px"><img src="{% static 'users/employee/images/Salary Icon.svg' %}"><span>Salary</span></li></a>-->
+                <a href="{% url 'attendance:leave_request' %}"><li style="top:293px"><img src="{% static 'users/employee/images/Leave Req.. Icon.svg' %}"><span>Leave Request</span></li></a>
+            </ul>
+{% endblock sidetab %}
+
+
+{% block page_content %}
+    <div class="main-content ">
+        <div class="row head">
+            <h4>Leads</h4>
+        </div>
+        {% if emp_meeting %}
         {% for meeting in emp_meeting %}
-            <p>Opportunity ID: {{ meeting.Opportunity.pk }}</p>
-            <p>Meeting ID: {{ meeting.pk }}</p>
-            <p>Date: {{ meeting.date }}</p>
-            <p>
-                Assigned To: {{meeting.Opportunity.assigned_to}}
-            </p>
-            <p>
-                Meeting Notes: {{ meeting.description|safe }}
-            </p>
-            <div>
-                {% if meeting.extras is not NULL %}
-                Extras:<br/>
-                <ul>
-                    {% for extra in meeting.extras.all %}
-                    <li>{{ extra.username }}</li>
-                    {% endfor %}
-                    {% endif %}
-                </ul>
+            <div class="view_lead">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="lead_left">
+
+                        <div class="row">
+                            <div class="col-md-3"> Opportunity ID: </div><div class="col-md-9"><p>{{ meeting.Opportunity.pk }}</p></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">Meeting ID: </div><div class="col-md-9"><p>{{ meeting.pk }}</p></div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">Date: </div><div class="col-md-9"><p>{{ meeting.date }}</p></div>
+
+                        </div>
+                    </div><!--lead_left-->
+                </div>
+                <div class="col-md-4">
+                    <h5>Notes</h5>
+                    <div class="lead_right">
+
+                        <ul class="notes_list">
+                            {{ meeting.description|safe }}
+                        </ul>
+
+                        <div class="add_btn">
+                            <a href="#" data-toggle="modal" data-target="#myModal{{ meeting.pk }}" class="add_btn_txt">Add Notes</a>
+                        </div>
+                        <div class="modal lead_popup" id="myModal{{ meeting.pk }}">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+
+                                    <h4>{{ form.description.label }}</h4>
+
+
+                                    <div class="modal-body">
+                                        <form method="post" action="{% url 'opportunity:meeting:add_meeting_notes' pk=meeting.Opportunity.pk meeting_id=meeting.pk %}">
+                                            {% csrf_token %}
+                                            <div class="form-group">
+                                                {{ form.description }}
+                                            </div>
+                                            {{ form.description.errors }}
+                                            <button type="submit" class="save_cncl_btn">Save</button>
+                                            <button type="button" class="save_cncl_btn" data-dismiss="modal">Cancel</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!--lead_right-->
+                </div>
             </div>
-            <div>
-                <fieldset>
-                    <legend>Meeting Notes</legend>
-                    <form method="post" action="{% url 'opportunity:meeting:add_meeting_notes' pk=meeting.Opportunity.pk meeting_id=meeting.pk %}">
-                        {% csrf_token %}
-                        <p>
-                            {{ form.description.errors }} {{ form.description.label }} {{ form.description }}
-                        </p>
-                        <input type="submit" value="Add">
-                    </form>
-                </fieldset>
-            </div>
-            <hr/>
-            <hr/>
+
+        </div>
         {% endfor %}
-    {% else %}
-        <div>You don't have permission</div>
-    {% endif %}
-</body>
-</html>
+        {% else %}
+            <div> Please ask you Project Manager to add meeting!</div>
+        {% endif %}
+    </div>
+        <!-- The Modal -->
+{% endblock page_content %}
+
+
+{% block footer %}
+            <div class="footer">
+                    <div class="row">
+                        <div class="footer-elements">
+                            <ul class="list-unstyled">
+                                <li>Terms of Use</li>
+                                <li>|</li>
+                                <li>Privacy Policy</li>
+                                <li>Code Flow Tech &copy 2018</li>
+                            </ul>
+                        </div>
+                    </div>
+            </div>
+{% endblock footer %}
+
+{% block extra-scripts %}
+        <script src="{% static 'meeting/js/project-list.js' %}"></script>
+        <script src="{% static 'meeting/js/leads.js' %}"></script>
+        <script>
+
+        </script>
+{% endblock extra-scripts %}

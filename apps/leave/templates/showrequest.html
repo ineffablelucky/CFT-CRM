@@ -10,7 +10,6 @@
 
     <title>{% block title %} Leave Requests {% endblock title %}</title>
 
-
 {% block page-content %}
 
 <div class="right_col" role="main">
@@ -48,12 +47,12 @@
                         <p><b>Leave Type:</b>{{ leave.leave_type }}</p>
                         <p><b>Status:</b> {{ leave.status }}</p>
                         <p><b>Reason:</b> {{ leave.note }}</p>
-                        <form action="approve/{{ leave.id }}" style="display:inline" method="post">
+                        <form action="{% url 'leave:approve' leave.id %}" style="display:inline" method="post" id="approve">
                             {% csrf_token %}
 
                             <button type="submit">Approve</button>
                         </form>
-                        <form action="reject/{{ leave.id }}" style="display:inline" method="post">
+                        <form action="{% url 'leave:reject' leave.id %}" style="display:inline" method="post" id="reject">
                             {% csrf_token %}
 
                             <button type="submit">Reject</button>
@@ -66,3 +65,68 @@
 </div>
 
 {% endblock page-content %}
+
+{% block extra-script %}
+<script>
+        $(document).ready(function(){
+            $('#approve').submit(function(event){
+                event.preventDefault();
+                that = $(this);
+                $.ajax({
+                    url:$('#approve').attr('action'),
+                    method:'post',
+                    data:$(this).serialize(),
+
+                    success:function(response){
+                        console.log(response);
+                        if (response.a == 'True'){
+                            alert("Already Approved or Rejected");
+                            }
+                        else if (response.a == 'Success'){
+                            alert("Successfully Approved");
+                            window.location = '/leave/leaverequest'
+                        }
+
+
+                    }
+
+                });
+            });
+
+
+
+        });
+
+    </script>
+    <script>
+        $(document).ready(function(){
+            $('#reject').submit(function(event){
+                event.preventDefault();
+                that = $(this);
+                $.ajax({
+                    url:$('#reject').attr('action'),
+                    method:'post',
+                    data:$(this).serialize(),
+
+                    success:function(response){
+                        console.log(response);
+                        if (response.b == 'True'){
+                            alert("Already Approved or Rejected");
+                            }
+                        else if (response.b == 'Success'){
+                            alert("Successfully Rejected");
+                            window.location = '/leave/leaverequest'
+                        }
+
+
+                    }
+
+                });
+            });
+
+
+
+        });
+
+    </script>
+{% endblock extra-script %}

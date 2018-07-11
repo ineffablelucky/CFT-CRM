@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .forms import LeaveForm, AttendanceForm
+from .forms import LeaveForm, AttendanceForm, GraphForm
 from django.views.generic import CreateView, TemplateView, UpdateView, ListView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.shortcuts import redirect
@@ -12,6 +12,7 @@ from ..users.models import MyUser
 import csv
 import json
 from django.http import JsonResponse
+from django.forms.models import model_to_dict
 
 
 import datetime
@@ -65,7 +66,12 @@ class LeaveRequestView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
         ins = form.save()
         # for i in ins:
         #     print(i.id)
-        return redirect('/attendance/leave')
+        return JsonResponse({'a': 'True'})
+        # return redirect('/attendance/leave/')
+
+    def form_invalid(self, form):
+        print(form.errors)
+        return JsonResponse({'error': form.errors})
 
 
 
@@ -108,7 +114,8 @@ class Clockin(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
         if not request.user.is_authenticated:
             return HttpResponseForbidden
         elif Attendance.objects.filter(user_id=self.request.user.id, date=datetime.date.today()):
-            return HttpResponse("Already clocked in")
+            a = "Clocked In"
+            return JsonResponse({'a': a})
 
         else:
             a = Attendance.objects.create(user_id=self.request.user.id,
@@ -126,7 +133,9 @@ class Clockin(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
                 a.note = str(late.hour)+" hrs" + str(late.minute) + " min's Late"
 
             a.save()
-            return redirect('/attendance/userattendance')
+            time_in = str(a.time_in.hour)+":"+str(a.time_in.minute)
+
+            return JsonResponse({'a': time_in})
 
 
 class Clockout(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
@@ -139,15 +148,17 @@ class Clockout(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
             return HttpResponseForbidden
 
         else:
-            a = Attendance.objects.get(user_id = self.request.user, date=datetime.date.today())
-            if a is None:
-                return HttpResponse("first CLock In")
-            elif a.time_out is not None:
-                return HttpResponse("Clockout Done")
+            if Attendance.objects.filter(user_id=self.request.user, date=datetime.date.today()):
+                a = Attendance.objects.get(user_id=self.request.user, date=datetime.date.today())
+                if a.time_out is not None:
+                    return JsonResponse({'b': "Clockout Done"})
+                else:
+                    a.time_out = datetime.datetime.today()
+                    a.save()
+                    time_out = str(a.time_out.hour)+":"+str(a.time_out.minute)
+                    return JsonResponse({'b': time_out})
             else:
-                a.time_out = datetime.datetime.today()
-                a.save()
-            return redirect('/attendance/userattendance')
+                return JsonResponse({'b': "First Clock In"})
 
 
 class PastAttendance(LoginRequiredMixin, PermissionRequiredMixin, ListView):
@@ -254,21 +265,24 @@ class EmployAttendance(LoginRequiredMixin, PermissionRequiredMixin, ListView):
         context['ab']=[]
         tmp = []
         for a in abc:
-            if a.time_out is None:
-                wh = 0
-                s = str(wh)
-                working_hours.append(s)
+            if a.time_out:
 
-            elif a.status is 'absent':
-                wh = 0
-                s = str(wh)
-                working_hours.append(s)
+                if a.status is 'absent':
+                    wh = 0
+                    s = str(wh)
+                    working_hours.append(s)
+
+                else:
+                    delta = datetime.timedelta(hours=a.time_in.hour, minutes=a.time_in.minute)
+                    wh = a.time_out-delta
+                    s = str(wh.hour)+" hrs " + str(wh.minute) + " min's"
+                    working_hours.append(s)
 
             else:
-                delta = datetime.timedelta(hours=a.time_in.hour, minutes=a.time_in.minute)
-                wh = a.time_out-delta
-                s = str(wh.hour)+" hrs " + str(wh.minute) + " min's"
+                wh = 0
+                s = str(wh)
                 working_hours.append(s)
+
             a.working_hours = s
             tmp.append(a)
 
@@ -349,24 +363,46 @@ def download_emp_excel_data(request):
 
 
 def attendance_graph(request):
-    return render(request, 'attendance/attendancebar.html')
+    form = GraphForm(request.GET)
+
+    return render(request, 'attendance/attendancebar.html',{'form':form})
 
 
 def ajax_data(request):
-    data = Attendance.objects.all()
+    data = Attendance.objects.filter(date__year=datetime.datetime.now().year)
+
     list1 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-    i = data[0].date.month
+    i = 0
     count = 0
     for d in data:
         if d.status == "absent" and d.date.month == i:
             count = count+1
-
         elif d.status == "absent" and d.date.month != i:
             i = d.date.month
             count = 1
         list1[i - 1] = count
 
     return JsonResponse(data={'list': list1})
+
+
+def ajax_data_change(request):
+    if request.method == 'GET':
+        year = request.GET['year2']
+        data = Attendance.objects.filter(date__year=year)
+        list2 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        i = 0
+        count = 0
+        for d in data:
+            if d.status == "absent" and d.date.month == i:
+                count = count + 1
+            elif d.status == "absent" and d.date.month != i:
+                i = d.date.month
+                count = 1
+            list2[i - 1] = count
+        return JsonResponse(data={'list': list2})
+
+
+
 
 
 

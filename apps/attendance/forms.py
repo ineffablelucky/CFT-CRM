@@ -10,34 +10,33 @@ from pytz import timezone
 class LeaveForm(forms.ModelForm):
     name = forms.CharField(
         max_length=100,
-        widget=forms.TextInput(attrs={'readonly': True, 'class': ''}),
+        widget=forms.TextInput(attrs={'readonly': True, 'class': 'form-control'}),
         label='Name'
     )
 
     date = forms.DateField(
-        widget=forms.TextInput(attrs={'type': 'date', 'class': ''}),
+        widget=forms.TextInput(attrs={'type': 'date', 'class': 'form-control'}),
         label='Start Date'
     )
 
     end_date = forms.DateField(
-        widget=forms.TextInput(attrs={'type': 'date', 'class': ''}),
+        widget=forms.TextInput(attrs={'type': 'date', 'class': 'form-control'}),
         label='End Date'
     )
 
     note = forms.CharField(
         max_length=500,
-        widget=forms.Textarea(attrs={'class': ''})
+        widget=forms.Textarea(attrs={'class': 'form-control'})
     )
 
     LEAVE_TYPE_CHOICES = (
         ('PL', 'Privilege leave'),
         ('CL', 'Casual leave'),
-        ('Half Day', 'Half Day')
     )
 
     leave_type = forms.ChoiceField(
         choices=LEAVE_TYPE_CHOICES,
-        widget=forms.Select(attrs={'class': ''}),
+        widget=forms.Select(attrs={'class': 'form-control'}),
         label='Type of Leave'
 
     )
@@ -226,4 +225,22 @@ class ClockoutForm(forms.ModelForm):
         return instance
 """
 
+
+class GraphForm(forms.ModelForm):
+    year=[]
+    for i in range(1990,2050):
+        a = (str(i),str(i))
+        year.append(a)
+
+    Year_Choice=tuple(year)
+    year2= forms.ChoiceField(
+        choices=Year_Choice,
+        widget=forms.Select(attrs={'class': ''}),
+        label='Select Year'
+
+    )
+
+    class Meta:
+        model=Attendance
+        fields=('year2',)
 

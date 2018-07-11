@@ -9,8 +9,8 @@ from django.urls import reverse, reverse_lazy
 from django.db.models import Q
 from apps.client.models import CLIENT
 import re
-from django.core.mail import  send_mail
-
+from django.core.mail import send_mail
+from django.http import HttpResponse, JsonResponse
 
 def sendEmail(subject, message, sender, to):
     send_mail(
@@ -27,6 +27,7 @@ class ListOppo(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     model = Opportunity
     template_name = 'opportunity/employee_leads.html'
     context_object_name = 'opportunity'
+    paginate_by = 2
     #print("Hello!!")
 
     def get_queryset(self):
@@ -35,15 +36,15 @@ class ListOppo(LoginRequiredMixin, PermissionRequiredMixin, ListView):
         queryset = Opportunity.objects.filter(Q(assigned_to=self.request.user) | Q(meeting__in=queryset2)).distinct()
         return queryset
 
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     context['form'] = AddProjManager()
-    #     return context
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = ChangeStatus()
+        return context
 
 # change status
 
 
-class C_Status(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+class Change_Status(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     permission_required = (
         'opportunity.change_opportunity',
         'opportunity.view_opportunity',
@@ -53,10 +54,44 @@ class C_Status(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     form_class = ChangeStatus
     success_url = reverse_lazy('opportunity:list_oppo')
 
+    # def get_queryset(self):
+    #     print(self.kwargs.get('pk'))
+    #     return None
+
+    # def get_form_kwargs(self):
+    #     kwargs = super().get_form_kwargs()
+    #     kwargs.update({'oppo_id': self.kwargs.get('pk')})
+    #     return kwargs
+    # def form_valid(self, form):
+    #     temp = super().form_valid(form)
+    #     print(self.kwargs.get('pk'))
+    #     oppo = Opportunity.objects.get(pk=self.kwargs.get('pk'))
+    #     if(oppo.proj_manager is )
+    #     print(oppo.proj_manager)
+    #     return temp
+    # def form_invalid(self, form):
+    #     temp = super().form_valid(form)
+    #     print('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$s')
+    #     print(temp.errors)
+
+
 # assigned leads
+# def change_status(request, pk):
+#     print(request.POST.get('status'))
+#     print("Hello World")
+#     choices = ['Approved', 'RQ_stage', 'Negotiation', 'Pending', 'Rejected']
+#     if request.method == 'POST':
+#         status = request.POST.get('status')
+#         if status in choices:
+#             opportunity = Opportunity.objects.get(pk=pk)
+#             opportunity.status = status
+#             opportunity.save()
+#             return JsonResponse({'success': 'success'})
+#
+#     return JsonResponse({'error': 'Please select a valid choice'})
 
 
-class A_Leads(LoginRequiredMixin, PermissionRequiredMixin, ListView):
+class Assigned_Leads(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     permission_required = (
         'opportunity.change_opportunity',
         'opportunity.add_opportunity',
@@ -82,7 +117,7 @@ class A_Leads(LoginRequiredMixin, PermissionRequiredMixin, ListView):
 # assign project manager
 
 
-class A_PManager(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+class Assign_ProjectManager(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     permission_required = (
         'opportunity.change_opportunity',
         'opportunity.add_opportunity',
@@ -98,7 +133,7 @@ class A_PManager(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
 # closed leads
 
 
-class C_Leads(LoginRequiredMixin, PermissionRequiredMixin, ListView):
+class Closed_Leads(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     permission_required = (
         'opportunity.change_opportunity',
         'opportunity.add_opportunity',
@@ -121,7 +156,7 @@ class C_Leads(LoginRequiredMixin, PermissionRequiredMixin, ListView):
 # declined leads
 
 
-class D_Leads(LoginRequiredMixin, PermissionRequiredMixin, ListView):
+class Declined_Leads(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     permission_required = (
         'opportunity.change_opportunity',
         'opportunity.add_opportunity',

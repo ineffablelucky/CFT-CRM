@@ -103,15 +103,12 @@ class RegistrationForm(UserCreationForm):
 
 
     def clean_email(self):
-        if self.instance.email:
-            return self.instance.email
-        else:
-            data = self.cleaned_data.get('email').lower()
-            try:
-                MyUser.objects.get(email=data)
-                raise forms.ValidationError("Email already exists")
-            except MyUser.DoesNotExist:
-                return data
+        data = self.cleaned_data.get('email').lower()
+        try:
+            MyUser.objects.get(email=data)
+            raise forms.ValidationError("Email already exists")
+        except MyUser.DoesNotExist:
+            return data
 
 
     def clean_first_name(self):
@@ -179,7 +176,6 @@ class RegistrationForm(UserCreationForm):
     designation_choices = (
         ('Employee', 'Employee'),
         ('Manager', 'Manager'),
-        ('NA', 'NA'),
     )
 
     department_choices = (
@@ -229,14 +225,14 @@ class RegistrationForm(UserCreationForm):
     first_name = forms.CharField(
         label='First name ',
         widget=forms.TextInput(
-            attrs={'class': 'form-control col-md-7 col-xs-12', 'placeholder': ''}
+            attrs={'class': 'form-control col-md-7 col-xs-12', 'placeholder': 'First name'}
         ),
     )
 
     middle_name = forms.CharField(
         label='Middle Name ',
         widget=forms.TextInput(
-            attrs={'class': 'form-control col-md-7 col-xs-12', 'placeholder': ''}
+            attrs={'class': 'form-control col-md-7 col-xs-12', 'placeholder': 'Middle name'}
         ),
         required = False,
     )
@@ -244,7 +240,7 @@ class RegistrationForm(UserCreationForm):
     last_name = forms.CharField(
         label='Last Name ',
         widget=forms.TextInput(
-            attrs={'class': 'form-control col-md-7 col-xs-12', 'placeholder': ''}
+            attrs={'class': 'form-control col-md-7 col-xs-12', 'placeholder': 'Last name'}
         ),
         required = False,
     )
@@ -252,7 +248,7 @@ class RegistrationForm(UserCreationForm):
     contact = forms.CharField(
         label='Contact ',
         widget=forms.NumberInput(
-            attrs={'class': 'form-control col-md-7 col-xs-12', 'placeholder': ''}
+            attrs={'class': 'form-control col-md-7 col-xs-12', 'placeholder': 'contact no'}
         ),
         required = False,
     )
@@ -266,13 +262,13 @@ class RegistrationForm(UserCreationForm):
     )
     password1 = forms.CharField(
         widget=forms.PasswordInput(
-            attrs={'class': 'form-control col-md-7 col-xs-12',}
+            attrs={'class': 'form-control col-md-7 col-xs-12', 'placeholder': 'Password'}
         )
     )
 
     password2 = forms.CharField(
         widget=forms.PasswordInput(
-            attrs={'class': 'form-control col-md-7 col-xs-12',}
+            attrs={'class': 'form-control col-md-7 col-xs-12', 'placeholder': 'Retype password'}
         )
     )
 
@@ -436,7 +432,6 @@ class EditProfile(forms.ModelForm):
     designation_choices = (
         ('Employee', 'Employee'),
         ('Manager', 'Manager'),
-        ('NA', 'NA'),
     )
 
     department_choices = (

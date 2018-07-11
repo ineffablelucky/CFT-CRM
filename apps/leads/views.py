@@ -6,7 +6,13 @@ from django.http import request, HttpResponse
 from django.shortcuts import render, HttpResponseRedirect, get_object_or_404, redirect
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, UpdateView, DeleteView,ListView,DetailView,FormView
+from reportlab.pdfgen import canvas
+
+from apps.leads.serializer import MyUserSerializer
 from .models import LEADS
+from ..users.models import MyUser
+from rest_framework import viewsets
+# from ..leads.serializer import MyUserSerializer
 from django.contrib.messages.views import SuccessMessageMixin
 from .forms import CreateForm,DetailForm,UpdateForm
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
@@ -17,6 +23,21 @@ from django.http import JsonResponse
 from django.http import HttpResponse
 from pytz import unicode
 import csv
+from rest_framework import generics
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+
+@api_view(['POST', 'GET'])
+def hello(request):
+    return Response({'hi': 'hello'}, status=200)
+
+def MyUserViewSet(request):
+    """
+    API endpoint that allows users to be viewed or edited.
+    """
+    queryset = MyUser.objects.all()
+    data = MyUserSerializer(queryset, many=True)
+    return JsonResponse(data={'data':data.data})
 
 
 
@@ -90,8 +111,6 @@ def check(request,id):
 
             return JsonResponse(data={'true':'true'})
         else:
-
-
             return JsonResponse(data={'error': form.errors})
     return JsonResponse({"details incorrect":"details incorrect"})
 
@@ -115,22 +134,25 @@ class LeadDelete(LoginRequiredMixin,PermissionRequiredMixin,DeleteView):
 @permission_required('leads.view_leads', raise_exception=True)
 def upload_csv(request):
     data = {}
-    if "GET" == request.method:
+    if request.method == 'GET':
         return render(request, "leads/upload_csv.html", data)
     # if not GET, then proceed
 
     try:
-        csv_file = request.FILES["csv_file"]
+        print('^^^^^^^^^^^^^^^^^^6')
+        print(request.FILES)
+        csv_file = request.FILES["file"]
+        print('%%%%%%%%%%%%%%%%%%%%', csv_file)
 
         if not csv_file.name.endswith('.csv'):
             messages.error(request, 'File is not CSV type')
-
-            return HttpResponseRedirect(reverse("leads:upload_csv"))
+            print('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
+            return JsonResponse(data={'error': 'Uploaded file is not CSV'})
         # if file is too large, return
         if csv_file.multiple_chunks():
             messages.error(request, "Uploaded file is too big (%.2f MB)." % (csv_file.size / (1000 * 1000),))
 
-            return HttpResponseRedirect(reverse("leads:upload_csv"))
+            return JsonResponse(data={'error':'Uploaded file is too big'})
 
         file_data = csv_file.read().decode("utf-8")
 
@@ -147,27 +169,24 @@ def upload_csv(request):
             data_dict["contact_person"] = fields[2]
             data_dict["source"] = fields[3]
             data_dict["source_type"] = fields[4]
-            data_dict["description"] = fields[5]
+            data_dict["description"] = fields[6]
+            data_dict["assigned_boolean"] = fields[5]
+            data_dict["email"] = fields[7]
+            data_dict["website"] = fields[8]
 
-            data_dict["email"] = fields[6]
-            data_dict["website"] = fields[7]
-            data_dict["assigned_boolean"] = fields[8]
             print(data_dict)
             lead=LEADS(**data_dict)
             lead.save()
-            return HttpResponseRedirect(reverse("leads:LeadDetails"))
-
-
-
-
-
+            return JsonResponse(data={'error':'success'})
 
     except Exception as e:
 
         logging.getLogger("error_logger").error("Unable to upload file. " + repr(e))
         # messages.error(request, "Unable to upload file. " + repr(e))
+        return JsonResponse(data={'error': 'cannot Upload this file'})
 
-    return HttpResponseRedirect(reverse("leads:upload_csv"))
+
+
 
 @login_required
 @permission_required('leads.view_leads', raise_exception=True)
