@@ -29,7 +29,7 @@
 <script>
   $('.form-horizontal').submit(function(e){
     e.preventDefault();
-    var formdata = new FormData($(this));
+    var formdata = new FormData($(this)[0]);
 
     formdata.append( 'file', $( '#csv_file' )[0].files[0] );
 
