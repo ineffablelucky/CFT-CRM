@@ -243,15 +243,15 @@ $(document).ready(function() {
             $('.modal-body').html(data);
         }});
     });
-        $('.upload1').click(function(e){
-            e.preventDefault();
-             $.ajax({url:'../upload/csv/',success:function(data){
+    $('.upload1').click(function(e){
+        e.preventDefault();
+         $.ajax({url:'../upload/csv/',success:function(data){
 
-                $('.modal-body-2').html(data);
+            $('.modal-body-2').html(data);
 
-             }});
+         }});
 
-        });
+    });
 
     $('.delete').click(function(){
 

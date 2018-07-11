@@ -8,7 +8,11 @@ from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, UpdateView, DeleteView,ListView,DetailView,FormView
 from reportlab.pdfgen import canvas
 
+from apps.leads.serializer import MyUserSerializer
 from .models import LEADS
+from ..users.models import MyUser
+from rest_framework import viewsets
+# from ..leads.serializer import MyUserSerializer
 from django.contrib.messages.views import SuccessMessageMixin
 from .forms import CreateForm,DetailForm,UpdateForm
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
@@ -19,6 +23,21 @@ from django.http import JsonResponse
 from django.http import HttpResponse
 from pytz import unicode
 import csv
+from rest_framework import generics
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+
+@api_view(['POST', 'GET'])
+def hello(request):
+    return Response({'hi': 'hello'}, status=200)
+
+def MyUserViewSet(request):
+    """
+    API endpoint that allows users to be viewed or edited.
+    """
+    queryset = MyUser.objects.all()
+    data = MyUserSerializer(queryset, many=True)
+    return JsonResponse(data={'data':data.data})
 
 
 
@@ -114,53 +133,62 @@ class LeadDelete(LoginRequiredMixin,PermissionRequiredMixin,DeleteView):
 @login_required
 @permission_required('leads.view_leads', raise_exception=True)
 def upload_csv(request):
-
+    data = {}
     if request.method == 'GET':
-        return render(request, "leads/upload_csv.html")
+        return render(request, "leads/upload_csv.html", data)
     # if not GET, then proceed
 
     try:
-
-        csv_file = request.FILES["csv_file"]
+        print('^^^^^^^^^^^^^^^^^^6')
+        print(request.FILES)
+        csv_file = request.FILES["file"]
+        print('%%%%%%%%%%%%%%%%%%%%', csv_file)
 
         if not csv_file.name.endswith('.csv'):
-            # messages.error(request, 'File is not CSV type')
-            # cde=messages.error(request, 'File is not CSV type')
-            return JsonResponse(data={'error': 'File is not CSV type'})
-
+            messages.error(request, 'File is not CSV type')
+            print('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
+            return JsonResponse(data={'error': 'Uploaded file is not CSV'})
         # if file is too large, return
         if csv_file.multiple_chunks():
-            # messages.error(request, "Uploaded file is too big (%.2f MB)." % (csv_file.size / (1000 * 1000),))
+            messages.error(request, "Uploaded file is too big (%.2f MB)." % (csv_file.size / (1000 * 1000),))
 
-
-            return JsonResponse(data={'error':'Uploaded file is too big (%.2f MB).'})
+            return JsonResponse(data={'error':'Uploaded file is too big'})
 
         file_data = csv_file.read().decode("utf-8")
-        print(file_data)
 
         lines = file_data.split("\n")
         # loop over the lines and save them in db. If error , store as string and then display
-        print(lines)
-        print('$$$$$$$$$$$$$$$$s')
         print(len(lines))
-        for l in range(0,len(lines)):
+        for l in range(1,len(lines)):
             fields = lines[l].split(",")
-            print(fields)
-            print('!!!!!!!!!!!!!!!!!')
 
-            data_dict = {"contact_number": fields[0], "company_name": fields[1], "contact_person": fields[2],
-                         "source": fields[3], "source_type": fields[4],"assigned_boolean":fields[6], "description": fields[5], "website": fields[8],
-                         "email": fields[7]}
+            data_dict = {}
+            print(fields)
+            data_dict["contact_number"] = fields[0]
+            data_dict["company_name"] = fields[1]
+            data_dict["contact_person"] = fields[2]
+            data_dict["source"] = fields[3]
+            data_dict["source_type"] = fields[4]
+            data_dict["description"] = fields[5]
+            data_dict["assigned_boolean"] = fields[6]
+            data_dict["email"] = fields[7]
+            data_dict["website"] = fields[8]
 
             print(data_dict)
             lead=LEADS(**data_dict)
             lead.save()
-            return JsonResponse(data={'error':'Uploaded Successfully'})
+            return JsonResponse(data={'error':'success'})
+
+
+
+
+
 
     except Exception as e:
+
         logging.getLogger("error_logger").error("Unable to upload file. " + repr(e))
-        # ghi=messages.error(request, "Unable to upload file. " + repr(e))
-        return JsonResponse(data={'error': 'Unable to upload file'})
+        # messages.error(request, "Unable to upload file. " + repr(e))
+        return JsonResponse(data={'error': 'cannot Upload this file'})
 
 
 

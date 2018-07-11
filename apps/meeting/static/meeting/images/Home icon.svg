@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19 19" width="19" height="19">
+	<defs>
+		<image width="19" height="19" id="img1" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAATCAMAAABFjsb+AAAAh1BMVEUAAAD///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////9qkf8RAAAALXRSTlMAU/ZL+vBCvhQ39MkLL/HQDyvr1BUp5Nwc9yD7oNHs2JCYNper2gc6/XZwTf+4dY+pAAAAlklEQVR4nKXNxxKDIAAEUCzRKAoWFGuwl5j//74woAa9Zi8Lb2cAgD2aroFbDPNhGleydPtp65ZKjgs94EHX+ZGPcMArwMg/KIxiIg4kjkJJSUqzfc1omojOUXG+UqCc74SWlfJbVVIC6hdrFGvYqwZthy+Gu5bXzUT9Zb1ivbRhnE6axkH0vMD1LbPCZZbjxj5H2MbvX2IkDKIsfXR5AAAAAElFTkSuQmCC"/>
+	</defs>
+	<style>
+		tspan { white-space:pre }
+	</style>
+	<use id="Home icon" href="#img1" transform="matrix(1,0,0,1,0,0)"/>
+</svg>

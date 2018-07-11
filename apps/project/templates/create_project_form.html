@@ -62,7 +62,7 @@
                              {{ form.project_description.errors }}
                          </div>
 
-
+                          {% if not object.id %}
                           <div class="item form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">Project Start Date</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
@@ -81,6 +81,7 @@
                             </div>
                              {{ form.project_end_date_time.errors }}
                          </div>
+                         {% endif %}
 
 
                          <div class="item form-group">

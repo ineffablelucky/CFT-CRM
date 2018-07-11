@@ -28,6 +28,24 @@ class ChangeStatus(forms.ModelForm):
         model = Opportunity
         fields = ('status',)
 
+    def __init__(self, *args, **kwargs):
+
+        super().__init__(*args, **kwargs)
+        print(args, "----------------------", kwargs)
+        if kwargs:
+            print('hello world')
+            self.oppo = kwargs.get('instance').proj_manager
+            print(self.oppo)
+
+    # def clean(self):
+    #     super().clean()
+    #     if self.oppo is not None:
+    #         self.add_error(None, "Project Manager Not Assigned")
+        #print(id)
+        # temp = Opportunity.objects.get(id=self.oppo)
+        # print(temp)
+
+
 
 class AddProjManager(forms.ModelForm):
     proj_manager = forms.ModelChoiceField(
@@ -196,6 +214,7 @@ class CreateClientForm(forms.ModelForm):
         company_name = self.cleaned_data.get('company_name')
         project_end_date = self.cleaned_data.get('project_end_date')
         project_total_working_hr = self.cleaned_data.get('project_total_working_hr')
+
         if commit:
             instance.save()
         project = IT_Project.objects.create(
@@ -214,14 +233,17 @@ class CreateClientForm(forms.ModelForm):
             address=client_address,
             client_user=instance
         )
+
         client.save()
         group_user = Group.objects.get_by_natural_key('Client Group')
-        group_user.user_set.add(client)
+        group_user.user_set.add(instance)
 
         project = IT_Project.objects.get(opportunity=opportunity)
         project.client_id = client
         project.save()
+
         opportunity_modify = Opportunity.objects.get(pk=opportunity.pk)
+
         opportunity_modify.price = amount
         opportunity_modify.client = client
         opportunity_modify.project_description = project_description

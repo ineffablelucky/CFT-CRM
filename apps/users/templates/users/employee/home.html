@@ -16,7 +16,7 @@
                 {% endif %}
 
                 <a href="#"><li style="top:175px"><img src="{% static 'users/employee/images/Attendance icon.svg' %}"><span>Attendance</span></li></a>
-                <a href="{% url 'ctc:salary' %}"><li style="top:234px"><img src="{% static 'users/employee/images/Salary Icon.svg' %}"><span>Salary</span></li></a>
+                <!--<a href="{% url 'ctc:salary' %}"><li style="top:234px"><img src="{% static 'users/employee/images/Salary Icon.svg' %}"><span>Salary</span></li></a>-->
                 <a href="{% url 'attendance:leave_request' %}"><li style="top:293px"><img src="{% static 'users/employee/images/Leave Req.. Icon.svg' %}"><span>Leave Request</span></li></a>
             </ul>
 {% endblock sidetab %}
@@ -34,7 +34,7 @@
                                 <div class="row text-left display-time">
                                     <div class="col-lg-6">
                                         <p id="clock_in"></p>
-                                        <form method="post" action="{% url 'attendance:clockin' %}">
+                                        <form method="post" action="{% url 'attendance:clockin' %}" id="in">
                                             {% csrf_token %}
                                           <button type="submit" class="clock-btn clock-in btn " ><span>CLOCK IN</span></button>
                                         </form>
@@ -42,7 +42,8 @@
 
                                     <div class="col-lg-6">
                                         <p class=""></p>
-                                        <form method="post" action="{% url 'attendance:clockout' %}">
+                                        <p id="clock_out"></p>
+                                        <form method="post" action="{% url 'attendance:clockout' %}" id="out">
                                             {% csrf_token %}
                                             <button type="submit" class="clock-btn clock-out btn"><span>CLOCK OUT</span></button>
                                         </form>
@@ -51,6 +52,9 @@
 
                                 <div class="table-wrapper">
                                     <div class="row table-scroll">
+                                        <div class="clock">
+
+                                        </div>
                                         <table class="table text-left">
                                             <thead>
                                                 <tr class="heads">
@@ -258,5 +262,71 @@
 
 {% block extra-scripts %}
         <script src="{% static 'users/employee/js/home.js' %}"></script>
+    <script>
+        $(document).ready(function(){
+            $('#in').submit(function(event){
+                console.log(event);
+                event.preventDefault();
+                that = $(this);
+
+                $.ajax({
+                    url:'/attendance/clock/in/',
+                    method:'post',
+                    data:$(this).serialize(),
+
+                    success:function(response){
+                        console.log(response);
+                        var b = response.a;
+                        if (response.a != 'Already Clocked In')
+                            $('#clock_in').html(response.a);
+                        else
+                            $('#clock_in').html(response.a);
+                            $('.clock-in').click(function(){
+                            that.find('button').attr('disabled', true);
+                            });
+
+                    }
+
+                });
+            });
+
+
+
+        });
+
+    </script>
+    <script>
+        $(document).ready(function(){
+            $('#out').submit(function(event){
+                console.log(event);
+                event.preventDefault();
+                that = $(this);
+
+                $.ajax({
+                    url:'/attendance/clock/out/',
+                    method:'post',
+                    data:$(this).serialize(),
+
+                    success:function(response){
+                        console.log(response);
+                        var b = response.b;
+                        if (response.b != 'Already Clocked In')
+                            $('#clock_out').html(response.b);
+                        else
+                            $('#clock_out').html(response.a);
+                            $('.clock-out').click(function(){
+                            that.find('button').attr('disabled', true);
+                            });
+
+                    }
+
+                });
+            });
+
+
+
+        });
+
+    </script>
 {% endblock extra-scripts %}
 

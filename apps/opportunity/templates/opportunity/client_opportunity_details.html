@@ -31,7 +31,9 @@
                             {% for item in client_opportunity %}
                             <div>
                                 <p>Opportunity ID: {{ item.pk }}</p>
-                                <p>Opportunity Name: Currently No Name</p>
+                                <!--<p>Opportunity Name: Currently No Name</p>-->
+                                <p>Contact Person: {{ item.lead.contact_person }}</p>
+                                <p>Contact Number: {{ item.lead.contact_number }}</p>
                                 <p>Opportunity Description: {{ item.project_description }}</p>
                                 <p>
                                     Assigned To: {{ item.assigned_to.username }}

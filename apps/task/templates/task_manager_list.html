@@ -64,7 +64,7 @@
                         <!--</form>-->
                       <!--<p id ="proj_id">{{ project_id }}</p>-->
                       <div class="text-right" style="margin-bottom: 10px">
-                        <form class="createTask" href="{% url 'task:task-add' %}" method="get">
+                        <form class="createTask" action="{% url 'task:task-add' %}" method="get">
                             {% csrf_token %}
                             <button data-toggle="modal" data-target="#exampleModal" type="button" class="btn createBtn btn-md">
                                 Create New Task
@@ -134,8 +134,8 @@
 
     <script>
         $(document).ready(function(){
-            var url = $('.createTask').attr('href');
-
+            var url = $('.createTask').attr('action');
+            console.log(url);
             $('.createTask').click(function(event){
                 event.preventDefault();
                 $.ajax({

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 4 18" width="4" height="18">
+	<defs>
+		<image width="4" height="18" id="img1" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAASAQMAAABGsO27AAAABlBMVEUAAAApV63PZtBmAAAAAnRSTlMAx3OTmisAAAANSURBVHicY2BgSCAEAWyEBmHncN2uAAAAAElFTkSuQmCC"/>
+	</defs>
+	<style>
+		tspan { white-space:pre }
+	</style>
+	<use id="Line" href="#img1" transform="matrix(1,0,0,1,0,0)"/>
+</svg>

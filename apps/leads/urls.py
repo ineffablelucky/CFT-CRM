@@ -1,10 +1,11 @@
-from django.urls import path
+from django.urls import path,include
 from django.views.generic import TemplateView,ListView
 from .import views
-from django.conf.urls.static import static
-from configs import settings
 
-app_name = 'leads'
+
+
+from configs import settings
+app_name='leads'
 urlpatterns =[
     #path('i',views.LeadIndex.as_view(),name='LeadIndex'),
     path('details/',views.LeadDetails.as_view(),name='LeadDetails'),
@@ -15,8 +16,11 @@ urlpatterns =[
     path('editajax/<int:id>',views.check),
 
     path('upload/csv/', views.upload_csv, name='upload_csv'),
+
     path('downloadpdf/<int:id>',views.DownloadPdf,name='LeadDownloadpdf'),
     path('downloadcsv/<int:id>',views.DownloadCsv,name='LeadDownloadcsv'),
+    path('api/hello/',views.hello),
+    path('api',views.MyUserViewSet)
 
 
 

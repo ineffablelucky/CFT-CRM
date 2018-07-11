@@ -23,14 +23,14 @@
                         <img src="{% static 'users/login/images/avatar.png' %}">
                         <h5>A ROBUST AND SECURE WAY OF ATTENDANCE TRACKING</h5>
 
-                        <form method="POST", action="{% url 'users:login' %}">
+                        <form method="POST", id="login-form" action="{% url 'users:login' %}">
                         {% csrf_token %}
                             <div class="form-group" style="position: relative">
-                                <input class="form-control form-control-lg"  name="email_or_username" id="username" placeholder="Email-Id/Username" autofocus>
+                                <input class="form-control form-control-lg"  name="email_or_username" id="username" placeholder="Email-Id/Username" autofocus required>
                                 <span class="bar-1"></span>
                             </div>
                             <div class="form-group" style="position: relative">
-                                <input class="form-control form-control-lg" type="password" name="password" id="password" placeholder="***************">
+                                <input class="form-control form-control-lg" type="password" name="password" id="password" placeholder="***************" required>
                                 <span class="bar-2"></span>
                             </div>
                             <div class="row">
