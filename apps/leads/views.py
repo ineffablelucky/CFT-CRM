@@ -8,6 +8,7 @@ from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, UpdateView, DeleteView,ListView,DetailView,FormView
 from reportlab.pdfgen import canvas
 
+from apps.leads.serializer import MyUserSerializer
 from .models import LEADS
 from ..users.models import MyUser
 from rest_framework import viewsets
