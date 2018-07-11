@@ -79,7 +79,19 @@ class MyUserSerializer(serializers.Serializer):
         else:
             return design
 
-
-
+#
+# {
+#     "email": "gdshg@gmail.com",
+#     "first_name": "devesh",
+#     "middle_name": "",
+#     "last_name": "",
+#     "password1": "a1password",
+#     "password2": "a1password",
+#     "contact": "9632587416",
+#     "department": "Marketing",
+#     "designation": "Manager",
+#     "gender": "M"
+#
+# }
 
 

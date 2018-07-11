@@ -213,20 +213,12 @@ def DownloadPdf(request):
 
     leads=LEADS.objects.filter(assigned_boolean=False)
     list=[]
-
     for lead in leads:
         a1=[lead.contact_number,lead.company_name,lead.contact_person,lead.source,lead.source_type,lead.description,lead.email,lead.website,lead.assigned_boolean]
 
         list.append(a1)
-
-    print(list)
-
-    string=''
     i = 10
-
     p = canvas.Canvas(response)
-
-
     for l in list:
         string = str(l)
         string = string.replace('[', '')
@@ -240,7 +232,7 @@ def DownloadPdf(request):
 
         p.drawString(10, 800 - i, string)
         i = i + 15
-        print(string)
+
 
 
     p.showPage()

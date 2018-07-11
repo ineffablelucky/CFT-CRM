@@ -29,6 +29,7 @@ def create_auth(request):
         print('devesh@@@@@@@@@@@@@@')
 
 
+
         return Response(serialized.data, status=status.HTTP_201_CREATED)
     else:
         return Response(serialized._errors, status=status.HTTP_400_BAD_REQUEST)
