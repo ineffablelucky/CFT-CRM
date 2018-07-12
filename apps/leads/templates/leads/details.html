@@ -137,8 +137,7 @@
                                         <!--</a>-->
                                         <!--<a href="{% url 'leads:LeadDelete' leads.id %}">-->
                                             <button type="button" data-toggle="modal" data-target="#exampleModal1" class="delete">Delete</button>
-                                        <a href="{% url 'leads:LeadDownloadpdf' leads.id%}"><button id="downloadpdf" type="button">Download in PDF</button></a>
-                                        <a href="{% url 'leads:LeadDownloadcsv' leads.id%}"><button id="downloadcsv" type="button">Download in CSV</button></a>
+
                                         <!--</a>-->
                                     </td>
                                     <!--<td class=" last">-->
@@ -147,6 +146,7 @@
                             {% endfor %}
                          </tbody>
                         </table>
+
                       </div>
                         {% else %}
                       <h1>No leads available</h1>
@@ -161,10 +161,13 @@
                                 <input type="submit" value="Assign" id="ram"/></a>
                         </div>
                         </form>
-                        <a href="{% static 'media/abc.csv' %}" download="abc.csv"><button>Download Leads</button></a>
-                        <!--<a href="{% url 'leads:upload_csv' %}">-->
-                            <button type="button" data-toggle="modal" data-target="#exampleModal2" class="upload1" >Import Leads</button>
-                        <!--</a>-->
+                        <a href="{% static 'media/abc.csv' %}" download="abc.csv"><button>Download format for Leads</button></a>
+
+                        <button type="button" data-toggle="modal" data-target="#exampleModal2" class="upload1" >Import Leads</button>
+                        <a href="{% url 'leads:LeadDownloadpdf' %}"><button id="downloadpdf" type="button">Download in PDF</button></a>
+                        <a href="{% url 'leads:LeadDownloadcsv' %}"><button id="downloadcsv" type="button">Download in CSV</button></a>
+
+
                     </div>
                     </div>
                   </div>

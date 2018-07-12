@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm, PasswordResetForm, PasswordChangeForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import permission_required, login_required
+from django.views.decorators.csrf import csrf_exempt
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -18,20 +19,23 @@ from django.http import HttpResponse, JsonResponse
 from django.urls import reverse
 from django.views.generic import ListView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.views.decorators.csrf import csrf_exempt
 import re
 from  django.db.models import Q
 
 
 @api_view(['POST'])
+@csrf_exempt
 def create_auth(request):
-    serialized = MyUserSerializer(data=request.data)
-    if serialized.is_valid():
+    serializer = MyUserSerializer(data=request.data)
+    if serializer.is_valid():
         print('devesh@@@@@@@@@@@@@@')
+        print(serializer)
+        serializer.save()
 
-
-        return Response(serialized.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
     else:
-        return Response(serialized._errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response(serializer._errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 @login_required

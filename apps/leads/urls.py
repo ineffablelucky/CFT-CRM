@@ -17,8 +17,8 @@ urlpatterns =[
 
     path('upload/csv/', views.upload_csv, name='upload_csv'),
 
-    path('downloadpdf/<int:id>',views.DownloadPdf,name='LeadDownloadpdf'),
-    path('downloadcsv/<int:id>',views.DownloadCsv,name='LeadDownloadcsv'),
+    path('downloadpdf/',views.DownloadPdf,name='LeadDownloadpdf'),
+    path('downloadcsv/',views.DownloadCsv,name='LeadDownloadcsv'),
     path('api/hello/',views.hello),
     path('api',views.MyUserViewSet)
 
