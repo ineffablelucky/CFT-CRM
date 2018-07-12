@@ -5,7 +5,9 @@ class SalaryGenerationForm(forms.Form):
     a=timezone.now().year
     year_choices = [tuple([str(x), x]) for x in range(2010, a+1)]
 
-    year = forms.ChoiceField(choices=year_choices)
+    year = forms.ChoiceField(choices=year_choices,widget=forms.Select(
+                    attrs={'class':"form-control"}
+                ))
     # year = forms.ChoiceField(choices=year_choices,
     #     widget = forms.Select(
     #         attrs={"onChange":'formSubmit()'}
@@ -27,7 +29,12 @@ class SalaryGenerationForm(forms.Form):
         ('12', 'December')
     )
 
-    month = forms.ChoiceField(choices=month_choices)
+    month = forms.ChoiceField(
+        choices=month_choices,
+        widget=forms.Select(
+                    attrs={'class':"form-control"}
+                )
+    )
 
     # month = forms.ChoiceField(choices = month_choices,
     #     widget=forms.Select(
