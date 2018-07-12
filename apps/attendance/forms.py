@@ -48,7 +48,7 @@ class LeaveForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         # print(kwargs, args)
         self.logged_user = kwargs.pop('logged_user')
-        super(LeaveForm, self).__init__(*argnames, **kwargs)
+        super(LeaveForm, self).__init__(*args, **kwargs)
         self.fields['name'].initial = self.logged_user
 
     """

@@ -385,7 +385,6 @@ def ajax_data(request):
     return JsonResponse(data={'list': list1})
 
 
-
 def ajax_data_change(request):
     if request.method == 'GET':
         year = request.GET['year2']
