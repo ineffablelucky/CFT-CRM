@@ -51,7 +51,7 @@ $(document).on('submit', '#login-form', function(e){
 
     $.ajax({
         type:'POST',
-        url:'/',
+        url:'',
         data:$(this).serialize(),
         success:function(data){
             if(data.success == 'success'){
