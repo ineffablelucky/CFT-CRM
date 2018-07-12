@@ -15,7 +15,7 @@ class LEADS(models.Model):
     description=models.CharField(max_length=45)
     email=models.EmailField(unique=True)
     website=models.URLField(max_length=45,blank=True,null=True)
-    assigned_boolean=models.BooleanField()
+    assigned_boolean=models.BooleanField(default=False)
 
 
 
