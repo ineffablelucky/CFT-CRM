@@ -1,5 +1,7 @@
+from django.db.models import Q
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
+from rest_framework.authtoken.models import Token
 import re
 from django.contrib.auth.hashers import make_password
 from .models import MyUser
@@ -9,34 +11,58 @@ from django.contrib.auth import (
 from django.contrib.auth.models import Group
 
 
-class MyUserSerializer(serializers.ModelSerializer):
+class MyUserSerializer(serializers.Serializer):
     email = serializers.EmailField(validators=[UniqueValidator(queryset=MyUser.objects.all())])
-    password=serializers.CharField()
+    password1=serializers.CharField()
+    password2=serializers.CharField()
+    first_name=serializers.CharField()
+    middle_name = serializers.CharField(allow_blank=True)
+    last_name = serializers.CharField(allow_blank=True)
+    contact=serializers.IntegerField()
 
-    class Meta:
-        model = MyUser
-        fields = (
-            'email',
+    designation_choices = (
+        ('Employee', 'Employee'),
+        ('Manager', 'Manager'),
+    )
 
-            'first_name',
-            'middle_name',
-            'password',
-            'last_name',
-            'contact',
-            'department',
-            'designation',
-            'gender',
-        )
+    department_choices = (
+        ('HR', 'HR'),
+        ('Marketing', 'Marketing'),
+        ('Accounts', 'Accounts'),
+        ('IT', 'IT'),
+    )
+
+    gender_choice = (
+        ('M', 'M'),
+        ('F', 'F'),
+        ('Other', 'Other'),
+    )
+    department=serializers.ChoiceField(
+        label='department',
+        choices=department_choices
+    )
+    gender=serializers.ChoiceField(
+        label='gender',
+        choices=gender_choice
+    )
+    designation=serializers.ChoiceField(
+        label='designation',
+        choices=designation_choices
+    )
 
     def create(self,validated_data):
         print('*******************')
 
         print(validated_data)
+        validated_data.pop('password1')
+        validated_data.pop('password2')
+
+        print(validated_data,"filtered")
+
         myuser=MyUser(**validated_data)
         myuser.username=myuser.email.split('@')[0]
         myuser.save()
-        print(myuser.department)
-        print(myuser.designation)
+
 
         if myuser.designation == 'Admin':
             group_user = Group.objects.get_by_natural_key('Admin Group')
@@ -104,8 +130,28 @@ class MyUserSerializer(serializers.ModelSerializer):
 
         return myuser
 
+    def validate(self, data):
+        print(type(data))
+        print(data)
+        passwd1=data.get('password1')
+        print(passwd1,'%%%%%%%%%%%%%%%%')
+        passwd2=data.get('password2')
+        print(passwd2,'$$$$$$$$$$$$$$$')
+        if not data.get('password1') or not data.get('password2'):
+            raise serializers.ValidationError("Please enter a password and "
+                                              "confirm it.")
 
+        if data.get('password1') != data.get('password2'):
+            raise serializers.ValidationError("Those passwords don't match.")
 
+        passw=data.get('password1')
+        data['password']=make_password(passw)
+
+        print(data)
+        # data.pop('password1')
+        # data.pop('password2')
+        print(data,'~!@#$%^&*()')
+        return data
 
     def validate_email(self,email):
         try:
@@ -155,30 +201,22 @@ class MyUserSerializer(serializers.ModelSerializer):
 
     def validate_designation(self, design):
         return design
-        # if design==dept:
-        #     raise serializers.ValidationError("designation and department both can not be NA")
-        # elif design=='Client' and dept!='NA':
-        #     raise serializers.ValidationError('not correct match of designation and department')
-        # else:
-        #     return design
-    def validate_password(self,passw):
-        passw=make_password(passw)
-        return passw
 
 
-# {
-#     "email": "gdshg@gmail.com",
-#     "first_name": "devesh",
-#     "middle_name": "",
-#     "last_name": "",
-#     "password1": "a1password",
-#     "password2": "a1password",
-#     "contact": "9632587416",
-#     "department": "Marketing",
-#     "designation": "Manager",
-#     "gender": "M"
-#
-# }
+class UserLogin(serializers.Serializer):
+    username=serializers.CharField()
+    password=serializers.CharField()
+
+    def validate(self,data):
+        username1=data.get('username')
+        password1=data.get('password')
+        user=MyUser.objects.filter(Q(username=username1) & Q(password=password1))
+        if user:
+            token = Token.objects.create(user=user)
+            print(token.key)
+            return token
+        return serializers.ValidationError("Wrong credentials for access")
+
 
 
 
