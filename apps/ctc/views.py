@@ -1,5 +1,5 @@
 from .forms import SalaryGenerationForm
-from django.views.generic import FormView,ListView
+from django.views.generic import FormView,ListView, CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from apps.salary_percentages.models import Salary_Structure
 from apps.monthly_salary.models import Monthly_Salary
@@ -26,13 +26,15 @@ class CTC(LoginRequiredMixin,ListView):
      context_object_name = 'context'
 
      def get_queryset(self):
-         queryset= CTC_breakdown.objects.get(staff_id = self.request.user,year=self.request.POST['year'])
+         queryset= CTC_breakdown.objects.get(staff_id = self.request.user,year=self.request.GET['year'])
          return queryset
 
      def get_context_data(self,**kwargs):
          context = super().get_context_data()
-         context['struct'] = Salary_Structure.objects.get(financial_year=self.request.POST['year'])
+         print(self.request.GET)
+         context['struct'] = Salary_Structure.objects.get(financial_year=self.request.GET['year'])
          return context
+
 
 @login_required
 def Download_Salary(request):

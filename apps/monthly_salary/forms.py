@@ -10,16 +10,20 @@ class BasicSalaryForm(ModelForm):
     #staff=forms.IntegerField(required=True)
     year = forms.CharField(
                            widget=forms.TextInput(
-                               attrs={'readonly': True}
+                               attrs={'readonly': True, 'class': 'form-control col-md-7 col-xs-12'}
                            ))
 
     month = forms.CharField(
         widget=forms.TextInput(
-            attrs={'readonly': True}
+            attrs={'readonly': True,'class': 'form-control col-md-7 col-xs-12'}
         ))
 
-    basic_monthly_salary= forms.FloatField()
-    given_bonus=forms.IntegerField()
+    basic_monthly_salary= forms.FloatField(
+                           widget=forms.TextInput(
+                               attrs={'class': 'form-control col-md-7 col-xs-12'}))
+
+    given_bonus=forms.IntegerField(widget=forms.TextInput(
+                               attrs={'class': 'form-control col-md-7 col-xs-12'}))
 
     class Meta:
         model=Monthly_Salary
@@ -37,8 +41,7 @@ class BasicSalaryForm(ModelForm):
             instance.year=self.cleaned_data.get('year')
             instance.month=self.cleaned_data.get('month')
             instance.save()
-            #local=CTC_breakdown.objects.create(year=instance.year)
-            local=CTC_breakdown.objects.get(year=instance.year)
+            local=CTC_breakdown.objects.get(staff_id=self.instance.staff_id,year=instance.year)
             local.year = instance.year
             local.save()
             my_list=[instance,local]

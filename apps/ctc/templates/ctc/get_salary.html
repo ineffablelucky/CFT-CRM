@@ -5,7 +5,7 @@
     <title>Title</title>
 </head>
 <body>
-    <form action="{%url 'ctc:ctc' %}" method="POST">
+    <form action="{% url 'ctc:ctc' %}" method="GET">
         {% csrf_token %}
         Select Year: {{ form.year }}
         <button type="submit">Get CTC breakdown</button>

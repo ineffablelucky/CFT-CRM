@@ -5,7 +5,9 @@
     <title>Salary info</title>
 </head>
 <body>
-<p>Year:{{context.year}}</p>>
+<p>Year:{{context.year}}</p>
+<p>User ID: {{ context.staff.id}}</p>
+<p>Username:{{ context.staff.username }}</p>
 <table border ="1">
         <thead>
             <tr>
@@ -17,7 +19,7 @@
         </thead>
         <tbody>
             <tr>
-                <td>Basic</td>
+                <td>Basic Salary</td>
                 <td></td>
                 <td class="monthly"></td>
                 <td class="yearly">{{  context.basic_yearly }}</td>
