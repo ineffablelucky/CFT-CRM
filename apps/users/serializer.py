@@ -14,7 +14,7 @@ class MyUserSerializer(serializers.ModelSerializer):
         model = MyUser
         fields = (
             'email',
-            'username',
+
             'first_name',
             'middle_name',
             'password',
@@ -29,7 +29,15 @@ class MyUserSerializer(serializers.ModelSerializer):
         print('*******************')
         print(validated_data)
         user=MyUser.objects.create(**validated_data)
+        user.username = user.email.split('@')[0]
+
         return user
+
+    def validate_email(self,email):
+        user=MyUser
+
+        return email
+
 
     def validate_first_name(self,firstname):
         if re.match('^[a-zA-Z]*$',firstname):
