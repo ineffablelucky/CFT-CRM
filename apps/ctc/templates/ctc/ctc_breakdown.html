@@ -5,6 +5,9 @@
     <title>Salary info</title>
 </head>
 <body>
+<p>Year:{{context.year}}</p>
+<p>User ID: {{ context.staff.id}}</p>
+<p>Username:{{ context.staff.username }}</p>
 <table border ="1">
         <thead>
             <tr>
@@ -16,40 +19,70 @@
         </thead>
         <tbody>
             <tr>
-                <td>Basic</td>
-                <td>50% CTC</td>
+                <td>Basic Salary</td>
+                <td></td>
                 <td class="monthly"></td>
-                <td class="yearly"> {{  context.basic }} </td>
+                <td class="yearly">{{  context.basic_yearly }}</td>
             </tr>
             <tr>
                 <td>HRA</td>
-                <td>{{  struct.hra_percentage }}</td>
+                <td>{{  struct.hra_percentage }}% of basic</td>
                 <td class="monthly"></td>
-                <td class="yearly"> {{ context.hra  }}</td>
+                <td class="yearly">{{context.hra_yearly}}</td>
             </tr>
             <tr>
-                <td>PPF</td>
-                <td>{{  struct.ppf_percentage }}</td>
+                <td>PF</td>
+                <td>{{  struct.pf_percentage }}%of basic</td>
                 <td class="monthly"></td>
-                <td class="yearly">{{  context.ppf }}</td>
+                <td class="yearly">{{  context.pf_yearly }}</td>
             </tr>
             <tr>
-                <td>Allowances</td>
-                <td>{{  struct.allowances }}</td>
+                <td>Conveyance Allowance</td>
+                <td>Fixed</td>
+                <td>Rs.{{struct.conveyance_allowance}}/-</td>
+                <td>Rs.{{ context.conveyance_allowance_yearly }}/-</td>
+            </tr>
+            <tr>
+                <td>Dearness Allowance</td>
+                <td>{{struct.dearness_percentage}}% of basic</td>
                 <td class="monthly"></td>
-                <td class="yearly">{{ context.allowances }}</td>
+                <td class="yearly">{{ context.dearness_allowance_yearly }}</td>
+            </tr>
+            <tr>
+                <td>Medical Allowance</td>
+                <td>Fixed</td>
+                <td>Rs.{{struct.medical_allowance}}/-</td>
+                <td>Rs.{{ context.medical_allowance_yearly }}/-</td>
+            </tr>
+            <tr>
+                <td>Washing Allowance</td>
+                <td>Fixed</td>
+                <td>Rs.{{struct.washing_allowance}}/-</td>
+                <td>Rs.{{ context.washing_allowance_yearly }}/-</td>
+            </tr>
+            <tr>
+                <td>Other Allowances</td>
+                <td>{{struct.other_allowance_percentage}}% of basic</td>
+                <td class="monthly"></td>
+                <td class="yearly">{{ context.other_allowance_yearly }}</td>
+            </tr>
+            <tr>
+                <td>CTC Max Bonus</td>
+                <td></td>
+                <td></td>
+                <td>{{  context.max_bonus }}</td>
+            </tr>
+            <tr>
+                <td>Fixed Salary</td>
+                <td></td>
+                <td class="monthly"></td>
+                <td class="yearly">{{  context.fixed_yearly_salary }}</td>
             </tr>
             <tr>
                 <td>CTC</td>
                 <td></td>
                 <td></td>
                 <td>{{  context.ctc }}</td>
-            </tr>
-            <tr>
-                <td>CTC Max Bonus</td>
-                <td></td>
-                <td></td>
-                <td>{{  context.ctc_max_bonus }}</td>
             </tr>
         </tbody>
 </table>
@@ -59,7 +92,7 @@
     var yearlyAmt = document.getElementsByClassName("yearly");
 
     for(var i=0;i<monthlyAmt.length;i++){
-        monthlyAmt[i].innerHTML = (yearlyAmt[i].innerHTML)/12;
+        monthlyAmt[i].innerHTML=yearlyAmt[i].innerHTML/12 ;
 
     }
 </script>

@@ -1,8 +1,7 @@
 
-
 {% extends 'apps/users/templates/users/base.html' %}
 
-    <title>{% block title %} Edit Salary {% endblock title %}</title>
+    <title>{% block title %} Monthly Salary {% endblock title %}</title>
 
 
 
@@ -11,20 +10,21 @@
           <div class="">
             <div class="page-title">
               <div class="title_left">
-                <h3>Monthly Salary</h3>
+                <h3>Edit Salary</h3>
                 <a href="{% url 'salary_percentages:salary_structure' %}"><button>View Salary Structure</button></a>
-                <a href ="{% url 'salary_percentages:salary' %}"><button>Edit Salary</button></a>
-                <a href ="{% url 'salary_percentages:monthly_salary' %}"><button>Monthly Salary</button></a>
+                <a href ="{% url 'monthly_salary:edit_salary_list' %}"><button>Edit Salary</button></a>
+                <a href ="{% url 'monthly_salary:monthly_salary_list' %}"><button>Monthly Salary</button></a>
               </div>
-                <form method="GET" id="salary_form">
-                    Month:{{ form.month }}
-                    Year:{{ form.year }}
-                </form>
+
               <div class="title_right">
+                  <form method="GET">
+                      Select Month: {{ form.month }}
+                      Select Year: {{ form.year }}
+                      <button type="submit">GO!</button><br><br>
+                  </form>
                 <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
                   <div class="input-group">
                     <input type="text" class="form-control" placeholder="Search for...">
-
                     <span class="input-group-btn">
                       <button class="btn btn-default" type="button">Go!</button>
                     </span>
@@ -60,12 +60,14 @@
                       <div class="col-md-4 col-sm-4 col-xs-12 profile_details">
                         <div class="well profile_view">
                           <div class="col-sm-12">
-                            <h4 class="brief"><i>Employee ID: {{ i.employee.id }}</i></h4>
+                            <h4 class="brief"><i>User ID: {{ i.staff.id }}</i></h4>
                             <div class="left col-xs-7">
-                              <h2>{{ i.employee.username }}</h2>
-                              <p><strong>Department: </strong> {{ i.employee.department }} </p>
+                              <h2>Username: {{ i.staff.username }}</h2>
+                              <p><strong>Department: </strong> {{ i.staff.department }} </p>
+                              <p><strong> Fixed Monthly Salary</strong>{{ i.fixed_monthly_salary }} </p>
                               <ul class="list-unstyled">
-                                <li><i class="fa fa-building"></i> Fixed Monthly Salary: {{ i.fixed_monthly_salary }} </li>
+                                <li><i class="fa fa-building"></i> Email: {{ i.staff.email }} </li>
+                                <li><i class="fa fa-phone"></i> Phone : {{ i.staff.contact }}</li>
                               </ul>
                             </div>
                             <div class="right col-xs-5 text-center">
@@ -74,20 +76,16 @@
                           </div>
                           <div class="col-xs-12 bottom text-center">
                             <div class="col-xs-12 col-sm-6 emphasis">
-                              <a href="{% url 'salary_percentages:view_monthly_salary' i.employee.id %}?{{ request.GET.urlencode|yesno:'&, '}}{{ request.GET.urlencode }}"><button type="button" class="btn btn-primary btn-xs" >
-                                <i class="fa fa-user"> </i> View Salary
+                              <button type="button" class="btn btn-success btn-xs"> <i class="fa fa-user">
+                                </i> <i class="fa fa-comments-o"></i> </button>
+                              <a href="{% url 'monthly_salary:monthly_salary' i.staff_id %}?{{ request.GET.urlencode|yesno:'&, '}}{{ request.GET.urlencode }}"><button type="button" class="btn btn-primary btn-xs" >
+                                <i class="fa fa-user"> </i> View Monthly Salary
                               </button></a>
                             </div>
                           </div>
                         </div>
                       </div>
                     {% endfor %}
-                        <script>
-                        function formSubmit()
-                        {
-                            document.getElementById("salary_form").submit();
-                        }
-                        </script>
                     </div>
                   </div>
                 </div>
@@ -98,36 +96,5 @@
 {% endblock page-content %}
 
 
-
-<!--DOCTYPE html>
-<html-- lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<a href="{% url 'salary_percentages:salary_structure' %}"><button>View Salary Structure</button></a>
-<a href="{% url 'salary_percentages:salary' %}"><button>Edit Salary</button></a><br><br>
-    <form method="GET" id="salary_form">
-        Month:{{ form.month }}<br>
-        Year:{{ form.year }}<br>
-    </form><br>
-    {% for i in context %}
-    <div>
-        Employee ID: {{ i.employee.id }}<br>
-        Username: {{ i.employee.username }}<br>
-        Fixed Monthly Salary:{{ i.fixed_monthly_salary}}<br>
-        <a href="{% url 'salary_percentages:view_monthly_salary' i.employee.id %}?{{ request.GET.urlencode|yesno:'&, '}}{{ request.GET.urlencode }}">View Salary</a>
-    </div><br>
-    {% endfor %}
-    <script>
-    function formSubmit()
-{
-     document.getElementById("salary_form").submit();
-}
-
-</script>
-</body>
-</html-->
 
 

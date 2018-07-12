@@ -77,7 +77,7 @@
                             </tbody>
 
                         </table><br>
-                        <button type="submit"><a href="{% url 'attendance:download' %}?current_date={{ attendance.0.date|date:'Y-m-d' }}{{ request.GET.urlencode|yesno:'&, '}}{{ request.GET.urlencode }}">Download Attendance</a></button>
+                        <a href="{% url 'attendance:download' %}?current_date={{ attendance.0.date|date:'Y-m-d' }}{{ request.GET.urlencode|yesno:'&, '}}{{ request.GET.urlencode }}"><button type="submit">Download Attendance</button></a>
                       </div>
                     </div>
                   </div>

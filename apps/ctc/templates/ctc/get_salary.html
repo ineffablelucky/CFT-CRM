@@ -1,22 +1,95 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-    <a href ="{% url 'ctc:ctc' %}">Get CTC Breakdown</a><br><br>
-    <form method="GET" id="salary_form">
-        Month:{{ form.month }}
-        Year:{{ form.year }}
-    </form>
-    <a href="{% url 'ctc:download_salary' %}?{{ request.GET.urlencode|yesno:'&, '}}{{ request.GET.urlencode }}">Download Salary Slip</a>
-<script>
-    function formSubmit()
-{
-     document.getElementById("salary_form").submit();
-}
+{% extends 'users/employee/emp_base.html' %}
+{% load static %}
 
-</script>
-</body>
-</html>
+{% block extra-stylesheet %}
+        <link rel="stylesheet" href="{% static 'ctc/css/salary.css' %}">
+{% endblock extra-stylesheet %}
+
+{% block sidetab %}
+            <ul class="list-unstyled">
+                <a href="{% url 'attendance:pastattendance' %}"><li style="top:58px" ><img src="{% static 'users/employee/images/Home icon.svg' %}"><span>Home</span></li></a>
+                {% if user.department == 'IT' %}
+                <a href="{% url 'project:employee-project' %}"><li style="top:117px"><img src="{% static 'users/employee/images/Projects icon.svg' %}"><span>Projects</span></li></a>
+                {% elif user.department == 'Marketing' %}
+                <a href="{% url 'opportunity:list_oppo' %}"><li style="top:117px" ><img src="{% static 'users/employee/images/Projects icon.svg' %}"><span>Leads</span></li></a>
+                {% endif %}
+                <a href="#"><li style="top:175px"><img src="{% static 'users/employee/images/Attendance icon.svg' %}"><span>Attendance</span></li></a>
+                <a href="{% url 'ctc:salary' %}"><li style="top:234px" class="active"><img src="{% static 'users/employee/images/Salary Icon.svg' %}"><span>Salary</span></li></a>
+                <a href="{% url 'attendance:leave_request' %}"><li style="top:293px"><img src="{% static 'users/employee/images/Leave Req.. Icon.svg' %}"><span>Leave Request</span></li></a>
+            </ul>
+{% endblock sidetab %}
+
+
+{% block page_content %}
+<div class="main-content ">
+    <div class="row head">
+        <h4>Salary</h4>
+    </div>
+
+    <form action="{% url 'ctc:ctc' %}" method="GET">
+    <div>
+            Select Year:{{ form.year}}
+            <div class="card">
+                <div class="card-body">
+                    <button type="submit"> Get CTC Breakdown</button>
+                </div>
+            </div>
+
+    </div>
+        </form>
+
+    <div class="row top-form-container" id="year" class="form-control">
+        <form action="{% url 'ctc:download_salary' %}" method="POST">
+            {% csrf_token %}
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label>Month</label>
+                    {{ form.month }}
+                </div>
+                <div class="form-group col-md-4">
+                                <label>Year</label>
+                                {{ form.year }}
+
+                            </div>
+                            <button type="submit" class="download-btn">Download Salary Slip(PDF)</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="row">
+                    <p class="display-text">You can download your salary slip from here anytime.</p>
+                </div>
+
+                <div class="row">
+                    <p class="months">Months</p>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 columns download-btn-bottom-container">
+                        <button type="submit" class="download-btn">March 2018</button>
+                    </div>
+                    <div class="col-md-4 columns download-btn-bottom-container">
+                        <button type="submit" class="download-btn">April 2018</button>
+                    </div>
+                    <div class="col-md-4 columns download-btn-bottom-container">
+                        <button type="submit" class="download-btn">May 2018</button>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 columns download-btn-bottom-container">
+                        <button type="submit" class="download-btn">June 2018</button>
+                    </div>
+                    <div class="col-md-4 columns download-btn-bottom-container">
+                        <button type="submit" class="download-btn">July 2018</button>
+                    </div>
+                </div>
+            </div>
+{% endblock page_content %}
+
+
+{% block extra-scripts %}
+        <script src="{% static 'ctc/js/salary.js' %}"></script>
+
+{% endblock extra-scripts %}
+

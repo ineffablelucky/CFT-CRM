@@ -3,13 +3,7 @@ from . import views
 app_name = "salary_percentages"
 
 urlpatterns = [
-    path('', views.salary, name="salary"),
-    path('edit_salary/<int:id>/', views.edit_salary, name="edit_salary"),
-    path('monthly_salary/', views.monthly_salary, name="monthly_salary"),
-    path('view_monthly_salary/<int:id>/', views.view_monthly_salary, name="view_monthly_salary"),
-    path('edit_salary/<int:id>/edit_ctc/',views.edit_ctc,name="edit_ctc"),
-    path('edit_salary/<int:id>/edit_bonus/',views.edit_bonus,name="edit_bonus"),
-    path('structure/', views.salary_structure, name="salary_structure"),
+    path('', views.salary_structure, name="salary_structure"),
     path('add/',views.add, name="add"),
     path('upload_csv/',views.upload_csv,name="upload_csv"),
 

@@ -1,5 +1,3 @@
-
-
 {% extends 'apps/users/templates/users/base.html' %}
 
     <title>{% block title %} Edit Salary {% endblock title %}</title>
@@ -13,8 +11,8 @@
               <div class="title_left">
                 <h3>Edit Salary</h3>
                 <a href="{% url 'salary_percentages:salary_structure' %}"><button>View Salary Structure</button></a>
-                <a href ="{% url 'salary_percentages:salary' %}"><button>Edit Salary</button></a>
-                <a href ="{% url 'salary_percentages:monthly_salary' %}"><button>Monthly Salary</button></a>
+                <a href ="{% url 'monthly_salary:edit_salary_list' %}"><button>Edit Salary</button></a>
+                <a href ="{% url 'monthly_salary:monthly_salary_list' %}"><button>Monthly Salary</button></a>
               </div>
 
               <div class="title_right">
@@ -56,24 +54,26 @@
                       <div class="col-md-4 col-sm-4 col-xs-12 profile_details">
                         <div class="well profile_view">
                           <div class="col-sm-12">
-                            <h4 class="brief"><i>Employee ID: {{ i.employee.id }}</i></h4>
+                            <h4 class="brief"><i>User ID: {{ i.staff.id }}</i></h4>
                             <div class="left col-xs-7">
-                              <h2>{{ i.employee.username }}</h2>
-                              <p><strong>Department: </strong> {{ i.employee.department }} </p>
+                              <h2>{{ i.staff.first_name }}{{ i.staff.last_name }}</h2>
+                              <p><strong>Department: </strong> {{ i.staff.department }} </p>
+                              <p><strong>Designation: </strong> {{ i.staff.designation }} </p>
+                              <p><strong> Fixed Monthly Salary</strong>{{ i.fixed_monthly_salary }} </p>
                               <ul class="list-unstyled">
-                                <li><i class="fa fa-building"></i> Email: {{ i.employee.email }} </li>
-                                <li><i class="fa fa-phone"></i> Phone : {{ i.employee.contact }}</li>
+                                <li><i class="fa fa-phone"></i>{{ i.staff.contact }}</li>
+                                <li><i class="fa fa-envelope"><b>{{ i.staff.email }}</b></i></li>
                               </ul>
                             </div>
-                            <div class="right col-xs-5 text-center">
-                              <img src="images/img.jpg" alt="" class="img-circle img-responsive">
-                            </div>
+                            <!--<div class="right col-xs-5 text-center">-->
+                              <!--<img src="images/img.jpg" alt="" class="img-circle img-responsive">-->
+                            <!--</div>-->
                           </div>
                           <div class="col-xs-12 bottom text-center">
                             <div class="col-xs-12 col-sm-6 emphasis">
-                              <button type="button" class="btn btn-success btn-xs"> <i class="fa fa-user">
-                                </i> <i class="fa fa-comments-o"></i> </button>
-                              <a href="{% url 'salary_percentages:edit_salary' i.employee_id %}"><button type="button" class="btn btn-primary btn-xs" >
+                              <!--<button type="button" class="btn btn-success btn-xs"> <i class="fa fa-user">-->
+                                <!--</i> <i class="fa fa-comments-o"></i> </button>-->
+                              <a href="{% url 'monthly_salary:edit_salary' i.staff_id %}"><button type="button" class="btn btn-primary btn-xs" >
                                 <i class="fa fa-user"> </i> Edit Salary
                               </button></a>
                             </div>
@@ -89,5 +89,4 @@
           </div>
         </div>
 {% endblock page-content %}
-
 
