@@ -1,9 +1,7 @@
 from django.urls import path
 from . import views
 from django.views.generic import TemplateView
-from .views import EmployeeProfile
-
-
+from .views import EmployeeProfile, Logout
 
 app_name = 'users'
 
@@ -25,7 +23,8 @@ urlpatterns = [
     path('reset-link/<str:key>/', views.verify, name='verify'),
     path('reset-password/<str:token>/', views.reset_password, name='reset_password'),
     path('api/register/',views.create_auth),
-    path('api/login/',views.login_api)
+    path('api/login/',views.login_api),
+    path('api/logout/',Logout.as_view()),
 
 
 ]

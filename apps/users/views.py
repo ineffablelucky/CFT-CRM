@@ -6,6 +6,8 @@ from django.views.decorators.csrf import csrf_exempt
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from rest_framework.authtoken.models import Token
+from rest_framework.views import APIView
 
 from apps.users.serializer import MyUserSerializer
 from apps.users.serializer import UserLogin
@@ -32,6 +34,7 @@ def create_auth(request):
     serializer = MyUserSerializer(data=request.data)
     if serializer.is_valid():
         user = serializer.save()
+
         return Response("success", status=status.HTTP_201_CREATED)
     else:
         return Response(serializer._errors, status=status.HTTP_400_BAD_REQUEST)
@@ -40,12 +43,21 @@ def create_auth(request):
 @csrf_exempt
 def login_api(request):
     serializer=UserLogin(data=request.data)
+    print(request.data)
+    print(serializer)
     if serializer.is_valid():
-        print(serializer,"***********")
-        print(serializer.data,")))))))))))))")
-
-        return Response("some token is avaliable",status=status.HTTP_201_CREATED)
+        print('devesh')
+        print(serializer.validated_data)
+        return Response(serializer.validated_data['Token'],status=status.HTTP_201_CREATED)
     return Response("Cannot access token",status=status.HTTP_400_BAD_REQUEST)
+
+class Logout(APIView):
+    queryset = MyUser.objects.all()
+
+    def get(self, request, format=None):
+
+        request.user.auth_token.delete()
+        return Response(status=status.HTTP_200_OK)
 
 
 @login_required
@@ -136,14 +148,7 @@ class EditEmployeeProfile(LoginRequiredMixin, PermissionRequiredMixin, UpdateVie
     success_url = '/login/profile-all/'
     model = MyUser
 
-    # def form_invalid(self, form):
-    #     print("form is invalid")
-    #     print(form.errors)
-    #     return HttpResponse("form is invalid.. this is just an HttpResponse object")
 
-    # def get_queryset(self):
-    #     queryset = MyUser.objects.filter(id=self.kwargs.get('pk'))
-    #     return queryset
 
 
 def sendEmail(request, subject, message, sender, to):

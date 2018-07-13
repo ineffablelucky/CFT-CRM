@@ -64,6 +64,7 @@ class MyUserSerializer(serializers.Serializer):
         myuser.save()
 
 
+
         if myuser.designation == 'Admin':
             group_user = Group.objects.get_by_natural_key('Admin Group')
             group_user.user_set.add(myuser)
@@ -207,18 +208,27 @@ class UserLogin(serializers.Serializer):
     username=serializers.CharField()
     password=serializers.CharField()
 
+
+
     def validate(self,data):
+        print(data)
         username1=data.get('username')
         password1=data.get('password')
         password=make_password(password1)
         print(username1,password1)
         user=authenticate(username=username1,password=password1)
         print(user,"@@@@@@@@@@@@@@")
+        print(user.id)
         if user:
-            print("Hello World")
-            token = Token.objects.create(user_id=user.id)
-            print(token.key)
-            return token.key
+            # print("Hello World")
+            token=Token.objects.create(user_id=user.id)
+            print(token)
+
+
+            data['Token']=token.key
+            print(data)
+            return data
+
         return serializers.ValidationError("Wrong credentials for access")
 
 
