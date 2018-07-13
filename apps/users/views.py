@@ -41,9 +41,11 @@ def create_auth(request):
 def login_api(request):
     serializer=UserLogin(data=request.data)
     if serializer.is_valid():
+        print(serializer,"***********")
+        print(serializer.data,")))))))))))))")
 
-        return Response(serializer.data,status=status.HTTP_201_CREATED)
-    return Response(serializer.data,status=status.HTTP_400_BAD_REQUEST)
+        return Response("some token is avaliable",status=status.HTTP_201_CREATED)
+    return Response("Cannot access token",status=status.HTTP_400_BAD_REQUEST)
 
 
 @login_required

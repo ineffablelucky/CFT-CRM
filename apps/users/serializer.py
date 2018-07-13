@@ -210,11 +210,15 @@ class UserLogin(serializers.Serializer):
     def validate(self,data):
         username1=data.get('username')
         password1=data.get('password')
-        user=MyUser.objects.filter(Q(username=username1) & Q(password=password1))
+        password=make_password(password1)
+        print(username1,password1)
+        user=authenticate(username=username1,password=password1)
+        print(user,"@@@@@@@@@@@@@@")
         if user:
-            token = Token.objects.create(user=user)
+            print("Hello World")
+            token = Token.objects.create(user_id=user.id)
             print(token.key)
-            return token
+            return token.key
         return serializers.ValidationError("Wrong credentials for access")
 
 
