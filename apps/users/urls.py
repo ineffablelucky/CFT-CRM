@@ -3,6 +3,8 @@ from . import views
 from django.views.generic import TemplateView
 from .views import EmployeeProfile
 
+
+
 app_name = 'users'
 
 urlpatterns = [
@@ -23,5 +25,7 @@ urlpatterns = [
     path('reset-link/<str:key>/', views.verify, name='verify'),
     path('reset-password/<str:token>/', views.reset_password, name='reset_password'),
     path('api/register/',views.create_auth),
+    path('api/login/',views.login_api)
+
 
 ]

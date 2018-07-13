@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'apps.project.apps.ProjectConfig',
     'apps.complaints.apps.ComplaintsConfig',
     'rest_framework',
+    'rest_framework.authtoken',
     #'apps.salary_percentages.apps.SalaryPercentagesConfig',
 
 ]
@@ -171,6 +172,4 @@ try:
     from configs.local_settings import *
 except ImportError as e:
     pass
-
-
 

@@ -8,6 +8,8 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from apps.users.serializer import MyUserSerializer
+from apps.users.serializer import UserLogin
+
 from .forms import RegistrationForm, ResetPasswordForm, EditProfile
 from .models import MyUser, user_token
 from django.core.mail import  send_mail
@@ -29,13 +31,21 @@ from  django.db.models import Q
 def create_auth(request):
     serializer = MyUserSerializer(data=request.data)
     if serializer.is_valid():
-        print('devesh@@@@@@@@@@@@@@')
-        print(serializer)
-        serializer.save()
-
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+        user = serializer.save()
+        return Response("success", status=status.HTTP_201_CREATED)
     else:
         return Response(serializer._errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['POST'])
+@csrf_exempt
+def login_api(request):
+    serializer=UserLogin(data=request.data)
+    if serializer.is_valid():
+        print(serializer,"***********")
+        print(serializer.data,")))))))))))))")
+
+        return Response("some token is avaliable",status=status.HTTP_201_CREATED)
+    return Response("Cannot access token",status=status.HTTP_400_BAD_REQUEST)
 
 
 @login_required
