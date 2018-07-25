@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+    <body>
+
+
+            <p>Username:{{ request.user.username }}</p>
+            <div>
+            <form action="{% url 'attendance:clockin' %}" style="display:inline" method="post">
+                {% csrf_token %}
+
+            <input type="submit" value="clock in"></form>&nbsp;
+
+
+
+            <form action="{% url 'attendance:clockout' %}" style="display:inline" method="post">
+                {% csrf_token %}
+
+                <input type="submit" value="clock out">
+
+            </form>
+            </div><br>
+
+            <table border="1">
+    <tr>
+        <th>Date</th>
+        <th>Clock In</th>
+        <th>Clock Out</th>
+
+    </tr>
+    {% for attend in attendance %}
+        <tr>
+            <td>{{ attend.date }}</td>
+            <td>{{ attend.time_in }}</td>
+            <td>{{ attend.time_out }}</td>
+        </tr>
+    {% endfor %}
+</table>
+    </body>
+

@@ -1,0 +1,18 @@
+<!<!DOCTYPE html>
+<html>
+<head>
+	<title>Change opportunity Status</title>
+</head>
+<body>
+	{% if user.is_authenticated %}
+		<h1>Change Opportunity Status</h1>
+		<form id="category_form" method="post">
+			{% csrf_token %}
+			{{ form.status.errors }} {{ form.status.label }}{{ form.status }}
+			<input type="submit" value="Update"/>
+		</form>
+	{% else %}
+    	<div>You don't have permission</div>
+	{% endif %}
+</body>
+</html>

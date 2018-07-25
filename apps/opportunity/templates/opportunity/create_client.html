@@ -1,0 +1,137 @@
+
+
+{% extends 'apps/users/templates/users/base.html' %}
+
+{% block page-content %}
+<div class="right_col" role="main">
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h3>Client Creation Form</h3>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Create Client</h2>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <br />
+                        <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left" method="post" action="{% url 'opportunity:create_client' %}">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">{{ form.opportunity.label }} </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    {{ form.opportunity }}
+                                </div>
+                                {{ form.opportunity.errors }}
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">{{ form.email.label }} </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    {{ form.email }}
+                                </div>
+                                {{ form.email.errors }}
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">{{ form.company_name.label }} </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    {{ form.company_name }}
+                                </div>
+                                {{ form.company_name.errors }}
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">{{ form.client_address.label }} </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    {{ form.client_address }}
+                                </div>
+                                {{ form.client_address.errors }}
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">{{ form.project_name.label }} </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    {{ form.project_name }}
+                                </div>
+                                {{ form.project_name.errors }}
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">{{ form.project_description.label }} </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    {{ form.project_description }}
+                                </div>
+                                {{ form.project_description.errors }}
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">{{ form.project_start_date.label }} </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    {{ form.project_start_date }}
+                                </div>
+                                {{ form.project_start_date.errors }}
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">{{ form.project_end_date.label }} </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    {{ form.project_end_date }}
+                                </div>
+                                {{ form.project_end_date.errors }}
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">{{ form.project_total_working_hr.label }} </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    {{ form.project_total_working_hr }}
+                                </div>
+                                {{ form.project_total_working_hr.errors }}
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">{{ form.amount.label }} </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    {{ form.amount }}
+                                </div>
+                                {{ form.amount.errors }}
+                            </div>
+                            <div class="ln_solid"></div>
+                            <div class="form-group">
+                                <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                                    <button class="btn btn-primary" type="button">Cancel</button>
+                                    <button type="submit" class="btn btn-success">Create</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock page-content %}
+
+{% block extra-script %}
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.5/js/bootstrap-select.min.js"></script>
+{% endblock extra-script %}
+
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+    <!--<meta charset="UTF-8">-->
+    <!--<title>Title</title>-->
+<!--</head>-->
+<!--<body>-->
+    <!--{% if user.is_authenticated %}-->
+        <!--<div height="200">Hello {{ user.username }}</div>-->
+        <!--<hr/>-->
+        <!--<form action="{% url 'opportunity:create_client' %}" method="post">-->
+            <!--{% csrf_token %}-->
+            <!--{{ form.as_p }}-->
+            <!--<input type="submit" value="Add Client">-->
+        <!--</form>-->
+    <!--{% else %}-->
+        <!--<div>You don't have permission</div>-->
+    <!--{% endif %}-->
+<!--</body>-->
+<!--</html>-->

@@ -1,0 +1,61 @@
+
+
+
+
+<form action="{% url 'leads:upload_csv' %}" method="POST" enctype="multipart/form-data" class="form-horizontal">
+{% csrf_token %}
+<div class="form-group">
+    <label class="col-md-3 col-sm-3 col-xs-12 control-label">File: </label>
+    <div class="col-md-8">
+        <input type="file" name="csv_file" id="csv_file" required="True" class="form-control">
+    </div>
+</div>
+<div class="form-group">
+    <div class="col-md-3 col-sm-3 col-xs-12 col-md-offset-3" style="margin-bottom:10px;">
+         <button type="submit" class="btn btn-primary"> <span class="glyphicon glyphicon-upload" style="margin-right:5px;"></span>Upload </button>
+<h1 id ='errors'></h1>
+    </div>
+</div>
+</form>
+
+
+<!--{% if messages %}-->
+<!--<ul class="messages">-->
+    <!--{% for message in messages %}-->
+    <!--<li>{{ message }}</li>-->
+    <!--{% endfor %}-->
+<!--</ul>-->
+<!--{% endif %}-->
+<script>
+  $('.form-horizontal').submit(function(e){
+    e.preventDefault();
+    var formdata = new FormData($(this)[0]);
+
+    formdata.append( 'file', $( '#csv_file' )[0].files[0] );
+
+    console.log(formdata);
+
+    $.ajax({
+    type:'POST',
+    url:'..upload/csv/',
+    processData: false,
+    contentType: false,
+    data:formdata,
+     beforeSend: function(xhr) {
+       xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}" );
+                },
+
+    success:function(data){
+    console.log(data);
+    $('#errors').html(data.error);
+
+    },
+
+
+        });
+    });
+</script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+

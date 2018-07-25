@@ -1,0 +1,163 @@
+{% extends 'users/employee/emp_base.html' %}
+{% load static %}
+
+{% block extra-stylesheet %}
+        <link rel="stylesheet" href="{% static 'users/employee/css/profile.css' %}">
+{% endblock extra-stylesheet %}
+
+{% block sidebar %}
+        <div class="sidebar">
+            <div class="bar-icon">
+                <div class="bar-1-active"></div>
+                <div class="bar-2-active"></div>
+                <div class="bar-3-active"></div>
+            </div>
+            <img class="logo" src="{% static 'users/employee/images/Logo-1.png' %}">
+            <ul class="list-unstyled">
+                <a href="{% url 'attendance:pastattendance' %}"><li style="top:58px"><img src="{% static 'users/employee/images/Home icon.svg' %}"><span>Home</span></li></a>
+
+                {% if user.department == 'IT' %}
+                <a href="{% url 'project:employee-project' %}"><li style="top:117px"><img src="{% static 'users/employee/images/Projects icon.svg' %}"><span>Projects</span></li></a>
+                {% elif user.department == 'Marketing' %}
+                <a href="{% url 'opportunity:list_oppo' %}"><li style="top:117px"><img src="{% static 'users/employee/images/Projects icon.svg' %}"><span>Leads</span></li></a>
+                {% endif %}
+
+                <a href="#"><li style="top:175px"><img src="{% static 'users/employee/images/Attendance icon.svg' %}"><span>Attendance</span></li></a>
+                <a href="{% url 'ctc:salary' %}"><li style="top:234px"><img src="{% static 'users/employee/images/Salary Icon.svg' %}"><span>Salary</span></li></a>
+                <a href="{% url 'attendance:leave_request' %}"><li style="top:293px"><img src="{% static 'users/employee/images/Leave Req.. Icon.svg' %}"><span>Leave Request</span></li></a>
+            </ul>
+        </div>
+{% endblock sidebar %}
+
+{% block page_content %}
+            <div class="main-content ">
+                <div class="row head">
+                    <h4>User Information</h4>
+                </div>
+
+                <div class="row">
+                    <div class="card">
+                        <div class="card-header bg-white">
+                            <div class="row">
+                                <span>
+                                    <div class="row">
+                                        <div class="profile-bg profile-bg-border">
+                                            <img src="{% static 'users/employee/images/profile.png' %}">
+                                        </div>
+                                        <div class="main-info">
+                                            <div class="row">
+                                                <h5 class="name">{{ user.first_name }}{{ user.last_name }}{{ user.first_name }}{{ user.last_name }}</h5>
+                                            </div>
+                                            <div class="row">
+                                                <h6 class="designation-head">{{ user.designation }}</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </span>
+
+                                <span class="edit-btn ml-auto">
+                                    <!--<a href="{% url 'users:edit_profile' %}"><button type="button" class="btn edit">Edit</button></a>-->
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="card-body">
+                            <div class="contact-details">
+                                <div class="row">
+                                    <h4>Contact Details</h4>
+                                </div>
+                                <div class="row profile-elements">
+                                    <div class="col-lg-6 information">
+                                        <div class="row">
+                                            <h6>Name</h6>
+                                        </div>
+                                        <div class="row">
+                                            <h5>{{ user.first_name }}{{ usre.middle_name}}{{ user.last_name }}</h5>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6 information">
+                                        <div class="row">
+                                            <h6>Designation</h6>
+                                        </div>
+                                        <div class="row">
+                                            <h5>{{ user.designation }}</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row profile-elements">
+                                    <div class="col-lg-6 information">
+                                        <div class="row">
+                                            <h6>Email</h6>
+                                        </div>
+                                        <div class="row">
+                                            <h5>{{ user.email }}</h5>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6 information">
+                                        <div class="row">
+                                            <h6>Contact Number</h6>
+                                        </div>
+                                        <div class="row">
+                                            <h5>{% if user.contact %}(+91)-{{ user.contact }}{% else %}----{% endif %}</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row profile-elements">
+                                    <div class="col-lg-6 information">
+                                        <div class="row">
+                                            <h6>Department</h6>
+                                        </div>
+                                        <div class="row">
+                                            <h5>{{ user.department }}</h5>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6 information">
+                                        <div class="row">
+                                            <h6>Links</h6>
+                                        </div>
+                                        <div class="row">
+                                            <span>
+                                                <i class="fab fa-linkedin-in"></i>
+                                                <i class="fab fa-twitter"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="about-me">
+                                <div class="row">
+                                    <h4>About Me</h4>
+                                </div>
+
+                                <div class="row text">
+                                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+{% endblock page_content %}
+
+{% block footer %}
+            <div class="footer">
+                    <div class="row">
+                        <div class="footer-elements">
+                            <ul class="list-unstyled">
+                                <li>Terms of Use</li>
+                                <li>|</li>
+                                <li>Privacy Policy</li>
+                                <li>Code Flow Tech &copy 2018</li>
+                            </ul>
+                        </div>
+                    </div>
+            </div>
+{% endblock footer %}
+
+{% block extra-scripts %}
+        <script src="{% static 'users/employee/js/profile.js' %}"></script>
+{% endblock extra-scripts %}
+

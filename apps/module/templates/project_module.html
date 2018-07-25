@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Module</title>
+</head>
+<body>
+<h1>Hi, Welcome to Project Modules</h1><hr>
+
+<form><input type="submit" align="right" formaction="create/" value="CREATE NEW MODULE"></form>
+
+<table border="1">
+    <thead>
+    <th>Module Name</th>
+    <th>Module Description</th>
+    </thead>
+
+    <tbody>
+    {% for p in modules %}
+    <tr>
+        <td>{{ p.module_name }}</td>
+        <td>{{ p.module_description}}</td>
+
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+</body>
+</html>

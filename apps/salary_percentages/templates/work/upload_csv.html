@@ -1,0 +1,14 @@
+<form action="{% url 'salary_percentages:upload_csv' %}" method="POST" enctype="multipart/form-data">
+{% csrf_token %}
+<div>
+    File:<input type="file" name="csv_file" required="True"><br>
+    <button type="submit">Upload</button>
+</div>
+</form>
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}

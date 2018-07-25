@@ -1,0 +1,91 @@
+{% extends 'static/production/index.html' %}
+{% load users_extras %}
+
+
+{% block else_condition %}
+{% if user.is_authenticated %}
+<h3>
+    {% if user.designation == 'Client' %}
+    Welcome {{ user.first_name }}!<br>
+    You are autherized as our client but not has permission to access Admin page.<br>
+    And we have not created login for our Clients yet!<br>
+    Sorry.
+
+    {% else %}
+    Welcome {{ user.first_name }}!<br>
+    You are autherized user but not has permission to access Admin page.<br>
+    So switch to your <a href="{% url 'users:welcome' %}"><u>Employee portal</u></a> or <a href="{% url 'users:admin_login' %}"><u>try again</u></a> login to admin page.
+    {% endif %}
+</h3>
+{% else %}
+<h3>You are not authorized user. Please <a href="{% url 'users:index' %}"><u>login</u></a> first to acces this page!</h3>
+{% endif %}
+{% endblock else_condition %}
+
+
+{% block home_link %}
+    <a href="{% url 'users:admin_welcome' %}" class="site_title"><i class="fa fa-paw"></i> <span>CFT Admin!</span></a>
+{% endblock home_link %}
+{% block username %} {{ user.first_name }} {{ user.last_name }} {% endblock %}
+{% block name %} {{ user.first_name }} {{ user.last_name }} {% endblock %}
+
+{% block account_management %}
+    {% if user|has_group:"Account Manager Group" or user|has_group:"Admin Group" %}
+        <li><a><i class="fa fa-home"></i> Account Management <span class="fa fa-chevron-down"></span></a>
+            <ul class="nav child_menu">
+                <li><a href="{% url 'salary_percentages:salary_structure' %}">Salary Management</a></li>
+                <li><a href="#">Client Billing</a></li>
+                <!--<li><a href="index3.html">Dashboard3</a></li>-->
+            </ul>
+        </li>
+    {% endif %}
+{% endblock account_management %}
+
+{% block project_management %}
+    {% if user|has_group:"IT Manager Group" or user|has_group:"Admin Group" %}
+        <li><a><i class="fa fa-edit"></i> Project Management <span class="fa fa-chevron-down"></span></a>
+            <ul class="nav child_menu">
+                <li><a href="{% url 'project:project_manager_list' %}">Company Projects</a></li>
+                <li><a href="{% url 'project:opportunity-projects' %}">Opportunity Projects</a></li>
+                <!--<li><a href="form_validation.html">Form Validation</a></li>-->
+                <!--<li><a href="form_wizards.html">Form Wizard</a></li>-->
+                <!--<li><a href="form_upload.html">Form Upload</a></li>-->
+                <!--<li><a href="form_buttons.html">Form Buttons</a></li>-->
+            </ul>
+        </li>
+    {% endif %}
+{% endblock project_management %}
+
+{% block hr_management %}
+    {% if user|has_group:"HR Manager Group" or user|has_group:"Admin Group" %}
+        <li><a><i class="fa fa-desktop"></i> HR Management <span class="fa fa-chevron-down"></span></a>
+            <ul class="nav child_menu">
+                <li><a href="{% url 'attendance:show_attendance' %}">Attendance Management</a></li>
+                <li><a href="{% url 'leave:leave_request' %}">Leave Management</a></li>
+                <li><a href="{% url 'users:profile_all' %}">Employee Profiles</a></li>
+                <li><a href="{% url 'users:register' %}">Create Employee </a></li>
+                <!--<li><a href="icons.html">Icons</a></li>-->
+                <!--<li><a href="glyphicons.html">Glyphicons</a></li>-->
+                <!--<li><a href="widgets.html">Widgets</a></li>-->
+                <!--<li><a href="invoice.html">Invoice</a></li>-->
+                <!--<li><a href="inbox.html">Inbox</a></li>-->
+                <!--<li><a href="calendar.html">Calendar</a></li>-->
+            </ul>
+        </li>
+    {% endif %}
+{% endblock hr_management %}
+
+{% block lead_management %}
+    {% if user|has_group:"Marketing Manager Group" or user|has_group:"Admin Group" %}
+        <li><a><i class="fa fa-table"></i> Lead Management <span class="fa fa-chevron-down"></span></a>
+            <ul class="nav child_menu">
+                <li><a href="{% url 'leads:LeadDetails' %}">New Leads</a></li>
+                <li><a href="{% url 'opportunity:assign_lead' %}">Assigned Leads</a></li>
+                <li><a href="{% url 'opportunity:closed_leads' %}">Closed Leads</a></li>
+                <li><a href="{% url 'opportunity:declined_leads' %}">Declined Leads</a></li>
+                <li><a href="{% url 'opportunity:client_list' %}">Client List</a></li>
+            </ul>
+        </li>
+    {% endif %}
+{% endblock lead_management %}
+

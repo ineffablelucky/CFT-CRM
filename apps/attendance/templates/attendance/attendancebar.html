@@ -1,0 +1,132 @@
+{% extends 'apps/users/templates/users/base.html' %}
+{% load static %}
+
+
+{% block page-content %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/highcharts-3d.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+
+<div id="container">
+
+</div>
+
+<div id="chart">
+<form method="GET" style="position:relative;top:100px;;z-index:100" id="changegraph">
+
+     {{ form.as_p }}
+    <input type="submit" value="submit">
+    </form>
+</div>
+<div style="right">
+<style>
+
+    #container {
+    height: 400px;
+    min-width: 310px;
+    max-width: 800px;
+    margin: 0 auto;
+    color:red;
+}
+</style>
+</div>
+<script>
+function chart(a){
+Highcharts.chart('container', {
+  chart: {
+    type: 'column',
+    options3d: {
+      enabled: true,
+      alpha: 10,
+      beta: 25,
+      depth: 70
+    }
+  },
+  title: {
+    text: 'Attendance Of Employees'
+  },
+  subtitle: {
+    text: 'Notice the difference between a 0 value and a null point'
+  },
+  plotOptions: {
+    column: {
+      depth: 30
+    }
+  },
+  xAxis: {
+    categories: Highcharts.getOptions().lang.shortMonths,
+    labels: {
+      skew3d: true,
+      style: {
+        fontSize: '16px'
+
+      }
+    }
+  },
+  yAxis: {
+    title: {
+      text: null
+    }
+  },
+  series: [{
+    name: 'Attendance',
+    data: a
+
+  }]
+});
+}
+
+$(document).ready( (){
+    $.ajax({
+    type:'GET',
+    url:'../ajax/',
+    success:function(data){
+    console.log(data['list'].length);
+    var list=[];
+    for(var i=0;i<data['list'].length;i++){
+    list.push(data['list'][i]);
+    }
+
+    chart(list);
+
+    },
+
+
+
+    });
+
+});
+    $('#changegraph').submit(function(e){
+    e.preventDefault();
+    $.ajax({
+    type:'GET',
+    data:$(this).serialize(),
+     beforeSend: function(xhr) {
+                xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}" );
+                },
+    url:'../ajaxchange/',
+    success:function(data){
+
+     var list=[];
+    for(var i=0;i<data['list'].length;i++){
+    list.push(data['list'][i]);
+    }
+    chart(list);
+
+    },
+
+
+
+    });
+
+    });
+
+
+</script>
+
+
+{% endblock page-content %}
+{% block footer %}
+{% endblock footer %}

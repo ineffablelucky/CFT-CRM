@@ -1,0 +1,55 @@
+{% extends 'apps/users/templates/users/base.html' %}}
+
+
+
+{% block page-content %}
+<div class="right_col" role="main">
+    <!-- top tiles -->
+    <div class="row tile_count">
+
+        {% if user.is_authenticated %}
+        <div height="200">Hello {{ user.username }}</div>
+        <hr/>
+        <div>
+            {% for client in clients %}
+            <div >
+                <a href="{% url 'opportunity:client_list_opportunity' client.pk %}">
+                    <p>
+                        Company Name: {{ client.company_name }}
+                    </p>
+                    <p>
+                        Email Id: {{ client.client_user.email }}
+                    </p>
+                    <p>
+                        Company Address : {{ client.address }}
+                    </p>
+                </a>
+            </div>
+            <hr/>
+            <hr/>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div>You don't have permission</div>
+        {% endif %}
+    </div>
+    <!-- /top tiles -->
+
+    <div class="row">
+
+    </div>
+    <br />
+
+    <div class="row">
+
+    </div>
+
+
+    <div class="row">
+
+    </div>
+</div>
+
+{% endblock page-content %}
+
+

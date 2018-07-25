@@ -1,0 +1,64 @@
+{% extends 'apps/users/templates/users/base.html' %}
+
+    <title>{% block title %} Edit Basic Monthly Salary {% endblock title %}</title>
+
+
+
+{% block page-content %}
+        <div class="right_col" role="main">
+            <div class="row">
+              <div class="col-md-6 col-sm-6 col-xs-12">
+                  <a href="{% url 'salary_percentages:salary_structure' %}"><button>View Salary Structure</button></a>
+                      <a href ="{% url 'monthly_salary:edit_salary_list' %}"><button>Edit Salary</button></a>
+                      <a href ="{% url 'monthly_salary:monthly_salary_list' %}"><button>Monthly Salary</button></a>
+                <div class="x_panel">
+
+                  <div class="x_title">
+                    <h1>Salary Structure Table</h1><br><br>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <a href="{% url 'salary_percentages:upload_csv' %}"><button>Import salary structure of previous years</button></a>
+
+                        <a href="{% url 'salary_percentages:add' %}"><button>Add salary structure</button></a>
+
+                    </ul>
+
+                  </div>
+                  <div class="x_content">
+
+                    <table class="table table-bordered">
+                      <thead>
+                        <tr>
+                            <th>Financial Year</th>
+                            <th>HRA (% of monthly basic)</th>
+                            <th>Dearness Allowance (% of monthly basic)</th>
+                            <th>PF (% of monthly basic)</th>
+                            <th>Medical Allowance (INR/month)</th>
+                            <th>Conveyance Allowance INR/month)</th>
+                            <th>Washing Allowance (INR/month)</th>
+                            <th>Other Allowances (% of monthly basic)</th>
+                            <th>Max Bonus (% of yearly basic)</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                      {% for i in context %}
+                      <tr>
+                          <td>{{ i.financial_year }}</td>
+                          <td>{{ i.hra_percentage }}</td>
+                          <td>{{ i.dearness_percentage }}</td>
+                          <td>{{ i.pf_percentage }}</td>
+                          <td>{{ i.medical_allowance }}</td>
+                          <td>{{ i.conveyance_allowance }}</td>
+                          <td>{{ i.washing_allowance }}</td>
+                          <td>{{ i.other_allowance_percentage }}</td>
+                          <td>{{ i.max_bonus_percentage }}</td>
+                      </tr>
+                      {% endfor %}
+                      </tbody>
+                    </table>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+{% endblock page-content %}

@@ -1,0 +1,84 @@
+{% extends 'apps/users/templates/users/base.html' %}
+
+{% block page-content %}
+
+<div class="right_col" role="main">
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h3>Hi, Welcome to Marketing Manager's Portal! </h3>
+            </div>
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Client's Opportunity List</h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                            </li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+
+                    <div class="x_content">
+                        {% if user.is_authenticated %}
+                        <!--<div height="200">Hello {{ user.username }}</div>-->
+                        <div class="row">
+                            {% for item in client_opportunity %}
+                            <div>
+                                <p>Opportunity ID: {{ item.pk }}</p>
+                                <!--<p>Opportunity Name: Currently No Name</p>-->
+                                <p>Contact Person: {{ item.lead.contact_person }}</p>
+                                <p>Contact Number: {{ item.lead.contact_number }}</p>
+                                <p>Opportunity Description: {{ item.project_description }}</p>
+                                <p>
+                                    Assigned To: {{ item.assigned_to.username }}
+                                </p>
+                                <p>
+                                    Project Manager:  {{ item.proj_manager }}
+                                </p>
+                                <p>
+                                    Project Start Date: {{ item.project_start_date }}
+                                </p>
+                                <p>
+                                    Project End Date: {{ item.project_end_date }}
+                                </p>
+                                <p>
+                                    Project Expected Time Duration: {{ item.project_total_working_hr }}
+                                </p>
+                                <p>
+                                    Project Expected Amount : {{ item.price }}
+                                </p>
+                                <hr/>
+                                <hr/>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        <div>You don't have permission</div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock page-content %}
+
+{% block extra-script %}
+<script>
+    $(document).ready(function(){
+    $("#hello_world").click(function(){
+        $(this).toggle();
+    });
+});
+</script>
+{% endblock extra-script %}
+
+
+

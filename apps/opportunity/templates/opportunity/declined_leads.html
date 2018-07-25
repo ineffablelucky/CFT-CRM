@@ -1,0 +1,56 @@
+{% extends 'apps/users/templates/users/base.html' %}
+
+{% block page-content %}
+<div class="right_col" role="main">
+    <!-- top tiles -->
+    <div class="row tile_count">
+
+        {% if user.is_authenticated %}
+        <div height="200">Hello {{ user.username }}</div>
+        <hr/>
+        <div>
+            {% for leads in declined_leads %}
+            <div >
+                <a href="{% url 'opportunity:meeting:meeting_list' leads.pk %}">
+                    <p>
+                        Company Name: {{ leads.lead.company_name }}
+                    </p>
+                    <p>
+                        Project Manager: {{ leads.proj_manager.username }}
+                    </p>
+                    <p>
+                        Project Description : {{ leads.description }}
+                    </p>
+                    <p>
+                        Assigned To : {{ leads.assigned_to.username }}
+                    </p>
+                </a>
+            </div>
+            <hr/>
+            <hr/>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div>You don't have permission</div>
+        {% endif %}
+    </div>
+    <!-- /top tiles -->
+
+    <div class="row">
+
+    </div>
+    <br />
+
+    <div class="row">
+
+    </div>
+
+
+    <div class="row">
+
+    </div>
+</div>
+
+{% endblock page-content %}
+
+

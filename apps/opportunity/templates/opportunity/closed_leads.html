@@ -1,0 +1,66 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+    <!--<meta charset="UTF-8">-->
+    <!--<title>Title</title>-->
+<!--</head>-->
+<!--<body>-->
+
+{% extends 'apps/users/templates/users/base.html' %}
+
+
+
+
+{% block page-content %}
+<div class="right_col" role="main">
+    <div class="row ">
+        <div class="col-md-6 col-sm-6 col-xs-12">
+        <a href="{% url 'opportunity:create_client' %}"><button type="button" class="btn btn-primary"> Add Client</button></a>
+        <a href="{% url 'opportunity:add_opportunity_existing_client' %}"><button type="button" class="btn btn-primary">Add Opportunity to Existing Client</button></a>
+            <hr/>
+        </div>
+
+    </div>
+    <div class="row tile_count">
+        {% for leads in closed_leads %}
+        <div >
+            <a href="{% url 'opportunity:meeting:meeting_list' leads.pk %}">
+                <p>
+                    Company Name: {{ leads.lead.company_name }}
+                </p>
+                <p>
+                    Project Manager: {{ leads.proj_manager.username }}
+                </p>
+                <p>
+                    Project Description : {{ leads.lead.description }}
+                </p>
+                <p>
+                    Assigned To : {{ leads.assigned_to.username }}
+                </p>
+                <p>
+                    Amount : {{ leads.price }}
+                </p>
+            </a>
+        </div>
+        <hr/>
+        <hr/>
+        {% endfor %}
+    </div>
+    <!-- /top tiles -->
+
+    <div class="row">
+    </div>
+    <br />
+
+    <div class="row">
+
+    </div>
+
+
+    <div class="row">
+
+    </div>
+</div>
+{% endblock page-content %}
+
+

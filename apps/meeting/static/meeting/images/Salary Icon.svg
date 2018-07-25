@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19 19" width="19" height="19">
+	<defs>
+		<image width="19" height="19" id="img1" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAATCAMAAABFjsb+AAAA5FBMVEUAAAD///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////9MSBpRAAAATHRSTlMADpCsWObY+FsRIDq79nkGdewyHgP+/7Ifz98QVuDiKvlgFMaDX+fw4e/rOE1RUFq1MKABHJ4h3o3BT1e3mp18kfuwPYDQyPIz0n0T4VvzMQAAALBJREFUeJyNzmkTgVAYhuFXWRIR1QmVLSKUfUu2ZP///0fZptMXrk/v3DNnzgPwFSFICInG4gnqfSdpXyrNZLJsLk9zPAArIJ8gFgD4oneVOGAoSZKVsvx8U6nW6moDUFPRhFZbedGrSocA1O0ZlPlh9M2B14ah/0e/23jirSKnwTabP2ehYFssrZUk2Vhbb7Y7ABFr1t52HEfDGhy2ruseT3/vO7NDzOV6A0pHOPX+AHQWGm7gpb90AAAAAElFTkSuQmCC"/>
+	</defs>
+	<style>
+		tspan { white-space:pre }
+	</style>
+	<use id="Salary Icon" href="#img1" transform="matrix(1,0,0,1,0,0)"/>
+</svg>

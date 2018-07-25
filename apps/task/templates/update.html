@@ -1,0 +1,129 @@
+{% extends 'apps/users/templates/users/base.html' %}
+
+    <title>{% block title %} Create Project {% endblock title %}</title>
+{% block page-content %}
+
+        <div class="right_col" role="main">
+          <div class="">
+            {% if user.is_authenticated %}
+            <div class="page-title">
+              <div class="title_left">
+                <h3>This is a Task Entry form!</h3>
+              </div>
+            </div>
+            <div class="clearfix"></div>
+
+            <div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                      <h2>Task Info</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+
+                      <form action="{% url 'task:task-update' object.id %}" class="form-horizontal form-label-left" novalidate method="post">
+
+                      {% csrf_token %}
+                        <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Project Name</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                              <!--<input id="name" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="2" name="name" placeholder="both name(s) e.g Jon Doe" required="required" type="text">-->
+                              {{ form.project }}
+                            </div>
+                            {{ form.project.errors }}
+                        </div>
+
+                        <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Task Name</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                              <!--<input id="name" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="2" name="name" placeholder="both name(s) e.g Jon Doe" required="required" type="text">-->
+                              {{ form.task_name }}
+                            </div>
+                            {{ form.task_name.errors }}
+                        </div>
+                         <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" >Task Description</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                              <!--<textarea id="textarea" required="required" name="textarea" class="form-control col-md-7 col-xs-12"></textarea>-->
+                              {{ form.task_description }}
+                            </div>
+                             {{ form.task_description.errors }}
+                         </div>
+
+
+                          <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Task Start Date</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                              <!--<input id="name" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="2" name="name" placeholder="both name(s) e.g Jon Doe" required="required" type="text">-->
+                              {{ form.task_start_date_time}}
+                            </div>
+                              {{ form.task_start_date_time.errors }}
+                          </div>
+
+
+                         <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Task End Date</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                              <!--<input id="name" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="2" name="name" placeholder="both name(s) e.g Jon Doe" required="required" type="text">-->
+                              {{ form.task_end_date_time }}
+                            </div>
+                             {{ form.task_end_date_time.errors }}
+                         </div>
+
+
+                         <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Assigned To</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                              <!--<input id="name" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="2" name="name" placeholder="both name(s) e.g Jon Doe" required="required" type="text">-->
+                              {{ form.employee_id }}
+                            </div>
+                             {{ form.employee_id.errors }}
+                         </div>
+
+
+                         <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Expected Time in Hours</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                              <!--<input id="name" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="2" name="name" placeholder="both name(s) e.g Jon Doe" required="required" type="text">-->
+                              {{ form.expected_time }}
+                            </div>
+                             {{ form.expected_time.errors }}
+                         </div>
+
+
+                         <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Status</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                              <!--<input id="name" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="2" name="name" placeholder="both name(s) e.g Jon Doe" required="required" type="text">-->
+                              {{ form.status }}
+                            </div>
+                             {{ form.status.errors }}
+                         </div>
+
+
+                         <div class="ln_solid"></div>
+
+                            <div class="form-group">
+                                <div class="col-md-6 col-md-offset-3">
+                                    <button type="button" id="cancel" class="btn btn-primary">Cancel</button>
+                                    <button id="send" type="submit" class="btn btn-success">Submit</button>
+                                </div>
+                            </div>
+                      </form>
+
+                            {% else %}
+                                <div>You don't have permission</div>
+                            {% endif %}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+{% endblock page-content %}
+

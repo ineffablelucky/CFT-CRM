@@ -1,0 +1,83 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+    <!--<meta charset="UTF-8">-->
+    <!--<title>Assigned Leads</title>-->
+<!--</head>-->
+<!--<body>-->
+
+{% extends 'apps/users/templates/users/base.html' %}}
+
+{% block page-content %}
+<div class="right_col" role="main">
+          <div class="">
+            <div class="page-title">
+              <div class="title_left">
+                <h3>Hi, Welcome to Marketing Manager's Task List! </h3>
+              </div>
+            </div>
+
+            <div class="clearfix"></div>
+
+            <div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Default Example <small>Users</small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                    {% if user.is_authenticated %}
+                            {% for assign in assigned_leads %}
+                        <div class="row">
+                            <div class="col-lg-9 text-left">
+                                <a href="{% url 'opportunity:meeting:meeting_list' assign.id %}">
+                                    <p>
+                                        Company Name: {{ assign.lead.company_name }}
+                                    </p>
+                                </a>
+                                <p>
+                                    Project Manager: {{ assign.proj_manager.username }}
+                                </p>
+                                <p>
+                                    Project Description : {{ assign.lead.description }}
+                                </p>
+                                <p>
+                                    Status : {{ assign.status }}
+                                </p>
+                                <p>
+                                    Assigned To : {{ assign.assigned_to.username }}
+                                </p>
+                            </div>
+                            <div class="col-lg-3 text-center">
+                                <form action="{% url 'opportunity:add_proj_manager' assign.pk %}" method="post" class="form-group">
+                                    <fieldset>
+                                        <legend>Assign Project Manager</legend>
+                                        {% csrf_token %}
+                                        <p>
+                                            {{ form.proj_manager.errors }} {{ form.proj_manager.label }} {{ form.proj_manager }}
+                                        </p>
+                                        <input type = submit value="Assign" style="margin-bottom:15px; margin-top:15px">
+                                    </fieldset>
+                                </form>
+                            </div>
+                        </div>
+                        <hr/>
+                        <hr/>
+                    {% endfor %}
+                  </div>
+                    {% else %}
+                        <div>You don't have permission</div>
+                    {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+</div>
+
+{% endblock page-content %}
+

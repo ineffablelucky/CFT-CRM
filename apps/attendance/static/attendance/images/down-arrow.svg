@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 7 4" width="7" height="4">
+	<defs>
+		<image width="7" height="4" id="img1" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAEBAMAAACw6DhOAAAAIVBMVEUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABt0UjBAAAAC3RSTlNgDgAWZAsYYhUcb5DHAykAAAAcSURBVHicY2BUUmRgMAkKMWBQqyhTYFCaNUkBAB5oA/Ebd7I/AAAAAElFTkSuQmCC"/>
+	</defs>
+	<style>
+		tspan { white-space:pre }
+	</style>
+	<use id="Down arrow" href="#img1" transform="matrix(1,0,0,1,0,0)"/>
+</svg>

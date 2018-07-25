@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Index</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Hello User</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Please enter correct details!
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div style="width:50%; position:relative; top:200px; left:200px; margin: 0 auto">
+        <h1>This is the Index page!</h1>
+        <i class="fa fa-user"></i>
+        <div>
+            <b>Login </b>
+            <a href="{% url 'users:login' %}">
+                <button type="button">
+                    Employee
+                </button>
+            </a>
+            <a href="{% url 'users:admin_login' %}"><button>Admin</button></a>
+        </div><br>
+
+        <a href="{% url 'users:forgot_password' %}">Forgot Password</a>
+
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+            Launch demo modal
+        </button>
+
+    </div>
+</body>
+</html>
+
+
+
+

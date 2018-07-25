@@ -1,0 +1,132 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+    <!--<meta charset="UTF-8">-->
+    <!--<title>SHow REquest</title>-->
+<!--</head>-->
+<!--<body>-->
+
+{% extends 'apps/users/templates/users/base.html' %}
+
+    <title>{% block title %} Leave Requests {% endblock title %}</title>
+
+{% block page-content %}
+
+<div class="right_col" role="main">
+      <div class="">
+            <div class="page-title">
+              <div class="title_left">
+                <h3>HR Management </h3>
+              </div>
+
+              <div class="title_right">
+                <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search for...">
+                    <span class="input-group-btn">
+                      <button class="btn btn-default" type="button">Go!</button>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="clearfix"></div>
+             <div class="row">
+                  <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="x_panel">
+                      <div class="x_title">
+                          <h2>View Request </h2>
+                          <div class="clearfix"></div>
+                      </div>
+                      <div class="x_content">
+                        <p><b>Employee id :</b> {{ leave.user_id }}</p>
+                        <p><b>Employee Name:</b> {{ leave.user.first_name }} {{ leave.user.last_name }}</p>
+                        <p><b>Employee Department:</b> {{ leave.user.department }}</p>
+                        <p><b>Date:</b>&nbsp;&nbsp;&nbsp;&nbsp; <b>From:</b> {{ leave.date }} &nbsp;&nbsp; <b>To:</b> {{ leave.end_date }}</p>
+                        <p><b>Leave Type:</b>{{ leave.leave_type }}</p>
+                        <p><b>Status:</b> {{ leave.status }}</p>
+                        <p><b>Reason:</b> {{ leave.note }}</p>
+                        <form action="{% url 'leave:approve' leave.id %}" style="display:inline" method="post" id="approve">
+                            {% csrf_token %}
+
+                            <button type="submit">Approve</button>
+                        </form>
+                        <form action="{% url 'leave:reject' leave.id %}" style="display:inline" method="post" id="reject">
+                            {% csrf_token %}
+
+                            <button type="submit">Reject</button>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+             </div>
+      </div>
+</div>
+
+{% endblock page-content %}
+
+{% block extra-script %}
+<script>
+        $(document).ready(function(){
+            $('#approve').submit(function(event){
+                event.preventDefault();
+                that = $(this);
+                $.ajax({
+                    url:$('#approve').attr('action'),
+                    method:'post',
+                    data:$(this).serialize(),
+
+                    success:function(response){
+                        console.log(response);
+                        if (response.a == 'True'){
+                            alert("Already Approved or Rejected");
+                            }
+                        else if (response.a == 'Success'){
+                            alert("Successfully Approved");
+                            window.location = '/leave/leaverequest'
+                        }
+
+
+                    }
+
+                });
+            });
+
+
+
+        });
+
+    </script>
+    <script>
+        $(document).ready(function(){
+            $('#reject').submit(function(event){
+                event.preventDefault();
+                that = $(this);
+                $.ajax({
+                    url:$('#reject').attr('action'),
+                    method:'post',
+                    data:$(this).serialize(),
+
+                    success:function(response){
+                        console.log(response);
+                        if (response.b == 'True'){
+                            alert("Already Approved or Rejected");
+                            }
+                        else if (response.b == 'Success'){
+                            alert("Successfully Rejected");
+                            window.location = '/leave/leaverequest'
+                        }
+
+
+                    }
+
+                });
+            });
+
+
+
+        });
+
+    </script>
+{% endblock extra-script %}

@@ -1,0 +1,165 @@
+{% extends 'apps/users/templates/users/base.html' %}
+
+<title>{% block title %} Register Employee! {% endblock title %}</title>
+
+{% block page-content %}
+        <div class="right_col" role="main">
+          <div class="">
+
+            <div class="page-title">
+              <div class="title_left">
+                <h3>This is a Employee creation form!</h3>
+              </div>
+            </div>
+            <div class="clearfix"></div>
+
+            <div class="row">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                      <h2>Fill details</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+
+                        <form method="post" action="{% url 'users:register' %}" class="form-horizontal form-label-left" novalidate>
+
+                      {% csrf_token %}
+                        <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Email</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                              <!--<input id="name" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="2" name="name" placeholder="both name(s) e.g Jon Doe" required="required" type="text">-->
+                              {{ form.email }}{{ form.email.errors }}
+                            </div>
+
+                        </div>
+
+                        <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Password</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                              <!--<input id="name" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="2" name="name" placeholder="both name(s) e.g Jon Doe" required="required" type="text">-->
+                              {{ form.password1 }}
+                              {{ form.password1.errors }}
+                            </div>
+
+                        </div>
+                        <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Confirm Password</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                              <!--<input id="name" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="2" name="name" placeholder="both name(s) e.g Jon Doe" required="required" type="text">-->
+                              {{ form.password2 }}
+                              {{ form.password2.errors }}
+                            </div>
+
+                        </div>
+                        <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">First Name</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                              <!--<input id="name" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="2" name="name" placeholder="both name(s) e.g Jon Doe" required="required" type="text">-->
+                              {{ form.first_name }}{{ form.first_name.errors }}
+                            </div>
+
+                        </div>
+
+                        <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Middle Name</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                              <!--<input id="name" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="2" name="name" placeholder="both name(s) e.g Jon Doe" required="required" type="text">-->
+                              {{ form.middle_name }}{{ form.middle_name.errors }}
+                            </div>
+
+                        </div>
+
+                        <div class="item form-group">
+
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Last Name</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                              <!--<input id="name" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="2" name="name" placeholder="both name(s) e.g Jon Doe" required="required" type="text">-->
+                              {{ form.last_name }}{{ form.last_name.errors }}
+                            </div>
+
+                        </div>
+                         <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" >Contact</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                              <!--<textarea id="textarea" required="required" name="textarea" class="form-control col-md-7 col-xs-12"></textarea>-->
+                              {{ form.contact }}{{ form.contact.errors }}
+                            </div>
+
+                         </div>
+
+
+                          <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Gender</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                              <!--<input id="name" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="2" name="name" placeholder="both name(s) e.g Jon Doe" required="required" type="text">-->
+                              {{ form.gender}}{{ form.gender.errors }}
+                            </div>
+
+                          </div>
+
+
+                         <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Department</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                              <!--<input id="name" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="2" name="name" placeholder="both name(s) e.g Jon Doe" required="required" type="text">-->
+                              {{ form.department }}{{ form.department.errors }}
+                            </div>
+
+                         </div>
+
+
+                         <div class="item form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">Designation</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                              <!--<input id="name" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="2" name="name" placeholder="both name(s) e.g Jon Doe" required="required" type="text">-->
+                              {{ form.designation }}{{ form.designation.errors }}
+                            </div>
+
+                         </div>
+                         <!--<div class="item form-group">-->
+                            <!--<label class="control-label col-md-3 col-sm-3 col-xs-12">Salary</label>-->
+                            <!--<div class="col-md-6 col-sm-6 col-xs-12">-->
+                              <!--&lt;!&ndash;<input id="name" class="form-control col-md-7 col-xs-12" data-validate-length-range="6" data-validate-words="2" name="name" placeholder="both name(s) e.g Jon Doe" required="required" type="text">&ndash;&gt;-->
+                              <!--{{ form.salary }}-->
+                            <!--</div>-->
+                             <!--{{ form.salary.errors }}-->
+                         <!--</div>-->
+
+                         <div class="ln_solid"></div>
+
+                            <div class="form-group">
+                                <div class="col-md-6 col-md-offset-3">
+                                    <a href="">
+                                    <button type="button" id="cancel" class="btn btn-primary">Cancel</button>
+                                    </a>
+                                    <button id="send" type="submit" class="btn btn-success">Submit</button>
+                                </div>
+                            </div>
+                      </form>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+{% endblock page-content %}
+
+{% block extra-script %}
+<script>
+    $(document).ready(function(){
+        $('#cancel').click(function(){
+            window.history.back();
+        });
+    });
+
+
+</script>
+{% endblock %}
+
+

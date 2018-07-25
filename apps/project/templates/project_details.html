@@ -1,0 +1,26 @@
+{% if user.is_authenticated %}
+            <h1>Project Name: {{ object.project_name }}</h1>
+            <h5>Description: {{ object.project_description }}</h5>
+            <h5>Project start date: {{ object.project_start_date_time }}</h5>
+            <h5>Project Deadline: {{ object.project_end_date_time|date }}</h5>
+            <h5>Status: {{ object.status }}</h5>
+
+            <h5>Team Members:
+    {% if object.employees_per_project.all %}
+    {% for i in object.employees_per_project.all %}
+        <ul><li>{{ i.username }}</li></ul>
+
+    {% endfor %}</h5>
+    {% else %}
+    <h5>No team members !!</h5>
+    {% endif %}
+            {% if object.opportunity.proj_manager %}
+            <h5>Project Manager: {{object.opportunity.proj_manager}}</h5>
+            {% endif %}
+            {% if object.opportunity.assigned_to  %}
+            <h5>Marketing Employee: {{ object.opportunity.assigned_to }}</h5>
+            {% endif %}
+              {% else %}
+    <div>You don't have permission</div>
+{% endif %}
+

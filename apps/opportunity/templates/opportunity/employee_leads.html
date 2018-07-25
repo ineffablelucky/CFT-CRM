@@ -1,0 +1,272 @@
+{% extends 'users/employee/emp_base.html' %}
+{% load static %}
+
+
+{% block extra-stylesheet %}
+        <link rel="stylesheet" href="{% static 'opportunity/css/leads.css' %}">
+{% endblock extra-stylesheet %}
+
+{% block sidetab %}
+            <ul class="list-unstyled">
+                <a href="{% url 'attendance:pastattendance' %}"><li style="top:58px" ><img src="{% static 'users/employee/images/Home icon.svg' %}"><span>Home</span></li></a>
+                {% if user.department == 'IT' %}
+                <a href="{% url 'project:employee-project' %}"><li style="top:117px"><img src="{% static 'users/employee/images/Projects icon.svg' %}"><span>Projects</span></li></a>
+                {% elif user.department == 'Marketing' %}
+                <a href="{% url 'opportunity:list_oppo' %}"><li style="top:117px" class="active"><img src="{% static 'users/employee/images/Projects icon.svg' %}"><span>Leads</span></li></a>
+                {% endif %}
+
+                <a href="#"><li style="top:175px"><img src="{% static 'users/employee/images/Attendance icon.svg' %}"><span>Attendance</span></li></a>
+                <a href="{% url 'ctc:salary' %}"><li style="top:234px"><img src="{% static 'users/employee/images/Salary Icon.svg' %}"><span>Salary</span></li></a>
+                <a href="{% url 'attendance:leave_request' %}"><li style="top:293px"><img src="{% static 'users/employee/images/Leave Req.. Icon.svg' %}"><span>Leave Request</span></li></a>
+            </ul>
+{% endblock sidetab %}
+
+
+{% block page_content %}
+                <div class="row head">
+                    <h4>Leads</h4>
+                </div>
+
+                <!--<div class="row">-->
+                    <!--<ul class="list-unstyled leads-btn-container">-->
+                        <!--<li><button type="button" class="new-leads-btn leads-btn-active">My Leads</button></li>-->
+                        <!--&lt;!&ndash;<li><button type="button" class="declined-leads-btn">Other Leads</button></li>&ndash;&gt;-->
+                    <!--</ul>-->
+                <!--</div>-->
+
+                <div class="row ">
+                    <div class="modal fade" id="exampleModalerror" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle1">Edit Status</h5>
+                                </div>
+                                <div class="modal-body">
+                                    Please Ask Your Manager to add Project Manager First
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="close">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive major-container">
+                        <div class=" bg-white">
+                            <div class="row">
+                                <span>
+                                    <div class="row">
+                                        <div class="main-info">
+                                            <div class="row">
+                                                <h5 class="heading">New Leads</h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="table-container">
+                            <div class="table-responsive project-details">
+                                <table class="table table-lg text-center table-borderless">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">COMPANY NAME</th>
+                                            <th scope="col">CONTACT PERSON</th>
+                                            <th scope="col">CONTACT NUMBER</th>
+                                            <th scope="col">EMAIL</th>
+                                            <th scope="col">STATUS</th>
+                                            <th scope="col">VIEW</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for op in opportunity %}
+                                                <tr>
+                                                    <td>{{ op.lead.company_name }}</td>
+                                                    <td>{{ op.lead.contact_person }}</td>
+                                                    <td>{{ op.lead.contact_number }}</td>
+                                                    <!--<td>{{ op.client.username}}</td>-->
+                                                    <!--<td>{{ op.price }}</td>-->
+                                                    <td>{{ op.lead.email }}</td>
+                                                    <!--<td>{{ op.status }}</td>-->
+                                                    {% if op.assigned_to.username == user.username or user.designation == 'Manager' %}
+                                                    <td><a href="javascript:void(0)" data-some = "{{ op.pk }}"  data-toggle="modal"  data-target="#exampleModalCenter{{ op.id }}" class="status form_link">{{ op.status }}</a></td>
+                                                    <div class="modal fade" id="exampleModalCenter{{op.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" id="exampleModalLongTitle">Edit Status</h5>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <div>
+                                                                        <form class="form-inline" method="post" action="{% url 'opportunity:change_status' op.pk %}" id="post-form">
+                                                                            {% csrf_token %}
+                                                                            <label class="my-1 mr-2" >{{ form.status.label }}</label>
+                                                                            {{ form.status }}
+                                                                            {{ form.status.errors }}
+                                                                            <p id="error"></p>
+                                                                            <button type="submit" class="btn btn-primary my-1">Submit</button>
+                                                                        </form>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="close">Close</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    {% else %}
+                                                    <td>{{ op.status }}</td>
+                                                    {% endif %}
+                                                    <td><a href="{% url 'opportunity:meeting:emp_meeting' op.id %}" id="post_form_url"><img src="{% static 'opportunity/images/View.svg' %}"></a></td>
+                                                </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row major-pagination-container">
+                            <div class="pagination-container">
+                                <ul class="pagination">
+                                    {% if page_obj.has_previous %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span>
+                                            <span class="sr-only">Previous</span>
+                                        </a>
+                                    </li>
+                                    {% endif %}
+                                    <li class="page-item active-link">
+                                        <a class="page-link " href="javascript:void(0)">{{ page_obj.number }}</a>
+                                    </li>
+                                    {% if page_obj.has_next %}
+                                    <li class="page-item">
+                                        <a class="page-link " href="?page={{ page_obj.next_page_number }}">{{ page_obj.next_page_number }}</a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                                            <span aria-hidden="true">&raquo;</span>
+                                            <span class="sr-only">Next</span>
+                                        </a>
+                                    </li>
+                                    {% endif %}
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+{% endblock page_content %}
+
+{% block footer %}
+            <div class="footer">
+                    <div class="row">
+                        <div class="footer-elements">
+                            <ul class="list-unstyled">
+                                <li>Terms of Use</li>
+                                <li>|</li>
+                                <li>Privacy Policy</li>
+                                <li>Code Flow Tech &copy 2018</li>
+                            </ul>
+                        </div>
+                    </div>
+            </div>
+{% endblock footer %}
+
+{% block extra-scripts %}
+        <script src="{% static 'opportunity/js/leads.js' %}"></script>
+
+        <script>
+
+        </script>
+{% endblock extra-scripts %}
+
+
+<!--<body>-->
+    <!--{% if user.is_authenticated %}-->
+        <!--<div id="username">Hello {{ user.username }}</div>-->
+        <!--<hr/>-->
+        <!--<table border="1">-->
+            <!--<tr>-->
+                <!--<th>Company Name</th>-->
+                <!--<th>Description</th>-->
+                <!--<th>status</th>-->
+                <!--<th>Client</th>-->
+                <!--<th>Price</th>-->
+                <!--<th>Contact Person</th>-->
+                <!--<th>Email</th>-->
+                <!--<th>Contact Number</th>-->
+                <!--<th>Change Status</th>-->
+            <!--</tr>-->
+            <!--{% for op in opportunity %}-->
+                <!--<tr>-->
+                    <!--<td><a id="data"  href="{% url 'opportunity:meeting:emp_meeting' op.id %}">{{ op.lead.company_name }}</a></td>-->
+                    <!--<td>{{ op.lead.description }}</td>-->
+                    <!--<td>{{ op.status }}</td>-->
+                    <!--<td>{{ op.client.username}}</td>-->
+                    <!--<td>{{ op.price }}</td>-->
+                    <!--<td>{{ op.lead.contact_person }}</td>-->
+                    <!--<td>{{ op.lead.email }}</td>-->
+                    <!--<td>{{ op.lead.contact_number }}</td>-->
+                    <!--{% if op.assigned_to.username == user.username or user.designation == 'Manager' %}-->
+                        <!--<td id="change_status"><a id="edit" href="{% url 'opportunity:change_status' op.id %}"> Edit </a></td>-->
+                    <!--{% else %}-->
+                        <!--<td></td>-->
+                    <!--{% endif %}-->
+                    <!--&lt;!&ndash;<td><button type="button" data-id = "{{ op.id }}" class ="edit" data-toggle="modal" data-target="#exampleModalLong">Edit</button></td>&ndash;&gt;-->
+                <!--</tr>-->
+            <!--{% endfor %}-->
+        <!--</table>-->
+    <!--{% else %}-->
+        <!--<div>You don't have permission</div>-->
+    <!--{% endif %}-->
+
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>-->
+    <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
+
+<!--</body>-->
+
+<script>
+            $(function(){
+            id="dd";
+            $('.form_link').click(function(e){
+                            e.preventDefault();
+                            that = $(this);
+                            id = $(this).attr('href');
+                            var myData = $(this).data('some');
+                            console.log("myData: " + myData);
+                            $('body').data('someData',  myData);
+                            $('.modal').modal();
+                        });
+                        console.log();
+
+                        });
+
+
+        </script>
+  $("#post-form").submit(function(event){
+                    alert('helo');
+                    event.preventDefault();
+                    url =$(this).attr('action');
+                    console.log(url);
+                    console.log($(this).serialize());
+
+                    $.ajax({
+                        url : url, // the endpoint
+                        type : "POST", // http method
+                        data : $(this).serialize(), // data sent with the post request
+
+                        // handle a successful response
+                        success : function(response) {
+                            $('#close').click();
+
+                            console.log(response);
+                        },
+
+                        // handle a non-successful response
+                        error : function(response) {
+                            $('#error').text(response.error);
+                            console.log("Error");
+                        }
+                    });
+
+                });
